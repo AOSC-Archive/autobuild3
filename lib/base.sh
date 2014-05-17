@@ -6,6 +6,17 @@ bool(){
 		*) return 1 ;;
 	esac
 }
+abreqexe(){
+	for i
+	do
+		if which $i > /dev/null
+		then
+			true
+		else
+			exit 1
+		fi
+	done
+}
 abloadlib(){
 	[ -f $AB/lib/$1.sh ] || exit 1
 	. $AB/lib/$1.sh
