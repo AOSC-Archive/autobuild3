@@ -25,7 +25,7 @@ abloadlib(){
 abrequire(){
 	for i
 	do
-		if echo $ABLIBS | grep "\\|$1\\|" > /dev/null
+		if echo $ABLIBS | grep "|$1|" > /dev/null
 		then
 			true
 		elif [ "$i" = "pm" ]
@@ -34,7 +34,7 @@ abrequire(){
 			. $AB/$ABMPM/lib/pm.sh || exit 1
 			export ABLIBS="${ABLIBS}pm|"
 		else
-			abloadlib $i || exit 1
+			abloadlib $i || (echo No library $i ; exit 1)
 		fi
 	done
 }
