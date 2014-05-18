@@ -4,7 +4,7 @@ fltr_elffltr__process(){
 	[ "$ABELFFLTRS" = "" ] && return 0
 	for i in $ABELFFLTRS
 	do
-		$i "$*"
+		elffltr_$i "$*"
 	done
 }
 fltr_elffltr(){
