@@ -1,4 +1,5 @@
 ABLIBS="|base|"
+
 bool(){
 	case $1 in
 		0|f|F|false|n|N|no) return 1 ;;
@@ -6,6 +7,7 @@ bool(){
 		*) return 1 ;;
 	esac
 }
+
 abreqexe(){
 	for i
 	do
@@ -17,11 +19,13 @@ abreqexe(){
 		fi
 	done
 }
+
 abloadlib(){
 	[ -f $AB/lib/$1.sh ] || exit 1
 	. $AB/lib/$1.sh
 	export ABLIBS="${ABLIBS}$1|"
 }
+
 abrequire(){
 	for i
 	do
