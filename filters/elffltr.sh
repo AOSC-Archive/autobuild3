@@ -1,4 +1,5 @@
 abrequire fileenum elf
+
 fltr_elffltr__process(){
 	elf_iself "$*" || return 0
 	[ "$ABELFFLTRS" = "" ] && return 0
@@ -7,6 +8,7 @@ fltr_elffltr__process(){
 		elffltr_$i "$*"
 	done
 }
+
 fltr_elffltr(){
 	for i in usr/lib lib bin usr/bin opt/*/lib opt/*/bin
 	do

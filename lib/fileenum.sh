@@ -1,5 +1,6 @@
 abreqexe find
-fileenum_fromstdin(){
+
+fileenum_fromstdin() {
 	while true
 	do
 	read a
@@ -8,6 +9,7 @@ fileenum_fromstdin(){
 	eval `echo $1 | sed "s@{}@$a@g"`
 	done
 }
-fileenum(){
+
+fileenum() {
 	(find ; echo :EXIT) | fileenum_fromstdin "$*"
 }
