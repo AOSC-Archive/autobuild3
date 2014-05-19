@@ -1,0 +1,8 @@
+#! /bin/bash
+export AB=/usr/lib/autobuild
+# It's a pity that I hardcoded it.
+. $AB/lib/base.sh
+for i in $AB/proc/*.sh
+do
+	. $i
+done
