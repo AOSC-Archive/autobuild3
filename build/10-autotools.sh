@@ -43,7 +43,7 @@ build_autotools_build() {
 	fi
 
 	printf "\033[36m>>>\033[0m Running configure...		"
-	configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib/$PKGNAME --disable-static $AUTOTOOLS_AFTER 
+	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER 
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"
