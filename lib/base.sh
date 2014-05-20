@@ -11,12 +11,14 @@ bool(){
 abreqexe(){
 	for i
 	do
+		printf "\033[36m>>>\033[0m Checking system environment and necessary programs...		"
 		if which $i > /dev/null
 		then
-			echo -e "\033[36mLooks like everything needed are here\033[0m"
+			printf "\033[32m[OK]\033[0m"
 			true
 		else
-			echo -e "\033[31mNope, something seemed not being here while you ran autobuild\033[0m"
+			printf "\033[31m[FAILED]\n\033[0m"
+			printf "\033[33m-!- Some necessary programs are not found or not in PATH\033[0m"
 			# Needed program which are not here shall be listed below...
 			exit 1
 		fi

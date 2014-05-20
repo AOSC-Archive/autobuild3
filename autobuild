@@ -1,6 +1,8 @@
 #! /bin/bash
-export AB=/usr/lib/autobuild
+export ABSET=/etc/autobuild.d
+export AB=`cat /etc/autobuild.d/prefix`
 # It's a pity that I hardcoded it.
+# No worries man... use /etc
 . $AB/lib/base.sh
 for i in $AB/proc/*.sh
 do

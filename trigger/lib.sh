@@ -1,5 +1,6 @@
 # I'm a stand-along script.
-# No autobuild lib!
+# (No) Not an autobuild lib!
+
 interest(){
 	if [ -d abdist/$1 ]
 	then
@@ -13,3 +14,5 @@ interest(){
 		fi
 	fi
 }
+
+# You need to patch DPKG or RPM?
