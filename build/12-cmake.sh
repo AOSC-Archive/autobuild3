@@ -18,3 +18,4 @@ build_cmake_build(){
 	cd ..
 	fi
 }
+export ABBUILDS="$ABBUILDS perl"
