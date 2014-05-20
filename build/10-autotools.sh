@@ -2,6 +2,10 @@ abreqexe autoconf automake
 
 SRCDIR=`pwd`
 
+build_autotools_probe(){
+	[ -f configur ] || [ -f autogen.sh ] || [ -f configure.ac ]
+}
+
 build_autotools_build() {
 	if [ ! -e configure ]
 	then
@@ -77,3 +81,5 @@ build_autotools_build() {
 		true
 	fi
 }
+
+export ABBUILDS="$ABBUILDS autotools"
