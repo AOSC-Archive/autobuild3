@@ -7,6 +7,7 @@ build_autotools_probe(){
 }
 
 build_autotools_build() {
+	[ "$ABSHADOW" != "" ] && export ABSHADOW_AUTOTOOLS=$ABSHADOW
 	if [ ! -e configure ]
 	then
 		printf "\033[36m>>>\033[0m The configure script does not present, attempting to run autogen or autoreconf... 		"
@@ -38,7 +39,7 @@ build_autotools_build() {
 		 printf "\033[33m-!- It's not an autotools source tree is it?\n\033[0m"
 	fi
 
-	if bool $ABSHADOW
+	if bool $ABSHADOW_AUTOTOOLS
 	then
 		mkdir -p build 2> /dev/null&&
 		cd build
@@ -74,7 +75,7 @@ build_autotools_build() {
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 	
-	if bool $ABSHADOW
+	if bool $ABSHADOW_AUTOTOOLS
 	then 
 		cd ..
 	else
