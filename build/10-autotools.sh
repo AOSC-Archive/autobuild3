@@ -38,7 +38,7 @@ build_autotools_build() {
 		 printf "\033[33m-!- It's not an autotools source tree is it?\n\033[0m"
 	fi
 
-	if [ "x$ABSHADOW" = "x" ] 
+	if bool $ABSHADOW
 	then
 		mkdir -p build 2> /dev/null&&
 		cd build
@@ -74,7 +74,7 @@ build_autotools_build() {
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 	
-	if [ "x$ABSHADOW" = "x" ] 
+	if bool $ABSHADOW
 	then 
 		cd ..
 	else
