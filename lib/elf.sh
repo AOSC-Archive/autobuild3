@@ -17,5 +17,3 @@ elf_strip()
 	printf "\033[32m[OK]\n\033[0m"
 }
 
-elf_iself
-elf_strip
