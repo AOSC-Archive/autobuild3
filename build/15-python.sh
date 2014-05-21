@@ -1,13 +1,6 @@
 abreqexe python
 build_python_probe(){
-	printf "\033[36m>>>\033[0m Detecting Python project script...		"
 	[ -f setup.py ]	
-	then
-		printf "\033[32m[OK]\n\033[0m"
-	else
-		printf "\033[31m[FAILED]\n\033[0m"
-		printf "\033[33m-!- Please make sure setup.py exists in current directory!\n\033[0m"
-	fi
 }
 build_python_build(){
 printf "\033[36m>>>\033[0m Compiling Python project...			"

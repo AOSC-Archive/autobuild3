@@ -3,7 +3,7 @@ abreqexe autoconf automake
 SRCDIR=`pwd`
 
 build_autotools_probe(){
-	[ -f configur ] || [ -f autogen.sh ] || [ -f configure.ac ]
+	[ -f configure ] || [ -f autogen.sh ] || [ -f configure.ac ]
 }
 
 build_autotools_build() {

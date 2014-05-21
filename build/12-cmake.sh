@@ -1,6 +1,6 @@
 abreqexe cmake
 build_cmake_probe(){
-
+	[ -f CMakeLists.txt ]
 }
 build_cmake_build(){
 	[ "x$ABSHADOW" != "x" ] && export ABSHADOW_CMAKE=$ABSHADOW
