@@ -90,7 +90,7 @@ if [ "x$PKGPROV" != "x" ]
 		true
 fi
 cp abscripts/{postinst,prerm} abdist/DEBIAN/
-dpkg -b abdist.deb || exit 1
+dpkg -b abdist || exit 1
 mv abdist.deb ${PKGNAME}.deb
 rm -rf abdist/DEBIAN
 export ABPACKAGE="${PKGNAME}.deb"

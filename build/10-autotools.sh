@@ -35,8 +35,8 @@ build_autotools_build() {
 			fi
 		fi
 	else
-		 printf "\033[31m[FAILED]\n\033[0m"
-		 printf "\033[33m-!- It's not an autotools source tree is it?\n\033[0m"
+		# a configure script is already present
+		true
 	fi
 
 	if bool $ABSHADOW_AUTOTOOLS
