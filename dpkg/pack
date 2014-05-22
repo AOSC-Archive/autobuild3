@@ -1,0 +1,96 @@
+dpkg_getver(){
+        COLUMNS=1 dpkg -l $1 | grep ^ii | cut -c 20- | cut -d " " -f 1
+}
+gendep(){
+		FIRST=1
+		for i in $PKGDEP
+		do
+			[ "$FIRST" != "1" ] && printf ", "
+			[ "$FIRST" = "1" ] && FIRST=0
+			if [ "x`echo $i | cut -d '|' -f 1`" = "x$i" ]
+			then
+				printf "$i (>= `dpkg_getver $i`)"
+			else
+				printf "$i"
+			fi
+		done
+}
+genrecom(){
+		FIRST=1
+		for i in $PKGRECOM
+		do
+			[ "$FIRST" != "1" ] && printf ", "
+			[ "$FIRST" = "1" ] && FIRST=0
+			printf "$i"
+		done
+}
+genrep(){
+		FIRST=1
+		for i in $PKGREP
+		do
+			[ "$FIRST" != "1" ] && printf ", "
+			[ "$FIRST" = "1" ] && FIRST=0
+			printf "$i"
+		done
+}
+genconfl(){
+                FIRST=1
+                for i in $PKGCONFL
+                do
+                        [ "$FIRST" != "1" ] && printf ", "
+                        [ "$FIRST" = "1" ] && FIRST=0
+                        printf "$i"
+                done    
+}
+genprov(){
+       FIRST=1
+       for i in $PKGPROV
+       do
+                [ "$FIRST" != "1" ] && printf ", "
+                [ "$FIRST" = "1" ] && FIRST=0
+                printf "$i"
+       done    
+}
+mkdir -p abdist/DEBIAN && 
+echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
+echo "Version: $PKGVER" >> abdist/DEBIAN/control && 
+echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
+( ( [ "x$PKGSEC" != "x" ] && echo "Section: $PKGSEC" >> abdist/DEBIAN/control ) || true ) && 
+echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
+echo "Installed-Size: `du -s abdist | cut -f 1`" >> abdist/DEBIAN/control && 
+echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
+if [ "x$PKGDEP" != "x" ]
+	then 
+		echo "Depends: `gendep`" >> abdist/DEBIAN/control
+	else
+		true
+fi &&
+if [ "x$PKGRECOM" != "x" ]
+	then 
+		echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
+	else
+		true
+fi &&
+if [ "x$PKGREP" != "x" ]
+	then 
+		echo "Replaces: `genrep`" >> abdist/DEBIAN/control
+	else
+		true
+fi
+if [ "x$PKGCONFL" != "x" ]
+	then
+		echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control
+	else
+		true
+fi
+if [ "x$PKGPROV" != "x" ]
+	then
+		echo "Provides: `genprov`" >> abdist/DEBIAN/control
+	else
+		true
+fi
+cp abscripts/{postinst,prerm} abdist/DEBIAN/
+dpkg -b abdist.deb || exit 1
+mv abdist.deb ${PKGNAME}.deb
+rm -rf abdist/DEBIAN
+export ABPACKAGE="${PKGNAME}.deb"

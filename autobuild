@@ -1,6 +1,6 @@
 #! /bin/bash
-export ABSET=/etc/autobuild.d
-export AB=`cat /etc/autobuild.d/prefix`
+export ABSET=/etc/autobuild
+export AB=`cat /etc/autobuild/prefix`
 # It's a pity that I hardcoded it.
 # No worries man... use /etc
 . $AB/lib/base.sh
