@@ -10,7 +10,7 @@ build_autotools_build() {
 	[ "$ABSHADOW" != "" ] && export ABSHADOW_AUTOTOOLS=$ABSHADOW
 	if [ ! -e configure ]
 	then
-		printf "\033[36m>>>\033[0m The configure script does not present, attempting to run autogen or autoreconf... 		"
+		printf "\033[36m>>>\033[0m configure script not present, attempting to run autogen or autoreconf... 		"
 		if [ -e autogen.sh ]
 		then
 			NOCONFIGURE=1 ./autogen.sh > /dev/null
