@@ -6,7 +6,7 @@ done
 fltr_elffltr__process(){
 	elf_iself "$*" || return 0
 	[ "$ABELFFLTRS" = "" ] && return 0
-	printf "\033[36m>>>\033[0m Found ELF File		[INFO]:\n $*"
+	printf "\033[36m>>>\033[0m Found ELF File		\033[33m[INFO]\033[0m\n $*"
 	for i in $ABELFFLTRS
 	do
 		printf "\033[36m>>>\033[0m Processing $i on $*		[OK]\n"
