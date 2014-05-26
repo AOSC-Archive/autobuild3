@@ -14,11 +14,11 @@ abreqexe(){
 		printf "\033[36m>>>\033[0m Checking system environment and necessary programs...		"
 		if which $i > /dev/null
 		then
-			printf "\033[32m[OK]\033[0m"
+			printf "\033[32m[OK]\n\033[0m"
 			true
 		else
 			printf "\033[31m[FAILED]\n\033[0m"
-			printf "\033[33m-!- Some necessary programs are not found or not in PATH\033[0m"
+			printf "\033[33m-!- Some necessary programs are not found or not in PATH\n\033[0m"
 			# Needed program which are not here shall be listed below...
 			exit 1
 		fi
@@ -26,23 +26,24 @@ abreqexe(){
 }
 
 abloadlib(){
+	if [ "$1" != "pm" ]
+	then
 	[ -f $AB/lib/$1.sh ] || exit 1
 	. $AB/lib/$1.sh
+	else
+	[ -f $AB/$ABMPM/lib/$1.sh ] || exit 1
+	. $AB/$ABMPM/lib/$1.sh
+	fi
 	export ABLIBS="${ABLIBS}$1|"
+	echo "Loaded library $1"
 }
 
 abrequire(){
 	for i
 	do
-		if echo $ABLIBS | grep "|$1|" > /dev/null
+		if echo $ABLIBS | grep "|$i|" > /dev/null
 		then
 			true
-		elif [ "$i" = "pm" ]
-		then
-			# Special
-			# Special what... /etc/autobuild.d/10-pm or whatever to decide the PM used?
-			. $AB/$ABMPM/lib/pm.sh || exit 1
-			export ABLIBS="${ABLIBS}pm|"
 		else
 			abloadlib $i || (echo No library $i ; exit 1)
 		fi
