@@ -4,11 +4,13 @@ elffltr_elfdep(){
 	echo "Looking for Dependencies on $1 ..."
 	for i in `ldd /bin/bash | awk '{print $3}' | grep -v "^("`
 	do
+		i=`echo $i | sed 's@/lib64/@/lib/@g'`
 		P=`pm_whoprov $i`
 		echo "pm_whoprov returns $P for $i"
 		if [ "$P" != "" ]
 		then
 			depset_add $P
+			echo Now PKGDEP is "$PKGDEP"
 		fi
 	done
 }

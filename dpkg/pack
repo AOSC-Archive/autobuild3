@@ -1,9 +1,11 @@
+echo $PKGDEP
+
 dpkg_getver(){
         COLUMNS=1 dpkg -l $1 | grep ^ii | cut -c 20- | cut -d " " -f 1
 }
 gendep(){
 		FIRST=1
-		for i in $PKGDEP
+		for i in $*
 		do
 			[ "$FIRST" != "1" ] && printf ", "
 			[ "$FIRST" = "1" ] && FIRST=0
@@ -61,7 +63,8 @@ echo "Installed-Size: `du -s abdist | cut -f 1`" >> abdist/DEBIAN/control &&
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
 if [ "x$PKGDEP" != "x" ]
 	then 
-		echo "Depends: `gendep`" >> abdist/DEBIAN/control
+		echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
+		echo "Geenerating Dependencies Infomation for $PKGDEP"
 	else
 		true
 fi &&

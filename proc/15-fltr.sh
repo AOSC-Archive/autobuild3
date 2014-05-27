@@ -8,8 +8,9 @@ then
 	exit 1
 fi
 pushd abdist > /dev/null
-for i in $ABFLTRS
+for ii in $ABFLTRS
 do
-	fltr_$i
+	fltr_$ii
+	echo "After $ii, PKGDEP=$PKGDEP"
 done
 popd > /dev/null
