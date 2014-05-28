@@ -18,5 +18,4 @@ fileenum() {
 		[ ! -e $i ] && continue
 		eval `echo $1 | sed "s@{}@$i@g"`
 	done
-	echo $PKGDEP in fileenum
 }

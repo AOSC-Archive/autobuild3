@@ -12,8 +12,6 @@ fltr_elffltr__process(){
 		printf "\033[36m>>>\033[0m Processing $i on $*		[OK]\n"
 		elffltr_$i "$*"
 	done
-	echo Processed 1 $PKGDEP
-	export PKGDEP
 }
 fltr_elffltr(){
 	for i in usr/lib lib bin usr/bin opt/*/lib opt/*/bin
@@ -23,8 +21,6 @@ fltr_elffltr(){
 		fileenum "fltr_elffltr__process {}"
 		popd >/dev/null
 	done
-	echo Processed 2 $PKGDEP
-	export PKGDEP
 }
 
 export ABFLTRS="$ABFLTRS elffltr"

@@ -10,7 +10,6 @@ elffltr_elfdep(){
 		if [ "$P" != "" ]
 		then
 			depset_add $P
-			echo Now PKGDEP is "$PKGDEP"
 		fi
 	done
 }

@@ -11,6 +11,5 @@ pushd abdist > /dev/null
 for ii in $ABFLTRS
 do
 	fltr_$ii
-	echo "After $ii, PKGDEP=$PKGDEP"
 done
 popd > /dev/null

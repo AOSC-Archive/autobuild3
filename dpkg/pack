@@ -1,4 +1,3 @@
-echo $PKGDEP
 
 dpkg_getver(){
         COLUMNS=1 dpkg -l $1 | grep ^ii | cut -c 20- | cut -d " " -f 1
@@ -64,7 +63,6 @@ echo "Description: $PKGDES" >> abdist/DEBIAN/control &&
 if [ "x$PKGDEP" != "x" ]
 	then 
 		echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
-		echo "Geenerating Dependencies Infomation for $PKGDEP"
 	else
 		true
 fi &&
