@@ -5,5 +5,9 @@ pm_whoprov(){
 	# This just give a nice list of formatted dependencies.
 }
 
+pm_getver(){
+	dpkg-query -f '${Version}' -W dpkg 2>/dev/null
+}
+
 # pm_whoprov
 # Just for testing of output.

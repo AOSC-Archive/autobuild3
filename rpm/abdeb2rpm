@@ -1,0 +1,13 @@
+#! /bin/bash
+# tar xvf $1*.tar.xz
+mkdir $1
+tar xvf $1_*.tar.xz -C $1
+dpkg -x $1.deb $1/abdist
+dpkg -e $1.deb $1/abdist/DEBIAN
+pushd $1
+. autobuild/defines
+export PKGNAME PKGVER PKGDES PKGDEP PKGSEC
+sh ../genspec > spec
+rpmbuild -bb spec
+popd
+rpm -ivh --nodeps $HOME/rpmbuild/RPMS/x86_64/$PKGNAME-$PKGVER-0.x86_64.rpm

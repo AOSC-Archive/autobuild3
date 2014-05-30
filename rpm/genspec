@@ -1,0 +1,70 @@
+#! /bin/bash
+echo "Name:           $PKGNAME"
+echo "Version:        $PKGVER"
+echo "Release:        0"
+echo "Summary:        $PKGDES"
+echo ""
+echo "Group:          $PKGSEC"
+echo "License:        Unknown"
+echo "URL:            Unknown"
+echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
+[ "x$EXTRAPROVIDE" != "x" ] && echo "Provides:       $EXTRAPROVIDE"
+if [ "x$PKGDEP" != "x" ]
+then
+	printf "Requires:       "
+	FIRST=true
+	for i in $PKGDEP
+	do
+		if $FIRST
+		then
+			FIRST=false
+		else
+			printf " , "
+		fi
+	printf "%s >= %s" $i `rpm -qi $i | grep ^Version | awk '{print $3}'`
+	done
+fi
+echo ""
+echo "%description"
+echo "$PKGDES"
+echo ""
+echo "%prep"
+echo "true"
+echo ""
+echo "%build"
+echo "true"
+echo ""
+echo "%install"
+echo 'rm -rf $RPM_BUILD_ROOT'
+echo "cp -r `pwd`/abdist "'$RPM_BUILD_ROOT'
+echo 'rm -rf $RPM_BUILD_ROOT/DEBIAN'
+echo ""
+echo "%clean"
+echo 'rm -rf $RPM_BUILD_ROOT'
+echo ""
+echo "%post -p /bin/bash"
+cat `pwd`/abdist/DEBIAN/postinst 2>/dev/null || true
+echo ""
+echo "%postun -p /bin/bash"
+cat `pwd`/abdist/DEBIAN/postrm 2>/dev/null || true
+echo ""
+echo "%files"
+# echo "%defattr(-,root,root,-)"
+# echo ""
+printf "for i in " > /tmp/tmp-shell-autobuild-rpm-genspec
+find abdist | gawk '{printf("%s","\""$0"\" ")}' >> /tmp/tmp-shell-autobuild-rpm-genspec
+echo  >> /tmp/tmp-shell-autobuild-rpm-genspec
+cat >> /tmp/tmp-shell-autobuild-rpm-genspec << _ABEOF
+do
+( [ -d "\$i" ] && [ ! -L "\$i" ] ) && continue
+(echo \$i | grep ^abdist/DEBIAN >/dev/null )&& continue
+echo "\$i" >&2
+echo "%defattr(-,\`ls -l \"\$i\" | awk '{print \$3}'\`,\`ls -l \"\$i\" | awk '{print \$4}'\`,-)"
+printf /
+printf %s "\`echo \$i | cut -c 8-\`"
+echo
+done
+_ABEOF
+sh /tmp/tmp-shell-autobuild-rpm-genspec
+# rm /tmp/tmp-shell-autobuild-rpm-genspec
+
