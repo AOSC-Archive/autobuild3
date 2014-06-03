@@ -2,7 +2,7 @@ abrequire elf depset pm
 elffltr_elfdep(){
 	bool $ABELFDEP || return 0
 	echo "Looking for Dependencies on $1 ..."
-	for i in `ldd /bin/bash | awk '{print $3}' | grep -v "^("`
+	for i in `ldd $1 | awk '{print $3}' | grep -v "^("`
 	do
 		i=`echo $i | sed 's@/lib64/@/lib/@g'`
 		P=`pm_whoprov $i`
