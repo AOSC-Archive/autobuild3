@@ -1,18 +1,29 @@
 
-dpkg_getver(){
-        COLUMNS=1 dpkg -l $1 | grep ^ii | cut -c 20- | cut -d " " -f 1
-}
 gendep(){
 		FIRST=1
 		for i in $*
 		do
 			[ "$FIRST" != "1" ] && printf ", "
 			[ "$FIRST" = "1" ] && FIRST=0
-			if [ "x`echo $i | cut -d '|' -f 1`" = "x$i" ]
+#			if [ "x`echo $i | cut -d '|' -f 1`" = "x$i" ]
+#			then
+#				printf "$i (>= `pm_getver $i`)"
+#			else
+#				printf "$i"
+#			fi
+			if echo $i | grep '|' >/dev/null
 			then
-				printf "$i (>= `dpkg_getver $i`)"
+				printf $i
+			elif echo $i | grep '^=" > /dev/null
+			then
+				i2=`cut -c 2-`
+				printf "$i (= `pm_getver $i2`)"
+			elif echo $i | grep '^<" > /dev/null
+			then
+				i2=`cut -c 2-`
+				printf "$i (<= `pm_getver $i`)"
 			else
-				printf "$i"
+				printf "$i (>= `pm_getver $i`)"
 			fi
 		done
 }

@@ -32,7 +32,21 @@ then
 		else
 			printf " , "
 		fi
-	printf "%s >= %s" $i "`pm_getver $i`"
+#	printf "%s >= %s" $i "`pm_getver $i`"
+	if echo $i | grep '|' >/dev/null
+	then
+		printf $i
+	elif echo $i | grep '^=" > /dev/null
+	then
+		i2=`cut -c 2-`
+		printf "$i = `pm_getver $i2`"
+	elif echo $i | grep '^<" > /dev/null
+	then
+		i2=`cut -c 2-`
+		printf "$i <= `pm_getver $i`"
+	else
+		printf "$i >= `pm_getver $i`"
+	fi
 	done
 fi
 echo ""
