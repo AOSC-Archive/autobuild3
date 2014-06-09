@@ -13,7 +13,7 @@ build_autotools_build() {
 		printf "\033[36m>>>\033[0m configure script not present, attempting to run autogen or autoreconf... 		"
 		if [ -e autogen.sh ]
 		then
-			NOCONFIGURE=1 ./autogen.sh > /dev/null
+			NOCONFIGURE=1 ./autogen.sh | ablog
 			if [ $? -ne 0 ]
 			then
 				printf "\033[31m[FAILED]\n\033[0m"
@@ -25,7 +25,7 @@ build_autotools_build() {
 			fi
 		elif [ -e configure.ac ]
 		then 
-			autoreconf -fi 2> /dev/null
+			autoreconf -fi 2>&1 | ablog
 			if [ $? -ne 0 ]
 			then
 				printf "\033[31m[FAILED]\n\033[0m"
@@ -48,7 +48,7 @@ build_autotools_build() {
 	fi
 
 	printf "\033[36m>>>\033[0m Running configure...		"
-	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER 
+	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"
@@ -57,7 +57,7 @@ build_autotools_build() {
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 	printf "\033[36m>>>\033[0m Compile/Making source...		"
-	make $ABMK $MAKE_AFTER > /dev/null
+	make $ABMK $MAKE_AFTER | ablog
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"
@@ -66,7 +66,7 @@ build_autotools_build() {
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 	printf "\033[36m>>>\033[0m Installing binaries/output to `echo $SRCDIR`/abdist ...	"
-	make install DESTDIR=$SRCDIR/abdist $MAKE_AFTER > /dev/null
+	make install DESTDIR=$SRCDIR/abdist $MAKE_AFTER | ablog
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"

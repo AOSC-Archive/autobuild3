@@ -49,3 +49,12 @@ abrequire(){
 		fi
 	done
 }
+
+ablog(){
+	if bool $ABDUMB
+	then
+		cat > ablog
+	else
+		tee ablog
+	fi
+}
