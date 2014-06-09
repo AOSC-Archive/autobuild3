@@ -1,6 +1,7 @@
 . autobuild/defines
 
 for i in $AB/etc/defaults/*
+# What? /etc/defaults/grub ?
 do
 	. $i
 done

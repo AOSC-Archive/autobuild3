@@ -6,7 +6,7 @@ pm_whoprov(){
 }
 
 pm_getver(){
-	dpkg-query -f '${Version}' -W dpkg 2>/dev/null
+	dpkg-query -f '${Version}' -W $1 2>/dev/null
 }
 
 # pm_whoprov

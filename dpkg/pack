@@ -91,6 +91,10 @@ if [ "x$PKGPROV" != "x" ]
 		true
 fi
 cp abscripts/{postinst,prerm} abdist/DEBIAN/
+if [ -f autobuild/conffiles ]
+then
+cp autobuild/conffiles abdist/DEBIAN/
+fi
 dpkg -b abdist || exit 1
 mv abdist.deb ${PKGNAME}.deb
 rm -rf abdist/DEBIAN

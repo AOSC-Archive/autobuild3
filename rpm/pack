@@ -1,7 +1,17 @@
+if [ -f autobuild/pre-rpm ]
+then
+. autobuild/pre-rpm
+fi
 genspec(){
 echo "Name:           $PKGNAME"
+if echo $PKGVER | grep - >/dev/null
+then
+echo "Version:        `echo $PKGVER | cut -d - -f 1`"
+echo "Release:        `echo $PKGVER | cut -d - -f 2-`"
+else
 echo "Version:        $PKGVER"
 echo "Release:        0"
+fi
 echo "Summary:        $PKGDES"
 echo ""
 echo "Group:          $PKGSEC"
@@ -9,7 +19,7 @@ echo "License:        Unknown"
 echo "URL:            Unknown"
 echo "Autoreqprov:    yes"
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-[ "x$EXTRAPROVIDE" != "x" ] && echo "Provides:       $EXTRAPROVIDE"
+[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE"
 if [ "x$PKGDEP" != "x" ]
 then
 	printf "Requires:       "
@@ -71,4 +81,7 @@ sh /tmp/tmp-shell-autobuild-rpm-genspec
 }
 genspec > spec
 rpmbuild -bb spec
-
+if [ -f autobuild/post-rpm ]
+then
+. autobuild/post-rpm
+fi
