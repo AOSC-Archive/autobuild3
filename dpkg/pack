@@ -14,14 +14,14 @@ gendep(){
 			if echo $i | grep '|' >/dev/null
 			then
 				printf $i
-			elif echo $i | grep '^=" > /dev/null
+			elif echo $i | grep '^=' > /dev/null
 			then
-				i2=`cut -c 2-`
-				printf "$i (= `pm_getver $i2`)"
-			elif echo $i | grep '^<" > /dev/null
+				i2=`echo $i | cut -c 2-`
+				printf "$i2 (= `pm_getver $i2`)"
+			elif echo $i | grep '^<' > /dev/null
 			then
-				i2=`cut -c 2-`
-				printf "$i (<= `pm_getver $i`)"
+				i2=`echo $i |cut -c 2-`
+				printf "$i2 (<= `pm_getver $i2`)"
 			else
 				printf "$i (>= `pm_getver $i`)"
 			fi
