@@ -14,7 +14,7 @@ echo "Release:        0"
 fi
 echo "Summary:        $PKGDES"
 echo ""
-echo "Group:          $PKGSEC"
+echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
 echo "License:        Unknown"
 echo "URL:            Unknown"
 echo "Autoreqprov:    yes"
