@@ -9,7 +9,7 @@ then
 
 if [ -f autobuild/patch ]
 then
-	. autobuild/patch
+	. autobuild/patch &&
 	touch .patch
 elif [ -f autobuild/patches/series ]
 then

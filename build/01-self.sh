@@ -1,9 +1,10 @@
 build_self_probe(){
 	[ -f autobuild/build ]
 }
+
 build_self_build(){
 	printf "\033[36m>>>\033[0m Running self-build scripts you just wrote...		\033[36m[INFO]\033[0m\n"
-	sh autobuild/build
+	sh autobuild/build 
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"
@@ -12,3 +13,6 @@ build_self_build(){
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 }
+
+export ABBUILDS="$ABBUILDS self"
+# Soga...

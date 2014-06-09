@@ -66,7 +66,7 @@ build_autotools_build() {
 		printf "\033[32m[OK]\n\033[0m"
 	fi
 	printf "\033[36m>>>\033[0m Installing binaries/output to `echo $SRCDIR`/abdist ...	"
-	make install DESTDIR=$SRCDIR/abdist $MAKE_AFTER
+	make install DESTDIR=$SRCDIR/abdist $MAKE_AFTER > /dev/null
 	if [ $? -ne 0 ]
 	then
 		printf "\033[31m[FAILED]\n\033[0m"

@@ -1,6 +1,6 @@
 if [ "$ABTYPE" != "" ]
 then
-true
+	true
 else
 	for i in $ABBUILDS
 	do
