@@ -11,15 +11,10 @@ bool(){
 abreqexe(){
 	for i
 	do
-		printf "\033[36m>>>\033[0m Checking system environment and necessary programs...		"
 		if which $i > /dev/null
 		then
-			printf "\033[32m[OK]\n\033[0m"
 			true
 		else
-			printf "\033[31m[FAILED]\n\033[0m"
-			printf "\033[33m-!- Some necessary programs are not found or not in PATH\n\033[0m"
-			# Needed program which are not here shall be listed below...
 			exit 1
 		fi
 	done

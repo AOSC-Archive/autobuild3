@@ -2,7 +2,6 @@ abrequire fileenum
 abreqexe gzip
 fltr_compress__process(){
 	[ "$ABCOMPRESS" = "" ] && return 0
-	printf "\033[36m>>>\033[0m Found Document File		\033[33m[INFO]\033[0m\n $*"
 	gzip "$*"
 }
 fltr_compress(){
