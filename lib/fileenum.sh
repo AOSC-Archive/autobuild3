@@ -13,7 +13,7 @@ fileenum_fromstdin() {
 fileenum() {
 #	(find ; echo :EXIT) | fileenum_fromstdin "$*"
 #A buggy implenmentaion
-	for i in `find`
+	for i in `find .`
 	do
 		[ ! -e $i ] && continue
 		eval `echo $1 | sed "s@{}@$i@g"`
