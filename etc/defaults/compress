@@ -1,1 +1,2 @@
 ABCOMPRESS=yes
+compressor=gzip
