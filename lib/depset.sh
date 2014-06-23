@@ -10,6 +10,7 @@ depset_chk(){
 	(echo $PKGDEP | grep "|$1 " > /dev/null) && return 0
 	(echo $PKGDEP | grep "|$1\$" > /dev/null) && return 0
 	(echo $PKGDEP | grep " $1|" > /dev/null) && return 0
+	(echo $PKGDEP | grep " $1 " > /dev/null) && return 0
 	return 1
 }
 
