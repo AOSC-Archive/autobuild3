@@ -8,4 +8,5 @@ for i in $(cat $_list); do
   cd $i
   autobuild >stdout 2>stderr
   mv {$i.deb,$i_*.tar.xz} $_pwd/
+  cd $_pwd
 done 
