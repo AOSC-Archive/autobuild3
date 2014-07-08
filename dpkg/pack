@@ -106,6 +106,7 @@ if [ -f autobuild/conffiles ]
 then
 cp autobuild/conffiles abdist/DEBIAN/
 fi
+chmod -R 0755 abdist/DEBIAN
 dpkg -b abdist || exit 1
 mv abdist.deb ${PKGNAME}.deb
 rm -rf abdist/DEBIAN

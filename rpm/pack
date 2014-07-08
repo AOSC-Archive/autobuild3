@@ -12,12 +12,22 @@ else
 echo "Version:        $PKGVER"
 echo "Release:        0"
 fi
+if [ "x$RPMEPOCH" != "x" ]
+then
+echo "Epoch:          $RPMEPOCH"
+fi
 echo "Summary:        $PKGDES"
 echo ""
 echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
 echo "License:        Unknown"
 echo "URL:            Unknown"
+if bool $ABRPMAUTOPROVONLY
+then
+echo "Autoprov:       yes"
+echo "Autoreq:        no"
+else
 echo "Autoreqprov:    yes"
+fi
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
 [ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE"
 if [ "x$PKGDEP" != "x" ]
@@ -61,7 +71,7 @@ echo "true"
 echo ""
 echo "%install"
 echo 'rm -rf $RPM_BUILD_ROOT'
-echo "cp -r `pwd`/abdist "'$RPM_BUILD_ROOT'
+echo "cp -ra `pwd`/abdist "'$RPM_BUILD_ROOT'
 echo 'rm -rf $RPM_BUILD_ROOT/DEBIAN'
 echo ""
 echo "%clean"
@@ -84,7 +94,7 @@ do
 ( [ -d "\$i" ] && [ ! -L "\$i" ] ) && continue
 (echo \$i | grep ^abdist/DEBIAN >/dev/null )&& continue
 echo "\$i" >&2
-echo "%defattr(-,\`ls -l \"\$i\" | awk '{print \$3}'\`,\`ls -l \"\$i\" | awk '{print \$4}'\`,-)"
+echo "%defattr(\`stat --printf %a \"\$i\"\`,\`ls -l \"\$i\" | awk '{print \$3}'\`,\`ls -l \"\$i\" | awk '{print \$4}'\`,-)"
 printf /
 printf %s "\`echo \$i | cut -c 8-\`"
 echo
@@ -93,8 +103,8 @@ _ABEOF
 sh /tmp/tmp-shell-autobuild-rpm-genspec
 # rm /tmp/tmp-shell-autobuild-rpm-genspec
 }
-genspec > spec
-rpmbuild -bb spec
+genspec > abspec
+rpmbuild -bb abspec
 if [ -f autobuild/post-rpm ]
 then
 . autobuild/post-rpm

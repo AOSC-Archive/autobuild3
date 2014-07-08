@@ -1,5 +1,6 @@
 abreqexe autoconf automake
 
+export FORCE_UNSAFE_CONFIGURE=1
 SRCDIR=`pwd`
 
 build_autotools_probe(){
@@ -32,7 +33,7 @@ build_autotools_build() {
 
 	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog
 	make $ABMK $MAKE_AFTER | ablog
-	make install DESTDIR=$SRCDIR/abdist $MAKE_AFTER | ablog
+	make install BUILDROOT=$SRCDIR/abdist DESTDIR=$SRCDIR/abdist $MAKE_AFTER | ablog
 	
 	if bool $ABSHADOW_AUTOTOOLS
 	then 

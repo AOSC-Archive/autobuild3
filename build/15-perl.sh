@@ -2,7 +2,8 @@ abreqexe perl
 build_perl_probe(){
 	[ -f Makefile.PL ]
 }
-build_prel_build(){
+
+build_perl_build(){
 	perl Makefile.PL 
 	make && make DESTDIR=`pwd`/abdist install
 }

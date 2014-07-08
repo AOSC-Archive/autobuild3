@@ -8,6 +8,7 @@ else
 		if build_${i}_probe
 		then
 			export ABTYPE=$i
+			break
 		fi
 	done
 fi

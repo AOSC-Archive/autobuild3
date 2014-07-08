@@ -20,3 +20,5 @@ for i in `cat $AB/params/*`
 do
 	export $i
 done
+
+export PYTHON=/usr/bin/python2

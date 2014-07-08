@@ -8,4 +8,9 @@ do
 done
 abc="${PKGNAME}_${PKGVER}.tar.xz"
 tar cvfJ $abc autobuild/
+
+cp -v *.tar.xz /rebuild
+cp -v *.deb /rebuild
+
 [ "$ABARCHIVE" != "" ] && $ABARCHIVE $abc
+
