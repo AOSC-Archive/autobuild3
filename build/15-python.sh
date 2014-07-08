@@ -4,11 +4,8 @@ build_python_probe(){
 	[ -f setup.py ]	
 }
 build_python_build(){
-	$PYTHON setup.py bdist &&
-	cd dist &&
-	tar xvf *.tar.* &&
-	rm *.tar.* &&
-	cd .. &&
-	mv dist abdist
+        python2 setup.py install --prefix=/usr --root=`pwd`/abdist 
+        python2 setup.py clean
+        python3 setup.py install --prefix=/usr --root=`pwd`/abdist
 }
 export ABBUILDS="$ABBUILDS python"
