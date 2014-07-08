@@ -1,9 +1,10 @@
 mkdir -p abscripts
-echo "#! /bin/bash" > abscripts/postinst
-echo "#! /bin/bash" > abscripts/prerm
-cat autobuild/postinst > abscripts/postinst
-cat autobuild/prerm > abscripts/prerm
-chmod 755 abscripts/{postinst,prerm}
+for i in postinst prerm postrm preinst
+do
+echo "#! /bin/bash" > abscripts/$i
+cat autobuild/$i >> abscripts/$i
+chmod 755 abscripts/$i
+done
 if [ -e autobuild/triggers ]
 then
 	echo "#! /bin/bash" > abscripts/trigger

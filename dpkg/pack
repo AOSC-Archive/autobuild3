@@ -101,7 +101,8 @@ if [ "x$PKGPROV" != "x" ]
 	else
 		true
 fi
-cp abscripts/{postinst,prerm} abdist/DEBIAN/
+cp abscripts/{postinst,prerm,preinst,postrm} abdist/DEBIAN/
+cat abscripts/usergroup >> abdist/DEBIAN/postinst
 if [ -f autobuild/conffiles ]
 then
 cp autobuild/conffiles abdist/DEBIAN/

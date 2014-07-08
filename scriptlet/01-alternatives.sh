@@ -14,4 +14,4 @@ then
 	. autobuild/alternatives
 fi
 
-unset alternatives
+unset alternative
