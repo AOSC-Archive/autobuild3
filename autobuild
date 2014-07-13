@@ -6,5 +6,9 @@ export AB=`cat /etc/autobuild/prefix`
 . $AB/lib/base.sh
 for i in $AB/proc/*.sh
 do
-	. $i
+	if(. $i); then
+		echo -e "\e[32m$i is running SUCCESS!\e[m"
+	else
+		echo -e "\e[31mERROR occurs when running $i. Read the message above.\e[m"
+	fi
 done
