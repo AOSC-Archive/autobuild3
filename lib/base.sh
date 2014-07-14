@@ -55,3 +55,4 @@ ablog(){
 
 # Special Source, looks like stacktrace
 .(){ source $* || (printf "  \e[31min $*\e[0m\n"; return 1); }
+recsr(){for sr in "$@"; do . $sr; done}
