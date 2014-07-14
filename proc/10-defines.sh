@@ -1,18 +1,16 @@
-. autobuild/defines
+export SRCDIR="$PWD"
+export PKGDIR="$PWD/abdist"
 
-for i in $AB/etc/defaults/*
-# What? /etc/defaults/grub ?
-do
-	. $i
-done
+# Autobuild settings
+. AB/etc/defaults/*
 
-. autobuild/defines
+. autobuild/defines || return 1
 
 if [ -d $AB/spec ]
 then
 	for i in $AB/spec/*.sh
 	do
-		$i
+		. $i
 	done
 fi
 

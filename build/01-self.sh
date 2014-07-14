@@ -3,7 +3,8 @@ build_self_probe(){
 }
 
 build_self_build(){
-	bash autobuild/build 
+	. autobuild/build 
+	cd $SRCDIR
 }
 
 export ABBUILDS="$ABBUILDS self"
