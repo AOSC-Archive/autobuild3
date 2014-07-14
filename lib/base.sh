@@ -1,7 +1,7 @@
 ABLIBS="|base|"
 
 bool(){
-	case $1 in
+  case $1 in
 		0|f|F|false|n|N|no) return 1 ;;
 		1|t|T|true|y|Y|yes) return 0 ;;
 		*) return 1 ;;
@@ -9,8 +9,7 @@ bool(){
 }
 
 abreqexe(){
-	for i
-	do
+	for i; do
 		if which $i > /dev/null
 		then
 			true
@@ -55,5 +54,4 @@ ablog(){
 }
 
 # Special Source, looks like stacktrace
-ab_source(){ source $1 || (printf "\e[31min $1\e[0m"; return 1); }
-alias .='ab_source'
+.(){ source $* || (printf "  \e[31min $*\e[0m\n"; return 1); }

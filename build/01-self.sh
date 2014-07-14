@@ -3,7 +3,7 @@ build_self_probe(){
 }
 
 build_self_build(){
-	sh autobuild/build 
+	bash autobuild/build 
 }
 
 export ABBUILDS="$ABBUILDS self"
