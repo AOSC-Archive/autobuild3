@@ -1,2 +1,2 @@
-AUTOTOOLS_DEF="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib/$PKGNAME --disable-static"
+AUTOTOOLS_DEF="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir=/usr/lib/$PKGNAME --disable-option-checking --disable-static --disable-debug"
 CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release"

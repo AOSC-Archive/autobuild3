@@ -53,3 +53,7 @@ ablog(){
 		tee ablog
 	fi
 }
+
+# Special Source, looks like stacktrace
+ab_source(){ source $1 || (printf "\e[31min $1\e[0m"; return 1); }
+alias .='ab_source'

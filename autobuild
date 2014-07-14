@@ -4,10 +4,4 @@ export AB=`cat /etc/autobuild/prefix`
 # It's a pity that I hardcoded it.
 # No worries man... use /etc
 . $AB/lib/base.sh
-# Special Source, looks like stacktrace
-source_pretty(){
-  source $1 || (printf "\e[31min $1\e[0m"; false)
-}
-alias .='source_pretty'
-
 . $AB/proc/*.sh
