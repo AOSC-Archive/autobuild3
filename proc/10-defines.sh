@@ -2,7 +2,7 @@ export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
 
 # Autobuild settings
-recsr AB/etc/defaults/*
+recsr $AB/etc/defaults/*
 
 . autobuild/defines || return 1
 
