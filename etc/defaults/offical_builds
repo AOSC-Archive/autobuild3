@@ -2,3 +2,5 @@ AUTOTOOLS_DEF="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libexecdir
 CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=/etc"
 
 ABSHADOW=yes
+
+DPKGDEBFLAGS="-Zxz -z9 -Sextreme" 
