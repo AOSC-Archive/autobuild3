@@ -62,13 +62,14 @@ genprov(){
                 printf "$i"
        done    
 }
+instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
 echo "Version: $PKGVER" >> abdist/DEBIAN/control && 
 echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
 ( ( [ "x$PKGSEC" != "x" ] && echo "Section: $PKGSEC" >> abdist/DEBIAN/control ) || true ) && 
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
-echo "Installed-Size: `du -s abdist | cut -f 1`" >> abdist/DEBIAN/control && 
+echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
 if [ "x$PKGDEP" != "x" ]
 	then 
@@ -107,6 +108,21 @@ then
 cp autobuild/conffiles abdist/DEBIAN/
 fi
 chmod -R 0755 abdist/DEBIAN
-dpkg -b $DPKGDEBFLAGS abdist ${PKGNAME}.deb || exit 1
+[[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
+dpkg -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}.deb || exit 1
 rm -rf abdist/DEBIAN
 export ABPACKAGE="${PKGNAME}.deb"
+
+# Auto-select xz level, += preserves the possiblility of extra things
+dpkgflagsel(){
+  if (($instSIZE >= 8386000)); then
+    if (($instSIZE < 16775000)); then
+      DPKGDEBCOMP+="-z7"
+    else if (($instSIZE < 33552000)); then
+        DPKGDEBCOMP+="-z8"
+      else DPKGDEBCOMP+="-z9"
+      fi
+    fi
+  else DPKGDEBCOMP+="-z6"
+  fi
+}
