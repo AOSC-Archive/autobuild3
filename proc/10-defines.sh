@@ -6,6 +6,8 @@ recsr $AB/etc/defaults/*
 
 . autobuild/defines || return 1
 
+alias make='make $ABMK' # aliases aren't global, take care
+
 if [ -d $AB/spec ]; then
 	recsr $AB/spec/*.sh
 fi
