@@ -65,7 +65,7 @@ genprov(){
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
-echo "Version: $PKGVER" >> abdist/DEBIAN/control && 
+echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
 echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
 ( ( [ "x$PKGSEC" != "x" ] && echo "Section: $PKGSEC" >> abdist/DEBIAN/control ) || true ) && 
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
