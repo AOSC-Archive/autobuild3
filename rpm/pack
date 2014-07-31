@@ -69,17 +69,17 @@ echo "%clean"
 echo 'rm -rf $RPM_BUILD_ROOT'
 echo 
 echo "%post -p /bin/bash"
-cat `pwd`/abdist/DEBIAN/postinst 2>/dev/null || true
+cat `pwd`/abscripts/postinst 2>/dev/null || true
 echo 
 echo "%postun -p /bin/bash"
-cat abdist/DEBIAN/postrm 2>/dev/null || true
+cat `pwd`/abscripts/postrm 2>/dev/null || true
 echo 
 echo "%pre -p /bin/bash"
-cat `pwd`abdist/DEBIAN/usergroup 2>/dev/null || true
-cat `pwd`/abdist/DEBIAN/preinst 2>/dev/null || true
+cat `pwd`/abscripts/usergroup 2>/dev/null || true
+cat `pwd`/abscripts/preinst 2>/dev/null || true
 echo 
 echo "%preun -p /bin/bash"
-cat `pwd`/abdist/DEBIAN/prerm 2>/dev/null || true
+cat `pwd`/abscripts/prerm 2>/dev/null || true
 echo 
 echo "%files"
 # echo "%defattr(-,root,root,-)"
