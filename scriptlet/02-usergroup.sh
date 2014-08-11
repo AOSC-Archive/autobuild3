@@ -4,7 +4,7 @@ user(){
 	then
 		true
 	else
-		useradd -c "$5" -g $3 -d $4 -u $2 -s $6 $1
+		useradd -c "$5" -g $3 -d $4 -u $2 -s $6 $1 -m
 	fi
 _ABEOF
 	N=$1
