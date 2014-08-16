@@ -1,111 +1,80 @@
 gendep(){
-		FIRST=1
-		for i in $*
-		do
-			[ "$FIRST" != "1" ] && printf ", "
-			[ "$FIRST" = "1" ] && FIRST=0
-#			if [ "x`echo $i | cut -d '|' -f 1`" = "x$i" ]
-#			then
-#				printf "$i (>= `pm_getver $i`)"
-#			else
-#				printf "$i"
-#			fi
-			if echo $i | grep '|' >/dev/null
-			then
-				printf $i
-			elif echo $i | grep '^=' > /dev/null
-			then
-				i2=`echo $i | cut -c 2-`
-				printf "$i2 (= `pm_getver $i2`)"
-			elif echo $i | grep '^<' > /dev/null
-			then
-				i2=`echo $i |cut -c 2-`
-				printf "$i2 (<= `pm_getver $i2`)"
-			else
-				printf "$i (>= `pm_getver $i`)"
-			fi
-		done
+  FIRST=1
+  for i in $*; do
+    [ "$FIRST" != "1" ] && printf ", "
+    [ "$FIRST" = "1" ] && FIRST=0
+		 if echo $i | grep '|' >/dev/null; then
+		   printf $i
+		 elif echo $i | grep '^=' > /dev/null;then
+			  i2=`echo $i | cut -c 2-`
+			  printf "$i2 (= `pm_getver $i2`)"
+			elif echo $i | grep '^<' > /dev/null;then
+			  i2=`echo $i |cut -c 2-`
+			  printf "$i2 (<= `pm_getver $i2`)"
+			else printf "$i (>= `pm_getver $i`)"
+	   fi
+  done
 }
 genrecom(){
-		FIRST=1
-		for i in $PKGRECOM
-		do
-			[ "$FIRST" != "1" ] && printf ", "
-			[ "$FIRST" = "1" ] && FIRST=0
-			printf "$i"
-		done
+  FIRST=1
+  for i in $PKGRECOM; do
+  [ "$FIRST" != "1" ] && printf ", "
+  [ "$FIRST" = "1" ] && FIRST=0
+  printf "$i"
+	done
 }
 genrep(){
-		FIRST=1
-		for i in $PKGREP
-		do
-			[ "$FIRST" != "1" ] && printf ", "
+  FIRST=1
+  for i in $PKGREP; do
+    [ "$FIRST" != "1" ] && printf ", "
 			[ "$FIRST" = "1" ] && FIRST=0
 			printf "$i"
-		done
+	done
 }
 genconfl(){
-                FIRST=1
-                for i in $PKGCONFL
-                do
-                        [ "$FIRST" != "1" ] && printf ", "
-                        [ "$FIRST" = "1" ] && FIRST=0
-                        printf "$i"
-                done    
+  FIRST=1
+  for i in $PKGCONFL; do
+    [ "$FIRST" != "1" ] && printf ", "
+    [ "$FIRST" = "1" ] && FIRST=0
+    printf "$i"
+  done    
 }
 genprov(){
-       FIRST=1
-       for i in $PKGPROV
-       do
-                [ "$FIRST" != "1" ] && printf ", "
-                [ "$FIRST" = "1" ] && FIRST=0
-                printf "$i"
-       done    
+  FIRST=1
+  for i in $PKGPROV; do
+    [ "$FIRST" != "1" ] && printf ", "
+    [ "$FIRST" = "1" ] && FIRST=0
+    printf "$i"
+  done    
+}
+genbreak(){
+  FIRST=1
+  for i in $PKGBREAK; do
+    [ "$FIRST" != "1" ] && printf ", "
+    [ "$FIRST" = "1" ] && FIRST=0
+  done
 }
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
 echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
 echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
-( ( [ "x$PKGSEC" != "x" ] && echo "Section: $PKGSEC" >> abdist/DEBIAN/control ) || true ) && 
+echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
 echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
-if [ "x$PKGDEP" != "x" ]
-	then 
-		echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
-	else
-		true
-fi &&
-if [ "x$PKGRECOM" != "x" ]
-	then 
-		echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
-	else
-		true
-fi &&
-if [ "x$PKGREP" != "x" ]
-	then 
-		echo "Replaces: `genrep`" >> abdist/DEBIAN/control
-	else
-		true
-fi
-if [ "x$PKGCONFL" != "x" ]
-	then
-		echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control
-	else
-		true
-fi
-if [ "x$PKGPROV" != "x" ]
-	then
-		echo "Provides: `genprov`" >> abdist/DEBIAN/control
-	else
-		true
-fi
+[ "$PKGDEP" ] && "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
+[ "$PKGRECOM" ] && echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
+[ "$PKGREP" ] && echo "Replaces: `genrep`" >> abdist/DEBIAN/control
+[ "$PKGCONFL" ] && echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control
+[ "$PKGPROV" ] && echo "Provides: `genprov`" >> abdist/DEBIAN/control
+[ "$PKGBREAK" ] && "Breaks: `genbreak`" >> abdist/DEBIAN/control
+
+echo "$DPKGXTRACTRL" >> abdist/DEBIAN/control
 cp abscripts/{postinst,prerm,preinst,postrm} abdist/DEBIAN/
 cat abscripts/usergroup >> abdist/DEBIAN/postinst
 if [ -f autobuild/conffiles ]
-then
-cp autobuild/conffiles abdist/DEBIAN/
+  then cp autobuild/conffiles abdist/DEBIAN/
 fi
 chmod -R 0755 abdist/DEBIAN
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
