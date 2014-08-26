@@ -1,9 +1,0 @@
-abreqexe qmake 
-build_qtproj_probe(){
-	[ -f *.pro ]
-}
-build_perl_build(){
-	${qmake:-qmake} # changing to other qt prefixes
-	make && make DESTDIR=`pwd`/abdist install
-}
-export ABBUILDS="$ABBUILDS qtproj"
