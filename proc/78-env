@@ -1,3 +1,0 @@
-# Recovering the environment variables
-
-source ~/.bashrc > /dev/null
