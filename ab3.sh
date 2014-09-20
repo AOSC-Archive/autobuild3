@@ -5,4 +5,5 @@ export ARCH=$(cat $ABSET/arch 2>/dev/null || uname -m || echo "x86_64")
 [ $AB_DBG ] && set -xv
 [ $AB_SELF ] && AB=$(dirname $0)
 . $AB/lib/base.sh
-. $AB/proc/*.sh
+# RTFM: help source
+recsr $AB/proc/*.sh
