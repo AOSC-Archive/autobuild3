@@ -6,5 +6,5 @@ rm -rf $PKGDIR/contrib
 rm -rf $PKGDIR/usr/lib/autobuild3/{*.md,TODO}
 mkdir $PKGDIR/usr/bin/
 # Symlinking
-ln -s /usr/lib/autobuild3/ab3.sh $PKGDIR/usr/bin/autobuild
-ln -s /usr/lib/autobuild3/etc $PKGDIR/etc/autobuild/ab3
+ln -sf /usr/lib/autobuild3/ab3.sh $PKGDIR/usr/bin/autobuild 
+ln -sf /usr/lib/autobuild3/etc $PKGDIR/etc/autobuild/ab3
