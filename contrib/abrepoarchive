@@ -7,6 +7,7 @@ DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
 liba libb libc libd libe libf libg libh libi libj libk libl libm libn libo 
 libp libq libr libs libt libu libv libw libx liby libz l"
 TREE=1
+TARGET_DIR=/os3-build
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
 . $AB/lib/base.sh
 # ARCH Translation for older versions of ab. Going to use x86_64 as main arch name instead of amd64. (Future pacman compatibility)

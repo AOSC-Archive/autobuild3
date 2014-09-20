@@ -3,5 +3,5 @@ do
 	. $AB/$i/install
 done
 
-dpkg -i $TARGET_DIR/$PKGNAME.deb
+dpkg -i $PKGNAME.deb
 rpm -ivh --force /root/rpmbuild/RPMS/x86_64/$PKGNAME-*.rpm
