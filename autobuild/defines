@@ -7,4 +7,4 @@ PKGDESC="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt"
 
 # autobuild2 compatibility
-ln -s $SRCDIR/autobuild/overrides $SRCDIR/autobuild/override
+ln -sf $SRCDIR/autobuild/overrides $SRCDIR/autobuild/override || true
