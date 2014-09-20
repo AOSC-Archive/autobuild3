@@ -1,7 +1,7 @@
 mkdir -p $PKGDIR/usr/lib/autobuild3
-for i in $SRCDIR/*; do [ "$i" != autobuild ] && cp $i $PKGDIR/usr/lib/autobuild3/
+for i in $SRCDIR/*; do [ "$i" != autobuild ] && cp $i $PKGDIR/usr/lib/autobuild3/; done
 
-if $_CONTRIB; then cp contrib/* $PKGDIR/usr/bin/ ;fi
+$_CONTRIB &&  cp contrib/* $PKGDIR/usr/bin/
 rm -rf $PKGDIR/contrib 
 rm -rf $PKGDIR/usr/lib/autobuild3/{*.md,TODO}
 mkdir $PKGDIR/usr/bin/
