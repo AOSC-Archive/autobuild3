@@ -77,7 +77,7 @@ echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
 echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
-[ "$PKGDEP" ] && "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
+[ "$PKGDEP" ] && echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
 [ "$PKGRECOM" ] && echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
 [ "$PKGREP" ] && echo "Replaces: `genrep`" >> abdist/DEBIAN/control
 [ "$PKGCONFL" ] && echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control
