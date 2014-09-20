@@ -54,6 +54,20 @@ genbreak(){
     [ "$FIRST" = "1" ] && FIRST=0
   done
 }
+# Auto-select xz level, += preserves the possiblility of extra things
+dpkgflagsel(){
+  if (($instSIZE >= 8386000)); then
+    if (($instSIZE < 16775000)); then
+      DPKGDEBCOMP+="-z7"
+    else if (($instSIZE < 33552000)); then
+        DPKGDEBCOMP+="-z8"
+      else DPKGDEBCOMP+="-z9"
+      fi
+    fi
+  else DPKGDEBCOMP+="-z6"
+  fi
+}
+[ "$ARCH" == x86_64 ] && ARCH=amd64
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
@@ -81,17 +95,3 @@ chmod -R 0755 abdist/DEBIAN
 dpkg -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}.deb || exit 1
 rm -rf abdist/DEBIAN
 export ABPACKAGE="${PKGNAME}.deb"
-
-# Auto-select xz level, += preserves the possiblility of extra things
-dpkgflagsel(){
-  if (($instSIZE >= 8386000)); then
-    if (($instSIZE < 16775000)); then
-      DPKGDEBCOMP+="-z7"
-    else if (($instSIZE < 33552000)); then
-        DPKGDEBCOMP+="-z8"
-      else DPKGDEBCOMP+="-z9"
-      fi
-    fi
-  else DPKGDEBCOMP+="-z6"
-  fi
-}

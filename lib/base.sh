@@ -68,3 +68,8 @@ abinfo(){
 # Special Source, looks like stacktrace
 .(){ source $* || (echo -e "  \e[31min $*\e[0m"; return 1); }
 recsr(){ for sr in "$@"; do . $sr; done }
+
+# The awesome try-catch-finally loop
+alias try='if'
+alias catch='else'
+alias finally='then'
