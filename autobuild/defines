@@ -5,6 +5,6 @@ PKGNAME=autobuild$($_GIT && echo "-git")
 PKGVER=3.$(date +%y%m%d)
 PKGDESC="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt"
-
+PKGSEC=devel
 # autobuild2 compatibility
 ln -sf $SRCDIR/autobuild/overrides $SRCDIR/autobuild/override || true
