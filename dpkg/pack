@@ -67,12 +67,12 @@ dpkgflagsel(){
   else DPKGDEBCOMP+="-z6"
   fi
 }
-[ "$ARCH" == x86_64 ] && ARCH=amd64
+[ "$ARCH" == x86_64 ] && DPKG_ARCH=amd64 || DPKG_ARCH="$ARCH"
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
 echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
-echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
+echo "Architecture: $DPKG_ARCH" >> abdist/DEBIAN/control && 
 echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
 echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 

@@ -1,0 +1,10 @@
+mkdir -p $PKGDIR/usr/lib/autobuild3
+for i in $SRCDIR/*; do [ "$i" != autobuild ] && cp $i $PKGDIR/usr/lib/autobuild3/
+
+if $_CONTRIB; then cp contrib/* $PKGDIR/usr/bin/ ;fi
+rm -rf $PKGDIR/contrib 
+rm -rf $PKGDIR/usr/lib/autobuild3/{*.md,TODO}
+mkdir $PKGDIR/usr/bin/
+# Symlinking
+ln -s /usr/lib/autobuild3/ab3.sh $PKGDIR/usr/bin/autobuild
+ln -s /usr/lib/autobuild3/etc $PKGDIR/etc/autobuild/ab3
