@@ -8,3 +8,5 @@ PKGDEP="dpkg bash rpm apt"
 PKGSEC=devel
 # autobuild2 compatibility
 ln -sf $SRCDIR/autobuild/overrides $SRCDIR/autobuild/override || true
+# Clean-butt
+rm -rf abdist

@@ -1,9 +1,9 @@
 mkdir -p $PKGDIR/usr/lib/autobuild3
-for i in $SRCDIR/*; do [ "$i" != autobuild ] && cp -r $i $PKGDIR/usr/lib/autobuild3/; done
+for i in $SRCDIR/*; do [ "$i" != abdist ] && cp -r $i $PKGDIR/usr/lib/autobuild3/; done
 
-$_CONTRIB &&  cp contrib/* $PKGDIR/usr/bin/
+$_CONTRIB && cp contrib/* $PKGDIR/usr/bin/
 rm -rf $PKGDIR/contrib 
-rm -rf $PKGDIR/usr/lib/autobuild3/{*.md,TODO}
+rm -rf $PKGDIR/usr/lib/autobuild3/{*.md,TODO,*.tar.xz,*.deb,autobuild}
 mkdir -p $PKGDIR/usr/bin/ $PKGDIR/etc/autobuild
 # Symlinking
 ln -sf /usr/lib/autobuild3/ab3.sh $PKGDIR/usr/bin/autobuild 

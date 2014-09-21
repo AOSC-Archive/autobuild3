@@ -47,24 +47,17 @@ returns() { return $*; }
 abdie() {
   echo -e "\e[1;31mautobuild encountered an error and couldn't continue.\e[0m"
   echo -e "${1-Look at the stacktrace to see what happened.}"
-  echo "--------------------------------------------------------------------------------"
+  echo "------------------------------autobuild ${VERSION:-3}------------------------------"
   echo -e "Go to ‘\e[1mhttp://github.com/AOSC-Dev/autobuild3\e[0m’ for more information on this error."
   exit ${2-1}
 }
 
 # Should these information be redirected into ablog()?
-abwarn(){
-  echo -e "[\e[33mWARNING\e[0m]:\e[1m$*\e[0m" >&2
-}
-
-aberr(){
-  echo -e "[\e[31mERROR\e[0m]:\e[1m$*\e[0m" >&2
-}
-
-abinfo(){
-  echo -e "[\e[96mINFO\e[0m]:\e[1m$*\e[0m"
-}
-
+abwarn(){ echo -e "[\e[33mWARNING\e[0m]: \e[1m$*\e[0m" >&2; }
+aberr(){ echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
+abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
+abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
+ab_dbg(){ [ $AB_DBG ] && abdbg "$@"; }
 # Special Source, looks like stacktrace
-.(){ source $* || (echo -e "  \e[31min $*\e[0m"; return 1); }
+.(){ ab_dbg "Source Code from $1:"; source $* || (echo -e "  \e[31min $*\e[0m"; return 1); ab_dbg "---------------"; }
 recsr(){ for sr in "$@"; do . $sr; done }
