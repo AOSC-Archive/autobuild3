@@ -12,7 +12,7 @@ TARGET_DIR=/os3-build
 . $AB/lib/base.sh
 # ARCH Translation for older versions of ab. Going to use x86_64 as main arch name instead of amd64. (Future pacman compatibility)
 [ "$ARCH" == amd64 ] && ARCH=x86_64
-prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1" }
+prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
 # regex match
 [ "$TREE" == 1 ] && for _layout in $DIR_TREE; do [[ $1 =~ ^$_layout ]] && break; done || abinfo "Not using an alphabetical tree."
 # move and then ln
