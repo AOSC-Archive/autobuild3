@@ -104,7 +104,7 @@ sh /tmp/tmp-shell-autobuild-rpm-genspec
 # rm /tmp/tmp-shell-autobuild-rpm-genspec
 }
 genspec > abspec
-rpmbuild -bb abspec
+rpmbuild -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ]
 then
 . autobuild/post-rpm

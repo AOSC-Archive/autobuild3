@@ -53,7 +53,7 @@ abdie() {
 }
 
 # Should these information be redirected into ablog()?
-abwarn(){ echo -e "[\e[33mWARNING\e[0m]: \e[1m$*\e[0m" >&2; }
+abwarn(){ echo -e "[\e[33mWARN\e[0m]: \e[1m$*\e[0m" >&2; }
 aberr(){ echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
 abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
 abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }

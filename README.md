@@ -8,6 +8,6 @@ autobuild3 abstracts everything our distro need from the package managers.
 
 BUILDING
 --------
-Without autobuild:
-`AB_SELF= bash ab3.sh; autobuild`
-Will build autobuild twice, one without autobuild and another with installed autobuild.
+Without autobuild: `./ab3.sh`
+
+HELP: `./ab3.sh wtfisthishelp`
