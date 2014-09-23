@@ -3,5 +3,5 @@ do
 	. $AB/$i/install
 done
 
-dpkg -i /rebuild/$PKGNAME.deb
-rpm -ivh --force /root/rpmbuild/RPMS/x86_64/$PKGNAME-*.rpm
+dpkg -i $PKGNAME.deb || aberr "DPKG installation failed."
+rpm -ivh --force /root/rpmbuild/RPMS/x86_64/$PKGNAME-*.rpm || aberr "RPM installation failed."

@@ -1,0 +1,27 @@
+#! /bin/bash
+# abrepoarchive: default autobuild settings for os3-repo archiving
+# Useful for OS3 layout.
+SORT=1; NAME_PREFIX="os3-"
+# Directory Tree with priorities.
+DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z 
+liba libb libc libd libe libf libg libh libi libj libk libl libm libn libo 
+libp libq libr libs libt libu libv libw libx liby libz l"
+TREE=1
+TARGET_DIR=/os3-build
+# Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
+. $AB/lib/base.sh
+# ARCH Translation for older versions of ab. Going to use x86_64 as main arch name instead of amd64. (Future pacman compatibility)
+[ "$ARCH" == amd64 ] && ARCH=x86_64
+prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
+# regex match
+[ "$TREE" == 1 ] && for _layout in $DIR_TREE; do [[ $1 =~ ^$_layout ]] && break; done || abinfo "Not using an alphabetical tree."
+# move and then ln
+if [ "$SORT" == 1 ]; then mkdir -p $TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout; else mkdir -p $TARGET_DIR/$_layout; fi
+mv $1_$2.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
+mv $1.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
+mv /root/rpmbuild/RPMS/$1-$2.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
+abinfo "Moved files. Creating links..."
+ln -s $TARGET_DIR/$(prefixprint ab)/$_layout/$1_$2.tar.xz $1_$2.tar.xz
+ln -s $TARGET_DIR/$(prefixprint dpkg)/$_layout/$1.deb $1.deb
+ln -s $TARGET_DIR/$(prefixprint rpm)/$_layout/$1-$2.${ARCH}.rpm /root/rpmbuild/RPMS/$1-$2.${ARCH}.rpm
+aninfo "abRepoArchive done."

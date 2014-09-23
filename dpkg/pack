@@ -54,16 +54,30 @@ genbreak(){
     [ "$FIRST" = "1" ] && FIRST=0
   done
 }
+# Auto-select xz level, += preserves the possiblility of extra things
+dpkgflagsel(){
+  if (($instSIZE >= 8386000)); then
+    if (($instSIZE < 16775000)); then
+      DPKGDEBCOMP+="-z7"
+    else if (($instSIZE < 33552000)); then
+        DPKGDEBCOMP+="-z8"
+      else DPKGDEBCOMP+="-z9"
+      fi
+    fi
+  else DPKGDEBCOMP+="-z6"
+  fi
+}
+[ "$ARCH" == x86_64 ] && DPKG_ARCH=amd64 || DPKG_ARCH="$ARCH"
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
 echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
-echo "Architecture: $ARCH" >> abdist/DEBIAN/control && 
+echo "Architecture: $DPKG_ARCH" >> abdist/DEBIAN/control && 
 echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
 echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
-[ "$PKGDEP" ] && "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
+[ "$PKGDEP" ] && echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
 [ "$PKGRECOM" ] && echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
 [ "$PKGREP" ] && echo "Replaces: `genrep`" >> abdist/DEBIAN/control
 [ "$PKGCONFL" ] && echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control
@@ -78,20 +92,6 @@ if [ -f autobuild/conffiles ]
 fi
 chmod -R 0755 abdist/DEBIAN
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
-dpkg -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}.deb || exit 1
+dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}.deb || abdie "dpkg-deb failed, in dpkg/pack."
 rm -rf abdist/DEBIAN
 export ABPACKAGE="${PKGNAME}.deb"
-
-# Auto-select xz level, += preserves the possiblility of extra things
-dpkgflagsel(){
-  if (($instSIZE >= 8386000)); then
-    if (($instSIZE < 16775000)); then
-      DPKGDEBCOMP+="-z7"
-    else if (($instSIZE < 33552000)); then
-        DPKGDEBCOMP+="-z8"
-      else DPKGDEBCOMP+="-z9"
-      fi
-    fi
-  else DPKGDEBCOMP+="-z6"
-  fi
-}
