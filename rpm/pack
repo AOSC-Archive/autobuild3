@@ -50,6 +50,8 @@ then
 	fi
 	done
 fi
+[ "x$PKGCONFL" != "x" ] && echo "Conflicts:       $PKGCONFL"
+[ "x$PKGREP" != "x" ] && echo "Replaces:       $PKGREP"
 echo 
 echo "%description"
 echo "$PKGDES"
