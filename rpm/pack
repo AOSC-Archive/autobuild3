@@ -50,8 +50,34 @@ then
 	fi
 	done
 fi
-[ "x$PKGCONFL" != "x" ] && echo "Conflicts:       $PKGCONFL"
-[ "x$PKGREP" != "x" ] && echo "Replaces:       $PKGREP"
+if [ "x$PKGCONFL" != "x" ]
+then
+	printf "Conflicts:       "
+	FIRST=true
+	for i in $PKGCONFL
+	do
+		if $FIRST
+		then
+			FIRST=false
+		else
+			printf " , "
+		fi
+	done
+fi
+if [ "x$PKGREP" != "x" ]
+then
+	printf "Replaces:       "
+	FIRST=true
+	for i in $PKGREP
+	do
+		if $FIRST
+		then
+			FIRST=false
+		else
+			printf " , "
+		fi
+	done
+fi
 echo 
 echo "%description"
 echo "$PKGDES"
