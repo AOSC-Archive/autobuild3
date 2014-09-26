@@ -15,7 +15,7 @@ echo -e "\e[1mAutobuild ${VERSION:-3}\e[0m, the next generation of autobuild for
   \e[1mAB_DBG\e[0m Prints debug information to stderr if set to a non-empty value.\n\tNow it prints the files sourced."
 . $AB/extended-help 2>/dev/null
 abinfo "End of autobuild-core help. See GitHub wiki at AOSC-Dev/autobuild3 for information on usage and hacking."; }
-autobuild-clean(){ rm -rf { abdist,*_*.tar.xz,*.deb,abscripts,abspec} && abinfo "Build directory clean."; }
+autobuild-clean(){ rm -rf {abdist,*_*.tar.xz,*.deb,abscripts,abspec} && abinfo "Build directory clean."; }
 # Plugin and external command parser
 if [ $1 ]; then PATH="$AB/contrib:$PATH"
   PLUG="$1"; shift
