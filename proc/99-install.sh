@@ -4,4 +4,4 @@ do
 done
 
 dpkg -i $PKGNAME.deb || aberr "DPKG installation failed."
-rpm -ivh --force /root/rpmbuild/RPMS/x86_64/$PKGNAME-*.rpm || aberr "RPM installation failed."
+rpm -ivh --force /root/rpmbuild/RPMS/x86_64/$PKGNAME-$PKGVER-$PKGREL*.rpm || aberr "RPM installation failed."
