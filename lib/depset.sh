@@ -1,4 +1,4 @@
-#abreqexe grep
+abreqexe grep
 
 depset_chk(){
 	(echo $PKGDEP | grep "^[\=><]$1 " > /dev/null) && return 0
@@ -17,5 +17,5 @@ depset_chk(){
 depset_add(){
 	depset_chk $1 && return 0
 	export PKGDEP="$PKGDEP $1"
-	echo "Added dependency $1"
+	abinfo "Added dependency $1$([ $2 ] && echo " from $2")."
 }

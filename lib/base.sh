@@ -49,6 +49,9 @@ abdie() {
   echo -e "${1-Look at the stacktrace to see what happened.}"
   echo "------------------------------autobuild ${VERSION:-3}------------------------------"
   echo -e "Go to ‘\e[1mhttp://github.com/AOSC-Dev/autobuild3\e[0m’ for more information on this error."
+  if [ $AB_DBG ]; then read -p "AUTOBUILD_DEBUG: CONTINUE? (Y/N)" -t 5 AB_DBGRUN || AB_DBGRUN=false
+  bool $AB_DBGRUN && abwarn "Forced AUTOBUILD_DIE continue." && return 0 || abdbg "AUTOBUILD_DIE EXIT - NO_CONTINUE/CONTINUE_TIMEDOUT"
+  fi
   exit ${2-1}
 }
 
@@ -57,7 +60,7 @@ abwarn(){ echo -e "[\e[33mWARN\e[0m]: \e[1m$*\e[0m" >&2; }
 aberr(){ echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
 abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
 abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
-ab_dbg(){ [ $AB_DBG ] && abdbg "$@"; }
+ab_dbg(){ [ $AB_DBG ] && abdbg "$@" || true; }
 # Special Source, looks like stacktrace
 .(){ ab_dbg "Source Code from $1:"; source $* || (echo -e "  \e[31min $*\e[0m"; return 1); ab_dbg "---------------"; }
 recsr(){ for sr in "$@"; do . $sr; done }
