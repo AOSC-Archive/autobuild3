@@ -10,4 +10,4 @@ BUILDING
 --------
 Without autobuild: `./ab3.sh`
 
-HELP: `./ab3.sh wtfisthishelp`
+HELP: `./ab3.sh help`
