@@ -1,14 +1,10 @@
-if [ "$ABTYPE" != "" ]
-then
-true
-else
-	for i in $ABBUILDS
-	do
+if ! [ "$ABTYPE" ]; then
+	for i in $ABBUILDS; do
 		# build are all plugins now.
-		if build_${i}_probe
-		then
+		if build_${i}_probe; then
 			export ABTYPE=$i
-			break
+			break 
 		fi
 	done
 fi
+[ ! "$ABTYPE" ] && abdie "Cannot determine build type." || true
