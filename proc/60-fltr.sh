@@ -1,13 +1,6 @@
-for i in $AB/fltr/*.sh
-do
-. $i
-done
-if [ ! -d abdist ]
-then
-	echo "Build failed: no abdist."
-	exit 1
-fi
-pushd abdist > /dev/null
+recsr $AB/fltr/*.sh
+[ -d $PKGDIR ] || abdie "abdist not found.\n in proc/60-fltr.sh"
+pushd $PKGDIR > /dev/null
 for ii in $ABFLTRS
 do
 	fltr_$ii

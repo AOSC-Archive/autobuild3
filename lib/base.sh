@@ -49,6 +49,9 @@ abdie() {
   echo -e "${1-Look at the stacktrace to see what happened.}"
   echo "------------------------------autobuild ${VERSION:-3}------------------------------"
   echo -e "Go to ‘\e[1mhttp://github.com/AOSC-Dev/autobuild3\e[0m’ for more information on this error."
+  if [ $AB_DBG ]; then read -p "AUTOBUILD_DEBUG: CONTINUE? (Y/N)" -t 5 AB_DBGRUN || AB_DBGRUN=false
+  bool $AB_DBGRUN && abwarn "Forced AUTOBUILD_DIE continue." && return 0 || abdbg "AUTOBUILD_DIE EXIT - NO_CONTINUE/CONTINUE_TIMEDOUT"
+  fi
   exit ${2-1}
 }
 
