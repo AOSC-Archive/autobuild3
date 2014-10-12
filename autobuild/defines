@@ -5,14 +5,14 @@ timestamp_convert(){
   if [ "$2" ]; then
     # Split hour and minute.
     if [ "${2:0:1}" == "-" ]
-    then hour=${2:0:3}; minute=${2:3:2}; calc="+"
-    [ "${hour:1:1}" == "0" ] && hour="-${hour:2:1}"
-    else hour=${2:0:2}; minute=${2:2:2}; calc="-"
-    [ "${hour:0:1}" == "0" ] && hour="-${hour:1:1}"
+    then calc="+"
+    else calc="-"
     fi
+    hour=${2:1:2}; minute=${2:3:2}; # utcoffset should always contain + or - signs.
     # Delete 0 in hour and minute. having that 0 will make them recognized as oct.
-    [ "${minute:0:1}" == "0" ] && minute="-${minute:1:1}"
-    echo $(($1+($calc(${hour}*3600+${minute}*60))))
+    [ "${minute:0:1}" == "0" ] && minute="${minute:1:1}"
+    [ "${hour:0:1}" == "0" ] && hour="${hour:1:1}"
+    echo $(($1$calc(${hour}*3600+${minute}*60)))
   else echo "$1"
   fi
 }
