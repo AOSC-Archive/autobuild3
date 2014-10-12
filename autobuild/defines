@@ -1,8 +1,26 @@
 # autobuild3 defines for autobuild3.
+
+# timestamp_convert unixtimestamp [utcoffset]
+timestamp_convert(){
+  if [ "$2" ]; then
+    # Split hour and minute.
+    if [ "${2:1:1}" == "-" ]
+    then hour=${2:0:3}; minute=${2:3:2};
+    [ "${hour:1:1}" == "0" ] && hour="-${hour:2:1}"
+    else hour=${2:0:2}; minute=${2:2:2}
+    [ "${hour:0:1}" == "0" ] && hour="-${hour:1:1}"
+    fi
+    # Delete 0 in hour and minute. having that 0 will make them recognized as oct.
+    [ "${minute:0:1}" == "0" ] && minute="-${minute:1:1}"
+    echo $(($1-${hour}*3600-${minute}*60))
+  else echo "$1"
+  fi
+}
 _GIT=true
 _CONTRIB=true
-PKGNAME=autobuild$($_GIT && echo "-git")
-PKGVER=3.$(date +%y%m%d)
+PKGNAME=autobuild$($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
+PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt"
 PKGSEC=devel
+_GIT && abwarn "You are packing a GIT version of autobuild.\n\tA trunk version that is not tagged is more likely to have bugs." || true
