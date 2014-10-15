@@ -23,4 +23,4 @@ PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt"
 PKGSEC=devel
-$_GIT && abwarn "You are packing a GIT version of autobuild.\n\tA trunk version that is not &tagged is more likely to have bugs." || true
+$_GIT && abwarn "You are packing a GIT version of autobuild.\n\tA trunk version that is not tagged is more likely to have bugs." || true
