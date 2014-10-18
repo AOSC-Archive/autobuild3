@@ -6,4 +6,5 @@ rm -rf $PKGDIR/usr/lib/autobuild3/{contrib,*.md,TODO,*.tar.xz,*.deb,autobuild}
 sed -e "s/VERSION=3/VERSION=$PKGVER/g" -i $PKGDIR/usr/lib/autobuild3/ab3.sh
 # Symlinking
 ln -sf /usr/lib/autobuild3/ab3.sh $PKGDIR/usr/bin/autobuild 
+mkdir -p /etc/autobuild
 ln -sf /usr/lib/autobuild3/etc/defaults $PKGDIR/etc/autobuild/defaults
