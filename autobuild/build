@@ -1,5 +1,5 @@
 mkdir -p $PKGDIR/usr/lib/autobuild3
-for i in $SRCDIR/*; do [ "$i" != $SRCDIR/abdist ] && cp -r $i $PKGDIR/usr/lib/autobuild3/; done
+for i in $SRCDIR/*; do [ "$i" != $SRCDIR/abdist ] && cp -ar $i $PKGDIR/usr/lib/autobuild3/; done
 mkdir -p $PKGDIR/usr/bin/ $PKGDIR/etc/autobuild
 $_CONTRIB && cp -r contrib/* $PKGDIR/usr/bin/
 rm -rf $PKGDIR/usr/lib/autobuild3/{contrib,*.md,TODO,*.tar.xz,*.deb,autobuild}
