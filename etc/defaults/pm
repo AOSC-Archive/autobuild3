@@ -1,0 +1,5 @@
+ABMPM=dpkg
+ABAPMS=rpm
+MTER="AOSC Buildbot <aosc@members.fsf.org>"
+ARCH=amd64
+ABQA=yes
