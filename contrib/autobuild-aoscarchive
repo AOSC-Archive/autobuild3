@@ -20,11 +20,13 @@ prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
 [ "$TREE" == 1 ] && for _layout in $DIR_TREE; do [[ $1 =~ ^$_layout ]] && break; done || abinfo "Not using an alphabetical tree."
 # move and then ln
 if [ "$SORT" == 1 ]; then mkdir -p $TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout; else mkdir -p $TARGET_DIR/$_layout; fi
-mv $1_$2-$3.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
-mv $1.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
-mv /root/rpmbuild/RPMS/$1-$2-$3.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
-abinfo "Moved files. Creating links..."
-ln -s $TARGET_DIR/$(prefixprint ab)/$_layout/$1_$2.tar.xz $1_$2.tar.xz
-ln -s $TARGET_DIR/$(prefixprint dpkg)/$_layout/$1.deb $1.deb
-ln -s $TARGET_DIR/$(prefixprint rpm)/$_layout/$1-$2.${ARCH}.rpm /root/rpmbuild/RPMS/$1-$2.${ARCH}.rpm
-aninfo "abRepoArchive done."
+cp -v $1_$2-*.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
+cp -v $1.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
+cp -v /root/rpmbuild/RPMS/$ARCH/$1-$2-*.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
+
+#abinfo "Moved files. Creating links..."
+#ln -s $TARGET_DIR/$(prefixprint ab)/$_layout/$1_$2.tar.xz $1_$2.tar.xz
+#ln -s $TARGET_DIR/$(prefixprint dpkg)/$_layout/$1.deb $1.deb
+#ln -s $TARGET_DIR/$(prefixprint rpm)/$_layout/$1-$2.${ARCH}.rpm /root/rpmbuild/RPMS/$ARCH/$1-$2.${ARCH}.rpm
+
+abinfo "abRepoArchive done."
