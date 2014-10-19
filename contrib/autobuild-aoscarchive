@@ -28,4 +28,4 @@ if [ "$SORT" == 1 ]; then mkdir -p $TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout; else 
 mvln $1_$2-$3.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
 mvln $1.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
 mvln /root/rpmbuild/RPMS/${ARCH}/$1-$2-$3.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
-abinfo "aoscarchive done."
+abinfo "abRepoArchive done."

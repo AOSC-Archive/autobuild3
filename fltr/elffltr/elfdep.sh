@@ -13,7 +13,7 @@ elffltr_elfdep(){
 		i=`echo $i | sed 's@/\.\./lib/@/@g'`
 		P=`pm_whoprov $i`
 		abdbg "pm_whoprov returned ${P-null} for $i"
-		if [ "$P" != "$PKGNAME" ] && [ "$P" != "" ]; then; depset_add "$P"; fi
+		if [ "$P" != "$PKGNAME" ] && [ "$P" != "" ]; then depset_add "$P"; fi
 	done
 }
 export ABELFFLTRS="$ABELFFLTRS elfdep"
