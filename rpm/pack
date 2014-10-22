@@ -1,7 +1,6 @@
-if [ -f autobuild/pre-rpm ]
-then
-. autobuild/pre-rpm
-fi
+#! /bin/bash
+# -*- bash -*-
+if [ -f autobuild/pre-rpm ]; then . autobuild/pre-rpm; fi
 genspec(){
 echo "Name:           $PKGNAME"
 echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
@@ -12,74 +11,50 @@ echo
 echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
 echo "License:        Unknown"
 echo "URL:            Unknown"
-if bool $ABRPMAUTOPROVONLY
-then
-echo "Autoprov:       yes"
-echo "Autoreq:        no"
+if bool $ABRPMAUTOPROVONLY; then
+  echo "Autoprov:       yes"
+  echo "Autoreq:        no"
 else
-echo "Autoreqprov:    yes"
+  echo "Autoreqprov:    yes"
 fi
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
 [ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE"
-if [ "x$PKGDEP" != "x" ]
-then
+if [ "$PKGDEP" ]; then
 	printf "Requires:       "
 	FIRST=true
-	for i in $PKGDEP
-	do
+	for i in $PKGDEP; do
 		if $FIRST
 		then
 			FIRST=false
 		else
 			printf " , "
 		fi
-#	printf "%s >= %s" $i "`pm_getver $i`"
-	if echo $i | grep '|' >/dev/null
-	then
-		printf $i
-	elif echo $i | grep '^=' > /dev/null
-	then
-		i2=`echo $i | cut -c 2-`
-		printf "$i2 = `pm_getver $i2`"
-	elif echo $i | grep '^<' > /dev/null
-	then
-		i2=`echo $i | cut -c 2-`
-		printf "$i2 <= `pm_getver $i2`"
-	else
-		printf "$i >= `pm_getver $i`"
-	fi
+  #	printf "%s >= %s" $i "`pm_getver $i`"
+  	if echo $i | grep '|' >/dev/null; then
+  		printf $i
+  	elif echo $i | grep '^=' > /dev/null; then
+  		i2=`echo $i | cut -c 2-`
+  		printf "$i2 = `pm_getver $i2`"
+  	elif echo $i | grep '^<' > /dev/null; then
+  		i2=`echo $i | cut -c 2-`
+  		printf "$i2 <= `pm_getver $i2`"
+  	else
+  		printf "$i >= `pm_getver $i`"
+  	fi
 	done
-fi
-if [ "x$PKGCONFL" != "x" ]
-then
+fi # PKGDEP
+
+
+if [ "$PKGCONFL" ]; then
 	printf "Conflicts:       "
-	FIRST=true
-	for i in $PKGCONFL
-	do
-		if $FIRST
-		then
-			FIRST=false
-		else
-			printf " , "
-		fi
-	printf $i
-	done
+  abcommaprint "$PKGCONFL"
 fi
-if [ "x$PKGREP" != "x" ]
-then
+
+if [ "$PKGREP" ]; then
 	printf "Replaces:       "
-	FIRST=true
-	for i in $PKGREP
-	do
-		if $FIRST
-		then
-			FIRST=false
-		else
-			printf " , "
-		fi
-	printf $i
-	done
+	abcommaprint "$PKGREP"
 fi
+
 echo 
 echo "%description"
 echo "$PKGDES"
@@ -112,27 +87,22 @@ echo "%preun -p /bin/bash"
 cat `pwd`/abscripts/prerm 2>/dev/null || true
 echo 
 echo "%files"
-# echo "%defattr(-,root,root,-)"
-# echo 
-
-printf "for i in " > /tmp/tmp-shell-autobuild-rpm-genspec
-find abdist | gawk '{printf("%s","\""$0"\" ")}' >> /tmp/tmp-shell-autobuild-rpm-genspec
-echo >> /tmp/tmp-shell-autobuild-rpm-genspec
-cat >> /tmp/tmp-shell-autobuild-rpm-genspec << _ABEOF
-do
-( [ -d "\$i" ] && [ ! -L "\$i" ] ) && continue
-(echo \$i | grep ^abdist/DEBIAN >/dev/null )&& continue
-echo "\$i" >&2
-echo "%defattr(\`stat --printf %a \"\$i\"\`,\`ls -l \"\$i\" | awk '{print \$3}'\`,\`ls -l \"\$i\" | awk '{print \$4}'\`,-)"
-printf /
-printf %s "\`echo \$i | cut -c 8-\`"
-echo
-done
-_ABEOF
-
-sh /tmp/tmp-shell-autobuild-rpm-genspec
-# rm /tmp/tmp-shell-autobuild-rpm-genspec
+# field Syntax: [otherDirectives] %defattr(octMode,owner,group) /path/to/file/
+# Is it possible to do attr merging or shall we assign some defaults so as to shorten the spec?
+find $PKGDIR | {
+  while read i; do
+    [ -d "$i" ] && [ ! -L "$i" ] && continue 
+    echo $i | grep ^abdist/DEBIAN >/dev/null && continue
+    echo "$i" >&2
+    grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
+    echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+    printf /
+    printf %s "$(echo $i | cut -c 8-)" # TODO reverse glob
+    echo
+  done
 }
+}
+
 genspec > abspec
 rpmbuild -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ]
