@@ -35,14 +35,21 @@ abrequire(){
 
 ablog(){
 	if bool $ABDUMB
-	then
-		cat > ablog
-	else
-		tee ablog
+	then cat > ablog
+	else tee ablog
 	fi
 }
 
 returns() { return $*; }
+
+abcommaprint(){ 
+  local FIRST=true
+  for i; do
+		if $FIRST; then FIRST=false
+		else printf " , "; fi
+	  printf $i
+	done
+}
 
 abdie() {
   echo -e "\e[1;31mautobuild encountered an error and couldn't continue.\e[0m"
