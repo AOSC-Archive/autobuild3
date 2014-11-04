@@ -1,13 +1,11 @@
 #! /bin/bash
-# tar xvf $1*.tar.xz
-mkdir $1
-tar xvf $1_*.tar.xz -C $1
-dpkg -x $1.deb $1/abdist
-dpkg -e $1.deb $1/abdist/DEBIAN
-pushd $1
-. autobuild/defines
-export PKGNAME PKGVER PKGDES PKGDEP PKGSEC
-sh ../genspec > spec
-rpmbuild -bb spec
-popd
-rpm -ivh --nodeps $HOME/rpmbuild/RPMS/x86_64/$PKGNAME-$PKGVER-0.x86_64.rpm
+# SYNOPSIS: 
+# autobuild deb2rpm
+. $AB/proc/10-defines.sh
+mkdir $PKGNAME_${PKGVER}-${PKGREL}
+tar xvf $PKGNAME_${PKGVER}-${PKGREL}.tar.xz -C $1
+dpkg -x $PKGNAME_${PKGVER}-${PKGREL}.deb $PKGNAME_${PKGVER}-${PKGREL}/abdist
+dpkg -e $PKGNAME_${PKGVER}-${PKGREL}.deb $PKGNAME_${PKGVER}-${PKGREL}/abdist/DEBIAN
+pushd $PKGNAME_${PKGVER}-${PKGREL}
+ln -s ../autobuild autobuild
+. $AB/rpm/pack

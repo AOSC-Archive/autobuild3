@@ -16,6 +16,7 @@ echo -e "\e[1mAutobuild ${VERSION:-3}\e[0m, the next generation of autobuild for
 . $AB/extended-help 2>/dev/null
 abinfo "End of autobuild-core help. See GitHub wiki at AOSC-Dev/autobuild3 for information on usage and hacking."; }
 autobuild-clean(){ rm -rf {abdist,*_*.tar.xz,*.deb,abscripts,abspec} && abinfo "Build directory clean."; }
+autobuild-plugin(){ ab_dbg "Called plugin bootstrap.."; true; }
 # Plugin and external command parser
 if [ $1 ]; then PATH="$AB/contrib:$PATH"
   PLUG="$1"; shift
