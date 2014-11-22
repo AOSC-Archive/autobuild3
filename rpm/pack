@@ -1,5 +1,4 @@
 #! /bin/bash
-# -*- bash -*-
 if [ -f autobuild/pre-rpm ]; then . autobuild/pre-rpm; fi
 genspec(){
 echo "Name:           $PKGNAME"
@@ -96,8 +95,7 @@ find $PKGDIR | {
     echo "$i" >&2
     grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
     echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
-    printf /
-    printf %s "$(echo $i | cut -c 8-)" # TODO reverse glob
+    printf %s "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
     echo
   done
 }
