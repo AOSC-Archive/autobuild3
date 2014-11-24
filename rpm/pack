@@ -95,8 +95,7 @@ find $PKGDIR | {
     echo "$i" >&2
     grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
     echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
-    printf %s "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
-    echo
+    echo "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
   done
 }
 }
