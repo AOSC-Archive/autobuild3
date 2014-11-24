@@ -88,13 +88,14 @@ echo
 echo "%files"
 # field Syntax: [otherDirectives] %defattr(octMode,owner,group) /path/to/file/
 # Is it possible to do attr merging or shall we assign some defaults so as to shorten the spec?
-find $PKGDIR | {
+find abdist | {
   while read i; do
     [ -d "$i" ] && [ ! -L "$i" ] && continue 
     echo $i | grep ^abdist/DEBIAN >/dev/null && continue
     echo "$i" >&2
     grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
     echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+    # The `cut -c 8-' step is like `cut -c $((${#PKGDIR}+2)) if we use `find "$PKGDIR"'.
     echo "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
   done
 }
