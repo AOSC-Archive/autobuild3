@@ -18,7 +18,7 @@ timestamp_convert(){
 }
 _GIT=true
 _CONTRIB=true
-PKGNAME=autobuild$($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
+PKGNAME=autobuild # $($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
 PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt"
