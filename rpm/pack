@@ -17,9 +17,9 @@ else
   echo "Autoreqprov:    yes"
 fi
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE"
+[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "\nProvides:       $RPMEXTRAPROVIDE"
 if [ "$PKGDEP" ]; then
-	printf "Requires:       "
+	printf "\nRequires:       "
 	FIRST=true
 	for i in $PKGDEP; do
 		if $FIRST
@@ -45,12 +45,12 @@ fi # PKGDEP
 
 
 if [ "$PKGCONFL" ]; then
-	printf "Conflicts:       "
+	printf "\nConflicts:       "
   abcommaprint "$PKGCONFL"
 fi
 
 if [ "$PKGREP" ]; then
-	printf "Replaces:       "
+	printf "\nObseletes:       "
 	abcommaprint "$PKGREP"
 fi
 
@@ -92,7 +92,7 @@ find abdist | {
   while read i; do
     [ -d "$i" ] && [ ! -L "$i" ] && continue 
     echo $i | grep ^abdist/DEBIAN >/dev/null && continue
-    echo "$i" >&2
+    echo "\'$i\'" >&2
     grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
     echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
     # The `cut -c 8-' step is like `cut -c $((${#PKGDIR}+2)) if we use `find "$PKGDIR"'.
