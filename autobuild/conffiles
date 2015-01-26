@@ -1,2 +1,8 @@
 /etc/autobuild/prefix
-/usr/lib/autobuild3/etc/
+/usr/lib/autobuild3/etc
+/usr/lib/autobuild3/etc/defaults
+/usr/lib/autobuild3/etc/defaults/offical_builds
+/usr/lib/autobuild3/etc/defaults/elffltr_strip
+/usr/lib/autobuild3/etc/defaults/compress
+/usr/lib/autobuild3/etc/defaults/pm
+/usr/lib/autobuild3/etc/defaults/elffltr_elfdep
