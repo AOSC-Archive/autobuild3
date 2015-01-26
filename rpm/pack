@@ -94,7 +94,7 @@ find abdist | {
     echo $i | grep ^abdist/DEBIAN >/dev/null && continue
     echo "\"$i\"" >&2
     if [ -e $SRCDIR/autobuild/conffiles ]; then
-        grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
+        echo "%config `grep $(echo $i | cut -c 7-) $SRCDIR/autobuild/conffiles`"
     else
         true
     fi
