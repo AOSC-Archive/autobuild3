@@ -92,7 +92,8 @@ find abdist | {
   while read i; do
     [ -d "$i" ] && [ ! -L "$i" ] && continue 
     echo $i | grep ^abdist/DEBIAN >/dev/null && continue
-    echo "\"$i\"" >&2
+#   So what for godsaken good will this do?!
+#   echo "\"$i\"" >&2
     if [ -e $SRCDIR/autobuild/conffiles ]; then
         echo "%config `grep $(echo $i | cut -c 7-) $SRCDIR/autobuild/conffiles`"
     else
