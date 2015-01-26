@@ -17,7 +17,7 @@ else
   echo "Autoreqprov:    yes"
 fi
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "\nProvides:       $RPMEXTRAPROVIDE"
+[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE $PKGPROV"
 if [ "$PKGDEP" ]; then
 	printf "\nRequires:       "
 	FIRST=true
@@ -50,7 +50,7 @@ if [ "$PKGCONFL" ]; then
 fi
 
 if [ "$PKGREP" ]; then
-	printf "\nObseletes:       "
+	printf "\nObsoletes:       "
 	abcommaprint "$PKGREP"
 fi
 
