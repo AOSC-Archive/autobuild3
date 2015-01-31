@@ -25,7 +25,7 @@ build_autotools_build() {
 		cd build
 	fi
 
-	$SRCDIR/$configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
+	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
 	make $ABMK $MAKE_AFTER | ablog &&
 	make install BUILDROOT=$SRCDIR/abdist DESTDIR=$SRCDIR/abdist $MAKE_AFTER | ablog &&
 	_ret=$?
