@@ -1,7 +1,9 @@
 abreqexe rpm
 
 pm_getver(){
-	rpm -qi glibc | grep 'Version' | awk '{ print $3 }' 2>/dev/null
+	for dep in $PKGDEP; do
+	    rpm -qi $dep | grep 'Version' | awk '{ print $3 }' 2>/dev/null
+	done
 }
 
 # pm_whoprov
