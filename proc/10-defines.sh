@@ -1,11 +1,11 @@
 export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
 
-# Autobuild settings
-recsr $AB/etc/defaults/*
-
 [ -e autobuild/defines ] && { . autobuild/defines || abwarn "autobuild/defines returned a non-zero value." 
 } || aberr "autobuild/defines not found."
+
+# Autobuild settings
+recsr $AB/etc/defaults/*
 
 alias make='make $ABMK' # aliases aren't global, take care
 
