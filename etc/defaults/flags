@@ -1,0 +1,8 @@
+export CPPFLAGS_NOLTO="-D_FORTIFY_SOURCE=2 -O2" 
+export CFLAGS_NOLTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
+export CXXFLAGS_NOLTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
+export LDFLAGS_NOLTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -fno-lto -fuse-linker-plugin" 
+export CPPFLAGS_LTO="-D_FORTIFY_SOURCE=2 -O2"
+export CFLAGS_LTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error"
+export CXXFLAGS_LTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error"
+export LDFLAGS_LTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -flto -fuse-linker-plugin"

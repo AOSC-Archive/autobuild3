@@ -1,11 +1,11 @@
 if bool $NOLTO; then
-    export CPPFLAGS="-D_FORTIFY_SOURCE=2 -O2" 
-    export CFLAGS="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
-    export CXXFLAGS="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
-    export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -fno-lto -fuse-linker-plugin" 
+    export CPPFLAGS="$CPPFLAGS_NOLTO" 
+    export CFLAGS="$CFLAGS_NOLTO"
+    export CXXFLAGS="$CXXFLAGS_NOLTO"
+    export LDFLAGS="$LDFLAGS_NOLTO"
 else
-    export CPPFLAGS="-D_FORTIFY_SOURCE=2 -O2"
-    export CFLAGS="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error"
-    export CXXFLAGS="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error"
-    export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -flto -fuse-linker-plugin"
+    export CPPFLAGS="$CPPFLAGS_LTO"
+    export CFLAGS="$CFLAGS_LTO"
+    export CXXFLAGS="$CXXFLAGS_LTO"
+    export LDFLAGS="$LDFLAGS_LTO"
 fi
