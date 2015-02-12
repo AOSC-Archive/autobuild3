@@ -7,12 +7,6 @@ export PKGDIR="$PWD/abdist"
 # Autobuild settings
 recsr $AB/etc/defaults/*
 
-if bool $NOLTO ; then
-   source $AB/etc/defaults/flags-nolto
-else
-   source $AB/etc/defaults/flags
-fi
-
 alias make='make $ABMK' # aliases aren't global, take care
 
 # PKGREL Parameter, pkg and rpm friendly
