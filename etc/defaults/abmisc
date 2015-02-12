@@ -1,5 +1,9 @@
 # Autobuild Manifests
-ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc) V=1"
+if [ "x$ABMK" = "x" ]; then
+    ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc) V=1"
+else
+    true
+fi
 ABARCHIVE=autobuild-aoscarchive
 ABINSTALL=yes
 ABSHADOW=yes
