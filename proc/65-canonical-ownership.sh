@@ -1,3 +1,5 @@
+abinfo "Creating en-listed items for canonical-ownership"
+
 mkdir -p $PKGDIR/var/ab/canonical-ownership
 
 for enlist in `find abdist/`; do 
