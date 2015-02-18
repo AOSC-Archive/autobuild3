@@ -21,7 +21,7 @@ _CONTRIB=true
 PKGNAME=autobuild3 # $($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
 PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
-PKGDEP="automake perl python-2 python-3 cmake dpkg bash rpm apt"
+PKGDEP="automake perl python-2 python-3 cmake dpkg bash rpm apt coreutils"
 PKGREP="autobuild"
 PKGSEC=devel
 $_GIT && abwarn "You are packing a GIT version of autobuild.\n\tA trunk version that is not tagged is more likely to have bugs." || true
