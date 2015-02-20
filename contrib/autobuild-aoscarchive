@@ -9,7 +9,7 @@ SORT=1; NAME_PREFIX="os3-"
 # Directory Tree with priorities.
 DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z 
 liba libb libc libd libe libf libg libh libi libj libk libl libm libn libo 
-libp libq libr libs libt libu libv libw libx liby libz l _UNSORTED"
+libp libq libr libs libt libu libv libw libx liby libz l 0 1 2 3 4 5 6 7 8 9 _UNSORTED"
 TREE=1
 TARGET_DIR=/os3-build
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
