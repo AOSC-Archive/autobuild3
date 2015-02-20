@@ -10,3 +10,6 @@ ABSHADOW=yes
 
 # LTO section
 NOLTO=yes
+
+# Clang or not?
+USECLANG=no
