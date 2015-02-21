@@ -46,12 +46,12 @@ fi # PKGDEP
 
 if [ "$PKGCONFL" ]; then
 	printf "\nConflicts:       "
-  abcommaprint "$PKGCONFL"
+  abcommaprint $PKGCONFL
 fi
 
 if [ "$PKGREP" ]; then
 	printf "\nObsoletes:       "
-	abcommaprint "$PKGREP"
+	abcommaprint $PKGREP
 fi
 
 echo 
