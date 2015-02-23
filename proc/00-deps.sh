@@ -3,7 +3,7 @@ if [ "$ABMPM" = "rpm" ]; then
         zypper ref -f
         zypper install $BUILDDEP $PKGDEP
     fi
-elif [ "$ABAPM" = "dpkg" ]; then
+elif [ "$ABMPM" = "dpkg" ]; then
     if ! dpkg -l $BUILDDEP $PKGDEP; then
         apt-get update
         apt-get install $BUILDDEP $PKGDEP --yes
