@@ -1,11 +1,5 @@
-if [ "$ABMPM" = "rpm" ]; then
-    if ! rpm -qa $BUILDDEP $PKGDEP; then
-        zypper ref -f
-        zypper install $BUILDDEP $PKGDEP
-    fi
-elif [ "$ABMPM" = "dpkg" ]; then
-    if ! dpkg -l $BUILDDEP $PKGDEP; then
-        apt-get update
-        apt-get install $BUILDDEP $PKGDEP --yes
-    fi
-fi
+abrequire pm
+pm_checkdep $BUILDDEP $PKGDEP || (
+pm_repoupdate
+pm_repoinstall $BUILDDEP $PKGDEP
+)
