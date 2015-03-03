@@ -1,8 +1,8 @@
 # Autobuild Manifests
 if [ "x$ABMK" = "x" ]; then
-    ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc) CFLAGS=${CFLAGS} CPPFLAGS=${CPPFLAGS} CXXFLAGS=${CXXFLAGS} LDFLAGS=${LDFLAGS} V=1"
+    ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc) V=1"
 else
-    ABMK+=" CFLAGS=${CFLAGS} CPPFLAGS=${CPPFLAGS} CXXFLAGS=${CXXFLAGS} LDFLAGS=${LDFLAGS}"
+    true
 fi
 ABARCHIVE=autobuild-aoscarchive
 ABINSTALL=yes
