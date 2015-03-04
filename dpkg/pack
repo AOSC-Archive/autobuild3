@@ -85,8 +85,8 @@ echo "Description: $PKGDES" >> abdist/DEBIAN/control &&
 [ "$PKGBREAK" ] && "Breaks: `genbreak`" >> abdist/DEBIAN/control
 
 echo "$DPKGXTRACTRL" >> abdist/DEBIAN/control
-cp abscripts/{postinst,prerm,preinst,postrm} abdist/DEBIAN/
 cat abscripts/usergroup >> abdist/DEBIAN/postinst
+cp abscripts/{postinst,prerm,preinst,postrm} abdist/DEBIAN/
 if [ -f autobuild/conffiles ]
   then cp autobuild/conffiles abdist/DEBIAN/
 fi
