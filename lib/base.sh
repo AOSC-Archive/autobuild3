@@ -14,17 +14,24 @@ abreqexe(){
 	done
 }
 
+# So ugly...
+
+abloadpm(){
+        . $AB/$ABMPM/lib/pm.sh
+	export ABLIBS="${ABLIBS}pm|"	
+	echo "Loaded library pm" 1>&2
+}
+
 abloadlib(){
-	if [ "$1" != "pm" ]
+	if [ "x$1" = "xpm" ] 
 	then
-	[ -f $AB/lib/$1.sh ] || return 1
-	. $AB/lib/$1.sh
-	else
-	[ -f $AB/$ABMPM/lib/$1.sh ] || return 1
-	. $AB/$ABMPM/lib/$1.sh
+		abloadpm
+		return
 	fi
+	[ -f $ABBLPREFIX/$1.sh ] || return 1
+	. $ABBLPREFIX/$1.sh
 	export ABLIBS="${ABLIBS}$1|"
-	echo "Loaded library $1"
+	echo "Loaded library $1" 1>&2
 }
 
 abrequire(){
