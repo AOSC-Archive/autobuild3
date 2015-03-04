@@ -2,6 +2,7 @@
 export VERSION=3
 export ABSET=/etc/autobuild
 export AB=$(cat $ABSET/prefix 2>/dev/null || dirname $(readlink -e $0))
+export ABBLPREFIX=$AB/lib
 export ARCH=$(cat $ABSET/arch 2>/dev/null || uname -m || echo "x86_64")
 [ $AB_NOISY ] && set -xv
 [ $AB_SELF ] && AB=$(dirname $0)
