@@ -24,15 +24,15 @@ pm_checkdep(){
 		then
 			while echo $i | grep \| 2>/dev/null 1>&2
 			do
-				pm_exist "`cut -d \| -f 1`" && (sat=true;break)
-				i="`cut -d \| -f 2-`"
+				pm_exist "`echo $i | cut -d \| -f 1`" && (sat=true;break)
+				i="`echo $i| cut -d \| -f 2-`"
 			done
 		fi
 		if bool sat
 		then
 			true
 		else
-			pm_exist "`cut -d \| -f 1`" || return 1
+			pm_exist "`echo $i | cut -d \| -f 1`" || return 1
 		fi
 	done
 }
