@@ -1,5 +1,39 @@
 ABLIBS="|base|"
 
+# Should these information be redirected into ablog()?
+abwarn(){ 
+    echo -e "[\e[33mWARN\e[0m]: \e[1m$*\e[0m" >&2; 
+}
+
+aberr(){ 
+    echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; 
+}
+
+abinfo(){ 
+    echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; 
+}
+
+abdbg(){ 
+    echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; 
+}
+
+ab_dbg(){ 
+    local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; 
+}
+
+# Special Source, looks like stacktrace
+.(){ 
+    ab_dbg "Source Code from $1:"; 
+    source $* || (echo -e "  \e[31min $*\e[0m"; return 1); 
+    ab_dbg "---------------"; 
+}
+
+recsr(){ 
+    for sr in "$@"; do . $sr; done 
+}
+
+recsr $AB/etc/autobuild/defaults/*
+
 bool(){
   case $1 in
 		0|f|F|false|n|N|no) return 1 ;;
@@ -68,13 +102,3 @@ abdie() {
   fi
   exit ${2-1}
 }
-
-# Should these information be redirected into ablog()?
-abwarn(){ echo -e "[\e[33mWARN\e[0m]: \e[1m$*\e[0m" >&2; }
-aberr(){ echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
-abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
-abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
-ab_dbg(){ local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; }
-# Special Source, looks like stacktrace
-.(){ ab_dbg "Source Code from $1:"; source $* || (echo -e "  \e[31min $*\e[0m"; return 1); ab_dbg "---------------"; }
-recsr(){ for sr in "$@"; do . $sr; done }
