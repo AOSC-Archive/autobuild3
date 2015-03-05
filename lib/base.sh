@@ -53,7 +53,7 @@ abreqexe(){
 abloadpm(){
         . $AB/$ABMPM/lib/pm.sh
 	export ABLIBS="${ABLIBS}pm|"	
-	echo "Loaded library pm" 1>&2
+	abinfo "Loaded library pm"
 }
 
 abloadlib(){
@@ -65,7 +65,7 @@ abloadlib(){
 	[ -f $ABBLPREFIX/$1.sh ] || return 1
 	. $ABBLPREFIX/$1.sh
 	export ABLIBS="${ABLIBS}$1|"
-	echo "Loaded library $1" 1>&2
+	abinfo "Loaded library $1"
 }
 
 abrequire(){
