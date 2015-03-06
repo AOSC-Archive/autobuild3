@@ -4,7 +4,7 @@ export FORCE_UNSAFE_CONFIGURE=1
 SRCDIR=`pwd`
 
 build_autotools_probe(){
-	[ -x configure ] || [ -x autogen.sh ] || [ -x bootstrap] || [ -f configure.ac ] # || [ -x $configure ]
+	[ -x configure ] || [ -x autogen.sh ] || [ -x bootstrap ] || [ -f configure.ac ] # || [ -x $configure ]
 											# Seems that you can't use it this way.
 }
 
