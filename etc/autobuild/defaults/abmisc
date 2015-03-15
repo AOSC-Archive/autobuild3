@@ -1,6 +1,6 @@
 # Autobuild Manifests
 if [ "x$ABMK" = "x" ]; then
-    ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc) V=1"
+    ABMK="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc)"
 else
     true
 fi
