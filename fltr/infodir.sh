@@ -1,5 +1,5 @@
 fltr_infodir(){
-  if [ -d usr/share/info/dir ]
+  if [ -f usr/share/info/dir ]
   then
     rm usr/share/info/dir
   else
