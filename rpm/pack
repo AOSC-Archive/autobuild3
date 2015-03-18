@@ -1,23 +1,32 @@
 #! /bin/bash
-if [ -f autobuild/pre-rpm ]; then . autobuild/pre-rpm; fi
+if [ -f autobuild/pre-rpm ]; then 
+    . autobuild/pre-rpm
+fi
+
 genspec(){
 echo "Name:           $PKGNAME"
 echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
 echo "Release:        $PKGREL"
+
 [ "$RPMEPOCH" ] && echo "Epoch:          $RPMEPOCH"
+
 echo "Summary:        $PKGDES"
 echo
 echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
 echo "License:        Unknown"
 echo "URL:            Unknown"
+
 if bool $ABRPMAUTOPROVONLY; then
   echo "Autoprov:       yes"
   echo "Autoreq:        no"
 else
   echo "Autoreqprov:    yes"
 fi
+
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-[ "x$RPMEXTRAPROVIDE" != "x" ] && echo "Provides:       $RPMEXTRAPROVIDE $PKGPROV"
+[ "x$RPMEXTRAPROVIDE" != "x" ] || [ "x$PKGPROV" != "x" ] && printf "\nProvides:       "
+abcommaprint $RPMEXTRAPROVIDE $PKGPROV
+
 if [ "$PKGDEP" ]; then
 	printf "\nRequires:       "
 	FIRST=true
