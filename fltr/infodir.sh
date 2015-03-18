@@ -1,4 +1,9 @@
 fltr_infodir(){
-rm usr/share/info/dir
+  if [ -d usr/share/info/dir ]
+  then
+    rm usr/share/info/dir
+  else
+    true
+  fi
 }
 export ABFLTRS="$ABFLTRS infodir"
