@@ -10,7 +10,7 @@ build_autotools_probe(){
 
 build_autotools_build() {
 	[ $ABSHADOW ] && export ABSHADOW
-	([ -x bootstrap ] && ! [ -e autogen.sh]) && ln -s bootstrap autogen.sh
+	([ -x bootstrap ] && ! [ -e autogen.sh ]) && ln -s bootstrap autogen.sh
 	if [ ! -e configure ]; then
 	  if [ -x autogen.sh ]; then
 	    NOCONFIGURE=1 ./autogen.sh | ablog
