@@ -1,12 +1,5 @@
 # Autobuild Manifests
 
-# MAKEFLAGS usage. ABMK as supplement.
-if [[ $NOPARALLEL = yes ]]; then
-    MAKEFLAGS=
-else
-    MAKEFLAGS="-j$(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc)"
-fi
-
 ABARCHIVE=autobuild-aoscarchive
 ABINSTALL=yes
 ABSHADOW=yes
