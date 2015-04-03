@@ -92,6 +92,6 @@ if [ -f autobuild/conffiles ]
 fi
 chmod -R 0755 abdist/DEBIAN
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
-dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}_${PKGVER}-${PKGVER}_${ARCH}.deb || abdie "dpkg-deb failed, in dpkg/pack."
+dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}_${PKGVER}-${PKGREL}_${ARCH}.deb || abdie "dpkg-deb failed, in dpkg/pack."
 rm -rf abdist/DEBIAN
-export ABPACKAGE="${PKGNAME}.deb"
+export ABPACKAGE="${PKGNAME}_${PKGVER}-${PKGREL}_${ARCH}.deb"

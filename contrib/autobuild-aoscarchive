@@ -26,6 +26,7 @@ fi
 # move and then ln
 if [ "$SORT" == 1 ]; then mkdir -p $TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout; else mkdir -p $TARGET_DIR/$_layout; fi
 cp $1_$2*.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
-cp $1.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
+cp $1_$2-$3*.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
 cp /root/rpmbuild/RPMS/${ARCH}/$1-$2*.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
 abinfo "abRepoArchive done."
+
