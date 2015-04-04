@@ -25,7 +25,7 @@ genrecom(){
 }
 genrep(){
   FIRST=1
-  for i in $PKGREP; do
+  for i in $PKGREP $PKGREP_DPKG; do
     [ "$FIRST" != "1" ] && printf ", "
 			[ "$FIRST" = "1" ] && FIRST=0
 			printf "$i"
@@ -33,7 +33,7 @@ genrep(){
 }
 genconfl(){
   FIRST=1
-  for i in $PKGCONFL; do
+  for i in $PKGCONFL $PKGCONFL_DPKG; do
     [ "$FIRST" != "1" ] && printf ", "
     [ "$FIRST" = "1" ] && FIRST=0
     printf "$i"
@@ -41,7 +41,7 @@ genconfl(){
 }
 genprov(){
   FIRST=1
-  for i in $PKGPROV; do
+  for i in $PKGPROV $PKGPROV_DPKG; do
     [ "$FIRST" != "1" ] && printf ", "
     [ "$FIRST" = "1" ] && FIRST=0
     printf "$i"
@@ -49,7 +49,7 @@ genprov(){
 }
 genbreak(){
   FIRST=1
-  for i in $PKGBREAK; do
+  for i in $PKGBREAK $PKGPROV_DPKG; do
     [ "$FIRST" != "1" ] && printf ", "
     [ "$FIRST" = "1" ] && FIRST=0
   done
@@ -77,7 +77,7 @@ echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
 echo "Installed-Size: $instSIZE" >> abdist/DEBIAN/control && 
 echo "Description: $PKGDES" >> abdist/DEBIAN/control && 
-[ "$PKGDEP" ] && echo "Depends: `gendep $PKGDEP`" >> abdist/DEBIAN/control
+[ "$PKGDEP" ] && echo "Depends: `gendep $PKGDEP $PKGDEP_DPKG`" >> abdist/DEBIAN/control
 [ "$PKGRECOM" ] && echo "Recommends: `genrecom`" >> abdist/DEBIAN/control
 [ "$PKGREP" ] && echo "Replaces: `genrep`" >> abdist/DEBIAN/control
 [ "$PKGCONFL" ] && echo "Conflicts: `genconfl`" >> abdist/DEBIAN/control

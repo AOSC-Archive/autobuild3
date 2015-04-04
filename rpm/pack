@@ -25,12 +25,12 @@ fi
 
 echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
 [ "x$RPMEXTRAPROVIDE" != "x" ] || [ "x$PKGPROV" != "x" ] && printf "\nProvides:       "
-abcommaprint $RPMEXTRAPROVIDE $PKGPROV
+abcommaprint $RPMEXTRAPROVIDE $PKGPROV $PKGPROV_RPM
 
 if [ "$PKGDEP" ]; then
 	printf "\nRequires:       "
 	FIRST=true
-	for i in $PKGDEP $PKGRECOM_RPM; do
+	for i in $PKGDEP $PKGDEP_RPM $PKGRECOM_RPM; do
 		if $FIRST
 		then
 			FIRST=false
@@ -55,12 +55,12 @@ fi # PKGDEP
 
 if [ "$PKGCONFL" ]; then
 	printf "\nConflicts:       "
-  abcommaprint $PKGCONFL
+  abcommaprint $PKGCONFL $PKGCONFL_RPM
 fi
 
 if [ "$PKGREP" ]; then
 	printf "\nObsoletes:       "
-	abcommaprint $PKGREP
+	abcommaprint $PKGREP $PKGREP_RPM
 fi
 
 echo 
