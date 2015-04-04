@@ -12,3 +12,6 @@ USECLANG=no
 
 # Want those big fat static libraries?
 NOSTATIC=yes
+
+# Clean up?
+ABCLEAN=yes
