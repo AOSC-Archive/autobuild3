@@ -17,7 +17,7 @@ gendep(){
 }
 genrecom(){
   FIRST=1
-  for i in $PKGRECOM; do
+  for i in $PKGRECOM $PKGRECOM_DPKG; do
   [ "$FIRST" != "1" ] && printf ", "
   [ "$FIRST" = "1" ] && FIRST=0
   printf "$i"

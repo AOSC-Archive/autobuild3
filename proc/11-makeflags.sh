@@ -5,5 +5,5 @@ if bool $NOPARALLEL; then
     export MAKEFLAGS=
 else
     abinfo "Parallel build ENABLED"
-    export MAKEFLAGS="-j $(echo $(lscpu | grep ^CPU\(s\) | awk '{ print $2 }')*2+1 | bc)"
+    export MAKEFLAGS="-j $(( $(nproc) * 2 + 1))"
 fi

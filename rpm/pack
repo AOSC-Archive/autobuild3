@@ -30,7 +30,7 @@ abcommaprint $RPMEXTRAPROVIDE $PKGPROV
 if [ "$PKGDEP" ]; then
 	printf "\nRequires:       "
 	FIRST=true
-	for i in $PKGDEP; do
+	for i in $PKGDEP $PKGRECOM_RPM; do
 		if $FIRST
 		then
 			FIRST=false
