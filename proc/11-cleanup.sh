@@ -7,4 +7,4 @@ if bool $ABCLEAN; then
     rm -f abspec
 else 
     true
-done
+fi
