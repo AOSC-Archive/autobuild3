@@ -7,7 +7,7 @@
 
 PREFIX="/usr"
 BINDIR="/usr/bin"
-LIBDIR="/usr/lic"
+LIBDIR="/usr/lib"
 SYSCONF="/etc"
 CONFD="/etc/conf.d"
 ETCDEF="/etc/default"
