@@ -1,0 +1,2 @@
+HOST=i686-pc-linux-gnu
+HOSTTOOLPREFIX=/opt/abcross/i386/bin/i686-pc-linux-gnu
