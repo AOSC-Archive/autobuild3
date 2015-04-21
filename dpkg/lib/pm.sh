@@ -1,19 +1,23 @@
 abreqexe dpkg dpkg-deb dpkg-query
 
+PM_ROOT=/
+
+PM_ROOTPARAM=""
+
 pm_whoprov(){
-	dpkg-query -S $1 2> /dev/null | awk '{ print $1 }' | rev | cut -b 2- | rev
+	dpkg-query $PM_ROOTPARAM -S $1 2> /dev/null | awk '{ print $1 }' | rev | cut -b 2- | rev
 	# This just give a nice list of formatted dependencies.
 }
 
 pm_getver(){
-	dpkg-query -f '${Version}' -W $1 2>/dev/null
+	dpkg-query $PM_ROOTPARAM -f '${Version}' -W $1 2>/dev/null
 }
 
 # pm_whoprov
 # Just for testing of output.
 
 pm_exist(){
-	dpkg -l $1 2>/dev/null 1>&2
+	dpkg $PM_ROOTPARAM -l $1 2>/dev/null 1>&2
 }
 
 pm_checkdep(){
@@ -43,4 +47,8 @@ pm_repoupdate(){
 
 pm_repoinstall(){
 	apt-get install $* --yes
+}
+pm_chroot(){
+	export PM_ROOT=$1
+	export PM_ROOTPARAM="--root=$1 --admindir=$i/var/lib/dpkg"
 }

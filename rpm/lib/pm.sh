@@ -1,15 +1,20 @@
 abreqexe rpm
 
+pm_chroot(){
+	export PM_ROOT=$1
+	export PM_ROOTPARAM="--root=$1"
+}
+
 pm_getver(){
-	rpm -qi $1 | grep 'Version' | awk '{ print $3 }' 2>/dev/null
+	rpm $PM_ROOTPARAM -qi $1 | grep 'Version' | awk '{ print $3 }' 2>/dev/null
 }
 
 pm_checkdep(){
-	rpm -q $* 2>/dev/null 1>&2
+	rpm $PM_ROOTPARAM -q $* 2>/dev/null 1>&2
 }
 
 pm_repoinstall(){
-	if ! rpm -qa $BUILDDEP $PKGDEP; then
+	if ! rpm $PM_ROOTPARAM -qa $BUILDDEP $PKGDEP; then
 	    zypper ref -f
 	    zypper -n install $BUILDDEP $PKGDEP
 	fi
