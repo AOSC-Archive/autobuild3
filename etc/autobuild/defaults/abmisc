@@ -15,3 +15,6 @@ NOSTATIC=yes
 
 # Clean up?
 ABCLEAN=yes
+
+# Hug pkg-config and CMake configurations?
+NOLIBTOOL=yes

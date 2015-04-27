@@ -44,7 +44,7 @@ bool(){
 
 abreqexe(){
 	for i; do
-	  which $i > /dev/null || abdie "Executable ‘$i’ not found."
+	  which $i > /dev/null || abwarn "Executable ‘$i’ not found, you may experience build failures!"
 	done
 }
 
