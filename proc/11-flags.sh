@@ -1,3 +1,13 @@
+if bool $CROSS; then
+    target_arch=$CROSS
+else
+    target_arch=$ARCH
+fi
+for i in CFLAGS_LTO CXXFLAGS_LTO LDFLAGS_LTO CPPFLAGS_LTO
+do
+    export $i="`cat $AB/arch/$target_arch/$i`"
+done
+
 if bool $USECLANG; then
     if bool $NOLTO; then
         export CPPFLAGS="$CPPFLAGS_CLANG_NOLTO" 
@@ -8,7 +18,7 @@ if bool $USECLANG; then
         export CPPFLAGS="$CPPFLAGS_CLANG_LTO"
         export CFLAGS="$CFLAGS_CLANG_LTO"
         export CXXFLAGS="$CXXFLAGS_CLANG_LTO"
-        export LDFLAGS="$LDFLAGS_CLANGLTO"
+        export LDFLAGS="$LDFLAGS_CLANG_LTO"
     fi
 else
     if bool $NOLTO; then

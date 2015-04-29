@@ -25,8 +25,8 @@ arch_loaddef(){
 }
 arch_initcross(){
 	[ "x$CROSS" = "x" ] && return 0
-	. $AB/arch/build/$ARCH
-	. $AB/arch/host/$CROSS
+	. $AB/arch/$ARCH/build
+	. $AB/arch/$CROSS/host
 	[ "x$HOSTSYSROOT" = "x" ] && HOSTSYSROOT=/var/ab/cross-root/$CROSS
 	$HOSTSYSROOT/bin/bash -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
 	pm_chroot $HOSTSYSROOT
