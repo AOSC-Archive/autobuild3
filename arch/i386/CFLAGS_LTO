@@ -1,2 +1,1 @@
-CFLAGS_LTO="-march=i686 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error"
-CFLAGS_CLANG_LTO="-march=i686 -mtune=core2 -O4 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -Wno-error"
+-march=i686 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -flto -fuse-linker-plugin -Wno-error

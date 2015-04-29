@@ -1,2 +1,1 @@
-export LDFLAGS_LTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -flto -fuse-linker-plugin"
-export LDFLAGS_CLANG_LTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -flto -fuse-linker-plugin"
+-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -flto -fuse-linker-plugin

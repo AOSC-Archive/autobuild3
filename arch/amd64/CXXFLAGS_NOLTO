@@ -1,2 +1,1 @@
-CXXFLAGS_NOLTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
-CXXFLAGS_CLANG_NOLTO="-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse -msse2 -msse3 -fPIC -fno-lto -Wno-error"
+-march=x86-64 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -msse -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error
