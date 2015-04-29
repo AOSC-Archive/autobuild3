@@ -1,0 +1,2 @@
+LDFLAGS_NOLTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -fno-lto -fuse-linker-plugin" 
+LDFLAGS_CLANG_NOLTO="-Wl,-O1,--sort-common,--as-needed,-z,relro -fPIC -fno-lto"

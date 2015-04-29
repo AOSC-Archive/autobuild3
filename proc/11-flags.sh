@@ -3,7 +3,8 @@ if bool $CROSS; then
 else
     target_arch=$ARCH
 fi
-for i in CFLAGS_LTO CXXFLAGS_LTO LDFLAGS_LTO CPPFLAGS_LTO
+for i in CFLAGS_LTO CFLAGS_NOLTO CXXFLAGS_LTO CXXFLAGS_NOLTO \
+         LDFLAGS_LTO LDFLAGS_NOLTO CPPFLAGS_LTO CPPFLAGS_NOLTO
 do
     export $i="`cat $AB/arch/$target_arch/$i`"
 done

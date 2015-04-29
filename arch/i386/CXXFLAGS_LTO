@@ -1,0 +1,2 @@
+CXXFLAGS_NOLTO="-march=i686 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -fno-lto -fuse-linker-plugin -Wno-error" 
+CXXFLAGS_CLANG_LTO="-march=i686 -mtune=core2 -O4 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -Wno-error"
