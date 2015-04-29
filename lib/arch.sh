@@ -1,4 +1,4 @@
-abrequire arch
+abrequire pm
 ARCH_FILEFINDLIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
 arch_filefind(){
 	for i in $ARCH_FILEFINDLIST
