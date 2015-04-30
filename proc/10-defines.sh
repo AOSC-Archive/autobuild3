@@ -9,6 +9,8 @@ abrequire arch
 [ -e autobuild/defines ] && { arch_loaddef || abwarn "arch_loaddef returned a non-zero value." 
 } || aberr "autobuild/defines not found."
 
+arch_initcross
+
 alias make='make $ABMK' # aliases aren't global, take care
 
 # PKGREL Parameter, pkg and rpm friendly
