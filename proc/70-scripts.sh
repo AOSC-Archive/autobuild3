@@ -1,12 +1,12 @@
 mkdir -p abscripts
-for i in postinst prerm postrm preinst
-do
-echo "#! /bin/bash" > abscripts/$i
-cat autobuild/$i >> abscripts/$i 2>/dev/null || abinfo "Creating empty $i."
-chmod 755 abscripts/$i
+
+for i in postinst prerm postrm preinst; do
+	echo "#! /bin/bash" > abscripts/$i
+	cat autobuild/$i >> abscripts/$i 2>/dev/null || abinfo "Creating empty $i."
+	chmod 755 abscripts/$i
 done
-if [ -e autobuild/triggers ]
-then
+
+if [ -e autobuild/triggers ]; then
 	[ $AB_DBG ] && abinfo "Triggers found."
 	echo "#! /bin/bash" > abscripts/trigger
 	echo "#! /bin/bash" > abscripts/triggered
@@ -19,9 +19,10 @@ then
 	cp abscripts/trigger abdist/var/ab/triggers/$PKGNAME
 	cp abscripts/triggered abdist/var/ab/triggered/$PKGNAME
 fi
+
 recsr $AB/scriptlet/*.sh
-for i in /var/ab/triggers/*
-do
+
+for i in /var/ab/triggers/*; do
 	[ "`basename $i`" != "$PKGNAME" ] && $i
 done
 

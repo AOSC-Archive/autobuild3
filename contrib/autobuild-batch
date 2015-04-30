@@ -1,11 +1,14 @@
 #! /bin/bash
 [ "$1" != "" ] && _list=$1 || _list=./ab_batch
+
 _pwd=$PWD
 export ABARCHIVE=abrepoarchive
+
 ! [ -e $_list ] && echo "List file $_list not found!" && exit 1
+
 # Well, do we need a xargs-based multi-process?
 for i in $(cat $_list); do
-  cd $i
-  autobuild >stdout 2>stderr
-  cd $_pwd
+	cd $i
+	autobuild >stdout 2>stderr
+	cd $_pwd
 done 

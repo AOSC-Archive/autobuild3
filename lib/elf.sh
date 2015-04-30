@@ -31,6 +31,7 @@ elf_iself()
 	file $1 | grep '\: ELF' > /dev/null
 }
 
+# TODO: A2, can you show me the code here?
 elf_strip()
 {
 	case "$(file -bi $1)" in

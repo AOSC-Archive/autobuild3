@@ -15,7 +15,5 @@ interest(){
 	fi
 }
 
-# You need to patch DPKG or RPM?
-
 
 

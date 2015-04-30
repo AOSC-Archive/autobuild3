@@ -1,3 +1,5 @@
+# TODO: forward port changes made in AOSC-Dev/autobuild
+
 user(){
 	cat >> abscripts/usergroup << _ABEOF
 	if grep ^$1: /etc/passwd >/dev/null
@@ -16,6 +18,7 @@ _ABEOF
 _ACEOF
 	done
 }
+
 group(){
 	cat >> abscripts/usergroup << _ABEOF
 	if grep ^$1: /etc/group >/dev/null
@@ -26,10 +29,11 @@ group(){
 	fi
 _ABEOF
 }
+
 echo "#! /bin/bash" > abscripts/usergroup
 chmod 755 abscripts/usergroup
-if [ -e autobuild/usergroup ]
-then
+
+if [ -e autobuild/usergroup ]; then
 	. autobuild/usergroup
 fi
 

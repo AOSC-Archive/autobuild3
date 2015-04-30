@@ -7,12 +7,13 @@ build_cmake_build(){
 	export SRCDIR=`pwd`
 	if bool $ABSHADOW_CMAKE
 	then
-		mkdir -p build
+		rm -rf build
+		mkdir build
 		cd build
 	fi
 	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER && 
 	make $ABMK $MAKE_AFTER && 
-	make DESTDIR=$SRCDIR/abdist $MAKE_AFTER install
+	make DESTDIR=$PKGDIR $MAKE_AFTER install
 	if bool $ABSHADOW_CMAKE
 	then
 		cd ..
