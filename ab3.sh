@@ -7,6 +7,9 @@ export AB=$(cat $ABSET/prefix 2>/dev/null || dirname $(readlink -e $0))
 export ABBLPREFIX=$AB/lib
 export ARCH=$(cat $ABSET/arch 2>/dev/null || uname -m || echo "x86_64")
 
+# For consistency of build output
+export LANG=C
+
 # Behavior
 [ $AB_NOISY ] && set -xv
 [ $AB_SELF ] && AB=$(dirname $0)
