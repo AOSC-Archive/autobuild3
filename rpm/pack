@@ -116,7 +116,8 @@ find abdist | {
 }
 
 genspec > abspec
-rpmbuild -bb abspec || aberr "RPM PACKING FAILED."
+[ "$CROSS" = "armel" ] && RPM_CROSS="--target armhfp"
+rpmbuild $RPM_CROSS -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ]
 then
 . autobuild/post-rpm

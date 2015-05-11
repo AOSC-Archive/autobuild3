@@ -30,4 +30,5 @@ arch_initcross(){
 	[ "x$HOSTSYSROOT" = "x" ] && HOSTSYSROOT=/var/ab/cross-root/$CROSS
 	$HOSTSYSROOT/bin/bash -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
 	pm_chroot $HOSTSYSROOT
+	export PATH=`dirname $HOSTTOOLPREFIX`:$PATH
 }

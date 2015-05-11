@@ -68,6 +68,7 @@ dpkgflagsel(){
   fi
 }
 [ "$ARCH" == x86_64 ] && DPKG_ARCH=amd64 || DPKG_ARCH="$ARCH"
+[ "$CROSS" != "" ] && DPKG_ARCH=$CROSS
 instSIZE=$(du -s abdist | cut -f 1)
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
@@ -92,6 +93,6 @@ if [ -f autobuild/conffiles ]
 fi
 chmod -R 0755 abdist/DEBIAN
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
-dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}_${PKGVER}-${PKGREL}_${ARCH}.deb || abdie "dpkg-deb failed, in dpkg/pack."
+dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb || abdie "dpkg-deb failed, in dpkg/pack."
 rm -rf abdist/DEBIAN
-export ABPACKAGE="${PKGNAME}_${PKGVER}-${PKGREL}_${ARCH}.deb"
+export ABPACKAGE="${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb"

@@ -1,1 +1,1 @@
-dpkg $PM_ROOTPARAM -i ${PKGNAME}_${PKGVER}-${PKGREL}_${ARCH}.deb
+dpkg $PM_ROOTPARAM -i ${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb
