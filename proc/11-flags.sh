@@ -1,4 +1,4 @@
-if bool $CROSS; then
+if [ "x$CROSS" != "x" ]; then
 	target_arch=$CROSS
 else
 	target_arch=$ARCH
