@@ -7,4 +7,5 @@ if ! [ "$ABTYPE" ]; then
 		fi
 	done
 fi
+
 [ ! "$ABTYPE" ] && abdie "Cannot determine build type." || true

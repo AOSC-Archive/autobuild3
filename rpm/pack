@@ -1,124 +1,126 @@
 #! /bin/bash
+
+# Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then 
-    . autobuild/pre-rpm
+	. autobuild/pre-rpm
 fi
 
+# RPM spec generation.
 genspec(){
-echo "Name:           $PKGNAME"
-echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
-echo "Release:        $PKGREL"
+	echo "Name:           $PKGNAME"
+	echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
+	echo "Release:        $PKGREL"
 
-[ "$RPMEPOCH" ] && echo "Epoch:          $RPMEPOCH"
+	[ "$RPMEPOCH" ] && echo "Epoch:          $RPMEPOCH"
 
-echo "Summary:        $PKGDES"
-echo
-echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
-echo "License:        Unknown"
-echo "URL:            Unknown"
+	echo "Summary:        $PKGDES"
+	echo
+	echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
+	echo "License:        Unknown"
+	echo "URL:            Unknown"
 
-if bool $ABRPMAUTOPROVONLY; then
-  echo "Autoprov:       yes"
-  echo "Autoreq:        no"
-else
-  echo "Autoreqprov:    yes"
-fi
+	if bool $ABRPMAUTOPROVONLY; then
+		echo "Autoprov:       yes"
+		echo "Autoreq:        no"
+	else
+		echo "Autoreqprov:    yes"
+	fi
 
-echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-[ "x$RPMEXTRAPROVIDE" != "x" ] || [ "x$PKGPROV" != "x" ] && printf "\nProvides:       "
-abcommaprint $RPMEXTRAPROVIDE $PKGPROV $PKGPROV_RPM
+	echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
+	[ "x$RPMEXTRAPROVIDE" != "x" ] || [ "x$PKGPROV" != "x" ] && printf "\nProvides:       "
+	abcommaprint $RPMEXTRAPROVIDE $PKGPROV $PKGPROV_RPM
 
-if [ "$PKGDEP" ]; then
-	printf "\nRequires:       "
-	FIRST=true
-	for i in $PKGDEP $PKGDEP_RPM $PKGRECOM_RPM; do
-		if $FIRST
-		then
-			FIRST=false
-		else
-			printf " , "
-		fi
-  #	printf "%s >= %s" $i "`pm_getver $i`"
-  	if echo $i | grep '|' >/dev/null; then
-  		printf $i
-  	elif echo $i | grep '^=' > /dev/null; then
-  		i2=`echo $i | cut -c 2-`
-  		printf "$i2 = `pm_getver $i2`"
-  	elif echo $i | grep '^<' > /dev/null; then
-  		i2=`echo $i | cut -c 2-`
-  		printf "$i2 <= `pm_getver $i2`"
-  	else
-  		printf "$i >= `pm_getver $i`"
-  	fi
-	done
-fi # PKGDEP
+	if [ "$PKGDEP" ]; then
+		printf "\nRequires:       "
+		FIRST=true
+		for i in $PKGDEP $PKGDEP_RPM $PKGRECOM_RPM; do
+			if $FIRST
+			then
+				FIRST=false
+			else
+				printf " , "
+			fi
+	  		if echo $i | grep '|' >/dev/null; then
+		  		printf $i
+	  			elif echo $i | grep '^=' > /dev/null; then
+	  			i2=`echo $i | cut -c 2-`
+  				printf "$i2 = `pm_getver $i2`"
+	  		elif echo $i | grep '^<' > /dev/null; then
+  				i2=`echo $i | cut -c 2-`
+  				printf "$i2 <= `pm_getver $i2`"
+	  		else
+  				printf "$i >= `pm_getver $i`"
+	  		fi
+		done
+	fi # PKGDEP
 
+	if [ "$PKGCONFL" ]; then
+		printf "\nConflicts:       "
+		abcommaprint $PKGCONFL $PKGCONFL_RPM
+	fi
 
-if [ "$PKGCONFL" ]; then
-	printf "\nConflicts:       "
-  abcommaprint $PKGCONFL $PKGCONFL_RPM
-fi
+	if [ "$PKGREP" ]; then
+		printf "\nObsoletes:       "
+		abcommaprint $PKGREP $PKGREP_RPM
+	fi
 
-if [ "$PKGREP" ]; then
-	printf "\nObsoletes:       "
-	abcommaprint $PKGREP $PKGREP_RPM
-fi
+	echo 
+	echo "%description"
+	echo "$PKGDES"echo 
+	echo "%prep"
+	echo "true"
+	echo 
+	echo "%build"
+	echo "true"
+	echo 
+	echo "%install"
+	echo 'rm -rf $RPM_BUILD_ROOT'
+	echo "cp -ra `pwd`/abdist "'$RPM_BUILD_ROOT'
+	echo 'rm -rf $RPM_BUILD_ROOT/DEBIAN'
+	echo 
+	echo "%clean"
+	echo 'rm -rf $RPM_BUILD_ROOT'
+	echo 
+	echo "%post -p /bin/bash"
+	cat `pwd`/abscripts/postinst 2>/dev/null || true
+	echo 
+	echo "%postun -p /bin/bash"
+	cat `pwd`/abscripts/postrm 2>/dev/null || true
+	echo 
+	echo "%pre -p /bin/bash"
+	cat `pwd`/abscripts/usergroup 2>/dev/null || true
+	cat `pwd`/abscripts/preinst 2>/dev/null || true
+	echo 
+	echo "%preun -p /bin/bash"
+	cat `pwd`/abscripts/prerm 2>/dev/null || true
+	echo 
+	echo "%files"
 
-echo 
-echo "%description"
-echo "$PKGDES"
-echo 
-echo "%prep"
-echo "true"
-echo 
-echo "%build"
-echo "true"
-echo 
-echo "%install"
-echo 'rm -rf $RPM_BUILD_ROOT'
-echo "cp -ra `pwd`/abdist "'$RPM_BUILD_ROOT'
-echo 'rm -rf $RPM_BUILD_ROOT/DEBIAN'
-echo 
-echo "%clean"
-echo 'rm -rf $RPM_BUILD_ROOT'
-echo 
-echo "%post -p /bin/bash"
-cat `pwd`/abscripts/postinst 2>/dev/null || true
-echo 
-echo "%postun -p /bin/bash"
-cat `pwd`/abscripts/postrm 2>/dev/null || true
-echo 
-echo "%pre -p /bin/bash"
-cat `pwd`/abscripts/usergroup 2>/dev/null || true
-cat `pwd`/abscripts/preinst 2>/dev/null || true
-echo 
-echo "%preun -p /bin/bash"
-cat `pwd`/abscripts/prerm 2>/dev/null || true
-echo 
-echo "%files"
-# field Syntax: [otherDirectives] %defattr(octMode,owner,group) /path/to/file/
-# Is it possible to do attr merging or shall we assign some defaults so as to shorten the spec?
-find abdist | {
-  while read i; do
-    [ -d "$i" ] && [ ! -L "$i" ] && continue 
-    echo $i | grep ^abdist/DEBIAN >/dev/null && continue
-#   So what for godsaken good will this do?!
-#   echo "\"$i\"" >&2
-    if [ -e $SRCDIR/autobuild/conffiles ]; then
-        echo "%config `grep $(echo $i | cut -c 7-) $SRCDIR/autobuild/conffiles`"
-    else
-        true
-    fi
-    echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
-    # The `cut -c 8-' step is like `cut -c $((${#PKGDIR}+2)) if we use `find "$PKGDIR"'.
-    echo "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
-  done
-}
+	# field Syntax: [otherDirectives] %defattr(octMode,owner,group) /path/to/file/
+	# Is it possible to do attr merging or shall we assign some defaults so as to 
+	# shorten the spec?
+	find abdist | {
+		while read i; do
+			[ -d "$i" ] && [ ! -L "$i" ] && continue 
+			echo $i | grep ^abdist/DEBIAN >/dev/null && continue
+
+			if [ -e $SRCDIR/autobuild/conffiles ]; then
+				echo "%config `grep $(echo $i | cut -c 7-) $SRCDIR/autobuild/conffiles`"
+			else
+				true
+			fi
+
+			echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+			# The `cut -c 8-' step is like `cut -c $((${#PKGDIR}+2)) if we use 
+			# `find "$PKGDIR"'.
+			echo "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
+		done
+	}
 }
 
 genspec > abspec
 [ "$CROSS" = "armel" ] && RPM_CROSS="--target armhfp"
 rpmbuild $RPM_CROSS -bb abspec || aberr "RPM PACKING FAILED."
-if [ -f autobuild/post-rpm ]
-then
+if [ -f autobuild/post-rpm ] ; then
 . autobuild/post-rpm
 fi

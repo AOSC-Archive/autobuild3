@@ -11,8 +11,6 @@ abrequire arch
 
 arch_initcross
 
-alias make='make $ABMK' # aliases aren't global, take care
-
 # PKGREL Parameter, pkg and rpm friendly
 # Test used for those who wants to override.
 ! [ $PKGREL ] && { PKGVER=$(echo $PKGVER| rev | cut -d - -f 2- | rev)
@@ -28,3 +26,4 @@ for i in `cat $AB/params/*`; do
 done
 
 export PYTHON=/usr/bin/python2
+

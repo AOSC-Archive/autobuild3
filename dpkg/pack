@@ -1,75 +1,88 @@
 gendep(){
-  FIRST=1
-  for i in $*; do
-    [ "$FIRST" != "1" ] && printf ", "
-    [ "$FIRST" = "1" ] && FIRST=0
-		 if echo $i | grep '|' >/dev/null; then
-		   printf $i
-		 elif echo $i | grep '^=' > /dev/null;then
-			  i2=`echo $i | cut -c 2-`
-			  printf "$i2 (= `pm_getver $i2`)"
+	FIRST=1
+	for i in $*; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		if echo $i | grep '|' >/dev/null; then
+			printf $i
+		elif echo $i | grep '^=' > /dev/null; then
+			i2=`echo $i | cut -c 2-`
+			printf "$i2 (= `pm_getver $i2`)"
 			elif echo $i | grep '^<' > /dev/null;then
-			  i2=`echo $i |cut -c 2-`
-			  printf "$i2 (<= `pm_getver $i2`)"
-			else printf "$i (>= `pm_getver $i`)"
-	   fi
-  done
+				i2=`echo $i |cut -c 2-`
+				printf "$i2 (<= `pm_getver $i2`)"
+		else printf "$i (>= `pm_getver $i`)"
+		fi
+	done
 }
+
 genrecom(){
-  FIRST=1
-  for i in $PKGRECOM $PKGRECOM_DPKG; do
-  [ "$FIRST" != "1" ] && printf ", "
-  [ "$FIRST" = "1" ] && FIRST=0
-  printf "$i"
+	FIRST=1
+	for i in $PKGRECOM $PKGRECOM_DPKG; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		printf "$i"
 	done
 }
+
 genrep(){
-  FIRST=1
-  for i in $PKGREP $PKGREP_DPKG; do
-    [ "$FIRST" != "1" ] && printf ", "
-			[ "$FIRST" = "1" ] && FIRST=0
-			printf "$i"
+	FIRST=1
+	for i in $PKGREP $PKGREP_DPKG; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		printf "$i"
 	done
 }
+
 genconfl(){
-  FIRST=1
-  for i in $PKGCONFL $PKGCONFL_DPKG; do
-    [ "$FIRST" != "1" ] && printf ", "
-    [ "$FIRST" = "1" ] && FIRST=0
-    printf "$i"
-  done    
+	FIRST=1
+	for i in $PKGCONFL $PKGCONFL_DPKG; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		printf "$i"
+	done    
 }
+
 genprov(){
-  FIRST=1
-  for i in $PKGPROV $PKGPROV_DPKG; do
-    [ "$FIRST" != "1" ] && printf ", "
-    [ "$FIRST" = "1" ] && FIRST=0
-    printf "$i"
-  done    
+	FIRST=1
+	for i in $PKGPROV $PKGPROV_DPKG; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		printf "$i"
+	done    
 }
+
 genbreak(){
-  FIRST=1
-  for i in $PKGBREAK $PKGPROV_DPKG; do
-    [ "$FIRST" != "1" ] && printf ", "
-    [ "$FIRST" = "1" ] && FIRST=0
-  done
+	FIRST=1
+	for i in $PKGBREAK $PKGBREAK_DPKG; do
+		[ "$FIRST" != "1" ] && printf ", "
+		[ "$FIRST" = "1" ] && FIRST=0
+		printf "$i"
+	done
 }
+
 # Auto-select xz level, += preserves the possiblility of extra things
 dpkgflagsel(){
-  if (($instSIZE >= 8386000)); then
-    if (($instSIZE < 16775000)); then
-      DPKGDEBCOMP+="-z7"
-    else if (($instSIZE < 33552000)); then
-        DPKGDEBCOMP+="-z8"
-      else DPKGDEBCOMP+="-z9"
-      fi
-    fi
-  else DPKGDEBCOMP+="-z6"
-  fi
+	if (($instSIZE >= 8386000)); then
+		if (($instSIZE < 16775000)); then
+			DPKGDEBCOMP+="-z7"
+		else 
+			if (($instSIZE < 33552000)); then
+				DPKGDEBCOMP+="-z8"
+			else DPKGDEBCOMP+="-z9"
+			fi
+		fi
+	else
+		DPKGDEBCOMP+="-z6"
+	fi
 }
+
+# TODO: more architecture translations.
 [ "$ARCH" == x86_64 ] && DPKG_ARCH=amd64 || DPKG_ARCH="$ARCH"
 [ "$CROSS" != "" ] && DPKG_ARCH=$CROSS
 instSIZE=$(du -s abdist | cut -f 1)
+
+# Writing in control information.
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
 echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
@@ -85,14 +98,22 @@ echo "Description: $PKGDES" >> abdist/DEBIAN/control &&
 [ "$PKGPROV" ] && echo "Provides: `genprov`" >> abdist/DEBIAN/control
 [ "$PKGBREAK" ] && "Breaks: `genbreak`" >> abdist/DEBIAN/control
 
+# Extra control definitions.
 echo "$DPKGXTRACTRL" >> abdist/DEBIAN/control
 cp abscripts/{postinst,prerm,preinst,postrm} abdist/DEBIAN/
 cat abscripts/usergroup >> abdist/DEBIAN/postinst
+
+# Configuration files definition.
 if [ -f autobuild/conffiles ]
   then cp autobuild/conffiles abdist/DEBIAN/
 fi
+
+# Payload.
 chmod -R 0755 abdist/DEBIAN
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
 dpkg-deb -b -Zxz $DPKGDEBCOMP abdist ${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb || abdie "dpkg-deb failed, in dpkg/pack."
+
+# Clean up.
+# TODO: procedural sequence? How about when RPM is first and DPKG is APM.
 rm -rf abdist/DEBIAN
 export ABPACKAGE="${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb"

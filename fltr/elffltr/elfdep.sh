@@ -1,4 +1,5 @@
 abrequire elf depset pm
+
 elffltr_elfdep(){
 	bool $ABELFDEP || return 0
 	echo "Looking for Dependencies on $1 ..."
@@ -16,4 +17,5 @@ elffltr_elfdep(){
 		if [ "$P" != "$PKGNAME" ] && [ "$P" != "" ]; then depset_add "$P"; fi
 	done
 }
+
 export ABELFFLTRS="$ABELFFLTRS elfdep"

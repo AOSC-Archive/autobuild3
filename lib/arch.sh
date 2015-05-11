@@ -1,5 +1,7 @@
 abrequire pm
+
 ARCH_FILEFINDLIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
+
 arch_filefind(){
 	for i in $ARCH_FILEFINDLIST
 	do
@@ -12,6 +14,7 @@ arch_filefind(){
 	echo autobuild/$1
 	return 1
 }
+
 arch_loaddef(){
 	local rev
 	for i in $ARCH_FILEFINDLIST
@@ -23,6 +26,7 @@ arch_loaddef(){
 		[ -e $i/defines ] && source $i/defines
 	done
 }
+
 arch_initcross(){
 	[ "x$CROSS" = "x" ] && return 0
 	. $AB/arch/$ARCH/build

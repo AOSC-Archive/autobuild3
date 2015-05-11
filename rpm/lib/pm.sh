@@ -15,8 +15,8 @@ pm_checkdep(){
 
 pm_repoinstall(){
 	if ! rpm $PM_ROOTPARAM -qa $BUILDDEP $PKGDEP; then
-	    zypper ref -f
-	    zypper -n install $BUILDDEP $PKGDEP
+		zypper ref -f
+		zypper -n install $BUILDDEP $PKGDEP
 	fi
 }
 
