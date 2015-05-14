@@ -6,13 +6,6 @@ then
 	if [ -f `arch_filefind patch` ]
 	then
 		. `arch_filefind patch`
-		if [ ${ABTYPE} = "autotools" ]; then
-			if [ -x $SRC/autogen.sh ]; then
-				NOCONFIGURE=1 ./autogen.sh
-			else
-				autoreconf -fi
-			fi
-		fi
 		touch .patch
 	elif [ -f autobuild/patches/series ]
 	then
