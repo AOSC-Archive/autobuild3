@@ -15,7 +15,7 @@ fltr_elffltr__process(){
 }
 
 fltr_elffltr(){
-	for i in usr/lib lib bin usr/bin opt/*/lib opt/*/bin
+	for i in lib lib64 usr/lib usr/lib64 usr/libexec bin usr/bin opt/*/lib opt/*/bin
 	do
 		[ -d $i ] || continue
 		pushd $i >/dev/null
