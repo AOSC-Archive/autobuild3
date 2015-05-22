@@ -11,7 +11,7 @@ genspec(){
 	echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
 	echo "Release:        $PKGREL"
 
-	[ "$RPMEPOCH" ] && echo "Epoch:          $RPMEPOCH"
+	[ "$PKGEPOCH" ] && echo "Epoch:          $PKGEPOCH"
 
 	echo "Summary:        $PKGDES"
 	echo
