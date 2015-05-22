@@ -85,7 +85,11 @@ instSIZE=$(du -s abdist | cut -f 1)
 # Writing in control information.
 mkdir -p abdist/DEBIAN && 
 echo "Package: $PKGNAME" > abdist/DEBIAN/control && 
-echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control && 
+if [ -z "$PKGEPOCH" ]; then
+	echo "Version: ${PKGEPOCH}:${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control
+else
+	echo "Version: ${PKGVER}-${PKGREL}" >> abdist/DEBIAN/control
+fi
 echo "Architecture: $DPKG_ARCH" >> abdist/DEBIAN/control && 
 echo "Section: $PKGSEC" >> abdist/DEBIAN/control
 echo "Maintainer: $MTER" >> abdist/DEBIAN/control &&
