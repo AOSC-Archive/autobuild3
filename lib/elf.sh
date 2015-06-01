@@ -47,7 +47,7 @@ elf_strip()
 					continue ;;
 			esac ;;
 		*application/x-executable*)
-			eu-strip 1 ;;
+			eu-strip $1 ;;
 		*)
 			continue ;;
 	esac
