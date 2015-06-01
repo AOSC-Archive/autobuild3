@@ -24,8 +24,13 @@ build_autotools_build() {
 		mkdir -p build 2> /dev/null&&
 		cd build
 	fi
+	
+	if [ "x$CROSS" != "x" ]
+	then
+		AUTOTOOLS_CROSS=--host=$HOST
+	fi
 
-	$SRCDIR/configure $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
+	$SRCDIR/configure $AUTOTOOLS_CROSS $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
 	make $ABMK $MAKE_AFTER | ablog &&
 	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog &&
 	_ret=$?
