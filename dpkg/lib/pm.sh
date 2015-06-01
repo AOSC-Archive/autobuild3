@@ -10,7 +10,7 @@ pm_whoprov(){
 }
 
 pm_getver(){
-	dpkg-query $PM_ROOTPARAM -f '${Version}' -W $1 2>/dev/null
+	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -f '${Version}' -W $1 2>/dev/null
 }
 
 # pm_whoprov
