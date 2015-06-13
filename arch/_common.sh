@@ -21,4 +21,4 @@ LDFLAGS_COMMON_OPTI='--relax '	# on some arches this interfere with debugging, t
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin'
 LDFLAGS_COMMON_OPTI_NOLTO='-flto -fnouse-linker-plugin'
 
-((AB_FLAGS_PIC)) && {LD,C}FLAGS_COMMON+='-fPIC '
+((AB_FLAGS_PIC)) && eval {LD,C}FLAGS_COMMON+='-fPIC '
