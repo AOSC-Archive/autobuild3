@@ -1,5 +1,6 @@
 # Common archdef for all ab arches, unsettable so the flags can be erased.
 AB_FLAGS_TYPES='_OPTI _ARCH '
+AB_FLAGS_FEATURES='LTO '
 AB_FLAGS_PIC=1
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -fstack-protector-strong --param=ssp-buffer-size=4 -Wno-error '

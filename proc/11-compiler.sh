@@ -1,7 +1,7 @@
 # Compiler configuration.
 
-if [ "$CROSS" = "" ]; then
-	
+# Wrapper TODO: accept $0 detection by checking ${HOSTTOOLPREFIX/abcross/abwrap}.
+if [ -z "$CROSS" ]; then
 	if [ -e /usr/bin/gcc-multilib-wrapper ]; then
 		if bool $USECLANG; then
 			export CC=/usr/bin/clang CXX=/usr/bin/clang++
