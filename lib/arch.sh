@@ -23,16 +23,17 @@ arch_loaddef(){
 	done
 	for i in $rev
 	do
-		[ -e $i/defines ] && source $i/defines
+		[ -e $i/defines ] && . $i/defines
 	done
 }
 
 arch_initcross(){
-	[ "x$CROSS" = "x" ] && return 0
-	. $AB/arch/$ARCH/build
-	. $AB/arch/$CROSS/host
-	[ "x$HOSTSYSROOT" = "x" ] && HOSTSYSROOT=/var/ab/cross-root/$CROSS
-	$HOSTSYSROOT/bin/bash -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
+	if [ -z "$CROSS" ]; then
+		unset ${!BUILD@} ${!HOST@}
+		return 0
+	fi
+	[ "$HOSTSYSROOT" ] || HOSTSYSROOT=/var/ab/cross-root/$CROSS
+	$HOSTSYSROOT/bin/sh -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
 	pm_chroot $HOSTSYSROOT
-	export PATH=`dirname $HOSTTOOLPREFIX`:$PATH
+	export PATH="$(dirname $HOSTTOOLPREFIX):$PATH"
 }

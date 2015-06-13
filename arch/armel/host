@@ -1,2 +1,0 @@
-HOST=armv7a-hardfloat-linux-gnueabi
-HOSTTOOLPREFIX=/opt/abcross/armel/bin/armv7a-hardfloat-linux-gnueabi

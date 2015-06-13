@@ -1,39 +1,22 @@
-if [ "x$CROSS" != "x" ]; then
-	target_arch=$CROSS
-else
-	target_arch=$ARCH
-fi
-
-for i in CFLAGS_LTO CFLAGS_NOLTO CXXFLAGS_LTO CXXFLAGS_NOLTO \
-         LDFLAGS_LTO LDFLAGS_NOLTO CPPFLAGS_LTO CPPFLAGS_NOLTO \
-         CFLAGS_CLANG_LTO CFLAGS_CLANG_NOLTO CXXFLAGS_CLANG_LTO CXXFLAGS_CLANG_NOLTO \
-         LDFLAGS_CLANG_LTO LDFLAGS_CLANG_NOLTO CPPFLAGS_CLANG_LTO CPPFLAGS_CLANG_NOLTO
-do
-	export $i="`cat $AB/arch/$target_arch/$i`"
+. "$AB/arch/_common.sh"
+. "$AB/arch/${CROSS:-$ARCH}.sh"
+# The suffix get forked in multiple ways, basically FLAG_(COMPILER|COMMON)[_TYPE][_ISLTO].
+for ABFLAG in {LD,C{XX,PP,}}FLAGS; do
+	export $ABFLAG
+	declare -n FLAG="$ABFLAG"
+	for ABCC in COMMON $(bool $USECLANG && echo CLANG || echo GCC); do
+		for ABTYPE in '' $AB_FLAGS_TYPES; do
+			# unrolled: for ABFLTO in '' "_$(bool $NOLTO && echo -n NO; echo LTO)"
+			declare -n THISFLAG="$ABFLAG_$ABCC_$ABTYPE"
+			FLAG+="$THISFLAG"
+			if bool $NOLTO; then
+				declare -n THISFLAG="$ABFLAG_$ABCC_$ABTYPE_NOLTO"
+			else
+				declare -n THISFLAG="$ABFLAG_$ABCC_$ABTYPE_LTO"
+			fi
+			FLAG+="$THISFLAG"
+		done
+	done
+	unset -n FLAG THISFLAG
+	unset ABCC ABTYPE ABFLAG
 done
-
-if bool $USECLANG; then
-	if bool $NOLTO; then
-		export CPPFLAGS="$CPPFLAGS_CLANG_NOLTO" 
-		export CFLAGS="$CFLAGS_CLANG_NOLTO"
-		export CXXFLAGS="$CXXFLAGS_CLANG_NOLTO"
-		export LDFLAGS="$LDFLAGS_CLANG_NOLTO"
-	else
-		export CPPFLAGS="$CPPFLAGS_CLANG_LTO"
-		export CFLAGS="$CFLAGS_CLANG_LTO"
-		export CXXFLAGS="$CXXFLAGS_CLANG_LTO"
-		export LDFLAGS="$LDFLAGS_CLANG_LTO"
-	fi
-else
-	if bool $NOLTO; then
-		export CPPFLAGS="$CPPFLAGS_NOLTO" 
-		export CFLAGS="$CFLAGS_NOLTO"
-		export CXXFLAGS="$CXXFLAGS_NOLTO"
-		export LDFLAGS="$LDFLAGS_NOLTO"
-	else
-		export CPPFLAGS="$CPPFLAGS_LTO"
-		export CFLAGS="$CFLAGS_LTO"
-		export CXXFLAGS="$CXXFLAGS_LTO"
-		export LDFLAGS="$LDFLAGS_LTO"
-	fi
-fi

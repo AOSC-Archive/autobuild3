@@ -1,1 +1,0 @@
--march=armv7-a -mtune=cortex-a7 -mfpu=neon -mfloat-abi=hard -fomit-frame-pointer -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -fPIC -fno-lto -Wno-error

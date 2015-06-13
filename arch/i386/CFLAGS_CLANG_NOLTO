@@ -1,1 +1,0 @@
--march=i686 -mtune=core2 -O2 -pipe -fstack-protector-strong --param=ssp-buffer-size=4 -mmmx -msse -msse2 -msse3 -fPIC -fno-lto -Wno-error
