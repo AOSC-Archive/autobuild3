@@ -5,7 +5,7 @@ AB_FLAGS_PIC=1
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -fstack-protector-strong --param=ssp-buffer-size=4 -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer '
-CFLAGS_COMMON_OPTI_LTO='-O3 -flto ' # eq. clang -O4
+CFLAGS_COMMON_OPTI_LTO='-O2 -flto ' # eq. clang -O4
 CFLAGS_COMMON_OPTI_NOLTO='-O2 '
 CFLAGS_COMMON_DEBUG='-O '	# not that frequently used since autotools know it.
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
@@ -19,6 +19,6 @@ CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
 LDFLAGS_COMMON_OPTI='--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
-LDFLAGS_COMMON_OPTI_NOLTO='-flto -fnouse-linker-plugin '
+LDFLAGS_COMMON_OPTI_NOLTO='-flto -fno-use-linker-plugin '
 
 if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+='-fPIC ' CFLAGS_COMMON+='-fPIC '; fi 
