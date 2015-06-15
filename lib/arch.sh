@@ -1,9 +1,10 @@
 abrequire pm
 
-ARCH_FILEFINDLIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
+ARCH_FINDFILELIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
 
-arch_filefind(){
-	for i in $ARCH_FILEFINDLIST
+arch_findfile(){
+	local i
+	for i in $ARCH_FINDFILELIST
 	do
 		if [ -e $i/$1 ]
 		then
@@ -15,15 +16,16 @@ arch_filefind(){
 	return 1
 }
 
+# fuck you, how are you going to let the return values work properly?
 arch_loaddef(){
-	local rev
-	for i in $ARCH_FILEFINDLIST
+	local rev i
+	for i in $ARCH_FINDFILELIST
 	do
-		rev="$i $rev"
-	done
-	for i in $rev
-	do
-		[ -e $i/defines ] && . $i/defines
+		if [ -e $i/defines ]; then
+			. $i/defines
+		else
+			returns 127
+		fi
 	done
 }
 

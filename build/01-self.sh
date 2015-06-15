@@ -1,9 +1,9 @@
 build_self_probe(){
-	[ -f `arch_filefind build` ]
+	[ -f `arch_findfile build` ]
 }
 
 build_self_build(){
-	. `arch_filefind build`
+	. `arch_findfile build`
 	cd $SRCDIR
 }
 

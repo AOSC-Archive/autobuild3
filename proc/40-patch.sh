@@ -3,9 +3,9 @@ abrequire arch
 if [ ! -f .patch ]
 then
 
-	if [ -f `arch_filefind patch` ]
+	if [ -f `arch_findfile patch` ]
 	then
-		. `arch_filefind patch`
+		. `arch_findfile patch`
 		touch .patch
 	elif [ -f autobuild/patches/series ]
 	then
