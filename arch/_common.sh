@@ -18,7 +18,7 @@ CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 # Linker Flags.
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
-LDFLAGS_COMMON_OPTI='--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
+LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 
