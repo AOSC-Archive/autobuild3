@@ -20,6 +20,6 @@ CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
 LDFLAGS_COMMON_OPTI='--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
-LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fnouse-linker-plugin '
+LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 
 if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+='-fPIC ' CFLAGS_COMMON+='-fPIC '; fi 
