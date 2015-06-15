@@ -34,7 +34,7 @@ recsr(){
 
 recsr $AB/etc/autobuild/defaults/*
 
-readonly true=1 false=0 yes=1 no=0
+readonly true=1 false=0 yes=1 no=0 y=1 n=0 Y=1 N=0 t=1 f=0 T=1 F=0
 bool(){
 	case $1 in
 		0|f|F|false|n|N|no) return 1 ;;
