@@ -15,7 +15,7 @@ fltr_elffltr__process(){
 }
 
 fltr_elffltr(){
-	for i in {/opt/*/,usr/,}{lib{,64,exec},bin}
+	for i in $PKGDIR/{opt/*/,usr/,}{lib{,64,exec},bin,sbin}
 	do
 		[ -d "$i" ] || continue
 		pushd "$i" >/dev/null
