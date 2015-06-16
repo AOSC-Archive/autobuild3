@@ -34,7 +34,7 @@ recsr(){
 
 # PORT ab2 -> abbs -> ab3
 # TODO merge share abbs
-argprint(){ local p; for p; do print %q\  "$p"; done; }
+argprint(){ local p; for p; do printf %q\  "$p"; done; }
 recsr $AB/etc/autobuild/defaults/*
 
 readonly true=1 false=0 yes=1 no=0
