@@ -24,10 +24,11 @@ CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 # Linker Flags.
 # LDFLAGS writing helpers:
-lib_arg(){ echo -n -Wl; local arg; for arg; do echo -n }
+ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
+ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
 LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
-
+LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
 if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+='-fPIC ' CFLAGS_COMMON+='-fPIC '; fi 
