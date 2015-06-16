@@ -5,7 +5,7 @@ PM_ROOT=/
 PM_ROOTPARAM=""
 
 pm_whoprov(){
-	dpkg-query $PM_ROOTPARAM -S $1 2> /dev/null | awk '{ print $1 }' | rev | cut -b 2- | rev
+	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -S $1 2> /dev/null | awk '{ print $1 }' | rev | cut -b 2- | rev
 	# This just give a nice list of formatted dependencies.
 }
 
@@ -13,11 +13,8 @@ pm_getver(){
 	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -f '${Version}' -W $1 2>/dev/null
 }
 
-# pm_whoprov
-# Just for testing of output.
-
 pm_exist(){
-	dpkg $PM_ROOTPARAM -l $1 2>/dev/null 1>&2
+	dpkg --admindir=$PM_ROOT/var/lib/dpkg -l $1 2>/dev/null 1>&2
 }
 
 pm_checkdep(){
