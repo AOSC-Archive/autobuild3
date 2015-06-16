@@ -5,15 +5,15 @@ fileenum_fromstdin() {
 	while read -r a; do
 		[ "$a" = ":EXIT" ] && return
 		[ "$a" ] || continue
-		eval "${1//{}/$(argprint $a)}"
+		eval "${1//\{\}/$(argprint $a)}"
 	done
 }
 
 fileenum() {
-	local _IFS=$"IFS" IFS=$'\n' a
+	local _IFS=$"$IFS" IFS=$'\n' a
 	for a in $(find .)
 	do
-		IFS="$_IFS" eval "${1//{}/$(argprint $a)}"
+		IFS="$_IFS" eval "${1//\{\}/$(argprint $a)}"
 	done
 	# find . | fileenum_fromstdin "$@"
 }
