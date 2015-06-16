@@ -3,6 +3,14 @@
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
+if [ "$CROSS" ]; then
+	AB_FLAGS_TYPES+="_CROSS _CROSS_$ARCH _CROSS_BASE "
+	BUILD=${ARCH_TARGET[$ARCH]}
+	HOST=${ARCH_TARGET[$CROSS]}
+	: ${HOSTTOOLPREFIX=/opt/abcross/$CROSS/bin/$HOST}
+else
+	unset ${!BUILD@} ${!HOST@}
+fi
 # The suffix get forked in multiple ways, basically FLAG_(COMPILER|COMMON)[_TYPE][_(NO)FEATURE].
 AB_FLAGS_FEATURES_DEF="$(
 	for f in $AB_FLAGS_FEATURES; do
@@ -34,4 +42,5 @@ for ABFLAG in {LD,C{,PP,XX}}FLAGS; do
 	unset ABFLAG{,CC,TYPE,FEATURE}
 done
 CXXFLAGS="$CFLAGS $CXXFLAGS"
+CFLAGS+="$CFLAGS_WEIRD"
 unset ABCC

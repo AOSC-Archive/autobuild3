@@ -1,7 +1,8 @@
 abrequire pm
 
+# translations from dpkg representation to generic ones.
+declare -A ARCH_RPM ARCH_TARGET
 ARCH_FINDFILELIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
-
 arch_findfile(){
 	local i
 	for i in $ARCH_FINDFILELIST
@@ -39,3 +40,6 @@ arch_initcross(){
 	pm_chroot $HOSTSYSROOT
 	export PATH="$(dirname $HOSTTOOLPREFIX):$PATH"
 }
+
+arch_lib(){ echo $(arch_crossroot "$@")/usr/lib; }
+arch_crossroot() { echo /var/ab/cross-root/${1:-$CROSS}/usr/lib; }

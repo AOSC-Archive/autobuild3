@@ -2,6 +2,12 @@
 AB_FLAGS_TYPES='_OPTI _ARCH '
 AB_FLAGS_FEATURES='LTO '
 AB_FLAGS_PIC=1
+# Naming, sadly. PORT_NOTICE!
+ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
+ARCH_TARGET[armel]=armv7a-hardfloat-linux-gnueabi
+ARCH_TARGET[i386]=i686-pc-linux-gnu
+ARCH_RPM[amd64]=x86_64
+ARCH_RPM[armel]=armfhp # real story: we are using neon.
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -fstack-protector-strong --param=ssp-buffer-size=4 -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
@@ -17,6 +23,8 @@ CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 # Preprocesser Flags.
 CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 # Linker Flags.
+# LDFLAGS writing helpers:
+lib_arg(){ echo -n -Wl; local arg; for arg; do echo -n }
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
 LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
