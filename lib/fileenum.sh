@@ -1,17 +1,19 @@
 abreqexe find
 
 fileenum_fromstdin() {
-	while read a; do
-	[ "$a" = ":EXIT" ] && return
-	[ "$a" = "" ] && continue
-	eval `echo $1 | sed "s@{}@$a@g"`
+	local a
+	while read -r a; do
+		[ "$a" = ":EXIT" ] && return
+		[ "$a" ] || continue
+		eval "${1//{}/$(argprint $a)}"
 	done
 }
 
 fileenum() {
-	for i in `find .`
+	local _IFS=$"IFS" IFS=$'\n' a
+	for a in $(find .)
 	do
-		[ ! -e $i ] && continue
-		eval `echo $1 | sed "s@{}@$i@g"`
+		IFS="$_IFS" eval "${1//{}/$(argprint $a)}"
 	done
+	# find . | fileenum_fromstdin "$@"
 }

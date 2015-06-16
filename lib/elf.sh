@@ -28,10 +28,11 @@ abreqexe strip file
 
 elf_iself()
 {
-	file $1 | grep '\: ELF' > /dev/null
+	file -F $'\n' "$1" | grep -q '^ ELF' 
 }
 
 # TODO: A2, can you show me the code here?
+# are you blind?
 elf_strip()
 {
 	case "$(file -bi $1)" in
