@@ -3,13 +3,15 @@ loading_common=1
 loading_common=0
 
 loading_build=1
+[ "$CROSS" ] || loading_host=1
 . "$AB/arch/$ARCH.sh" # Loading
+[ "$CROSS" ] || loading_host=0
 loading_build=0
 
 if [ "$CROSS" ]; then
-	loading_cross=1
+	loading_host=1
 	. "$AB/arch/$CROSS.sh"
-	loading_cross=0
+	loading_host=0
 fi
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
