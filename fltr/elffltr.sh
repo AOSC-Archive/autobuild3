@@ -15,13 +15,13 @@ fltr_elffltr__process(){
 }
 
 fltr_elffltr(){
-	for i in {/opt/*,usr,}/{lib{,64,exec},bin}
+	for i in {/opt/*/,usr/,}/{lib{,64,exec},bin}
 	do
-		[ -d $i ] || continue
-		pushd $i >/dev/null
+		[ -d "$i" ] || continue
+		pushd "$i" >/dev/null
 		fileenum "fltr_elffltr__process {}"
 		popd >/dev/null
 	done
 }
 
-export ABFLTRS="$ABFLTRS elffltr"
+export ABFLTRS+=" elffltr"
