@@ -1,16 +1,5 @@
-loading_common=1
 . "$AB/arch/_common.sh"
-loading_common=0
-
-loading_build=1
-. "$AB/arch/$ARCH.sh" # Loading
-loading_build=0
-
-if [ "$CROSS" ]; then
-	loading_cross=1
-	. "$AB/arch/$CROSS.sh"
-	loading_cross=0
-fi
+. "$AB/arch/${CROSS:-$ARCH}.sh"
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
