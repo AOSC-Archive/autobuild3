@@ -3,6 +3,6 @@
 
 for i in $ABINSTALL
 do
-	. $AB/$i/lib/install.sh
+	. $AB/$i/install || aberr $i install returned $?.
 done
 
