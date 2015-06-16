@@ -3,19 +3,27 @@ abrequire elf depset pm
 elffltr_elfdep(){
 	bool $ABELFDEP || return 0
 	echo "Looking for Dependencies on $1 ..."
-	export OLD_LC_ALL=$LC_ALL
+	local OLD_LC_ALL=$LC_ALL _IFS="$IFS" IFS=$'\n' i P
 	export LC_ALL=C
-	ldd $1 | grep "not a dynamic executable" &>/dev/null && ab_dbg "Non-dynamic executable $1 sent into elfdep." && return
-	ldd $1 | grep "not found" 2>/dev/null && abwarn "↑Missing library found in $1.↑" && return
+	local lddstr="$(ldd "$1")"
+	if grep -q "not a dynamic executable" <<< "$lddstr"; then
+		ab_dbg "Non-dynamic executable $1 sent into elfdep."
+		return 1
+	fi
+	if grep -q "not found" <<< "$lddstr"; then
+		abwarn "↑Missing library found in $1.↑"
+		return 1
+	fi
 	export LC_ALL=$OLD_LC_ALL
-	for i in `ldd $1 | awk '{print $3}' | grep -v "^("`
+	for i in $(awk '{print $3}' <<< "$lddstr" | grep -v "^(")
 	do
-		i=`echo $i | sed 's@/lib64/@/lib/@g'`
-		i=`echo $i | sed 's@/\.\./lib/@/@g'`
-		P=`pm_whoprov $i`
+		IFS="$_IFS"
+		i="${i//\/lib64\//lib/}"
+		i="${i//..\/lib}"
+		P="$(pm_whoprov $i)"
 		abdbg "pm_whoprov returned ${P-null} for $i"
-		if [ "$P" != "$PKGNAME" ] && [ "$P" != "" ]; then depset_add "$P"; fi
+		if [[ "$P" && "$P" != "$PKGNAME" ]]; then depset_add "$P"; fi
 	done
 }
 
-export ABELFFLTRS="$ABELFFLTRS elfdep"
+export ABELFFLTRS+=" elfdep"
