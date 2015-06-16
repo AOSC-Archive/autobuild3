@@ -1,7 +1,6 @@
 #!/bin/bash
 # Not to be run directly.
 # TODO:	Add basic support for bashdb.
-# TODO: Better sync with abbs.
 shopt -s expand_aliases extglob
 
 declare -x ABLIBS="|base|" # GLOBAL: ABLIBS='|base[|lib1|lib2]|'
@@ -19,33 +18,22 @@ bool(){
 
 abreqexe(){
 	for i; do
-		which $i > /dev/null || abicu "Executable ‘$i’ not found."{\ Expect failures.,}
+		which $i > /dev/null || abdie "Executable ‘$i’ not found."
 	done
 }
 
 # So ugly...
-# TODO: remove hardcode.
-abloadpm(){
-	. $AB/$ABMPM/lib/pm.sh
-	ABLIBS+="pm|"	
-	echo "Loaded library pm" 1>&2
-}
 
 abloadlib(){
-	if [ "$1" = "pm" ] 
-	then
-		abloadpm
-		return $?
-	fi
 	[ -f $ABBLPREFIX/$1.sh ] || return 1
 	. $ABBLPREFIX/$1.sh
 	ABLIBS+="$1|"
-	echo "Loaded library $1" 1>&2
+	abinfo "Loaded library $1" 1>&2
 }
 
 abrequire(){
 	for i; do
-		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abdie "Library ‘$i’ not found."{\ Expect failures.,}
+		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abdie "Library ‘$i’ not found."
 	done
 }
 
