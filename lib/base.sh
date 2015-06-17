@@ -9,33 +9,34 @@ argprint(){ local p; for p; do printf %q\  "$p"; done; }
 readonly true=1 false=0 yes=1 no=0
 
 bool(){
-	case $1 in
-		0|f|F|false|n|N|no) return 1 ;;
-		1|t|T|true|y|Y|yes) return 0 ;;
+	case "$1" in
+		[0fFnN]|false|no) return 1 ;;
+		[1tTyY]|true|yes) return 0 ;;
 		*) return 2;;
 	esac
 }
 
 abreqexe(){
 	for i; do
-		which $i > /dev/null || abdie "Executable ‘$i’ not found."
+		which $i &> /dev/null || abicu "Executable ‘$i’ not found: $?."{\ Expect failures.,}
 	done
 }
-
+alias abtryexe='ABSTRICT=0 abreqexe'
 # So ugly...
 
 abloadlib(){
-	[ -f $ABBLPREFIX/$1.sh ] || return 1
-	. $ABBLPREFIX/$1.sh
+	[ -f $ABBLPREFIX/$1.sh ] || return 127
+	. $ABBLPREFIX/$1.sh || return $?
 	ABLIBS+="$1|"
 	abinfo "Loaded library $1" 1>&2
 }
 
 abrequire(){
 	for i; do
-		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abdie "Library ‘$i’ not found."
+		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load: $?."{\ Expect failures.,}
 	done
 }
+alias abtrylib='ABSTRICT=0 abrequire'
 
 ablog(){
 	if bool $ABDUMB
@@ -54,7 +55,8 @@ abicu(){
 		shift
 		abdie "$@"
 	else
-		abwarn "$1"
+		aberr "$1"
+		return 1
 	fi
 }
 

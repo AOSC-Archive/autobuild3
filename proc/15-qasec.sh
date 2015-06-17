@@ -1,4 +1,4 @@
-abrequire qa
+abtrylib qa || return
 
 if qa; then
 	qa_inset "$PKGSEC" section && abinfo "QA PASS: PKGSEC"
