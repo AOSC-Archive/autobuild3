@@ -1,21 +1,13 @@
 abreqexe grep
 
-depset_chk(){
-	(echo $PKGDEP | grep "^[\=><]$1 " > /dev/null) && return 0
-	(echo $PKGDEP | grep " [|\=><]$1\$" > /dev/null) && return 0
-	(echo $PKGDEP | grep " [|\=><]$1 " > /dev/null) && return 0
-	(echo $PKGDEP | grep "^$1 " > /dev/null) && return 0
-	(echo $PKGDEP | grep " $1\$" > /dev/null) && return 0
-	(echo $PKGDEP | grep "|$1|" > /dev/null) && return 0
-	(echo $PKGDEP | grep "|$1 " > /dev/null) && return 0
-	(echo $PKGDEP | grep "|$1\$" > /dev/null) && return 0
-	(echo $PKGDEP | grep " $1|" > /dev/null) && return 0
-	(echo $PKGDEP | grep " $1 " > /dev/null) && return 0
-	return 1
+# Checks if the current string contains the dep argv[1]
+# old eregex: grep -E "(^| )[\=><]?$1( |\$)" <<< "$PKGDEP"
+depset_contains(){
+	grep -E "(^| )[\=><]?$1( |\$)" <<< "$PKGDEP"
 }
 
 depset_add(){
-	depset_chk $1 && return 0
-	export PKGDEP="$PKGDEP $1"
-	abinfo "Added dependency $1$([ $2 ] && echo " from $2")."
+	depset_contains $1 && return 0
+	PKGDEP+=" $1"
+	abinfo "Added dependency $1$([ "$2" ] && echo from $2)."
 }
