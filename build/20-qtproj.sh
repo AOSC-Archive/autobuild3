@@ -1,17 +1,20 @@
-abreqexe qmake 
+abreqexe qmake
+
 build_qtproj_probe(){
-	[ -f *.pro ]
-}
-build_qtproj_build(){
-	# ${qmake:-qmake} # changing to other qt prefixes
+	[ -f *.pro ] || return $?
 	if bool $USEQT5; then
-		/usr/lib/qt5/bin/qmake &&
-		make && make INSTALL_ROOT=$PKGDIR install
+		QTPREFIX=/usr/lib/qt5
 	elif bool $USEQT4; then
-		/usr/lib/qt4/bin/qmake &&
-		make && make INSTALL_ROOT=$PKGDIR install
+		QTPREFIX=/usr/lib/qt4
 	else
-		abdie "Please specify a Qt version to use!"
+		abicu "Qt version unspecified."
+		QTPREFIX="$(dirname "$(dirname "$(which qmake)")")"
 	fi
+}
+
+build_qtproj_build(){
+	$QTPREFIX/bin/qmake &&
+	make $ABMK $MAKE_AFTER &&
+	make INSTALL_ROOT=$PKGDIR install
 }
 export ABBUILDS="$ABBUILDS qtproj"
