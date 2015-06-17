@@ -25,6 +25,7 @@ build_autotools_build() {
 
 	if bool $ABSHADOW
 	then
+		rm -rf build
 		mkdir -p build || abdie "Failed creating \$SRCDIR/build"
 		cd build
 	fi
