@@ -1,4 +1,4 @@
-abreqexe autoconf automake
+abtryexe autoconf automake autoreconf
 
 export FORCE_UNSAFE_CONFIGURE=1
 # SRCDIR=`pwd`
@@ -10,13 +10,15 @@ build_autotools_probe(){
 
 build_autotools_build() {
 	[ $ABSHADOW ] && export ABSHADOW
-	([ -x bootstrap ] && ! [ -e autogen.sh ]) && ln -s bootstrap autogen.sh
-	if [ ! -e configure ]; then
+	[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
+	if [ ! -x "$configure" ] || [ -e .patch ]; then
 		if [ -x autogen.sh ]; then
 			NOCONFIGURE=1 ./autogen.sh | ablog
 		elif [ -e configure.ac ]; then 
-			autoreconf -fis 2>&1 | ablog
-		fi
+			autoreconf -fis -Wcross 2>&1 | ablog
+		elif [ -e .patch ]; then
+			abwarn "Source patched but configure not regenerated."
+		fi || return $?
 	fi
 
 	if bool $ABSHADOW
