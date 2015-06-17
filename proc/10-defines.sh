@@ -8,8 +8,13 @@ abrequire arch
 
 arch_loaddef || abdie "arch_loaddef returned a non-zero value: $?." 
 
-arch_initcross
+if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ARCH == amd64 ]]
+then
+	abinfo "Detected 32subsys build."
+	CROSS=i386
+fi
 
+arch_initcross
 # PKGREL Parameter, pkg and rpm friendly
 # Test used for those who wants to override.
 # TODO foreport verlint
