@@ -22,6 +22,14 @@ abreqexe(){
 	done
 }
 alias abtryexe='ABSTRICT=0 abreqexe'
+
+abreqcmd(){
+	for i; do
+		(alias; declare -F) | /usr/bin/which -i --read-functions "$i" &> /dev/null ||
+		abicu "Command ‘$i’ not found: $?."{\ Expect failures.,}
+	done
+}
+alias abtrycmd='ABSTRICT=0 abreqcmd'
 # So ugly...
 
 abloadlib(){
@@ -52,7 +60,7 @@ abmkcomma(){ ((cnt++)) && echo -n "${ABCOMMA-, }"; }
 # hey buddy, you are dying!
 abicu(){
 	if ((ABSTRICT)); then
-		shift
+		[ "$2" ] && shift
 		abdie "$@"
 	else
 		aberr "$1"
