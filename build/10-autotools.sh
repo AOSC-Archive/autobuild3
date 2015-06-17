@@ -4,7 +4,7 @@ export FORCE_UNSAFE_CONFIGURE=1
 # SRCDIR=`pwd`
 
 build_autotools_probe(){
-	[ -x configure ] || [ -x autogen.sh ] || [ -x bootstrap ] || [ -f configure.ac ] # || [ -x $configure ]
+	[ -x "${configure=configure}" ] || [ -x autogen.sh ] || [ -x bootstrap ] || [ -f configure.ac ]
 	# Seems that you can't use it this way.
 }
 
@@ -32,7 +32,7 @@ build_autotools_build() {
 		AUTOTOOLS_CROSS=--host=$HOST
 	fi
 
-	$SRCDIR/configure $AUTOTOOLS_CROSS $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
+	$SRCDIR/$configure $AUTOTOOLS_CROSS $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
 	make $ABMK $MAKE_AFTER | ablog &&
 	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog &&
 	_ret=$?
