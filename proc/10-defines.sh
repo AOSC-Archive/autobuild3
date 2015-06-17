@@ -8,6 +8,7 @@ abrequire arch
 
 [ -e autobuild/defines ] && { arch_loaddef || abwarn "arch_loaddef returned a non-zero value." 
 } || aberr "autobuild/defines not found."
+arch_loaddef || abdie "arch_loaddef returned a non-zero value: $?." 
 
 arch_initcross
 
@@ -26,4 +27,3 @@ for i in `cat $AB/params/*`; do
 done
 
 export PYTHON=/usr/bin/python2
-

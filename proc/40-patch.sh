@@ -2,10 +2,8 @@ abrequire arch
 
 if [ ! -f .patch ]
 then
-
-	if [ -f `arch_findfile patch` ]
+	if arch_loadfile patch
 	then
-		. `arch_findfile patch`
 		touch .patch
 	elif [ -f autobuild/patches/series ]
 	then

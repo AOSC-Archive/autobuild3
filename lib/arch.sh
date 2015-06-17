@@ -14,21 +14,23 @@ arch_findfile(){
 		fi
 	done
 	echo autobuild/$1
-	return 1
+	return 127
 }
 
 # fuck you, how are you going to let the return values work properly?
-arch_loaddef(){
-	local rev i
+arch_loadfiles(){
+	local i
 	for i in $ARCH_FINDFILELIST
 	do
-		if [ -e $i/defines ]; then
-			. $i/defines
+		if [ -e $i/"$1" ]; then
+			. $i/"$1"
 		else
 			returns 127
 		fi
 	done
 }
+arch_loaddef(){ arch_loadfiles defines; }
+arch_loadfile(){ local _abarchf="$(arch_findfile "$_abarchf")" || return $?; shift; . $_abarchf "$@"; }
 
 arch_initcross(){
 	if [ -z "$CROSS" ]; then
