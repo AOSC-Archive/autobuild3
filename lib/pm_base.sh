@@ -24,7 +24,7 @@ pm_genver(){
 # depcom: Turns "$@" into a comma seperated list of deps.
 _ab_pm+="PM_{ALT,DELIM,COMMA} VER_NONE "
 pm_depcom(){
-	: ${PM_ALT=1} ${PM_DELIM= | }
+	: ${PM_ALT=1} ${PM_DELIM= | } ${PM_COMMA=, }
 	local IFS=\| dep pkg i cnt=0	# cnt_depcom: dep comma pos
 	for i; do
 		dep=($i)
