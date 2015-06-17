@@ -18,12 +18,14 @@ build_autotools_build() {
 			autoreconf -fis -Wcross 2>&1 | ablog
 		elif [ -e .patch ]; then
 			abwarn "Source patched but configure not regenerated."
+		else
+			abdie "$configure is not executable and no fallbacks found."
 		fi || return $?
 	fi
 
 	if bool $ABSHADOW
 	then
-		mkdir -p build 2> /dev/null&&
+		mkdir -p build || abdie "Failed creating \$SRCDIR/build"
 		cd build
 	fi
 	
@@ -34,12 +36,13 @@ build_autotools_build() {
 
 	$SRCDIR/$configure $AUTOTOOLS_CROSS $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
 	make $ABMK $MAKE_AFTER | ablog &&
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog &&
+	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog ||
 	_ret=$?
 	if bool $ABSHADOW
 	then
 		cd ..
 	fi
+	return $_ret
 }
 
 export ABBUILDS="$ABBUILDS autotools"
