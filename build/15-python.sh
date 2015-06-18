@@ -10,7 +10,7 @@ build_python_build(){
 	"$(bool NOPYTHON3 || which python3 || echo :)"; do
 		"$PYTHON" setup.py install $MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 || return $?
 		bool $NOPYTHONCLEAN || "$PYTHON" setup.py clean || true
-	fi
+	done
 }
 
 ABBUILDS+=python
