@@ -109,7 +109,7 @@ aosc_lib(){
 aosc_lib base
 
 aosc_lib_skip(){
-	abinfo "${1-$AOSC_SOURCE} loading skipped."
+	abwarn "${1-$AOSC_SOURCE} loading skipped."
 	return 1
 }
 alias ablibret='aosc_lib_skip $BASH_SOURCE || return 0'
