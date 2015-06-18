@@ -18,7 +18,7 @@ bool(){
 
 abreqexe(){
 	for i; do
-		which $i &> /dev/null || abicu "Executable ‘$i’ not found: $?."{\ Expect\ failures.,}
+		which $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtryexe='ABSTRICT=0 abreqexe'
@@ -26,7 +26,7 @@ alias abtryexe='ABSTRICT=0 abreqexe'
 abreqcmd(){
 	for i; do
 		(alias; declare -F) | /usr/bin/which -i --read-functions "$i" &> /dev/null ||
-		abicu "Command ‘$i’ not found: $?."{\ Expect\ failures.,}
+		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrycmd='ABSTRICT=0 abreqcmd'
@@ -41,7 +41,7 @@ abloadlib(){
 
 abrequire(){
 	for i; do
-		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load: $?."{\ Expect\ failures.,}
+		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrylib='ABSTRICT=0 abrequire'
@@ -109,7 +109,7 @@ aosc_lib(){
 aosc_lib base
 
 aosc_lib_skip(){
-	aberr "${1-$AOSC_SOURCE} loading skipped."
+	abwarn "${1-$AOSC_SOURCE} loading skipped."
 	return 1
 }
 alias ablibret='aosc_lib_skip $BASH_SOURCE || return 0'

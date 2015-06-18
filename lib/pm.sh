@@ -45,4 +45,5 @@ pm_deparse(){
 		genver $pkg
 	done
 }
-p
+. $AB/$ABMPM/lib.sh
+
