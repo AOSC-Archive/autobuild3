@@ -17,4 +17,4 @@ build_qtproj_build(){
 	make $ABMK $MAKE_AFTER &&
 	make INSTALL_ROOT=$PKGDIR install
 }
-ABBUILDS+=qtproj
+ABBUILDS+=' qtproj'

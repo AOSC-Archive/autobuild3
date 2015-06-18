@@ -9,5 +9,5 @@ build_self_build(){
 	cd $SRCDIR
 }
 
-ABBUILDS+=self
+ABBUILDS+=' self'
 # Soga...

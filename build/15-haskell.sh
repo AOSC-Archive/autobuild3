@@ -31,4 +31,4 @@ build_haskell_build(){
 	runhaskell Setup copy --destdir=$PKGDIR
 }
 
-ABBUILDS+=haskell
+ABBUILDS+=' haskell'

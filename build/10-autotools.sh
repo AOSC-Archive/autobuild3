@@ -46,4 +46,4 @@ build_autotools_build() {
 	return $_ret
 }
 
-ABBUILDS+=autotools
+ABBUILDS+=' autotools'

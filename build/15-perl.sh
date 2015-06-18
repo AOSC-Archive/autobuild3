@@ -9,4 +9,4 @@ build_perl_build(){
 	yes | make $MAKE_AFTER && 
 	make DESTDIR="$PKGDIR" install
 }
-ABBUILDS+=perl
+ABBUILDS+=' perl'

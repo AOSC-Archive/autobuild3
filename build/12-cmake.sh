@@ -22,4 +22,4 @@ build_cmake_build(){
 	fi
 	return $_ret
 }
-ABBUILDS+=cmake
+ABBUILDS+=' cmake'
