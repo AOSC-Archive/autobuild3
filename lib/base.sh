@@ -107,3 +107,9 @@ aosc_lib(){
 }
 
 aosc_lib base
+
+aosc_lib_skip(){
+	aberr "${1-$BASH_SOURCE} loading skipped."
+	return 1
+}
+alias ablibret='aosc_lib_skip || return 0'

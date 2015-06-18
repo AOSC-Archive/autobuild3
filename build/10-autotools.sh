@@ -20,7 +20,7 @@ build_autotools_build() {
 			abwarn "Source patched but configure not regenerated."
 		else
 			abdie "$configure is not executable and no fallbacks found."
-		fi || return $?
+		fi || abicu 'Reconfiguration failed: $?.'
 	fi
 
 	if bool $ABSHADOW
@@ -46,4 +46,4 @@ build_autotools_build() {
 	return $_ret
 }
 
-export ABBUILDS="$ABBUILDS autotools"
+ABBUILDS+=autotools

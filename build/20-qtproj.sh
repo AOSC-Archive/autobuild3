@@ -1,4 +1,4 @@
-abreqexe qmake
+abtryexe qmake || ablibret
 
 build_qtproj_probe(){
 	[ -f *.pro ] || return $?
@@ -17,4 +17,4 @@ build_qtproj_build(){
 	make $ABMK $MAKE_AFTER &&
 	make INSTALL_ROOT=$PKGDIR install
 }
-export ABBUILDS="$ABBUILDS qtproj"
+ABBUILDS+=qtproj

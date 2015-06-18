@@ -1,4 +1,4 @@
-abreqexe runhaskell ghc
+abtryexe runhaskell ghc || ablibret
 
 build_haskell_probe(){
 	[ -f Setup.hs ] || [ -f Setup.lhs ]
@@ -31,4 +31,4 @@ build_haskell_build(){
 	runhaskell Setup copy --destdir=$PKGDIR
 }
 
-export ABBUILDS="$ABBUILDS haskell"
+ABBUILDS+=haskell

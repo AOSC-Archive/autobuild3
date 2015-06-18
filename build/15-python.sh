@@ -1,5 +1,5 @@
-abreqexe python
-abtryexe python2 python3
+abtryexe python || ablibret
+abtryexe python2 python3 || ((!ABSTRICT)) || ablibret
 
 build_python_probe(){
 	[ -f setup.py ]
@@ -13,4 +13,4 @@ build_python_build(){
 	fi
 }
 
-export ABBUILDS="$ABBUILDS python"
+ABBUILDS+=python

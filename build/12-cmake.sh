@@ -1,7 +1,9 @@
-abreqexe cmake
+abtryexe cmake || ablibret
+
 build_cmake_probe(){
 	[ -f CMakeLists.txt ]
 }
+
 build_cmake_build(){
 	local _ret
 	: ${ABSHADOW_CMAKE=$ABSHADOW}
@@ -20,4 +22,4 @@ build_cmake_build(){
 	fi
 	return $_ret
 }
-export ABBUILDS="$ABBUILDS cmake"
+ABBUILDS+=cmake
