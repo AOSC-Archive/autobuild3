@@ -30,7 +30,8 @@ arch_loadfiles(){
 	done
 }
 arch_loaddef(){ arch_loadfiles defines; }
-arch_loadfile(){ local _abarchf="$(arch_findfile "$1")" || return $?; shift; . $_abarchf "$@"; }
+# Making assignment in local line will cause $? capturing to fail.
+arch_loadfile(){ local _abarchf; _abarchf="$(arch_findfile "$1")" || return $?; shift; . $_abarchf "$@"; }
 
 arch_initcross(){
 	if [ -z "$CROSS" ]; then
