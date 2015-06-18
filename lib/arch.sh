@@ -30,7 +30,7 @@ arch_loadfiles(){
 	done
 }
 arch_loaddef(){ arch_loadfiles defines; }
-arch_loadfile(){ local _abarchf="$(arch_findfile "$_abarchf")" || return $?; shift; . $_abarchf "$@"; }
+arch_loadfile(){ local _abarchf="$(arch_findfile "$1")" || return $?; shift; . $_abarchf "$@"; }
 
 arch_initcross(){
 	if [ -z "$CROSS" ]; then
