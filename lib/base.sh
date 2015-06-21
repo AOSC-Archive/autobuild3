@@ -5,7 +5,7 @@ shopt -s expand_aliases extglob
 
 declare -x ABLIBS="|base|" # GLOBAL: ABLIBS='|base[|lib1|lib2]|'
 
-argprint(){ local p; for p; do printf %q\  "$p"; done; }
+argprint(){ printf '%q ' "$@"; }
 readonly true=1 false=0 yes=1 no=0
 
 bool(){
@@ -88,7 +88,6 @@ abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
 abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
 ab_dbg(){ local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; }
 recsr(){ for sr in "$@"; do . $sr; done }
-argprint(){ local arg; for arg; do printf "%q " "$i"; done; }
 # Special Source, looks like stacktrace
 .(){
 	ab_dbg "Sourcing from $1:"
