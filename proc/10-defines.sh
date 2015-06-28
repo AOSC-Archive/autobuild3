@@ -18,7 +18,7 @@ arch_initcross
 # PKGREL Parameter, pkg and rpm friendly
 # Test used for those who wants to override.
 # TODO foreport verlint
-if [ !"$PKGREL" ]; then
+if [ ! "$PKGREL" ]; then
 	PKGVER=$(echo $PKGVER| rev | cut -d - -f 2- | rev)
 	PKGREL=$(echo $PKGVER | rev | cut -d - -f 1 | rev)
 	if [ "$PKGREL" == "$PKGVER" ] || [ ! "$PKGREL" ]; then PKGREL=0; fi;
