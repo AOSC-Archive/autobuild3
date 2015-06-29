@@ -1,8 +1,6 @@
 recsr $AB/filter/*.sh
 
-[ -d $PKGDIR ] || abdie "abdist not found.\n in proc/60-filter.sh"
-
-pushd $PKGDIR > /dev/null
+pushd $PKGDIR > /dev/null || return
 
 for ii in $ABFILTERS; do
 	filter_$ii
