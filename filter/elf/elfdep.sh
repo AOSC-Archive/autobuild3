@@ -1,9 +1,9 @@
 abrequire elf depset pm
 
-elffltr_elfdep(){
+filter_elf_dep(){
 	bool $ABELFDEP || return 0
 	echo "Looking for Dependencies on $1 ..."
-	local OLD_LC_ALL=$LC_ALL _IFS="$IFS" IFS=$'\n' i P
+	local OLD_LC_ALL=$LC_ALL _IFS="$IFS" IFS=$'\n' i P _libs
 	export LC_ALL=C
 	local lddstr="$(ldd "$1")"
 	if grep -q "not a dynamic executable" <<< "$lddstr"; then
@@ -15,9 +15,10 @@ elffltr_elfdep(){
 		return 1
 	fi
 	export LC_ALL=$OLD_LC_ALL
-	for i in $(awk '{print $3}' <<< "$lddstr" | grep -v "^(")
+	_libs=($(awk '{print $3}' <<< "$lddstr" | grep -v "^("))
+	IFS="$_IFS"
+	for i in "${_libs[@]}"
 	do
-		IFS="$_IFS"
 		i="${i//\/lib64\//lib/}"
 		i="${i//..\/lib}"
 		P="$(pm_whoprov $i)"
@@ -26,4 +27,4 @@ elffltr_elfdep(){
 	done
 }
 
-export ABELFFLTRS+=" elfdep"
+export ABELFFILTERS+=" elfdep"

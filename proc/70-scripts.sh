@@ -23,7 +23,5 @@ fi
 recsr $AB/scriptlet/*.sh
 
 for i in /var/ab/triggers/*; do
-	[ "`basename $i`" != "$PKGNAME" ] && $i
+	[ "$(basename "${i##.sh}")" == "$PKGNAME" ] || $i || abwarn "trigger $i: $?"
 done
-
-
