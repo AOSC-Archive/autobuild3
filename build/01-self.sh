@@ -1,11 +1,13 @@
+abtrylib arch || ablibret
+
 build_self_probe(){
 	[ -f `arch_findfile build` ]
 }
 
 build_self_build(){
-	. `arch_findfile build`
+	arch_loadfile build
 	cd $SRCDIR
 }
 
-export ABBUILDS="$ABBUILDS self"
+ABBUILDS+=' self'
 # Soga...

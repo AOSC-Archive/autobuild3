@@ -40,7 +40,6 @@ autobuild-clean(){
 }
 autobuild-plugin(){
 	ab_dbg "Called plugin bootstrap.."
-	true
 }
 
 # Plugin and external command parser

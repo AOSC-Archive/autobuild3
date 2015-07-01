@@ -5,7 +5,7 @@ shopt -s expand_aliases extglob
 
 declare -x ABLIBS="|base|" # GLOBAL: ABLIBS='|base[|lib1|lib2]|'
 
-argprint(){ local p; for p; do printf %q\  "$p"; done; }
+argprint(){ printf '%q ' "$@"; }
 readonly true=1 false=0 yes=1 no=0
 
 bool(){
@@ -18,10 +18,18 @@ bool(){
 
 abreqexe(){
 	for i; do
-		which $i &> /dev/null || abicu "Executable ‘$i’ not found: $?."{\ Expect failures.,}
+		which $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtryexe='ABSTRICT=0 abreqexe'
+
+abreqcmd(){
+	for i; do
+		(alias; declare -F) | /usr/bin/which -i --read-functions "$i" &> /dev/null ||
+		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
+	done
+}
+alias abtrycmd='ABSTRICT=0 abreqcmd'
 # So ugly...
 
 abloadlib(){
@@ -33,7 +41,7 @@ abloadlib(){
 
 abrequire(){
 	for i; do
-		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load: $?."{\ Expect failures.,}
+		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrylib='ABSTRICT=0 abrequire'
@@ -52,7 +60,7 @@ abmkcomma(){ ((cnt++)) && echo -n "${ABCOMMA-, }"; }
 # hey buddy, you are dying!
 abicu(){
 	if ((ABSTRICT)); then
-		shift
+		[ "$2" ] && shift
 		abdie "$@"
 	else
 		aberr "$1"
@@ -80,7 +88,6 @@ abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
 abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
 ab_dbg(){ local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; }
 recsr(){ for sr in "$@"; do . $sr; done }
-argprint(){ local arg; for arg; do printf "%q " "$i"; done; }
 # Special Source, looks like stacktrace
 .(){
 	ab_dbg "Sourcing from $1:"
@@ -99,3 +106,9 @@ aosc_lib(){
 }
 
 aosc_lib base
+
+aosc_lib_skip(){
+	abwarn "${1-$AOSC_SOURCE} loading skipped."
+	return 1
+}
+alias ablibret='aosc_lib_skip $BASH_SOURCE || return 0'

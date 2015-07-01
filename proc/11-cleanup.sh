@@ -7,6 +7,4 @@ if bool $ABCLEAN; then
 	rm -rf $SRCDIR/abdist
 	rm -rf $SRCDIR/abscripts
 	rm -f $SRCDIR/abspec
-else 
-	true
 fi

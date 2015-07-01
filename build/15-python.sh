@@ -1,33 +1,16 @@
-abreqexe python
+abtryexe python || ablibret
+abtryexe python2 python3 || ((!ABSTRICT)) || ablibret
 
 build_python_probe(){
 	[ -f setup.py ]
 }
 
-build_python2(){
-	python2 setup.py install --prefix=/usr --root=$PKGDIR --optimize=1
-}
-
-build_python2_clean(){
-	python2 setup.py clean
-}
-
-build_python3(){
-	python3 setup.py install --prefix=/usr --root=$PKGDIR --optimize=1
-}
-
 build_python_build(){
-	if bool $NOPYTHON2
-	then
-		build_python3
-	elif bool $NOPYTHON3
-	then
-		build_python2
-	else
-		build_python2
-		build_python2_clean
-		build_python3
-	fi
+	for PYTHON in "$(bool NOPYTHON2 || which python2 || which python || echo :)" \
+	"$(bool NOPYTHON3 || which python3 || echo :)"; do
+		"$PYTHON" setup.py install $MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 || return $?
+		bool $NOPYTHONCLEAN || "$PYTHON" setup.py clean || true
+	done
 }
 
-export ABBUILDS="$ABBUILDS python"
+ABBUILDS+=' python'

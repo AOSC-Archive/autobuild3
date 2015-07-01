@@ -1,17 +1,16 @@
-abreqexe runhaskell ghc
+abtryexe runhaskell ghc || ablibret
 
 build_haskell_probe(){
 	[ -f Setup.hs ] || [ -f Setup.lhs ]
 }
+
 build_haskell_build(){
 	echo "/usr/share/haskell/$PKGNAME/register.sh" > autobuild/postinst
-	echo "cd /usr/share/doc/ghc/html/libraries; ./gen_contents_index" >> autobuild/postinst
-	echo "cd /usr/share/doc/ghc/html/libraries; ./gen_contents_index" > autobuild/postrm
+	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" >> autobuild/postinst
+	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" > autobuild/postrm
 	# A reminder
-	if grep ^NOSTATIC=no autobuild/defines >/dev/null; then
-		true
-	else
-		echo "" >> autobuild/defines
+	if ! grep -q ^NOSTATIC=no autobuild/defines; then
+		echo "# This is Haskell" >> autobuild/defines
 		echo "NOSTATIC=no" >> autobuild/defines
 	fi
 	# Execute reminder
@@ -20,7 +19,7 @@ build_haskell_build(){
 		--enable-split-objs --enable-shared \
 		--prefix=/usr --docdir=/usr/share/doc/$PKGNAME \
 		--libsubdir=\$compiler/site-local/\$pkgid
-	runhaskell Setup build
+	runhaskell Setup build $MAKE_AFTER
 	runhaskell Setup haddock
 	runhaskell Setup register --gen-script
 	runhaskell Setup unregister --gen-script
@@ -32,4 +31,4 @@ build_haskell_build(){
 	runhaskell Setup copy --destdir=$PKGDIR
 }
 
-export ABBUILDS="$ABBUILDS haskell"
+ABBUILDS+=' haskell'
