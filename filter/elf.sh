@@ -20,7 +20,7 @@ filter_elf(){
 	do
 		[ -d "$i" ] || continue
 		pushd "$i" >/dev/null
-		fileenum "filter_elffilter__process {}"
+		fileenum "filter_elf__process {}"
 		popd >/dev/null
 	done
 }
