@@ -27,7 +27,9 @@ CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
 ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro '
-LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
+#LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
+# temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
+# investigation advised.
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
