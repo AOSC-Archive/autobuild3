@@ -1,1 +1,2 @@
+abtrycom rpmarch || . "$ABLE/rpm/lib.sh" || rpmarch(){ echo "$1"; }
 rpm $PM_ROOTPARAM -Uvh /root/rpmbuild/RPMS/$(rpmarch ${CROSS:-$ARCH})/$PKGNAME-$PKGVER-$PKGREL*.rpm

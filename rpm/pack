@@ -1,6 +1,8 @@
 #! /bin/bash
 eval unset $_ab_pm
 PM_ALT=0 VER_S=' ' VER_E=''
+abtrycom rpmarch || . "$ABLE/rpm/lib.sh" || rpmarch(){ echo "$1"; }
+
 # Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then 
 	. autobuild/pre-rpm

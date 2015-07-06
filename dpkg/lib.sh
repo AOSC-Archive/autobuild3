@@ -9,7 +9,7 @@ pm_getver(){
 	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -f '${Version}' -W $1 2>/dev/null
 }
 
-pm_exist(){
+pm_exists(){
 	dpkg $PM_ROOTPARAM -l "$@" &>/dev/null
 }
 
