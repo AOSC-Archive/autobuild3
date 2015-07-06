@@ -16,13 +16,14 @@ filter_elf__process(){
 }
 
 filter_elf(){
+	[ -d $PKGDIR ] &&
 	for i in $PKGDIR/{opt/*/,usr/,}{lib{,64,exec},bin,sbin}
 	do
 		[ -d "$i" ] || continue
 		pushd "$i" >/dev/null
 		fileenum "filter_elf__process {}"
 		popd >/dev/null
-	done
+	done || abicu "$PKGDIR not found, ELF filters are not invoked!"
 }
 
 export ABFILTERS+=" elf"

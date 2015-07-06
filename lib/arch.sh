@@ -2,14 +2,14 @@ abrequire pm
 
 # translations from dpkg representation to generic ones.
 declare -A ARCH_RPM ARCH_TARGET
-ARCH_FINDFILELIST="autobuild/cross-$ARCH-$CROSS autobuild/cross-$CROSS autobuild/$ARCH autobuild"
+ARCH_FINDFILELIST=("autobuild/cross-$ARCH-$CROSS" "autobuild/cross-$CROSS" "autobuild/$ARCH" "autobuild")
 arch_findfile(){
 	local i
-	for i in $ARCH_FINDFILELIST
+	for i in "${ARCH_FINDFILELIST[@]}"
 	do
-		if [ -e $i/$1 ]
+		if [ -e "$i/$1" ]
 		then
-			echo $i/$1
+			echo "$i/$1"
 			return 0
 		fi
 	done
@@ -19,11 +19,12 @@ arch_findfile(){
 
 # fuck you, how are you going to let the return values work properly?
 arch_loadfiles(){
-	local i
-	for i in $ARCH_FINDFILELIST
+	local _archpath _archpidx
+	for (( _archpidx = "${#ARCH_FINDFILELIST[@]}"; _archpidx; --_archpidx ))
 	do
-		if [ -e $i/"$1" ]; then
-			. $i/"$1"
+		_archpath="${ARCH_FINDFILELIST[$_archpidx]}"
+		if [ -e "$_archpath/$1" ]; then
+			. "_archpath/$1"
 		else
 			returns 127
 		fi
@@ -41,8 +42,8 @@ arch_initcross(){
 	[ "$HOSTSYSROOT" ] || HOSTSYSROOT=/var/ab/cross-root/$CROSS
 	$HOSTSYSROOT/bin/sh -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
 	pm_chroot $HOSTSYSROOT
-	export PATH="$(dirname $HOSTTOOLPREFIX):$PATH"
+	export PATH="$(dirname "$HOSTTOOLPREFIX"):$PATH"
 }
 
-arch_lib(){ echo $(arch_crossroot "$@")/usr/lib; }
-arch_crossroot() { echo /var/ab/cross-root/${1:-$CROSS}/usr/lib; }
+arch_lib(){ echo "$(arch_crossroot "$@")/usr/lib"; }
+arch_crossroot() { echo "/var/ab/cross-root/${1:-$CROSS}"; }
