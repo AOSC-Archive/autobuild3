@@ -23,14 +23,15 @@ abreqexe(){
 }
 alias abtryexe='ABSTRICT=0 abreqexe'
 
+_whichcmd(){ (alias; declare -F) | /usr/bin/which -i --read-functions "$1"; }
+which --version | grep -q GNU || _whichcmd(){ alias "$1" || declare -f "$1" || which "$1"; }
 abreqcmd(){
 	for i; do
-		(alias; declare -F) | /usr/bin/which -i --read-functions "$i" &> /dev/null ||
+		_whichcmd "$i" &> /dev/null ||
 		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrycmd='ABSTRICT=0 abreqcmd'
-# So ugly...
 
 abloadlib(){
 	[ -f $ABBLPREFIX/$1.sh ] || return 127
