@@ -93,7 +93,7 @@ recsr(){ for sr in "$@"; do . $sr; done }
 	ab_dbg "Sourcing from $1:"
 	source "$@"
 	local _ret=$? # CATCH_TRANSPARENT
-	returns $_ret || abwarn ". $(argprint "$@") returned $_ret".
+	returns $_ret || abwarn ". $(argprint "$@")returned $_ret".
 	ab_dbg "End Of $1."
 	return $_ret
 }
