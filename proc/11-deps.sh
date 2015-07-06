@@ -6,4 +6,4 @@ if ! pm_exists $FLATDEP; then
 	pm_repoupdate
 	pm_repoinstall $FLATDEP
 fi
-unset $FLATDEP
+unset FLATDEP

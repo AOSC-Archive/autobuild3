@@ -30,7 +30,7 @@ rpmscripts(){
 	for i in {pre,post}{inst,rm}; do
 		i=${i/rm/un}
 		echo "%${i%inst} -p /bin/bash"
-		cat abscripts/$i
+		cat abscripts/${i/un/rm}
 		echo
 	done
 }

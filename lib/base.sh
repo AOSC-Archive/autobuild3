@@ -44,7 +44,6 @@ abrequire(){
 	for i; do
 		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load; returned value: $?."{\ Expect\ failures.,}
 	done
-	declare -p BASH_SOURCE BASH_LINENO
 }
 alias abtrylib='ABSTRICT=0 abrequire'
 
