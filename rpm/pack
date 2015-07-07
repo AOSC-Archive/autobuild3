@@ -63,14 +63,14 @@ Release:	$PKGREL
 Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
-Group:		$(sed -f "$AB/rpm/supp/rpm-sec" <<< "$PKGSEC")
+Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC" | tee /dev/tty)
 License:	Unknown
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:	$(pm_depcom $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
-$(rpmopttag Replaces $PKGREP)
+$(rpmopttag Obsoletes $PKGREP)
 $(rpmopttag Provides $PKGPROV)
 
 %description
