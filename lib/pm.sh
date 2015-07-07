@@ -46,6 +46,6 @@ pm_deparse(){
 	done
 }
 # flattens "$@" to a simple list of package names, just like an otokonoko's..
-pm_deflat(){ VER_NONE_ALL=1 VER_NONE=1 PM_ALT=1 ABCOMMA=' ' pm_depcom "$@"; }
+pm_deflat(){ ABPM=dummy VER_NONE_ALL=1 VER_NONE=1 PM_ALT=0 PM_COMMA=' ' PM_DELIM=' ' pm_depcom "$@"; }
 . $AB/$ABMPM/lib.sh
 abtrycmd pm_{whoprov,getver,exists,repoupdate,repoinstall,chroot,getver,exists}

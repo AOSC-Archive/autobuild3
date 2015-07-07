@@ -1,7 +1,7 @@
 #! /bin/bash
 eval unset $_ab_pm
 PM_ALT=0 VER_S=' ' VER_E=''
-abtrycom rpmarch || . "$ABLE/rpm/lib.sh" || rpmarch(){ echo "$1"; }
+abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
 
 # Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then 
@@ -60,10 +60,10 @@ cat > abspec << _ab_rpm_endspec
 Name:		$PKGNAME
 Version:	${PKGVER//-/_}
 Release:	$PKGREL
-Epoch:		$PKGEPOCH
+Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
-Group:		$(sed -f $ABLE/supp/rpm-sec <<< "$PKGSEC")
+Group:		$(sed -f "$AB/rpm/supp/rpm-sec" <<< "$PKGSEC")
 License:	Unknown
 URL:		Unknown
 $(rpmreqprov)
