@@ -12,7 +12,7 @@ fi
 rpmopttag(){
 	[ "$2" ] || return
 	echo -ne "$1:\t\t"; shift
-	VER_NONE=1 pm_depcom "$@"
+	VER_NONE=${VER_NONE-1} pm_depcom "$@"
 }
 
 # Fscked-up varname.
@@ -39,17 +39,16 @@ rpmscripts(){
 # We are not going to meet any DEBIAN stuffs. The PAKMGR spec says that
 # every support wipes its own butt.
 rpmfiles(){
-	find $PKGDIR | while read i; do
-    	[[ -d "$i" && ! -L "$i" ]] && continue 
-    	# echo "$i" >&2
-    	grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
-   		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+	local _strlen_pkg="$((${#PKGDIR}+1))"
+	find "$PKGDIR" | while read i; do
+		[[ -d "$i" && ! -L "$i" ]] && continue 
+		grep -Fx "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		# If there is a space, double quote!
 		[[ $i =~ ' ' ]] && echo -n \"
-    	echo -n /
-    	printf %s "$(echo $i | cut -c 8-)"
+    		printf %s "$(echo $i | cut -c $_strlen_pkg-)"
 		[[ $i =~ ' ' ]] && echo -n \"
-    	echo
+    		echo
   	done
 }
 
@@ -83,14 +82,15 @@ true
 true
 
 %install
-rm -rf $RPM_BUILD_ROOT
-cp -ra --reflink -l $PKGDIR $RPM_BUILD_ROOT
+rm -rf "\$RPM_BUILD_ROOT"
+cp -ra --reflink -l $PKGDIR "\$RPM_BUILD_ROOT"
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf "$RPM_BUILD_ROOT"
 
 $(rpmscripts)
 
+%files
 $(rpmfiles)
 _ab_rpm_endspec
 
