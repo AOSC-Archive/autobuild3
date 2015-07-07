@@ -42,7 +42,7 @@ rpmfiles(){
 	local _strlen_pkg="$((${#PKGDIR}+1))"
 	find "$PKGDIR" | while read i; do
 		[[ -d "$i" && ! -L "$i" ]] && continue 
-		grep -Fx "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
 		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		# If there is a space, double quote!
 		[[ $i =~ ' ' ]] && echo -n \"
