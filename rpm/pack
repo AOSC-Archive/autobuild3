@@ -11,7 +11,7 @@ fi
 # Optional Tag: tagname pkgs
 rpmopttag(){
 	[ "$2" ] || return
-	echo -e "$1\t\t"; shift
+	echo -ne "$1:\t\t"; shift
 	VER_NONE=1 pm_depcom "$@"
 }
 
@@ -21,7 +21,7 @@ rpmreqprov(){
   		echo "Autoprov:		yes"
   		echo "Autoreq:		no"
 	else
-  		echo "Autoreqprov:		yes"
+  		echo "Autoreqprov:	yes"
 	fi
 }
 
@@ -63,7 +63,7 @@ Release:	$PKGREL
 Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
-Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC" | tee /dev/tty)
+Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
 License:	Unknown
 URL:		Unknown
 $(rpmreqprov)
