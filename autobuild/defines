@@ -16,12 +16,18 @@ timestamp_convert(){
   else echo "$1"
   fi
 }
-_GIT=true
-_CONTRIB=true
+_GIT=1
+_CONTRIB=1
 PKGNAME=autobuild3 # $($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
 PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
 PKGDEP="dpkg bash rpm apt coreutils"
 PKGREP="autobuild"
 PKGSEC=devel
-$_GIT && abwarn "You are packing a GIT version of autobuild.\n\tA trunk version that is not tagged is more likely to have bugs." || true
+
+if ((_GIT)); then
+	abwarn "You are packing a GIT version of autobuild.
+	A trunk version that is not tagged is more likely to have bugs."
+fi
+
+ABCLEAN=1

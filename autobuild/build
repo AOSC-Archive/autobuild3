@@ -1,7 +1,7 @@
 mkdir -p $PKGDIR/usr/lib/autobuild3
 for i in $SRCDIR/*; do [ "$i" != $SRCDIR/abdist ] && cp -ar $i $PKGDIR/usr/lib/autobuild3/; done
 mkdir -p $PKGDIR/usr/bin/ $PKGDIR/etc/autobuild
-$_CONTRIB && cp -r contrib/* $PKGDIR/usr/bin/
+((_CONTRIB)) && cp -r contrib/* $PKGDIR/usr/bin/
 rm -rf $PKGDIR/usr/lib/autobuild3/{contrib,*.md,TODO,*.tar.xz,*.deb,autobuild}
 sed -e "s/VERSION=3/VERSION=$PKGVER/g" -i $PKGDIR/usr/lib/autobuild3/ab3.sh
 # Symlinking
