@@ -21,7 +21,7 @@ CFLAGS_WEIRD=''
 # What to add for C++ Compiler Flags.
 CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 # Preprocesser Flags.
-CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
+CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 -O2'
 # Linker Flags.
 # LDFLAGS writing helpers:
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
