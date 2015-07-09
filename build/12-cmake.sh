@@ -6,17 +6,20 @@ build_cmake_probe(){
 
 build_cmake_build(){
 	local _ret
-	: ${ABSHADOW_CMAKE=$ABSHADOW}
-	if bool $ABSHADOW_CMAKE
+	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
+	if bool $ABSHADOW
 	then
 		rm -rf build
 		mkdir build || abdie "Failed creating \$SRCDIR/build"
 		cd build
 	fi
-	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER && 
-	make $ABMK $MAKE_AFTER && 
-	make DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$?
-	if bool $ABSHADOW_CMAKE
+	BUILD_START
+	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER
+	BUILD_READY
+	make $ABMK $MAKE_AFTER
+	BUILD_FINAL
+	make DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$PIPESTATUS
+	if bool $ABSHADOW
 	then
 		cd ..
 	fi

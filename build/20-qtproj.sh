@@ -13,8 +13,11 @@ build_qtproj_probe(){
 }
 
 build_qtproj_build(){
-	$QTPREFIX/bin/qmake &&
-	make $ABMK $MAKE_AFTER &&
+	BUILD_START
+	$QTPREFIX/bin/qmake
+	BUILD_READY
+	make $ABMK $MAKE_AFTER
+	BUILD_FINAL
 	make INSTALL_ROOT=$PKGDIR install
 }
 ABBUILDS+=' qtproj'
