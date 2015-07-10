@@ -17,6 +17,7 @@ bool(){
 }
 
 abreqexe(){
+	local i;
 	for i; do
 		which $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
@@ -24,14 +25,22 @@ abreqexe(){
 alias abtryexe='ABSTRICT=0 abreqexe'
 
 _whichcmd(){ (alias; declare -F) | /usr/bin/which -i --read-functions "$1"; }
-which --version | grep -q GNU || _whichcmd(){ alias "$1" || declare -f "$1" || which "$1"; }
+which --version 2>/dev/null | grep -q GNU || _whichcmd(){ alias "$1" || declare -f "$1" || which "$1"; }
 abreqcmd(){
+	local i;
 	for i; do
 		_whichcmd "$i" &> /dev/null ||
 		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrycmd='ABSTRICT=0 abreqcmd'
+
+abcmdstub(){
+	local i;
+	for i; do
+		_whichcmd "$i" &>/dev/null || alias "$i=${_ab_stub_body:-:}"
+	done
+}
 
 abloadlib(){
 	[ -f $ABBLPREFIX/$1.sh ] || return 127
@@ -41,8 +50,10 @@ abloadlib(){
 }
 
 abrequire(){
+	local i
 	for i; do
-		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load; returned value: $?."{\ Expect\ failures.,}
+		[[ $ABLIBS == *|"$i"|* ]] || abloadlib "$i" ||
+		abicu "Library ‘$i’ failed to load; returned value: $?."{" Expect Failures",}
 	done
 }
 alias abtrylib='ABSTRICT=0 abrequire'

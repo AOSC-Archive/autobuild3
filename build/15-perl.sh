@@ -1,12 +1,15 @@
 abtryexe perl || ablibret
 
 build_perl_probe(){
-	[ -f Makefile.PL ]
+	[ -f Makefile.PL ] || [ -h Makefile.PL ]
 }
 
 build_perl_build(){
-	yes | perl Makefile.PL &&
-	yes | make $MAKE_AFTER && 
+	BUILD_START
+	yes | perl Makefile.PL
+	BUILD_READY
+	yes | make $MAKE_AFTER
+	BUILD_FINAL
 	make DESTDIR="$PKGDIR" install
 }
 ABBUILDS+=' perl'
