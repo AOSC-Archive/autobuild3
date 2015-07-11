@@ -52,8 +52,7 @@ abloadlib(){
 abrequire(){
 	local i
 	for i; do
-		[[ $ABLIBS == *|"$i"|* ]] || abloadlib "$i" ||
-		abicu "Library ‘$i’ failed to load; returned value: $?."{" Expect Failures",}
+		echo $ABLIBS | grep -q "|$i|" || abloadlib $i || abicu "Library ‘$i’ failed to load; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 alias abtrylib='ABSTRICT=0 abrequire'
