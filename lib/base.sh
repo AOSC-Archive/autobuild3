@@ -52,7 +52,7 @@ abloadlib(){
 abrequire(){
 	local i
 	for i; do
-		[[ $ABLIBS == *|"$i"|* ]] || abloadlib "$i" ||
+		[[ $ABLIBS == *"|$i|"* ]] || abloadlib "$i" ||
 		abicu "Library ‘$i’ failed to load; returned value: $?."{" Expect Failures",}
 	done
 }
