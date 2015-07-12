@@ -112,3 +112,44 @@ aosc_lib_skip(){
 	return 1
 }
 alias ablibret='aosc_lib_skip $BASH_SOURCE || return 0'
+
+# shopt/set control
+# Name-encoding: Regular shopts should just use their regular names,
+# and setflags use '-o xxx' as the name.
+declare -A opt_memory
+# set_opt opt-to-set
+set_opt(){
+	[ "$1" ] || return 2
+	if ! shopt -q $1; then
+		shopt -s $1 && # natural validation
+		opt_status["$1"]=0
+	fi
+}
+# rec_opt [opts-to-recover ...]
+rec_opt(){
+	local _opt
+	if [ -z "$1" ]; then
+		rec_opt "${!opt_memory[@]}"
+	elif [ "$1" == '-o' ]; then
+		rec_opt "${!opt_memory[@]/#!(-o*)/_skip}"
+	elif [ "$1" == '+o' ]; then
+		rec_opt "${!opt_memory[@]/#-o*/_skip}"
+	else
+		for _opt; do
+			[ "$_opt" == _skip ] && continue
+			case "${opt_memory[$_opt]}" in
+				(0)	uns_opt "$_opt";;
+				(1)	set_opt "$_opt";;
+				(*)	abwarn "Invaild memory $_opt: '${opt_memory[$_opt]}'"; unset opt_memory["$_opt"];;
+			esac
+		done
+	fi
+}
+# uns_opt opt-to-unset
+uns_opt(){
+	[ "$1" ] || return 2
+	if shopt -q $1; then
+		shopt -s $1 && # natural validation
+		opt_status["$1"]=1
+	fi
+}
