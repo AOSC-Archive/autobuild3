@@ -1,3 +1,4 @@
+touch "$SRCDIR/autobuild/conffiles"
 for i in $ABMPM $ABAPMS; do
 	. $AB/$i/pack || aberr $i packing returned $?.
 done

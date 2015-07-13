@@ -19,16 +19,16 @@ arch_findfile(){
 
 # fuck you, how are you going to let the return values work properly?
 arch_loadfiles(){
-	local _archpath _archpidx
+	local _archpath _archpidx _archokay=0
 	for (( _archpidx = "${#ARCH_FINDFILELIST[@]}"; _archpidx; --_archpidx ))
 	do
 		_archpath="${ARCH_FINDFILELIST[$_archpidx]}"
 		if [ -e "$_archpath/$1" ]; then
-			. "_archpath/$1"
-		else
-			returns 127
+			. "$_archpath/$1"
+			_archokay=1
 		fi
 	done
+	(( _archokay )) || return 127
 }
 arch_loaddef(){ arch_loadfiles defines; }
 # Making assignment in local line will cause $? capturing to fail.

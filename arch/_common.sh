@@ -6,6 +6,7 @@ AB_FLAGS_PIC=1
 ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
 ARCH_TARGET[armel]=armv7a-hardfloat-linux-gnueabi
 ARCH_TARGET[i386]=i686-pc-linux-gnu
+ARCH_TARGET[mipsel]=mips64el-linux-gnuabin32
 ARCH_RPM[amd64]=x86_64
 ARCH_RPM[armel]=armfhp # real story: we are using neon.
 # C Compiler Flags.
@@ -21,7 +22,7 @@ CFLAGS_WEIRD=''
 # What to add for C++ Compiler Flags.
 CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 # Preprocesser Flags.
-CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 '
+CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 -O2'
 # Linker Flags.
 # LDFLAGS writing helpers:
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }

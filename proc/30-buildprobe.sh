@@ -1,4 +1,4 @@
-if ! [ "$ABTYPE" ]; then
+if [ -z "$ABTYPE" ]; then
 	for i in $ABBUILDS; do
 		# build are all plugins now.
 		if build_${i}_probe; then
@@ -8,4 +8,6 @@ if ! [ "$ABTYPE" ]; then
 	done
 fi
 
-[ ! "$ABTYPE" ] && abdie "Cannot determine build type." || true
+if [ -z "$ABTYPE" ]; then
+	abdie "Cannot determine build type."
+fi

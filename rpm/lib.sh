@@ -1,6 +1,5 @@
 abreqexe rpm zypper
 ABSTRICT=0 abrequire arch || abwarn RPM archname translation disabled. Expect errors with names.
-rpmarch(){ echo "${ARCH_RPM[$1]-$1}"; }
 
 pm_chroot(){
 	export PM_ROOT=$1

@@ -27,4 +27,4 @@ filter_elf_elfdep(){
 	done
 }
 
-export ABELFFILTERS+=" elfdep"
+export ABELFFILTERS+=" dep"

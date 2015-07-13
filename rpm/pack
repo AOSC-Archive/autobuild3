@@ -1,6 +1,8 @@
 #! /bin/bash
 eval unset $_ab_pm
 PM_ALT=0 VER_S=' ' VER_E=''
+abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
+
 # Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then 
 	. autobuild/pre-rpm
@@ -9,8 +11,8 @@ fi
 # Optional Tag: tagname pkgs
 rpmopttag(){
 	[ "$2" ] || return
-	echo -e "$1\t\t"; shift
-	VER_NONE=1 depcom "$@"
+	echo -ne "$1:\t\t"; shift
+	VER_NONE=${VER_NONE-1} pm_depcom "$@"
 }
 
 # Fscked-up varname.
@@ -19,7 +21,7 @@ rpmreqprov(){
   		echo "Autoprov:		yes"
   		echo "Autoreq:		no"
 	else
-  		echo "Autoreqprov:		yes"
+  		echo "Autoreqprov:	yes"
 	fi
 }
 
@@ -28,7 +30,7 @@ rpmscripts(){
 	for i in {pre,post}{inst,rm}; do
 		i=${i/rm/un}
 		echo "%${i%inst} -p /bin/bash"
-		cat abscripts/$i
+		cat abscripts/${i/un/rm}
 		echo
 	done
 }
@@ -37,17 +39,16 @@ rpmscripts(){
 # We are not going to meet any DEBIAN stuffs. The PAKMGR spec says that
 # every support wipes its own butt.
 rpmfiles(){
-	find $PKGDIR | while read i; do
-    	[[ -d "$i" && ! -L "$i" ]] && continue 
-    	# echo "$i" >&2
-    	grep "^$i\$" "$SRCDIR/autobuild/conffiles" && echo "%config"
-   		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+	local _strlen_pkg="$((${#PKGDIR}+1))"
+	find "$PKGDIR" | while read i; do
+		[[ -d "$i" && ! -L "$i" ]] && continue 
+		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		# If there is a space, double quote!
 		[[ $i =~ ' ' ]] && echo -n \"
-    	echo -n /
-    	printf %s "$(echo $i | cut -c 8-)"
+    		printf %s "$(echo $i | cut -c $_strlen_pkg-)"
 		[[ $i =~ ' ' ]] && echo -n \"
-    	echo
+    		echo
   	done
 }
 
@@ -58,17 +59,17 @@ cat > abspec << _ab_rpm_endspec
 Name:		$PKGNAME
 Version:	${PKGVER//-/_}
 Release:	$PKGREL
-Epoch:		$PKGEPOCH
+Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
-Group:		$(sed -f $ABLE/supp/rpm-sec <<< "$PKGSEC")
+Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
 License:	Unknown
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires:	$(depcom $PKGDEP)
+Requires:	$(pm_depcom $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
-$(rpmopttag Replaces $PKGREP)
+$(rpmopttag Obsoletes $PKGREP)
 $(rpmopttag Provides $PKGPROV)
 
 %description
@@ -81,20 +82,20 @@ true
 true
 
 %install
-rm -rf $RPM_BUILD_ROOT
-cp -ra --reflink -l $PKGDIR $RPM_BUILD_ROOT
+rm -rf "\$RPM_BUILD_ROOT"
+cp -ra --reflink -l $PKGDIR "\$RPM_BUILD_ROOT"
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf "$RPM_BUILD_ROOT"
 
 $(rpmscripts)
 
+%files
 $(rpmfiles)
 _ab_rpm_endspec
 
-genspec > abspec
 rpmbuild $([ "$CROSS" ] && rpmarch $CROSS) -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ] ; then
 	. autobuild/post-rpm
 fi
-eval unset $_ab_pm
+# eval unset $_ab_pm

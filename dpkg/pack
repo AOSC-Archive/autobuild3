@@ -1,12 +1,12 @@
 #!/bin/bash
 # dpkg field helper.
 _ab_pm_func+='dpkgfield dpkgpkgver dpkgctrl '
-dpkgfield(){ echo -ne "$1: "; shift; depcom "$@"; echo; }
+dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
 dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
 	echo "Package: $PKGNAME"
-	echo "Version: $(pkgver)"
+	echo "Version: $PKGVER"
 	echo "Architecture: ${CROSS-$ARCH}"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"

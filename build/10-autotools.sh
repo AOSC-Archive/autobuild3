@@ -9,7 +9,8 @@ build_autotools_probe(){
 }
 
 build_autotools_build() {
-	[ $ABSHADOW ] && export ABSHADOW
+	export ABSHADOW
+
 	[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
 	if [ ! -x "$configure" ] || [ -e .patch ]; then
 		if [ -x autogen.sh ]; then
@@ -30,15 +31,20 @@ build_autotools_build() {
 		cd build
 	fi
 	
-	if [ "x$CROSS" != "x" ]
+	if [ "$CROSS" ]
 	then
-		AUTOTOOLS_CROSS=--host=$HOST
+		AUTOTOOLS_TARGET="--host=$HOST"
 	fi
 
-	$SRCDIR/$configure $AUTOTOOLS_CROSS $AUTOTOOLS_DEF $AUTOTOOLS_AFTER  | ablog &&
-	make $ABMK $MAKE_AFTER | ablog &&
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog ||
-	_ret=$?
+	BUILD_START
+	$SRCDIR/$configure $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+
+	BUILD_READY
+	make $ABMK $MAKE_AFTER | ablog
+
+	BUILD_FINAL
+	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog || _ret=$?
+
 	if bool $ABSHADOW
 	then
 		cd ..
