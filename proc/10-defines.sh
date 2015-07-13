@@ -18,18 +18,21 @@ arch_initcross
 # PKGREL Parameter, pkg and rpm friendly
 # Test used for those who wants to override.
 # TODO foreport verlint
+# TODO verlint backwriting when ((!PROGDEFINE)).
+# TODO automate $PKG* namespace and remove abbs `spec`
 if [ ! "$PKGREL" ]; then
 	PKGVER=$(echo $PKGVER| rev | cut -d - -f 2- | rev)
 	PKGREL=$(echo $PKGVER | rev | cut -d - -f 1 | rev)
 	if [ "$PKGREL" == "$PKGVER" ] || [ ! "$PKGREL" ]; then PKGREL=0; fi;
 fi
 
-if [ -d $AB/spec ]; then
-	recsr $AB/spec/*.sh
-fi
+# Programmable modules should be put here.
+arch_loadfile functions
 
+# TODO validate variable existance
 for i in `cat $AB/params/*`; do
 	export $i
 done
 
 export PYTHON=/usr/bin/python2
+
