@@ -39,15 +39,15 @@ rpmscripts(){
 # We are not going to meet any DEBIAN stuffs. The PAKMGR spec says that
 # every support wipes its own butt.
 rpmfiles(){
-	local _strlen_pkg="$((${#PKGDIR}+1))"
+	local _strlen_pkg="${#PKGDIR}"
 	find "$PKGDIR" | while read i; do
 		[[ -d "$i" && ! -L "$i" ]] && continue 
 		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
 		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		# If there is a space, double quote!
-		[[ $i =~ ' ' ]] && echo -n \"
-    		printf %s "$(echo $i | cut -c $_strlen_pkg-)"
-		[[ $i =~ ' ' ]] && echo -n \"
+		[[ "$i" == *' '* ]] && echo -n \"
+		printf %s "${i:_strlen_pkg}"
+		[[ "$i" == *' '* ]] && echo -n \"
     		echo
   	done
 }
