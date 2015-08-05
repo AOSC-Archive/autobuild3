@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # abrepoarchive: default autobuild settings for os3-repo archiving
 # THIS SCRIPT IS INTENDED FOR USE INSIDE AUTOBUILD, WITH EXPORTED VATIABLES, LIKE AB, ARCH.
 # SYNTAX: autobuild abrepoarchive PKGNAME PKGVER PKGREL

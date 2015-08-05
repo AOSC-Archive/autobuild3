@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 [ "$1" != "" ] && _list=$1 || _list=./ab_batch
 
 _pwd=$PWD

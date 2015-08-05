@@ -30,7 +30,7 @@ group(){
 _ABEOF
 }
 
-echo "#! /bin/bash" > abscripts/usergroup
+echo "#!/bin/bash" > abscripts/usergroup
 chmod 755 abscripts/usergroup
 
 if [ -e autobuild/usergroup ]; then

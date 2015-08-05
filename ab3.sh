@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Basic environment declarations
 export VERSION=3

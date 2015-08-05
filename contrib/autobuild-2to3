@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # SYNOPSIS:
 #+autobuild verconv
 . $AB/ab3.sh plugin

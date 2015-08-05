@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # SYNOPSIS: 
 # autobuild deb2rpm
 . $AB/proc/10-defines.sh
