@@ -165,3 +165,20 @@ uns_opt(){
 		opt_status["$1"]=1
 	fi
 }
+
+# USEOPT/NOOPT control
+boolopt(){
+	local t="$1"
+	declare -n n u
+	t="${f##NO_}"
+	u="USE$t" n="NO$t"
+	if ((n)); then
+		return 1
+	elif ((u)); then
+		return 0
+	elif [[ "$t" == NO_* ]]
+		return 1
+	else
+		return 0
+	fi
+}
