@@ -9,7 +9,7 @@ filter_elf_dep(){
 		abicu "Missing library found in $1."
 		return 1
 	fi
-	lddstr="${lddstr//(!(\)))}"
+	lddstr="${lddstr//${p//(*([^)]))}}"
 	filter_elf_dep_libs+=($(IFS=' '; while read -r _1 _2 _3 __; do echo "$_3"; done <<< "$lddstr"))
 	IFS="$_IFS"
 }
