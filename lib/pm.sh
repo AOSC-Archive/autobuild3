@@ -45,5 +45,7 @@ pm_deparse(){
 		genver $pkg
 	done
 }
+# dumpver: dumps a dpkg-ab-lish verstring.
+pm_dumpver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n $PKGVER; ((PKGREL)) && echo -n -$PKGREL; }
 . $AB/$ABMPM/lib.sh
 
