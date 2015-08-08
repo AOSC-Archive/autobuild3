@@ -1,5 +1,5 @@
 # Still, let's use ABMK. MAKEFLAGS should be in defines.
-: ${ABTHREADS=$(( $(nproc) * 2 + 1))}
+: ${ABTHREADS=$(( $(nproc) + 1))}
 if bool $NOPARALLEL; then
 	abwarn "Parallel build DISABLED, get a cup of coffee, now!"
 fi
