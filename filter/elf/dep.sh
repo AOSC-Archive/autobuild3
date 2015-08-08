@@ -1,6 +1,6 @@
 abrequire elf depset pm
 
-filter_elf_elfdep(){
+filter_elf_dep(){
 	bool $ABELFDEP || return 0
 	echo "Looking for Dependencies on $1 ..."
 	local OLD_LC_ALL=$LC_ALL _IFS="$IFS" IFS=$'\n' i P _libs

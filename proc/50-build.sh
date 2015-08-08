@@ -1,14 +1,15 @@
 arch_loadfile prepare
 
 for build_func in build_{start,ready,final}; do
-	abcmdstub "$i"
-	alias "${i^^}=_ret=\$PIPESTATUS
+	abcmdstub "$build_func"
+	alias "${build_func^^}=_ret=\$PIPESTATUS
 	if ((_ret)); then
 		bool ABSHADOW && cd ..
 		return \$_ret
 	fi
-	echo $i | ablog
-	$i || abwarn '$i: \$?'"
+	echo $build_func | ablog
+	$build_func || abwarn '$build_func: \$?'"
+	alias "${build_func^^}"
 done
 
 build_${ABTYPE}_build || abicu "Build failed: $?."

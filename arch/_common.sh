@@ -1,6 +1,6 @@
 # Common archdef for all ab arches, unsettable so the flags can be erased.
 AB_FLAGS_TYPES='_OPTI _ARCH '
-AB_FLAGS_FEATURES='LTO '
+AB_FLAGS_FEATURES='LTO PERMISSIVE '
 AB_FLAGS_PIC=1
 # Naming, sadly. PORT_NOTICE!
 ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
@@ -11,6 +11,7 @@ ARCH_RPM[amd64]=x86_64
 ARCH_RPM[armel]=armfhp # real story: we are using neon.
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -fstack-protector-strong --param=ssp-buffer-size=4 -Wno-error '
+CFLAGS_COMMON_PERMISSIVE="-fpermissive "
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
 CFLAGS_COMMON_OPTI_LTO='-flto '
 CFLAGS_COMMON_DEBUG='-O '	# not that frequently used since autotools know it.
