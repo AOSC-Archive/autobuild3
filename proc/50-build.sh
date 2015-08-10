@@ -9,7 +9,6 @@ for build_func in build_{start,ready,final}; do
 	fi
 	echo $build_func | ablog
 	$build_func || abwarn '$build_func: \$?'"
-	alias "${build_func^^}"
 done
 
 build_${ABTYPE}_build || abicu "Build failed: $?."
