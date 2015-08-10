@@ -1,0 +1,3 @@
+[submodule ".githubwiki"]
+	path = .githubwiki
+	url = https://github.com/AOSC-Dev/autobuild3.wiki.git
