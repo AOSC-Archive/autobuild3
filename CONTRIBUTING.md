@@ -36,6 +36,11 @@ ab/defines: bumping to version v0.1.4
 
 Issues and PRs: #17, #18, #24, #11, AOSC-Dev/abbs#4, ......
 
+<!-- Oh yes you can make it like this: -->
+- #17: a short title
+- #18: a manually shortened title
+- #24: ...
+
 Major Changes:
 
 - Deprecated use of `USEQT4`, ........
