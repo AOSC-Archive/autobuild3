@@ -4,7 +4,7 @@ for build_func in build_{start,ready,final}; do
 	abcmdstub "$build_func"
 	alias "${build_func^^}=_ret=\$PIPESTATUS
 	if ((_ret)); then
-		bool ABSHADOW && cd ..
+		bool \$ABSHADOW && cd ..
 		return \$_ret
 	fi
 	echo $build_func | ablog
