@@ -1,126 +1,101 @@
-#!/bin/bash
+#! /bin/bash
+eval unset $_ab_pm
+PM_ALT=0 VER_S=' ' VER_E=''
+abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
 
 # Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then 
 	. autobuild/pre-rpm
 fi
 
-# RPM spec generation.
-genspec(){
-	echo "Name:           $PKGNAME"
-	echo "Version:        $(echo "$PKGVER" | sed 's/-/./g')"
-	echo "Release:        $PKGREL"
-
-	[ "$PKGEPOCH" ] && echo "Epoch:          $PKGEPOCH"
-
-	echo "Summary:        $PKGDES"
-	echo
-	echo "Group:          `echo $PKGSEC | sed -f $AB/rpm/rep-sec`"
-	echo "License:        Unknown"
-	echo "URL:            Unknown"
-
-	if bool $ABRPMAUTOPROVONLY; then
-		echo "Autoprov:       yes"
-		echo "Autoreq:        no"
-	else
-		echo "Autoreqprov:    yes"
-	fi
-
-	echo "BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)"
-	[ "x$RPMEXTRAPROVIDE" != "x" ] || [ "x$PKGPROV" != "x" ] && printf "\nProvides:       "
-	abcommaprint $RPMEXTRAPROVIDE $PKGPROV $PKGPROV_RPM
-
-	if [ "$PKGDEP" ]; then
-		printf "\nRequires:       "
-		FIRST=true
-		for i in $PKGDEP $PKGDEP_RPM $PKGRECOM_RPM; do
-			if $FIRST
-			then
-				FIRST=false
-			else
-				printf " , "
-			fi
-	  		if echo $i | grep '|' >/dev/null; then
-		  		printf $i
-	  			elif echo $i | grep '^=' > /dev/null; then
-	  			i2=`echo $i | cut -c 2-`
-  				printf "$i2 = `pm_getver $i2`"
-	  		elif echo $i | grep '^<' > /dev/null; then
-  				i2=`echo $i | cut -c 2-`
-  				printf "$i2 <= `pm_getver $i2`"
-	  		else
-  				printf "$i >= `pm_getver $i`"
-	  		fi
-		done
-	fi # PKGDEP
-
-	if [ "$PKGCONFL" ]; then
-		printf "\nConflicts:       "
-		abcommaprint $PKGCONFL $PKGCONFL_RPM
-	fi
-
-	if [ "$PKGREP" ]; then
-		printf "\nObsoletes:       "
-		abcommaprint $PKGREP $PKGREP_RPM
-	fi
-
-	echo 
-	echo "%description"
-	echo "$PKGDES"echo 
-	echo "%prep"
-	echo "true"
-	echo 
-	echo "%build"
-	echo "true"
-	echo 
-	echo "%install"
-	echo 'rm -rf $RPM_BUILD_ROOT'
-	echo "cp -ra `pwd`/abdist "'$RPM_BUILD_ROOT'
-	echo 'rm -rf $RPM_BUILD_ROOT/DEBIAN'
-	echo 
-	echo "%clean"
-	echo 'rm -rf $RPM_BUILD_ROOT'
-	echo 
-	echo "%post -p /bin/bash"
-	cat `pwd`/abscripts/postinst 2>/dev/null || true
-	echo 
-	echo "%postun -p /bin/bash"
-	cat `pwd`/abscripts/postrm 2>/dev/null || true
-	echo 
-	echo "%pre -p /bin/bash"
-	cat `pwd`/abscripts/usergroup 2>/dev/null || true
-	cat `pwd`/abscripts/preinst 2>/dev/null || true
-	echo 
-	echo "%preun -p /bin/bash"
-	cat `pwd`/abscripts/prerm 2>/dev/null || true
-	echo 
-	echo "%files"
-
-	# field Syntax: [otherDirectives] %defattr(octMode,owner,group) /path/to/file/
-	# Is it possible to do attr merging or shall we assign some defaults so as to 
-	# shorten the spec?
-	find abdist | {
-		while read i; do
-			[ -d "$i" ] && [ ! -L "$i" ] && continue 
-			echo $i | grep ^abdist/DEBIAN >/dev/null && continue
-
-			if [ -e $SRCDIR/autobuild/conffiles ]; then
-				echo "%config `grep $(echo $i | cut -c 7-) $SRCDIR/autobuild/conffiles`"
-			else
-				true
-			fi
-
-			echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
-			# The `cut -c 8-' step is like `cut -c $((${#PKGDIR}+2)) if we use 
-			# `find "$PKGDIR"'.
-			echo "\"/$(echo $i | cut -c 8-)\"" # TODO reverse glob
-		done
-	}
+# Optional Tag: tagname pkgs
+rpmopttag(){
+	[ "$2" ] || return
+	echo -ne "$1:\t\t"; shift
+	VER_NONE=${VER_NONE-1} pm_depcom "$@"
 }
 
-genspec > abspec
-[ "$CROSS" = "armel" ] && RPM_CROSS="--target armhfp"
-rpmbuild $RPM_CROSS -bb abspec || aberr "RPM PACKING FAILED."
+# Fscked-up varname.
+rpmreqprov(){
+	if bool $ABRPMAUTOPROVONLY; then
+  		echo "Autoprov:		yes"
+  		echo "Autoreq:		no"
+	else
+  		echo "Autoreqprov:	yes"
+	fi
+}
+
+# There should NOT be any errors.
+rpmscripts(){
+	for i in {pre,post}{inst,rm}; do
+		i=${i/rm/un}
+		echo "%${i%inst} -p /bin/bash"
+		cat abscripts/${i/un/rm}
+		echo
+	done
+}
+
+# Files, list, boom!
+# We are not going to meet any DEBIAN stuffs. The PAKMGR spec says that
+# every support wipes its own butt.
+rpmfiles(){
+	local _strlen_pkg="${#PKGDIR}"
+	find "$PKGDIR" | while read i; do
+		[[ -d "$i" && ! -L "$i" ]] && continue 
+		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
+		# If there is a space, double quote!
+		[[ "$i" == *' '* ]] && echo -n \"
+		printf %s "${i:_strlen_pkg}"
+		[[ "$i" == *' '* ]] && echo -n \"
+    		echo
+  	done
+}
+
+# RPM spec generation.
+cat > abspec << _ab_rpm_endspec
+# Generated automatically by autobuild on $(LANG=C date)
+# This is made to ask rpm to pack from built binary.
+Name:		$PKGNAME
+Version:	${PKGVER//-/_}
+Release:	$PKGREL
+Epoch:		${PKGEPOCH=0}
+Summary:	$PKGDES
+
+Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
+License:	Unknown
+URL:		Unknown
+$(rpmreqprov)
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Requires:	$(pm_depcom $PKGDEP)
+$(rpmopttag Conflicts $PKGCONFL)
+$(rpmopttag Obsoletes $PKGREP)
+$(rpmopttag Provides $PKGPROV)
+
+%description
+$PKGDES
+
+%prep
+true
+
+%build
+true
+
+%install
+rm -rf "\$RPM_BUILD_ROOT"
+cp -ra --reflink -l $PKGDIR "\$RPM_BUILD_ROOT"
+
+%clean
+rm -rf "$RPM_BUILD_ROOT"
+
+$(rpmscripts)
+
+%files
+$(rpmfiles)
+_ab_rpm_endspec
+
+rpmbuild $([ "$CROSS" ] && rpmarch $CROSS) -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ] ; then
-. autobuild/post-rpm
+	. autobuild/post-rpm
 fi
+# eval unset $_ab_pm

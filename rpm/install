@@ -1,1 +1,2 @@
-rpm $PM_ROOTPARAM -Uvh /root/rpmbuild/RPMS/x86_64/$PKGNAME-$PKGVER-$PKGREL*.rpm
+abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
+rpm $PM_ROOTPARAM -Uvh /root/rpmbuild/RPMS/$(rpmarch ${CROSS:-$ARCH})/$PKGNAME-$PKGVER-$PKGREL*.rpm
