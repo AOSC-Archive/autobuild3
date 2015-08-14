@@ -90,7 +90,7 @@ true
 
 %install
 rm -rf "\$RPM_BUILD_ROOT"
-cp -ra --reflink -l $PKGDIR "\$RPM_BUILD_ROOT"
+cp -ra $PKGDIR "\$RPM_BUILD_ROOT"
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
