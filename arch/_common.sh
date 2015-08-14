@@ -1,5 +1,5 @@
 # Common archdef for all ab arches, unsettable so the flags can be erased.
-AB_FLAGS_TYPES='_OPTI _ARCH '
+AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 AB_FLAGS_PIC=1
 # Naming, sadly. PORT_NOTICE!
@@ -19,11 +19,16 @@ CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
 CFLAGS_CLANG_OPTI_LTO='-O4 '
 # C Specific Flags.
-CFLAGS_WEIRD=''
+CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
 CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
+CXXFLAGS_COMMON_WEIRD=''
 # Preprocesser Flags.
 CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 -O2'
+# OBJC Flags.
+OBJCFLAGS_COMMON_WEIRD=''
+# OBJCXX Flags.
+OBJCXXFLAGS_COMMON_WEIRD=''
 # Linker Flags.
 # LDFLAGS writing helpers:
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
