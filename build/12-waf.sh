@@ -4,7 +4,7 @@ build_waf_probe(){
 	[ -f waf ]
 }
 
-build_cmake_build(){
+build_waf_build(){
 	local _ret
 	BUILD_START
         python2 waf ${WAF_DEF} ${WAF_AFTER}
