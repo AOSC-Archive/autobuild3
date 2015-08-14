@@ -6,7 +6,7 @@ dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) 
 
 dpkgctrl(){
 	echo "Package: $PKGNAME"
-	echo "Version: $PKGVER"
+	echo "Version: $(dpkgpkgver)"
 	echo "Architecture: ${CROSS-$ARCH}"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
