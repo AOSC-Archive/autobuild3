@@ -8,7 +8,10 @@ _ab_pm+="OP_{EQ,LE,GE} VER_{S,E} "
 pm_genver(){
 	local store IFS ver name
 	: ${OP_EQ== } ${OP_LE=<= } ${OP_GE=>= } ${VER_S= (} ${VER_E=)}
-	if [[ "$1" =~ [\<\>=]= ]] && ((VER_NONE_ALL)); then			# nameOP[ver] -> name OP_ ver
+	if ((VER_NONE_ALL)); then			# name-only
+		name="${1/%_}"
+		echo "${name/[<>=]=}"; return
+	elif [[ "$1" =~ [\<\>=]= ]]; then		# nameOP[ver] -> name OP_ ver
 		IFS="$BASH_REMATCH"	# split string using OP
 		store=($1)
 		name=${store[0]} ver=${store[2]}	# constexpr store[${#IFS}]
@@ -36,7 +39,7 @@ pm_depcom(){
 pm_deparse(){
 	local cnt=0			# cnt_deparse: dep delim pos
 	if (( !PM_ALT && ${#dep[@]}>1 )); then
-		warn "$ABPM doesn't support dependency alternative listing.\n\t" \
+		abwarn "$ABPM doesn't support dependency alternative listing.\n\t" \
 			"Using first dependency: $dep."
 		pm_genver ${dep[0]}; return;
 	fi
