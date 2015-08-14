@@ -2,19 +2,22 @@ abtryexe qmake || ablibret
 
 build_qtproj_probe(){
 	[ -f *.pro ] || return $?
+	[ "$QT_SELECT" ] || 
 	if bool $USEQT5; then
-		QTPREFIX=/usr/lib/qt5
+		abwarn "\$USEQT5 is now deprecated. Use QT_SELECT=5."
+		QT_SELECT=qt5
 	elif bool $USEQT4; then
-		QTPREFIX=/usr/lib/qt4
+		abwarn "\$USEQT4 is now deprecated. Use QT_SELECT=4."
+		QT_SELECT=qt4
 	else
-		abicu "Qt version unspecified."
-		QTPREFIX="$(dirname "$(dirname "$(which qmake)")")"
+		abicu "Qt version unspecified => default."
+		QT_SELECT=default
 	fi
 }
 
 build_qtproj_build(){
 	BUILD_START
-	$QTPREFIX/bin/qmake
+	"$QTPREFIX/bin/qmake"
 	BUILD_READY
 	make $ABMK $MAKE_AFTER
 	BUILD_FINAL
