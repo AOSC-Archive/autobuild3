@@ -18,10 +18,10 @@ rpmopttag(){
 # Fscked-up varname.
 rpmreqprov(){
 	if bool $ABRPMAUTOPROVONLY; then
-  		echo "Autoprov:		yes"
-  		echo "Autoreq:		no"
+			echo "Autoprov:		yes"
+			echo "Autoreq:		no"
 	else
-  		echo "Autoreqprov:	yes"
+			echo "Autoreqprov:	yes"
 	fi
 }
 
@@ -40,16 +40,23 @@ rpmscripts(){
 # every support wipes its own butt.
 rpmfiles(){
 	local _strlen_pkg="${#PKGDIR}"
+	# Question: Shall we just use -type f?
 	find "$PKGDIR" | while read i; do
-		[[ -d "$i" && ! -L "$i" ]] && continue 
+		[[ -d "$i" && ! -L "$i" ]] && continue
 		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
-		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
-		# If there is a space, double quote!
-		[[ "$i" == *' '* ]] && echo -n \"
-		printf %s "${i:_strlen_pkg}"
-		[[ "$i" == *' '* ]] && echo -n \"
-    		echo
-  	done
+		echo "%attr($(stat --printf %a,%U,%G "$i"),-)"
+		rpm_transform "${i:_strlen_pkg}"
+	done
+}
+
+rpm_transform(){
+	# backslashes should be processed first
+	# The doc guy seems to forgot the spaces.
+	# If a line like a\ file\ with\ spaces works in RPM, then this is correct.
+	local p="$1" j badchar=(\\ \" \' \| \* \? . ' ') # Wait, why literal dots?
+	for j in "${badchar[@]}"; do p="${p//$j/\\$j}"; done
+	# RPM guys, again, forgot the % stuffs.
+	echo "\"${p//%/%%}\""
 }
 
 # RPM spec generation.
