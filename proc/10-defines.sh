@@ -29,10 +29,8 @@ fi
 # Programmable modules should be put here.
 arch_loadfile functions
 
-# TODO validate variable existance
-for i in `cat $AB/params/*`; do
+for i in `cat $AB/env_cfgs/*`; do
 	export $i
 done
 
 export PYTHON=/usr/bin/python2
-

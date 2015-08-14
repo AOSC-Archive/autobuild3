@@ -176,7 +176,7 @@ boolopt(){
 		return 1
 	elif ((u)); then
 		return 0
-	elif [[ "$t" == NO_* ]]
+	elif [[ "$t" == NO_* ]]; then
 		return 1
 	else
 		return 0

@@ -1,39 +1,20 @@
-# TODO: forward port changes made in AOSC-Dev/autobuild
+#!/bin/bash
 
+# user LOGIN UID GID HOME COMMENT SHELL [GROUPS..]
 user(){
-	cat >> abscripts/usergroup << _ABEOF
-	if grep ^$1: /etc/passwd >/dev/null
-	then
-		true
-	else
-		useradd -c "$5" -g $3 -d $4 -u $2 -s $6 $1 -m
-	fi
-_ABEOF
-	N=$1
+	echo "grep -q '^$1:' /etc/passwd || useradd $(dumparg -u "$2" -g "$3" -d "$4"  -c "$5" -s "$6" "$1" -m)" >> abscripts/preinst
+	local N=$1
 	shift 6
-	for i
-	do
-		cat >> abscripts/usergroup << _ACEOF
-		usermod -a -G $i $N
-_ACEOF
-	done
+	for i; do echo "usermod -a -G '$i' '$N'" >> abscripts/preinst; done
 }
 
+# group NAME GID
 group(){
-	cat >> abscripts/usergroup << _ABEOF
-	if grep ^$1: /etc/group >/dev/null
-	then
-		true
-	else
-		groupadd -g $2 $1
-	fi
-_ABEOF
+	echo "grep -q '^$1:' /etc/passwd || groupadd $(dumparg -g "$2" "$1")" >> abscripts/preinst
 }
-
-echo "#!/bin/bash" > abscripts/usergroup
-chmod 755 abscripts/usergroup
-
-if [ -e autobuild/usergroup ]; then
+if [ -e autobuild/usergroup ]
+then
+	echo '# usergroup' >> abscripts/preinst
 	. autobuild/usergroup
 fi
 

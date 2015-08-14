@@ -1,4 +1,5 @@
-abreqexe rpm
+abreqexe rpm zypper
+ABSTRICT=0 abrequire arch || abwarn RPM archname translation disabled. Expect errors with names.
 
 pm_chroot(){
 	export PM_ROOT=$1
@@ -6,19 +7,18 @@ pm_chroot(){
 }
 
 pm_getver(){
-	rpm $PM_ROOTPARAM -qi $1 | grep 'Version' | awk '{ print $3 }' 2>/dev/null
+	rpm $PM_ROOTPARAM -q $1 --qf '%{EPOCH}:%{VERSION}-${RELEASE}' 2>/dev/null
 }
 
-pm_checkdep(){
-	rpm $PM_ROOTPARAM -q $* 2>/dev/null 1>&2
+pm_exists(){
+	rpm $PM_ROOTPARAM -q "$@" &>/dev/null
 }
+
+pm_repoupdate(){ zypper ref -f; }
 
 pm_repoinstall(){
-	if ! rpm $PM_ROOTPARAM -qa $BUILDDEP $PKGDEP; then
-		zypper ref -f
-		zypper -n install $BUILDDEP $PKGDEP
-	fi
+	zypper -n install "$@"
 }
 
-# pm_whoprov
+pm_whoprov(){ rpm $PM_ROOTPARAM -q --whatprovides "$1" --qf '%{NAME}'; }
 # Just for testing of output.
