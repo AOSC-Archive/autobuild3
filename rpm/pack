@@ -54,9 +54,9 @@ rpm_transform(){
 	# The doc guy seems to forgot the spaces.
 	# If a line like a\ file\ with\ spaces works in RPM, then this is correct.
 	local p="$1" j badchar=(\\ \" \' \| \* \? . ' ') # Wait, why literal dots?
-	for j in "${badchar[@]}"; do p="${p//$j/\\$j}"; done
+	for j in "${badchar[@]}"; do p="${p//'$j'/\\$j}"; done
 	# RPM guys, again, forgot the % stuffs.
-	echo "\"${p//%/%%}\""
+	echo "\"${p//\%/%%}\""
 }
 
 # RPM spec generation.
