@@ -44,7 +44,7 @@ rpmfiles(){
 	find "$PKGDIR" | while read i; do
 		[[ -d "$i" && ! -L "$i" ]] && continue
 		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
-		echo "%attr($(stat --printf %a,%U,%G "$i"),-)"
+		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		rpm_transform "${i:_strlen_pkg}"
 	done
 }
