@@ -5,5 +5,5 @@ if bool $NOPARALLEL; then
 	export MAKEFLAGS=
 else
 	abinfo "Parallel build ENABLED"
-	export MAKEFLAGS="-j $(( $(nproc) * 2 + 1))"
+	export MAKEFLAGS="-j$(( $(nproc) + 1))"
 fi
