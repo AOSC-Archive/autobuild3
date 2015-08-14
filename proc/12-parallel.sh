@@ -20,9 +20,9 @@ if boolopt CCACHE && ((!ab_distccpump)) && _which ccache &>/dev/null; then
 fi
 # Final merge.
 if ((ab_distcc)) && ! bool $NOPARALLEL; then
-	export CC="distcc $CC" CXX="distcc $CXX"
+	export CC="distcc $CC" CXX="distcc $CXX" OBJC="distcc $OBJC" OBJCXX="distcc $OBJCXX"
 elif ((ab_ccache)); then
-	export CC="ccache $CC" CXX="ccache $CXX"
+	export CC="ccache $CC" CXX="ccache $CXX" OBJC="ccache $OBJC" OBJCXX="ccache $OBJCXX"
 fi
 # I don't think someone would be unlucky enough to use the same names. Not unset.
 bool $NOPARALLEL || ABMK+=" -j$ABTHREADS "	
