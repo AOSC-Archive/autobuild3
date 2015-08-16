@@ -10,7 +10,7 @@ user(){
 
 # group NAME GID
 group(){
-	echo "grep -q '^$1:' /etc/passwd || groupadd $(agrprint -g "$2" "$1")" >> abscripts/preinst
+	echo "grep -q '^$1:' /etc/group || groupadd $(argprint -g "$2" "$1")" >> abscripts/preinst
 }
 if [ -e autobuild/usergroup ]
 then
