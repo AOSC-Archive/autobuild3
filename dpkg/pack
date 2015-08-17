@@ -44,7 +44,7 @@ DPKG_ARCH="${CROSS-$ARCH}"
 
 mkdir -p $PKGDIR/DEBIAN
 cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
-cp -l $SRCDIR/autobuild/conffile $PKGDIR/DEBIAN 2>/dev/null
+cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 dpkgctrl > $PKGDIR/DEBIAN/control &&
 dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg

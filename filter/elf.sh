@@ -1,9 +1,6 @@
 abrequire fileenum elf
 
-for i in $AB/filter/elf/*.sh
-do
-	. "$i"
-done
+recsr $AB/filter/elf/*.sh
 
 filter_elf__process(){
 	local _elf_f
@@ -16,14 +13,17 @@ filter_elf__process(){
 }
 
 filter_elf(){
-	[ -d $PKGDIR ] &&
-	for i in $PKGDIR/{opt/*/,usr/,}{lib{,64,exec},bin,sbin}
+	local _elf_f _elf_cmd
+	for _elf_f in $ABELFFILTER; do _elf_cmd=filter_elf_${_elf_f}_pre; ! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?"; done
+	set_opt nullglob # Force existing(nullglob) directories(/).
+	for i in "$PKGDIR"/{[o]pt/*/,[u]sr/,}{[l]ib{,64,exec},{s,}[b]in}/
 	do
-		[ -d "$i" ] || continue
-		pushd "$i" >/dev/null
+		cd "$i"
 		fileenum "filter_elf__process {}"
-		popd >/dev/null
-	done || abicu "$PKGDIR not found, ELF filters are not invoked!"
+	done
+	cd "$PKGDIR"
+	for _elf_f in $ABELFFILTER; do _elf_cmd=filter_elf_${_elf_f}_post; ! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?"; done
+	rec_opt nullglob
 }
 
 export ABFILTERS+=" elf"

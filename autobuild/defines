@@ -16,13 +16,13 @@ timestamp_convert(){
   else echo "$1"
   fi
 }
-_GIT=1
-_CONTRIB=1
-PKGNAME=autobuild3 # $($_GIT && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
+[ -e .git ] && : ${_GIT=1}
+: ${AB_CONTRIB=1}
+PKGNAME=autobuild3$(((_GIT)) && echo "-git-$(git branch 2>/dev/null | grep '*' | sed 's/*\ //g')")
 PKGVER=3.$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))
 PKGDES="Automatic package building tool."
-PKGDEP="dpkg bash rpm apt coreutils"
 PKGRECOM="distcc ccache"
+PKGDEP="dpkg bash rpm apt coreutils autotools spdx-licenses"
 PKGREP="autobuild"
 PKGSEC=devel
 

@@ -11,7 +11,6 @@ ARCH_RPM[amd64]=x86_64
 ARCH_RPM[armel]=armfhp # real story: we are using neon.
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -fstack-protector-strong --param=ssp-buffer-size=4 -Wno-error '
-CFLAGS_COMMON_PERMISSIVE="-fpermissive "
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
 CFLAGS_COMMON_OPTI_LTO='-flto '
 CFLAGS_COMMON_DEBUG='-O '	# not that frequently used since autotools know it.
@@ -23,12 +22,14 @@ CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
 CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 CXXFLAGS_COMMON_WEIRD=''
+CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
 CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 -O2'
 # OBJC Flags.
 OBJCFLAGS_COMMON_WEIRD=''
 # OBJCXX Flags.
 OBJCXXFLAGS_COMMON_WEIRD=''
+OBJCXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Linker Flags.
 # LDFLAGS writing helpers:
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }

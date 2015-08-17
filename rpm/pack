@@ -44,7 +44,7 @@ rpmfiles(){
 	find "$PKGDIR" | while read i; do
 		[[ -d "$i" && ! -L "$i" ]] && continue
 		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
-		echo "%attr($(stat --printf %a,%U,%G "$i"),-)"
+		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		rpm_transform "${i:_strlen_pkg}"
 	done
 }
@@ -54,9 +54,9 @@ rpm_transform(){
 	# The doc guy seems to forgot the spaces.
 	# If a line like a\ file\ with\ spaces works in RPM, then this is correct.
 	local p="$1" j badchar=(\\ \" \' \| \* \? . ' ') # Wait, why literal dots?
-	for j in "${badchar[@]}"; do p="${p//$j/\\$j}"; done
+	for j in "${badchar[@]}"; do p="${p//'$j'/\\$j}"; done
 	# RPM guys, again, forgot the % stuffs.
-	echo "\"${p//%/%%}\""
+	echo "\"${p//\%/%%}\""
 }
 
 # RPM spec generation.
@@ -70,7 +70,7 @@ Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
 Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
-License:	Unknown
+License:	$(abcommaprint "${PKGLICENSE[@]}")
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -90,7 +90,7 @@ true
 
 %install
 rm -rf "\$RPM_BUILD_ROOT"
-cp -ra --reflink -l $PKGDIR "\$RPM_BUILD_ROOT"
+cp -ra $PKGDIR "\$RPM_BUILD_ROOT"
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
