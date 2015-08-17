@@ -70,7 +70,7 @@ Epoch:		${PKGEPOCH=0}
 Summary:	$PKGDES
 
 Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
-License:	$(abcommaprint "${PKGLICENSE[@]}")
+License:	$(abcommaprint "${PKGLICENSE[@]:-Unknown}")
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
