@@ -74,7 +74,7 @@ License:	$(abcommaprint "${PKGLICENSE[@]}")
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires:	$(pm_depcom $PKGDEP)
+$(VER_NONE=0 rpmopttag Requires $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
 $(rpmopttag Obsoletes $PKGREP)
 $(rpmopttag Provides $PKGPROV)
