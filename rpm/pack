@@ -66,7 +66,7 @@ cat > abspec << _ab_rpm_endspec
 Name:		$PKGNAME
 Version:	${PKGVER//-/_}
 Release:	$PKGREL
-Epoch:		${PKGEPOCH=0}
+$(rpmopttag Epoch $PKGEPOCH)
 Summary:	$PKGDES
 
 Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
