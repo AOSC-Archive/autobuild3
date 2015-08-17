@@ -14,7 +14,7 @@ fi
 
 declare -A _license_exception
 while IFS=$'\t' read LicenseGlob ExceptionID discard; do
-	[[ LicenseGlob != #* ]] || continue
+	[[ LicenseGlob != \#* ]] || continue
 	_license_exception["$ExceptionID"]="$LicenseGlob"
 done < /usr/share/spdx-licenses/exception
 
