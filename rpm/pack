@@ -78,6 +78,7 @@ $(VER_NONE=0 rpmopttag Requires $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
 $(rpmopttag Obsoletes $PKGREP)
 $(rpmopttag Provides $PKGPROV)
+$(rpmopttag Suggests $PKGSUG)
 
 %description
 $PKGDES

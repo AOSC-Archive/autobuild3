@@ -18,6 +18,7 @@ dpkgctrl(){
 	[ "$PKGREP" ] && dpkgfield Replaces $PKGREP
 	[ "$PKGCONFL" ] && dpkgfield Conflicts $PKGCONFL
 	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides $PKGPROV
+	[ "$PKGSUG" ] && dpkgfield Suggests $PKGSUG
 	[ "$PKGBREAK" ] && dpkgfield Breaks $PKGBREAK
 	echo "$DPKGXTRACTRL"
 }
