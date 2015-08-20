@@ -23,7 +23,7 @@ CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
 CXXFLAGS_COMMON_WEIRD=''
 CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
-CPPFLAGS_COMMON='-D_FORTIFY_SOURCE=2 -O2'
+CPPFLAGS_COMMON='-O2 '
 # OBJC Flags.
 OBJCFLAGS_COMMON_WEIRD=''
 # OBJCXX Flags.
@@ -46,3 +46,4 @@ if ((AB_FLAGS_PIE)); then LDFLAGS_COMMON+='-fPIE -pie ' CFLAGS_COMMON+='-fPIE -p
 if ((AB_FLAGS_SSP)); then CFLAGS_COMMON+='-fstack-protector-strong --param=ssp-buffer-size=4 '; fi
 if ((AB_FLAGS_RRO)); then LDFLAGS_COMMON+='-Wl,-z,relro '; fi
 if ((AB_FLAGS_NOW)); then LDFLAGS_COMMON+='-Wl,-z,now '; fi
+if ((AB_FLAGS_FTF)); then CPPFLAGS_COMMON+='-D_FORTIFY_SOURCE=2 '; fi
