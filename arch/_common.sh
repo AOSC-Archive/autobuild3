@@ -2,6 +2,7 @@
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 AB_FLAGS_PIC=1
+AB_FLAGS_PIE=1
 # Naming, sadly. PORT_NOTICE!
 ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
 ARCH_TARGET[armel]=armv7a-hardfloat-linux-gnueabi
@@ -34,7 +35,7 @@ OBJCXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # LDFLAGS writing helpers:
 ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
 ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
-LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro -Wl,-z,now'
+LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed,-z,relro -Wl,-z,now '
 #LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 # temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
 # investigation advised.
@@ -42,3 +43,4 @@ LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
 if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+='-fPIC ' CFLAGS_COMMON+='-fPIC '; fi 
+if ((AB_FLAGS_PIE)); then LDFLAGS_COMMON+='-fPIE -pie ' CFLAGS_COMMON+='-fPIE -pie '; fi
