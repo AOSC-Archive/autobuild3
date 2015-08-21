@@ -7,7 +7,7 @@ then
 		touch .patch
 	elif [ -f autobuild/patches/series ]
 	then
-		for i in `cat autobuild/patches/series`; do
+		for i in $(grep -v '#' autobuild/patches/series); do
 			patch -Np1 -i autobuild/patches/$i
 		done
 		touch .patch
