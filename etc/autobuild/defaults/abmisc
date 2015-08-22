@@ -18,3 +18,7 @@ ABCLEAN=yes
 
 # Hug pkg-config and CMake configurations?
 NOLIBTOOL=yes
+
+# Parallelism, the default value is an equation depending on the number of processors.
+# $ABTHREADS will take any integer larger than 0.
+ABTHREADS=$(( $(nproc) + 1))
