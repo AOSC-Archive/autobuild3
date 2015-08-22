@@ -1,4 +1,3 @@
-# Still, let's use ABMK. MAKEFLAGS should be in defines.
 if bool $NOPARALLEL; then
 	abwarn "Parallel build DISABLED, get a cup of coffee, now!"
 fi
@@ -24,4 +23,4 @@ elif ((ab_ccache)); then
 	export CC="ccache $CC" CXX="ccache $CXX" OBJC="ccache $OBJC" OBJCXX="ccache $OBJCXX"
 fi
 # I don't think someone would be unlucky enough to use the same names. Not unset.
-bool $NOPARALLEL || ABMK+=" -j$ABTHREADS "
+bool $NOPARALLEL || export MAKEFLAGS+=" -j$ABTHREADS "
