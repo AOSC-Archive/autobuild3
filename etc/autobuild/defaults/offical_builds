@@ -1,6 +1,6 @@
 # Compiling configurator configurations (yes!)
 AUTOTOOLS_DEF="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --bindir=/usr/bin --sbindir=/usr/bin --disable-option-checking --disable-static --disable-debug --enable-shared"
-CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=/etc"
+CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=/etc -DCMAKE_SKIP_RPATH=ON"
 WAF_DEF="--prefix=/usr --configdir=/etc"
 QTPROJ_DEF="PREFIX=/usr"
 
