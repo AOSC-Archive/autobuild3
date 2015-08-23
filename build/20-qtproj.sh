@@ -17,7 +17,7 @@ build_qtproj_probe(){
 
 build_qtproj_build(){
 	BUILD_START
-	"$QTPREFIX/bin/qmake"
+	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER
 	BUILD_READY
 	make $ABMK $MAKE_AFTER
 	BUILD_FINAL
