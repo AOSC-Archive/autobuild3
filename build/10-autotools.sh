@@ -41,6 +41,13 @@ build_autotools_build() {
 
 	BUILD_START
 	$SRCDIR/$configure $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+	# QUIRK: a bug found in most GNOME packages.
+	if bool $ABSHADOW
+	then
+	        sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' $SRCDIR/build/libtool
+	else
+		sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+	fi
 
 	BUILD_READY
 	make $ABMK $MAKE_AFTER | ablog
