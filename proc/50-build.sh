@@ -8,7 +8,17 @@ for build_func in build_{start,ready,final}; do
 		return \$_ret
 	fi
 	echo $build_func | ablog
-	$build_func || abwarn '$build_func: \$?'"
+	$build_func || abwarn '$build_func: \$?'
+	for _quirk in \$PKGQUIRKS; do
+		if [[ _quirk == */ ]]; then
+			[[ _quirk == ${build_func/#build_}/* ]] || continue
+		else
+			_quirk=${build_func/#build_}/\$_quirk
+		fi
+		if [ -e \"\$AB/quirks/\$_quirk\" ]; then
+			. \"\$AB/quirks/\$_quirk\"
+		fi
+	done"
 done
 
 build_${ABTYPE}_build || abicu "Build failed: $?."

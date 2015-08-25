@@ -1,0 +1,4 @@
+# https://bugzilla.gnome.org/show_bug.cgi?id=655517
+cp libtool libtool_
+sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool_
+mv libtool_ libtool
