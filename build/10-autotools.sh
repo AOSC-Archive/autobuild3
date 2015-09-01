@@ -40,7 +40,7 @@ build_autotools_build() {
 	fi
 
 	BUILD_START
-	$SRCDIR/$configure $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+	$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
 
 	BUILD_READY
 	make $ABMK $MAKE_AFTER | ablog
