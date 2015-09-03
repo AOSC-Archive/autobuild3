@@ -10,8 +10,8 @@ alternative(){ while [ "$1" ]; do addalt "$1" "$(basename "$1")" "$2" "$3"; shif
 
 if [ -e autobuild/alternatives ]
 then
-	echo "# alternatives" >> $PKGDIR/postinst
-	echo "# alternatives" >> $PKGDIR/prerm
+	echo "# alternatives" >> abscripts/postinst
+	echo "# alternatives" >> abscripts/prerm
 	. autobuild/alternatives
 fi
 
