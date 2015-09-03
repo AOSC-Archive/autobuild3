@@ -1,8 +1,8 @@
 # a more precise one
 # addalt link name path prio
 addalt(){
-	echo "update-alternatives --install $(argprint "$@")" >> $PKGDIR/postinst
-	echo "update-alternatives --remove $(argprint "$2" "$3")" >> $PKGDIR/prerm
+	echo "update-alternatives --install $(argprint "$@")" >> abscripts/postinst
+	echo "update-alternatives --remove $(argprint "$2" "$3")" >> abscripts/prerm
 }
 
 # alternative path link prio [path2 link2 prio2 ..]
