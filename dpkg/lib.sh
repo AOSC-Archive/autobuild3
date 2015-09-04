@@ -10,7 +10,7 @@ pm_getver(){
 }
 
 pm_exists(){
-	dpkg $PM_ROOTPARAM -l "$@" &>/dev/null
+	dpkg $PM_ROOTPARAM -l "$@" | grep ^ii &>/dev/null
 }
 
 pm_repoupdate(){
