@@ -5,9 +5,10 @@ AB_FLAGS_FEATURES='LTO PERMISSIVE '
 ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
 ARCH_TARGET[armel]=armv7a-hardfloat-linux-gnueabi
 ARCH_TARGET[i386]=i686-pc-linux-gnu
-ARCH_TARGET[mipsel]=mips64el-linux-gnuabin32
+ARCH_TARGET[mipsn32el]=mips64el-linux-gnuabin32
 ARCH_RPM[amd64]=x86_64
 ARCH_RPM[armel]=armfhp # real story: we are using neon.
+ARCH_RPM[mipsn32el]=mips64el
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
