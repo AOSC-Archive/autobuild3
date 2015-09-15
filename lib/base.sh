@@ -134,7 +134,7 @@ set_opt(){
 	[ "$1" ] || return 2
 	if ! shopt -q $1; then
 		shopt -s $1 && # natural validation
-		opt_status["$1"]=0
+		opt_memory["$1"]=0
 	fi
 }
 # rec_opt [opts-to-recover ...]
@@ -162,7 +162,7 @@ uns_opt(){
 	[ "$1" ] || return 2
 	if shopt -q $1; then
 		shopt -s $1 && # natural validation
-		opt_status["$1"]=1
+		opt_memory["$1"]=1
 	fi
 }
 
