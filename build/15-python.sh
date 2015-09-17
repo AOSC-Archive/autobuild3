@@ -7,8 +7,8 @@ build_python_probe(){
 
 build_python_build(){
 	BUILD_START
-	for PYTHON in "$(bool NOPYTHON2 || which python2 || which python || echo)" \
-	"$(bool NOPYTHON3 || which python3 || echo)"; do
+	for PYTHON in "$(bool $NOPYTHON2 || which python2 || which python || echo)" \
+	"$(bool $NOPYTHON3 || which python3 || echo)"; do
 		[ "$PYTHON" ] || continue
 		if bool $USE_PYTHON_BUILD_FIRST; then
 			BUILD_READY
