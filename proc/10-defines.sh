@@ -1,3 +1,4 @@
+# TODO: we may have to split this file. PKG/SRCDIR defs should be in ab3.sh.
 export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
 
@@ -5,6 +6,8 @@ export PKGDIR="$PWD/abdist"
 recsr $AB/etc/autobuild/defaults/*
 
 abrequire arch
+. "$AB/arch/_common.sh"
+. "$AB/arch/${CROSS:-$ARCH}.sh"
 
 arch_loaddef || abdie "arch_loaddef returned a non-zero value: $?." 
 

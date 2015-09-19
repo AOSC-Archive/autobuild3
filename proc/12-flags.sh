@@ -1,5 +1,3 @@
-. "$AB/arch/_common.sh"
-. "$AB/arch/${CROSS:-$ARCH}.sh"
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
