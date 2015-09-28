@@ -43,12 +43,13 @@ autobuild-plugin(){
 }
 
 # Plugin and external command parser
-if [ $1 ]; then PATH="$AB/contrib:$PATH"
-	PLUG="$1"; shift
+if [ "$1" ]; then
+	PATH="$AB/contrib:$PATH" PLUG="$1"
+	shift
 	ab_dbg "Starting autobuild-$PLUG"
-	autobuild-${PLUG} "$@"
+	"autobuild-$PLUG" "$@"
 	_ret=$?
-	[ "$_ret" == 0 ] || aberr "autobuild-$PLUG returned ${_ret}."
+	((!_ret)) || aberr "autobuild-$PLUG returned ${_ret}."
 	exit $_ret
 fi
 
