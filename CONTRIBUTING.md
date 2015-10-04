@@ -19,6 +19,10 @@ with a blank line as spacing so git (and hub) will take it as descriptions.
 Sign-Off should NOT be used in regular commits or you are flooding our
 Channel.
 
+Using camelCase instead of slashes, or using historical / commonly-accepted
+forms of words like `fltr` instead of `filter`, or other ways like `libarch`
+instead of `lib/arch` is acceptable. The `.sh` suffix is not necessary.
+
 Workflow
 --------
 
