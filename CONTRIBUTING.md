@@ -6,6 +6,8 @@ autobuild3 follows some issue-driven development.
 Issues
 ------
 
+First of all, update to the latest tag. If it doesn't work, update to Git master.
+
 Write descriptive text, give nice (better if minimal) reproductions for bugs
 and good documentation for pending features.
 
