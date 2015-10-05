@@ -41,10 +41,3 @@ LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed '
 LDFLAGS_COMMON_OPTI_LTO='-flto -fuse-linker-plugin '
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
-# Switches for hardening related flags.
-if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+='-fPIC ' CFLAGS_COMMON+='-fPIC '; fi
-if ((AB_FLAGS_PIE)); then LDFLAGS_COMMON+='-fPIE -pie ' CFLAGS_COMMON+='-fPIE '; fi
-if ((AB_FLAGS_SSP)); then CFLAGS_COMMON+='-fstack-protector-strong --param=ssp-buffer-size=4 '; fi
-if ((AB_FLAGS_RRO)); then LDFLAGS_COMMON+='-Wl,-z,relro '; fi
-if ((AB_FLAGS_NOW)); then LDFLAGS_COMMON+='-Wl,-z,now '; fi
-if ((AB_FLAGS_FTF)); then CPPFLAGS_COMMON+='-D_FORTIFY_SOURCE=2 '; fi

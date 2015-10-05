@@ -1,6 +1,9 @@
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
+
+. "$AB/arch/_common_switches.sh"
+
 if [ "$CROSS" ]; then
 	AB_FLAGS_TYPES+="_CROSS _CROSS_$ARCH _CROSS_BASE "
 	BUILD=${ARCH_TARGET[$ARCH]}
