@@ -1,5 +1,5 @@
 ##AUTOBUILD TRIGGER SCRIPT HEADER
-# I'm a stand-along script.
+# I'm a standalone script.
 # (No) Not an autobuild lib!
 
 # EXPORT FUNCTION trigger::interest
