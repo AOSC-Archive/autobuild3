@@ -25,7 +25,10 @@ fi
 # ARCH Translation for older versions of ab. Going to use x86_64 as main arch name instead of amd64. (Future pacman compatibility)
 [ "$ARCH" == amd64 ] && ARCH=x86_64
 prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
-mvln(){ mv "$1" "$2" || aberr "Move from [$1] to [$2] failed."; ln -s "$2" "$1" || aberr "Link from [$1] to [$2] failed."; }
+mvln(){	# not using cp -s because we want the main part to be in the target
+	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed."
+	ln -s "$2" "$1" || aberr "Link from [$1] to [$2] failed."
+}
 
 # regex match
 if [ "$TREE" == 1 ];
