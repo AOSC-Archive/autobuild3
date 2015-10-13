@@ -1,3 +1,6 @@
+#!/bin/bash
+##filter/elf/lib.sh: Adds dependencies according to ldd output
+##@license GPL-2.0+
 abrequire elf depset pm
 
 filter_elf_dep(){

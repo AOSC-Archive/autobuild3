@@ -1,3 +1,6 @@
+#!/bin/bash
+##15-haskell.sh: Builds Haskell stuffs
+##@license GPL-2.0+
 abtryexe runhaskell ghc || ablibret
 
 build_haskell_probe(){

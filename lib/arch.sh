@@ -1,3 +1,6 @@
+#!/bin/bash
+##arch.sh: archtecture support code.
+##@license GPL-2.0+
 abrequire pm
 
 # translations from dpkg representation to generic ones.

@@ -1,3 +1,6 @@
+#!/bin/bash
+# build/00-self.sh: Invokes `build` defs.
+##@license GPL-2.0+
 abtrylib arch || ablibret
 
 build_self_probe(){

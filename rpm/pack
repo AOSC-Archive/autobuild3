@@ -1,4 +1,6 @@
-#! /bin/bash
+#!/bin/bash
+##rpm/pack: Makes an rpm package.
+##@license GPL-2.0+
 eval unset $_ab_pm
 PM_ALT=0 VER_S=' ' VER_E=''
 abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }

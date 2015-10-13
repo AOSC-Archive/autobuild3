@@ -1,4 +1,6 @@
 #!/bin/bash
+# ab3.sh: the starting point
+##@license GPL-2.0+
 
 # Basic environment declarations
 export VERSION=3

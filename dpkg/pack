@@ -1,4 +1,6 @@
 #!/bin/bash
+##dpkg/pack: Makes a dpkg package.
+##@license GPL-2.0+
 # dpkg field helper.
 _ab_pm_func+='dpkgfield dpkgpkgver dpkgctrl '
 dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }

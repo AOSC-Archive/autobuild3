@@ -1,3 +1,6 @@
+#!/bin/bash
+##dpkg/lib.sh: What dpkg should provide to the abstraction as a package manager
+##@license GPL-2.0+
 abreqexe dpkg dpkg-deb dpkg-query apt-get
 
 pm_whoprov(){

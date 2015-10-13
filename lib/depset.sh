@@ -1,3 +1,6 @@
+#!/bin/bash
+##depset.sh: The dependency set (unique unordered array)
+##@license GPL-2.0+
 # Checks if the current string contains the dep argv[1]
 # Pollutes: BASH_REMATCH, consider rewrite in extglob.
 depset_contains(){

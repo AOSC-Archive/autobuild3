@@ -1,3 +1,6 @@
+#!/bin/bash
+##proc/filter.sh: Now we run the filters
+##@license GPL-2.0+
 recsr $AB/filter/*.sh
 
 pushd $PKGDIR > /dev/null || return

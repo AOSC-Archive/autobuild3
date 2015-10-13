@@ -1,3 +1,6 @@
+#!/bin/bash
+##15-perl.sh: Builds Makefile.PL stuffs
+##@license GPL-2.0+
 abtryexe perl || ablibret
 
 build_perl_probe(){

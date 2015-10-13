@@ -1,4 +1,6 @@
-# Common archdef for all ab arches, unsettable so the flags can be erased.
+#!/bin/bash
+##arch/_common.sh: Common arch defs for all ab arches, defines-mutable.
+##@license GPL-2.0+
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 # Naming, sadly. PORT_NOTICE!

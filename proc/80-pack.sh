@@ -1,3 +1,6 @@
+#!/bin/bash
+##proc/pack: packs the package.
+##@license GPL-2.0+
 touch "$SRCDIR/autobuild/conffiles"
 for i in $ABMPM $ABAPMS; do
 	. $AB/$i/pack || aberr $i packing returned $?.

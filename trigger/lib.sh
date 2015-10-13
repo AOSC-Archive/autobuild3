@@ -1,4 +1,5 @@
 ##AUTOBUILD TRIGGER SCRIPT HEADER
+##@license CC0
 # I'm a standalone script.
 # (No) Not an autobuild lib!
 
@@ -19,4 +20,3 @@ EOF
 }
 declare -fx interest # export function!
 ##END HEADER <trigger/lib.sh>
-

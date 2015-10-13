@@ -1,3 +1,6 @@
+#!/bin/bash
+##filter/elf/lib_archives.sh: Kills *.a / *.la
+##@license GPL-2.0+
 if bool $NOLIBTOOL; then
 	abinfo "Purging libtool archives from build tree."
 	find $PKGDIR -name '*.la' -delete || abwarn ".la purge: $?"

@@ -1,4 +1,5 @@
-#   strip routine adapted from ArchLinux's makepkg script.
+#!/bin/bash
+##  strip routine adapted from ArchLinux's makepkg script.
 
 #   makepkg - make packages compatible for use with pacman
 #   @configure_input@

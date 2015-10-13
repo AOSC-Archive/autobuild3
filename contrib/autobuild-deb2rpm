@@ -1,4 +1,7 @@
 #!/bin/bash
+# deb2rpm: uses autobuild processes to convert a package with given ab files
+##@license GPL-2.0+
+# TODO: extra the info from control
 # SYNOPSIS: 
 # autobuild deb2rpm
 . $AB/proc/10-defines.sh

@@ -1,3 +1,6 @@
+#!/bin/bash
+##11-qasec.sh: Kick the bucket if the section looks bad
+##@license GPL-2.0+
 abtrylib qa || return
 
 if qa; then

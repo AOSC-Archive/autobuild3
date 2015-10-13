@@ -1,3 +1,6 @@
+#!/bin/bash
+##defines: First we need the defines
+##@license GPL-2.0+
 # TODO: we may have to split this file. PKG/SRCDIR defs should be in ab3.sh.
 export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
