@@ -19,8 +19,9 @@ ab2file(){
 		if [ -e "$i" ]; then
 			abinfo "Partly ab3 — found $i"
 			if ! [ -e autobuild/override/DEBIAN/$i ]; then
-		        
+				
+			fi
 		fi
 	done
-return 0
+	return 0
 }
