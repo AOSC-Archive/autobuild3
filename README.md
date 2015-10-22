@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/AOSC-Dev/autobuild3.png?label=ready&title=Ready)](https://waffle.io/AOSC-Dev/autobuild3)
 autobuild3
 ==========
 
