@@ -6,7 +6,7 @@ export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
 
 # Autobuild settings
-recsr $AB/etc/autobuild/defaults/*
+recsr $AB/etc/autobuild/defaults/*!(.dpkg*|dist)
 
 abrequire arch
 . "$AB/arch/_common.sh"
