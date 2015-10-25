@@ -1,9 +1,0 @@
-# Work in progress: factor hardening-related flags into options
-# Parameters that are likely to cause trouble.
-
-AB_FLAGS_PIC=1
-AB_FLAGS_PIE=1
-AB_FLAGS_SSP=1
-AB_FLAGS_RRO=1
-AB_FLAGS_NOW=1
-AB_FLAGS_FTF=1
