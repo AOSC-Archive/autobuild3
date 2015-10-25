@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/deps: We want to install the dependencies
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abrequire pm
 
 # FIXME: The flat stuff gets stupid with 'foo | bar' packs. Guess why.

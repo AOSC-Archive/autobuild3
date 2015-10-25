@@ -1,6 +1,6 @@
 #!/bin/bash
 ##filter/elf.sh: ELF-related filters
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abrequire elf
 
 recsr $AB/filter/elf/*.sh

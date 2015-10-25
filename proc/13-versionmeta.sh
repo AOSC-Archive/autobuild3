@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/versionmeta: AOSC bugurl in version output
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 
 abtrylib pm || return
 . /etc/lsb-release || return

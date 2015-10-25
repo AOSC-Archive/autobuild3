@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/scripts: Silly way to deal with scripts
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 mkdir -p abscripts
 
 for i in postinst prerm postrm preinst; do

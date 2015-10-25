@@ -1,5 +1,5 @@
 ##AUTOBUILD TRIGGER SCRIPT HEADER
-##@license CC0
+##@copyright CC0
 # I'm a standalone script.
 # (No) Not an autobuild lib!
 

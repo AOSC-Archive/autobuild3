@@ -1,6 +1,6 @@
 #!/bin/bash
 # 10-autotools.sh: Builds GNU autotools stuffs
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abtryexe autoconf automake autoreconf
 
 export FORCE_UNSAFE_CONFIGURE=1

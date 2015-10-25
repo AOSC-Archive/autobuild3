@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/build_do: So we build it now
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 arch_loadfile prepare
 
 for build_func in build_{start,ready,final}; do

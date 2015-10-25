@@ -1,6 +1,6 @@
 #!/bin/bash
 ##base.sh: Base library.
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # Not to be run directly.
 # TODO:	Add basic support for bashdb.
 shopt -s expand_aliases extglob

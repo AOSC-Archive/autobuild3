@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/licenses.sh: SPDX-compatible license processing.
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # _license_atom: _license [ " WITH " _exception ]
 # TODO: Multiple exceptions, Unknown exceptions
 

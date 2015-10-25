@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/install: installs the built package
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # ABINSTALL no longer will be fed with boolean.
 # Put in PMs instead.
 

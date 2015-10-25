@@ -1,6 +1,6 @@
 #!/bin/bash
 # 12-cmake.sh: Builds cmake stuffs
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abtryexe cmake || ablibret
 
 build_cmake_probe(){

@@ -1,6 +1,6 @@
 #!/bin/bash
 ##filter/elf/strip.sh: Strips ELF files
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abrequire elf
 
 filter_elf_strip(){

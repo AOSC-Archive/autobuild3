@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/build_probe: Guess the build type
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 if [ -z "$ABTYPE" ]; then
 	for i in $ABBUILDS; do
 		# build are all plugins now.

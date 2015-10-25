@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/parallel: make -j, distcc and ccache
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 
 if bool $NOPARALLEL; then
 	abwarn "Parallel build DISABLED, get a cup of coffee, now!"

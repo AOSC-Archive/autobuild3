@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/cleanup: We always want our butt free of old build output
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # Clean up!
 
 # TODO: Different build type specific clean up.

@@ -1,6 +1,6 @@
 #!/bin/bash
 ##proc/patch: Loads the build/ functions
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abrequire arch
 
 if [ ! -f .patch ]

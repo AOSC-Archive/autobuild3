@@ -1,6 +1,6 @@
 #!/bin/bash
 ##fileenum.sh: A files.foreach routine that sucks.
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abreqexe find
 
 fileenum_fromstdin() {

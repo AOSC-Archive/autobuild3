@@ -1,6 +1,6 @@
 #!/bin/bash
 ##12-waf.sh: Builds WAF stuffs
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abtryexe python2 || ablibret
 
 build_waf_probe(){

@@ -1,6 +1,6 @@
 #!/bin/bash
 # aoscarchive: default autobuild settings for os3-repo archiving
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # THIS SCRIPT IS INTENDED FOR USE INSIDE AUTOBUILD, WITH EXPORTED VATIABLES, LIKE AB, ARCH.
 # SYNTAX: autobuild abrepoarchive PKGNAME PKGVER PKGREL
 # CURRENTLY DEFINED PKGMGRs: dpkg, rpm.

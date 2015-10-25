@@ -1,6 +1,6 @@
 #!/bin/bash
 ##pm.sh: Shared PM Abstraction Functions
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # The great common package manager library for everyone!
 # From the wisdom of the ancient, ab2.
 # Magic book: ab2:PAKMGR.md

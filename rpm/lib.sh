@@ -1,6 +1,6 @@
 #!/bin/bash
 ##rpm/lib.sh: What rpm should provide to the abstraction as a package manager
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 abreqexe rpm zypper
 ABSTRICT=0 abrequire arch || abwarn RPM archname translation disabled. Expect errors with names.
 

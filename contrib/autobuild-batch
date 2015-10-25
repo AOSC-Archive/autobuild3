@@ -1,6 +1,6 @@
 #!/bin/bash
 # autobuild-batch: batch-build
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 [ "$1" != "" ] && _list=$1 || _list=./ab_batch
 
 _pwd=$PWD

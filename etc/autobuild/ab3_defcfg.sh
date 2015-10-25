@@ -1,6 +1,6 @@
 #!/bin/bash-
 ##Autobuild default config file
-##@license CC0
+##@copyright CC0
 
 ##Misc building flags
 ABARCHIVE=autobuild-aoscarchive # Archive program

@@ -1,6 +1,6 @@
 #!/bin/bash
 ##The GNOME quirks
-##@license GPL-2.0+
+##@copyright GPL-2.0+
 # libtool, gnome Bugzilla #655517
 cp libtool libtool_
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool_
