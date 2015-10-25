@@ -35,8 +35,6 @@ fi
 # Programmable modules should be put here.
 arch_loadfile functions
 
-for i in `cat $AB/env_cfgs/*`; do
-	export $i
-done
+export `cat $AB/exportvars/*`
 
 export PYTHON=/usr/bin/python2
