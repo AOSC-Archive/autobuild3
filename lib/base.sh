@@ -1,6 +1,6 @@
 #!/bin/bash
 ##base.sh: Base library.
-##@copyright GPL-2.0+
+##@copyright GPL-2.0+ WITH GPL-Classpath-Exception
 # Not to be run directly.
 # TODO:	Add basic support for bashdb.
 shopt -s expand_aliases extglob
@@ -31,7 +31,7 @@ which --version 2>/dev/null | grep -q GNU || _whichcmd(){ alias "$1" || declare 
 abreqcmd(){
 	local i;
 	for i; do
-		_whichcmd "$i" &> /dev/null ||
+		type "$i" &> /dev/null ||
 		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
