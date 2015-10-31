@@ -26,7 +26,7 @@ abreqexe(){
 }
 alias abtryexe='ABSTRICT=0 abreqexe'
 
-_whichcmd(){ (alias; declare -F) | /usr/bin/which -i --read-functions "$1"; }
+_whichcmd(){ (alias; declare -f) | /usr/bin/which -i --read-functions "$1"; }
 which --version 2>/dev/null | grep -q GNU || _whichcmd(){ alias "$1" || declare -f "$1" || which "$1"; }
 abreqcmd(){
 	local i;
