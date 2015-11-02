@@ -32,3 +32,6 @@ build_${ABTYPE}_build || abicu "Build failed: $?."
 arch_loadfile beyond
 
 unalias BUILD_{START,READY,FINAL}
+
+# Inline: QA Dir
+bool $ABQA && [ -e $PKGDIR/usr/local ] && abicu "QA: found \$PKGDIR/usr/local."
