@@ -6,40 +6,53 @@ abrequire pm
 # translations from dpkg representation to generic ones.
 declare -A ARCH_RPM ARCH_TARGET
 ARCH_FINDFILELIST=("autobuild/cross-$ARCH-$CROSS" "autobuild/cross-$CROSS" "autobuild/$ARCH" "autobuild")
+ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
-	local i
+	local i j _arch_suf
+	((_arch_trymore)) && _arch_suf=("${ARCH_SUFFIX[@]}") || _arch_suf=('')
 	for i in "${ARCH_FINDFILELIST[@]}"
 	do
-		if [ -e "$i/$1" ]
-		then
-			echo "$i/$1"
-			return 0
-		fi
+		for j in "${_arch_suf[@]}"; do
+			if [ -e "$i/$1$j" ]
+			then
+				printf '%s\n' "$i/$1$j"
+				return 0
+			fi
+		done
 	done
-	echo autobuild/$1
+	printf '%s\n' "autobuild/$1"
 	return 127
 }
 
 # fuck you, how are you going to let the return values work properly?
 arch_loadfiles(){
-	local _archpath _archpidx _archokay=0
+	local _archpath _archpidx j _archokay=0 _arch_suf
+	((_arch_trymore)) && _arch_suf=("${ARCH_SUFFIX[@]}") || _arch_suf=('')
 	for (( _archpidx = "${#ARCH_FINDFILELIST[@]}"; _archpidx; --_archpidx ))
 	do
 		_archpath="${ARCH_FINDFILELIST[$_archpidx]}"
-		if [ -e "$_archpath/$1" ]; then
-			. "$_archpath/$1"
-			_archokay=1
-		fi
+		for j in "${_arch_suf[@]}"; do
+			if [ -e "$_archpath/$1$j" ]; then
+				. "$_archpath/$1$j"
+				_archokay=1
+				continue
+			fi
+		done
 	done
 	(( _archokay )) || return 127
 }
-arch_loaddef(){ arch_loadfiles defines; }
+arch_loaddef(){ _arch_trymore=1 arch_loadfiles defines; }
 # Making assignment in local line will cause $? capturing to fail.
-arch_loadfile(){ local _abarchf; _abarchf="$(arch_findfile "$1")" || return $?; shift; . $_abarchf "$@"; }
+arch_loadfile(){
+	local _abarchf _arch_trymore=${arch_trymore-1};
+	_abarchf="$(arch_findfile "$1")" || return $?;
+	shift;
+	. "$_abarchf" "$@";
+}
 
 arch_initcross(){
 	if [ -z "$CROSS" ]; then
-		unset ${!BUILD@} ${!HOST@}
+		unset "${!BUILD@}" "${!HOST@}"
 		return 0
 	fi
 	[ "$HOSTSYSROOT" ] || HOSTSYSROOT=/var/ab/cross-root/$CROSS
