@@ -12,7 +12,7 @@ abrequire arch
 . "$AB/arch/_common.sh"
 . "$AB/arch/${CROSS:-$ARCH}.sh"
 
-arch_loaddef || abdie "arch_loaddef returned a non-zero value: $?." 
+_arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
 
 if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ARCH == amd64 ]]
 then

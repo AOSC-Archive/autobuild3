@@ -35,13 +35,13 @@ arch_loadfiles(){
 			if [ -e "$_archpath/$1$j" ]; then
 				. "$_archpath/$1$j"
 				_archokay=1
-				continue
+				break
 			fi
 		done
 	done
 	(( _archokay )) || return 127
 }
-arch_loaddef(){ _arch_trymore=1 arch_loadfiles defines; }
+
 # Making assignment in local line will cause $? capturing to fail.
 arch_loadfile(){
 	local _abarchf _arch_trymore=${arch_trymore-1};
@@ -56,8 +56,8 @@ arch_initcross(){
 		return 0
 	fi
 	[ "$HOSTSYSROOT" ] || HOSTSYSROOT=/var/ab/cross-root/$CROSS
-	$HOSTSYSROOT/bin/sh -c "exit 0" >/dev/null 1>&2 && HOSTEXE=1 || HOSTEXE=0
-	pm_chroot $HOSTSYSROOT
+	"$HOSTSYSROOT"/bin/sh -c "exit 0" &>/dev/null; HOSTEXE=((! $?))
+	pm_chroot "$HOSTSYSROOT"
 	export PATH="$(dirname "$HOSTTOOLPREFIX"):$PATH"
 }
 
