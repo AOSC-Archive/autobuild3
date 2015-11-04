@@ -24,9 +24,10 @@ arch_findfile(){
 	return 127
 }
 
-# fuck you, how are you going to let the return values work properly?
+# FIXME: We need to figure out a way of handling multiple return vals!
 arch_loadfiles(){
-	local _archpath _archpidx j _archokay=0 _arch_suf
+	local _archpath _archpidx j _archokay=0
+	local _arch_suf _arch_trymore=${arch_trymore:-1}
 	((_arch_trymore)) && _arch_suf=("${ARCH_SUFFIX[@]}") || _arch_suf=('')
 	for (( _archpidx = "${#ARCH_FINDFILELIST[@]}"; _archpidx; --_archpidx ))
 	do
@@ -44,7 +45,7 @@ arch_loadfiles(){
 
 # Making assignment in local line will cause $? capturing to fail.
 arch_loadfile(){
-	local _abarchf _arch_trymore=${arch_trymore-1};
+	local _abarchf _arch_trymore=${arch_trymore:-1};
 	_abarchf="$(arch_findfile "$1")" || return $?;
 	shift;
 	. "$_abarchf" "$@";
