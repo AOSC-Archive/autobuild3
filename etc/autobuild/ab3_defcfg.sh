@@ -98,5 +98,8 @@ ARCH=amd64
 ABQA=yes
 ABINSTALL="dpkg rpm"
 
-recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
+[[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
+# Old, default.
+[[ -d "$AB"/etc/autobuild/defaults ]] && recsr "$AB"/etc/autobuild/defaults/*!(.dpkg*|dist)
+
 . "$AB"/etc/autobuild/ab3cfg.sh
