@@ -71,7 +71,7 @@ Release:	$PKGREL
 $(rpmopttag Epoch $PKGEPOCH)
 Summary:	$PKGDES
 
-Group:		$(sed -f "$AB/rpm/rpm-sec" <<< "$PKGSEC")
+Group:		$(sed -f "$AB/pm/rpm/rpm-sec" <<< "$PKGSEC")
 License:	$(abcommaprint "${PKGLICENSE[@]:-Unknown}")
 URL:		Unknown
 $(rpmreqprov)
