@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+
 touch "$SRCDIR/autobuild/conffiles"
 for i in $ABMPM $ABAPMS; do
-	. $AB/$i/pack || aberr $i packing returned $?.
+	. "$AB"/pm/"$i"/pack || aberr $i packing returned $?.
 done
 
 tar cvfJ "${PKGNAME}_${PKGVER}-${PKGREL}.tar.xz" autobuild/
