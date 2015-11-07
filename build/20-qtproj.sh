@@ -2,7 +2,7 @@
 ##20-qtproj.sh: Builds qmake stuffs
 ##@copyright GPL-2.0+
 abtryexe qmake || ablibret
-
+export QT_SELECT
 build_qtproj_probe(){
 	[ -f *.pro ] || return $?
 	[ "$QT_SELECT" ] || 
