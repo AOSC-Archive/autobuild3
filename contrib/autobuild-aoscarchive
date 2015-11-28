@@ -27,14 +27,14 @@ fi
 [ "$ARCH" == amd64 ] && ARCH=x86_64
 prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
 mvln(){	# not using cp -s because we want the main part to be in the target
-	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed."
-	ln -s "$2" "$1" || aberr "Link from [$1] to [$2] failed."
+	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed: $?"
+	ln -s "$2" "$1" || aberr "Link from [$2] to [$1] failed: $?"
 }
 
 # regex match
 if [ "$TREE" == 1 ];
 then
-	for _layout in $DIR_TREE; do [[ $1 =~ ^$_layout ]] && break; done || abwarn "$1 NOT SORTED"
+	for _layout in {a..k} lib{a..z} {l..z} _UNSORTED; do [[ $1 == "$_layout"* ]] && break; done || abwarn "$1 NOT SORTED"
 else 
 	abinfo "Not using an alphabetical tree."
 fi
