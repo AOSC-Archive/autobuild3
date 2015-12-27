@@ -17,6 +17,10 @@ rpmopttag(){
 	VER_NONE=${VER_NONE-1} pm_depcom "$@"
 }
 
+rpmopttag_extraprovide(){
+	[ "$RPMEXTRAPROVIDE" ] && echo -e "Provides:\t${RPMEXTRAPROVIDE}"
+}
+
 # Fscked-up varname.
 rpmreqprov(){
 	if bool $ABRPMAUTOPROVONLY; then
@@ -80,7 +84,7 @@ $(VER_NONE=0 rpmopttag Requires $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
 $(rpmopttag Obsoletes $PKGREP)
 $(rpmopttag Provides $PKGPROV $PKGPROV_RPM)
-Provides:	${RPMEXTRAPROVIDE}
+$(rpmopttag_extraprovide)
 $(rpmopttag Suggests $PKGSUG)
 
 %description
