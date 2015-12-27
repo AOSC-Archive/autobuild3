@@ -13,15 +13,15 @@ fi
 # Optional Tag: tagname pkgs
 rpmopttag(){
 	[ "$2" ] || return
-	echo -ne "$1:\t\t"; shift
+	echo -ne "$1:\t"; shift
 	VER_NONE=${VER_NONE-1} pm_depcom "$@"
 }
 
 # Fscked-up varname.
 rpmreqprov(){
 	if bool $ABRPMAUTOPROVONLY; then
-			echo "Autoprov:		yes"
-			echo "Autoreq:		no"
+			echo "Autoprov:	yes"
+			echo "Autoreq:	no"
 	else
 			echo "Autoreqprov:	yes"
 	fi
@@ -79,7 +79,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 $(VER_NONE=0 rpmopttag Requires $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
 $(rpmopttag Obsoletes $PKGREP)
-$(rpmopttag Provides $PKGPROV $PKGPROV_RPM) $RPMEXTRAPROVIDE
+$(rpmopttag Provides $PKGPROV $PKGPROV_RPM)
+Provides:	${RPMEXTRAPROVIDE}
 $(rpmopttag Suggests $PKGSUG)
 
 %description
