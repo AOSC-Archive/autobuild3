@@ -79,7 +79,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 $(VER_NONE=0 rpmopttag Requires $PKGDEP)
 $(rpmopttag Conflicts $PKGCONFL)
 $(rpmopttag Obsoletes $PKGREP)
-$(rpmopttag Provides $RPMEXTRAPROVIDE $PKGPROV $PKGPROV_RPM)
+$(rpmopttag Provides $PKGPROV $PKGPROV_RPM) $RPMEXTRAPROVIDE
 $(rpmopttag Suggests $PKGSUG)
 
 %description
