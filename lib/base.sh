@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+ WITH GPL-Classpath-Exception
 # Not to be run directly.
 # TODO:	Add basic support for bashdb.
-shopt -s expand_aliases extglob
+shopt -s expand_aliases extglob globstar nullglob
 
 declare -x ABLIBS="|base|" # GLOBAL: ABLIBS='|base[|lib1|lib2]|'
 

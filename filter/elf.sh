@@ -19,12 +19,10 @@ filter_elf(){
 	local _elf_f _elf_cmd
 	for _elf_f in $ABELFFILTER; do _elf_cmd=filter_elf_${_elf_f}_pre; ! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?"; done
 	set_opt nullglob # Force existing(nullglob) directories(/).
-	set_opt globstar
 	for i in "$PKGDIR"/{opt/*/,usr/,}{lib{,64,exec},{s,}bin}/**; do filter_elf__process "$i"; done
 	cd "$PKGDIR"
 	for _elf_f in $ABELFFILTER; do _elf_cmd=filter_elf_${_elf_f}_post; ! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?"; done
 	rec_opt nullglob
-	rec_opt globstar
 }
 
 export ABFILTERS+=" elf"
