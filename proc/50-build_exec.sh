@@ -13,7 +13,7 @@ for build_func in build_{start,ready,final}; do
 	echo $build_func | ablog
 	$build_func || abwarn '$build_func: \$?'
 	for _quirk in \$PKGQUIRKS; do
-		if [[ \$_quirk == */ ]]; then
+		if [[ \$_quirk == */* ]]; then
 			[[ \$_quirk == ${build_func/#build_}/* ]] || continue
 		else
 			_quirk=${build_func/#build_}/\$_quirk
