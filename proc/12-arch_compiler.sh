@@ -8,9 +8,9 @@ if [ -z "$CROSS" ]; then
 		export PATH="/opt/pseudo-multilib/bin:$PATH"
 	else
 		if bool $USECLANG; then
-			export CC=/usr/bin/clang CXX=/usr/bin/clang++
+			export CC=clang CXX=clang++ OBJC=clang OBJCXX=clang++
 		else
-			export CC=/usr/bin/gcc CXX=/usr/bin/g++
+			export CC=gcc CXX=g++ OBJC=clang OBJCXX=clang++
 		fi
 	fi
 fi
