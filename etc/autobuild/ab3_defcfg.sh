@@ -31,7 +31,7 @@ AB_FLAGS_FTF=1
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
 # Will be updated. Therefore not part of conffiles.
-# 
+#
 # COPYLEFT TO WHOEVER NEEDS IT.
 #
 PREFIX="/usr"
@@ -89,6 +89,7 @@ CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_SKIP_RPATH=ON"
 WAF_DEF="--prefix=$PREFIX --configdir=$SYSCONF"
 QTPROJ_DEF="PREFIX=$PREFIX"
+MAKE_INSTALL_DEF="PREFIX=/usr BINDIR=/usr/bin SBINDIR=/usr/bin LIBDIR=/usr/lib"
 
 # AUTOTOOLS related
 RECONF=yes

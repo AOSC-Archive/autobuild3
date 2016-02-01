@@ -16,7 +16,7 @@ build_plainmake_build(){
 	BUILD_READY
 	make $ABMK $MAKE_AFTER | ablog
 	BUILD_FINAL
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR PREFIX=/usr BINDIR=/usr/bin SBINDIR=/usr/bin LIBDIR=/usr/lib $MAKE_AFTER | ablog
+	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER | ablog
 }
 
 ABBUILDS+=' plainmake'
