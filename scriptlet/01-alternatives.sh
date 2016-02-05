@@ -9,13 +9,15 @@ addalt(){
 }
 
 # alternative path link prio [path2 link2 prio2 ..]
-alternative(){ while [ "$1" ]; do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 3 || break; done; }
+alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 3 || break; done; }
 
 if [ -e autobuild/alternatives ]
 then
-	echo "# alternatives" >> abscripts/postinst
-	echo "# alternatives" >> abscripts/prerm
+	echo "#>start 01-alternatives" >> abscripts/postinst
+	echo "#>start 01-alternatives" >> abscripts/prerm
 	. autobuild/alternatives
+	echo "#>end 01-alternatives" >> abscripts/postinst
+	echo "#>end 01-alternatives" >> abscripts/prerm
 fi
 
 unset alternative addalt
