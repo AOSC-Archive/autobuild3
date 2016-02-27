@@ -2,10 +2,21 @@ autobuild3
 ==========
 [![Stories in Ready](https://badge.waffle.io/AOSC-Dev/autobuild3.png?label=ready&title=Ready)](https://waffle.io/AOSC-Dev/autobuild3)
 
-The new generation of [Autobuild](https://github.com/AOSC-Dev/autobuild) for AOSC OS3,
-with deb/[rpm](https://github.com/AOSC-Dev/abdeb2rpm) support, and a QA system.
+Autobuild is a distribution packaging toolkit meant to carry out the following functions:
 
-autobuild3 abstracts everything our distro need from the package managers.
+- Definition, therefore identification of source code
+- Preparing and patching of source code
+- Building of source code
+- Quality control of built binaries
+- Packaging of built binaries
+
+Autobuild3 is essentially a set of scripts (`autobuild` is the only command script useful for invoking a build process) that works to automatically carry out the function listed above, and to simplify build configuration (build scripts in another word) using various pre-designed build routines, named `ABTYPE` or Autobuild Build Types. More will be discussed below (extensively).
+
+Autobuild3 is a successor to the original [Autobuild](https://github.com/AOSC-Dev/autobuild) used back in 2013 when AOSC OS was initially rebooted as a independent Linux distribution. Unlike Autobuild being a distribution specific and single backend toolkit, Autobuild3 is distribution neutral and supports various backends:
+
+- DPKG, the most "native" backend of all, using `dpkg-deb` and Autobuild variables to control the generation of DPKG control files, and henceforth building the packages.
+- RPM, using Autobuild variables to generate .spec files, and invoking `rpmbuild` to build RPM packages.
+- PKGBUILD (coming soon), using Autobuild variables to generate `PKGBUILD` files, using a temporary install root, to provide `makepkg` with a fake binary packaging process.
 
 Installing autobuild3
 ---------------------
@@ -14,14 +25,17 @@ Self-bootstrapping: `sudo ./ab3.sh`
 
 HELP: `./ab3.sh help`
 
+Documentations
+--------------
+
+Documentations can be found [here](https://github.com/AOSC-Dev/aosc-os-abbs/wiki/Autobuild3).
+
 Porting
 -------
 
-autobuild3 contains some AOSC-specific code, especially some definitions about
-the system. You may want to change it before you use it on your system.
+Autobuild3 contains some AOSC-specific code, especially some definitions about system paths. You may want to change it before you use it on your system.
 
 License
 -------
 
-GNU GPLv2+. We are too lazy to add a header to all the source files, given that
-lots of the files are even shorter than standard GPL header.
+GNU GPLv2+.
