@@ -5,7 +5,7 @@ abrequire pm
 
 # translations from dpkg representation to generic ones.
 declare -A ARCH_RPM ARCH_TARGET
-ARCH_FINDFILELIST=("autobuild/cross-$ARCH-$CROSS" "autobuild/cross-$CROSS" "autobuild/$ARCH" "autobuild")
+ARCH_FINDFILELIST=("autobuild/$CROSS-cross-$ARCH" "autobuild/$CROSS-cross" "autobuild/$ARCH" autobuild)
 ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
 	local i j _arch_suf
