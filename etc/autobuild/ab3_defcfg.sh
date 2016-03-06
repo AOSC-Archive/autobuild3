@@ -95,7 +95,6 @@ MAKE_INSTALL_DEF="PREFIX=/usr BINDIR=/usr/bin SBINDIR=/usr/bin LIBDIR=/usr/lib"
 RECONF=yes
 
 ##Packaging info
-ARCH=amd64
 ABQA=yes
 ABINSTALL="dpkg rpm"
 
@@ -104,3 +103,4 @@ ABINSTALL="dpkg rpm"
 [[ -d "$AB"/etc/autobuild/defaults ]] && recsr "$AB"/etc/autobuild/defaults/*!(.dpkg*|dist)
 
 . "$AB"/etc/autobuild/ab3cfg.sh
+: "${ABBUILD="$(uname -m || echo amd64)"}"

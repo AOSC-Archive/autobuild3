@@ -9,7 +9,7 @@ dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) 
 dpkgctrl(){
 	echo "Package: $PKGNAME"
 	echo "Version: $(dpkgpkgver)"
-	echo "Architecture: ${CROSS-$ARCH}"
+	echo "Architecture: $ABHOST"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
 	echo "Installed-Size: $(du -s $PKGDIR | cut -f 1)"
@@ -43,13 +43,12 @@ dpkgflagsel(){
 
 instSIZE=$(du -s abdist | cut -f 1)
 [[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
-DPKG_ARCH="${CROSS-$ARCH}"
 
 mkdir -p $PKGDIR/DEBIAN
 cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
 cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 dpkgctrl > $PKGDIR/DEBIAN/control &&
-dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb || return $?
+dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
-export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${DPKG_ARCH}.deb "
+export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb "

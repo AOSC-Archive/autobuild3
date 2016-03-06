@@ -5,16 +5,16 @@
 # Basic environment declarations
 export VERSION=3
 export ABSET=/etc/autobuild
-export AB=$(cat $ABSET/prefix 2>/dev/null || dirname $(readlink -e $0))
+export AB=$(<"$ABSET/prefix" || dirname "$(readlink -e "$0")")
 export ABBLPREFIX=$AB/lib
-export ARCH=$(cat $ABSET/arch 2>/dev/null || uname -m || echo "x86_64")
+export ABBUILD ABHOST ABTARGET
 
 # For consistency of build output
 export LANG=C
 
 # Behavior
 [ $AB_NOISY ] && set -xv
-[ $AB_SELF ] && AB=$(dirname $0)
+[ $AB_SELF ] && AB=$(dirname "$(readlink -e "$0")")
 
 # Check and load base library
 # TODO: split autobuild base libraries from the base libraries

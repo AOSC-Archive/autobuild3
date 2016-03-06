@@ -5,17 +5,16 @@
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
+BUILD=${ARCH_TARGET["$ABBUILD"]}
+HOST=${ARCH_TARGET["$ABHOST"]}
 
 . "$AB/arch/_common_switches.sh"
 
-if [ "$CROSS" ]; then
-	AB_FLAGS_TYPES+="_CROSS _CROSS_$ARCH _CROSS_BASE "
-	BUILD=${ARCH_TARGET["$ARCH"]}
-	HOST=${ARCH_TARGET["$CROSS"]}
-	: "${HOSTTOOLPREFIX=/opt/abcross/$CROSS/bin/$HOST}"
-else
-	unset "${!BUILD@}" "${!HOST@}"
+if [[ $ABBUILD != $ABHOST ]]; then
+	arch_initcross
+	AB_FLAGS_TYPES+="_CROSS _CROSS_$ABBUILD "
 fi
+
 # The suffix get forked in multiple ways, basically FLAG_(COMPILER|COMMON)[_TYPE][_(NO)FEATURE].
 AB_FLAGS_FEATURES_DEF="$(
 	for f in $AB_FLAGS_FEATURES; do

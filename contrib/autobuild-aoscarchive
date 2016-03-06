@@ -14,24 +14,17 @@ DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
 	libp libq libr libs libt libu libv libw libx liby libz l 0 1 2 3 4 5 6 7 8 9 _UNSORTED"
 
 TREE=1
-if [ "$CROSS" ] ; then
-	TARGET_DIR=/os3-build-$CROSS
-else
-	TARGET_DIR=/os3-build
-fi
+TARGET_DIR=/os3-build-"$ABHOST"
 
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
 . $AB/lib/base.sh
 
-# ARCH Translation for older versions of ab. Going to use x86_64 as main arch name instead of amd64. (Future pacman compatibility)
-[ "$ARCH" == amd64 ] && ARCH=x86_64
 prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
 mvln(){	# not using cp -s because we want the main part to be in the target
 	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed: $?"
 	ln -s "$2" "$1" || aberr "Link from [$2] to [$1] failed: $?"
 }
 
-# regex match
 if [ "$TREE" == 1 ];
 then
 	for _layout in {a..k} lib{a..z} {l..z} _UNSORTED; do [[ $1 == "$_layout"* ]] && break; done || abwarn "$1 NOT SORTED"
@@ -41,13 +34,13 @@ fi
 
 # in place
 if [ "$SORT" == 1 ]; then
-	mkdir -p $TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout
+	mkdir -p "$TARGET_DIR/os3-{ab,dpkg,rpm}/$_layout"
 else
-	mkdir -p $TARGET_DIR/$_layout
+	mkdir -p "$TARGET_DIR/$_layout"
 fi
 
-cp $1_$2-$3*.tar.xz $TARGET_DIR/$(prefixprint ab)/$_layout
-cp $1_$2-$3*.deb $TARGET_DIR/$(prefixprint dpkg)/$_layout
-cp /root/rpmbuild/RPMS/${ARCH}/$1-$2-$3.${ARCH}.rpm $TARGET_DIR/$(prefixprint rpm)/$_layout
+cp "$1_$2-$3*.tar.xz" "$TARGET_DIR/$(prefixprint ab)/$_layout"
+cp "$1_$2-$3*.deb" "$TARGET_DIR/$(prefixprint dpkg)/$_layout"
+cp "root/rpmbuild/RPMS/${ABHOST}/$1-$2-$3.${ABHOST}.rpm" "$TARGET_DIR/$(prefixprint rpm)/$_layout"
 abinfo "abRepoArchive done."
 

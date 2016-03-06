@@ -14,10 +14,10 @@ abrequire arch
 
 _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
 
-if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ARCH == amd64 ]]
+if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ABBUILD == amd64 ]]
 then
 	abinfo "Detected 32subsys build."
-	CROSS=i386
+	ABHOST=i386
 fi
 
 arch_initcross

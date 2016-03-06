@@ -2,4 +2,4 @@
 ##rpm/install: Procedure to install RPM stuffs
 ##@copyright GPL-2.0+
 abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
-rpm $PM_ROOTPARAM -Uvh /root/rpmbuild/RPMS/$(rpmarch ${CROSS:-$ARCH})/$PKGNAME-$PKGVER-$PKGREL*.rpm
+rpm $PM_ROOTPARAM -Uvh "/root/rpmbuild/RPMS/$(rpmarch "$ABHOST")/$PKGNAME-$PKGVER-$PKGREL"*.rpm

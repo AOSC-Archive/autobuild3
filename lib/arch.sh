@@ -3,9 +3,12 @@
 ##@copyright GPL-2.0+
 abrequire pm
 
+# compat 1.x.
+((AB_COMPAT)) || declare -n ARCH=ABBUILD CROSS=ABHOST
+
 # translations from dpkg representation to generic ones.
 declare -A ARCH_RPM ARCH_TARGET
-ARCH_FINDFILELIST=("autobuild/$CROSS-cross-$ARCH" "autobuild/$CROSS-cross" "autobuild/$ARCH" autobuild)
+ARCH_FINDFILELIST=("autobuild/$ABHOST"{-cross{-"$ABBUILD",},} autobuild)
 ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
 	local i j _arch_suf
@@ -52,15 +55,15 @@ arch_loadfile(){
 }
 
 arch_initcross(){
-	if [ -z "$CROSS" ]; then
-		unset "${!BUILD@}" "${!HOST@}"
+	if [[ $ABBUILD == $ABHOST ]]; then
 		return 0
 	fi
-	[ "$HOSTSYSROOT" ] || HOSTSYSROOT=/var/ab/cross-root/$CROSS
+	: "${HOSTSYSROOT=/var/ab/cross-root/$ABHOST}"
+	: "${HOSTTOOLPREFIX=/opt/abcross/$ABHOST/bin/$HOST}"
 	"$HOSTSYSROOT"/bin/sh -c "exit 0" &>/dev/null; ((HOSTEXE = ! $?))
 	pm_chroot "$HOSTSYSROOT"
 	export PATH="$(dirname "$HOSTTOOLPREFIX"):$PATH"
 }
 
 arch_lib(){ echo "$(arch_crossroot "$@")/usr/lib"; }
-arch_crossroot() { echo "/var/ab/cross-root/${1:-$CROSS}"; }
+arch_crossroot() { echo "/var/ab/cross-root/$ABHOST"; }
