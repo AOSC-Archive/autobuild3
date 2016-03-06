@@ -11,7 +11,6 @@ HOST=${ARCH_TARGET["$ABHOST"]}
 . "$AB/arch/_common_switches.sh"
 
 if [[ $ABBUILD != $ABHOST ]]; then
-	arch_initcross
 	AB_FLAGS_TYPES+="_CROSS _CROSS_$ABBUILD "
 fi
 

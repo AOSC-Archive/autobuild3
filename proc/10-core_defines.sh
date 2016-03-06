@@ -10,9 +10,11 @@ export PKGDIR="$PWD/abdist"
 
 abrequire arch
 . "$AB/arch/_common.sh"
-. "$AB/arch/${CROSS:-$ARCH}.sh"
+. "$AB/arch/$ABHOST.sh"
 
 _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
+[[ $ABHOST != $FAIL_ARCH ]] ||
+	die "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
 
 if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ABBUILD == amd64 ]]
 then

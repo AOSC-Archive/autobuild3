@@ -67,10 +67,3 @@ arch_initcross(){
 
 arch_lib(){ echo "$(arch_crossroot "$@")/usr/lib"; }
 arch_crossroot() { echo "/var/ab/cross-root/$ABHOST"; }
-arch_exclude(){
-	local i boom=0;
-	for i; do
-		[[ $ABHOST != $i ]] || { boom=1; break; }
-	done
-	((!boom)) || die "This package cannot be built on $(argprint "$@"), e.g. $ABHOST."
-}
