@@ -54,5 +54,10 @@ pm_deparse(){
 pm_deflat(){ ABPM=dummy VER_NONE_ALL=1 VER_NONE=1 PM_ALT=0 PM_COMMA=' ' PM_DELIM=' ' pm_depcom "$@"; }
 # dumpver: dumps a dpkg-ab-lish verstring.
 pm_dumpver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n $PKGVER; ((PKGREL)) && echo -n -$PKGREL; }
+
+# Deprecate RPMEPOCH.
+declare -i PKGEPOCH
+declare -n RPMEPOCH=PKGEPOCH
+
 . "$AB"/pm/"$ABMPM"/lib.sh
 abtrycmd pm_{whoprov,getver,exists,repoupdate,repoinstall,chroot,getver,exists}
