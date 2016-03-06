@@ -10,11 +10,11 @@ ABCC="${ABCC^^}"
 
 if [ "$CROSS" ]; then
 	AB_FLAGS_TYPES+="_CROSS _CROSS_$ARCH _CROSS_BASE "
-	BUILD=${ARCH_TARGET[$ARCH]}
-	HOST=${ARCH_TARGET[$CROSS]}
-	: ${HOSTTOOLPREFIX=/opt/abcross/$CROSS/bin/$HOST}
+	BUILD=${ARCH_TARGET["$ARCH"]}
+	HOST=${ARCH_TARGET["$CROSS"]}
+	: "${HOSTTOOLPREFIX=/opt/abcross/$CROSS/bin/$HOST}"
 else
-	unset ${!BUILD@} ${!HOST@}
+	unset "${!BUILD@}" "${!HOST@}"
 fi
 # The suffix get forked in multiple ways, basically FLAG_(COMPILER|COMMON)[_TYPE][_(NO)FEATURE].
 AB_FLAGS_FEATURES_DEF="$(
@@ -42,9 +42,9 @@ for ABFLAG in {LD,C{,PP,XX},OBJC{,XX}}FLAGS; do
 			for ABFLAGFEATURE in '' $AB_FLAGS_FEATURES_DEF; do
 				THISFLAG="${ABFLAG}_$ABFLAGCC$ABFLAGTYPE$ABFLAGFEATURE"
 				if [[ "$ABFLAGTYPE" == _WEIRD ]]; then
-					_flags_weird_buf[_flags_current_i]+="${!THISFLAG}"
+					_flags_weird_buf[_flags_current_i]+=" ${!THISFLAG}"
 				else
-					FLAG+="${!THISFLAG}"
+					FLAG+=" ${!THISFLAG}"
 				fi
 			done
 		done
