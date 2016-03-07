@@ -1,7 +1,7 @@
 #!/bin/bash
 ##filter/elf.sh: ELF-related filters
 ##@copyright GPL-2.0+
-abrequire fileenum elf
+abrequire elf
 
 recsr $AB/filter/elf/*.sh
 
