@@ -3,20 +3,22 @@
 ##@copyright GPL-2.0+
 abreqexe find
 
+# Not sure how to make this suck less.
 fileenum_fromstdin() {
 	local a
-	while read -r a; do
+	while IFS='' read -r a; do
 		[ "$a" = ":EXIT" ] && return
 		[ "$a" ] || continue
 		eval "${1//\{\}/$(argprint $a)}"
 	done
 }
 
+# Well I can make this one make some sense.
 fileenum() {
-	local _IFS=$"$IFS" IFS=$'\n' a
-	for a in $(find .)
+	local IFS=$'\n' a
+	while IFS='' read -d -r a
 	do
-		IFS="$_IFS" eval "${1//\{\}/$(argprint $a)}"
-	done
+		eval "${1//\{\}/$(argprint $a)}"
+	done < <(find . -print0)
 	# find . | fileenum_fromstdin "$@"
 }
