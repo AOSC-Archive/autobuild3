@@ -5,8 +5,6 @@
 ABCC="$(basename "$CC")"
 ABCC="${ABCC%%-*}"
 ABCC="${ABCC^^}"
-BUILD=${ARCH_TARGET["$ABBUILD"]}
-HOST=${ARCH_TARGET["$ABHOST"]}
 
 . "$AB/arch/_common_switches.sh"
 

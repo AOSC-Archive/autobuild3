@@ -11,6 +11,8 @@ export PKGDIR="$PWD/abdist"
 abrequire arch
 . "$AB/arch/_common.sh"
 . "$AB/arch/$ABHOST.sh"
+BUILD=${ARCH_TARGET["$ABBUILD"]}
+HOST=${ARCH_TARGET["$ABHOST"]}
 
 _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
 [[ $ABHOST != $FAIL_ARCH ]] ||
