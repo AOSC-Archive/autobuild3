@@ -46,7 +46,7 @@ abcmdstub(){
 
 abloadlib(){
 	[ -f $ABBLPREFIX/$1.sh ] || return 127
-	. $ABBLPREFIX/$1.sh || return $?
+	. "$ABBLPREFIX/$1.sh" || return
 	ABLIBS+="$1|"
 	abinfo "Loaded library $1" 1>&2
 }

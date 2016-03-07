@@ -7,7 +7,8 @@ abrequire pm
 ((AB_COMPAT)) || declare -n ARCH=ABBUILD CROSS=ABHOST
 
 # translations from dpkg representation to generic ones.
-declare -A ARCH_RPM ARCH_TARGET
+# Sorry, top level! Scoping made me do this.
+declare -gA ARCH_RPM ARCH_TARGET
 ARCH_FINDFILELIST=("autobuild/$ABHOST"{-cross{-"$ABBUILD",},} autobuild)
 ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
