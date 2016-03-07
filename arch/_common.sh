@@ -4,15 +4,15 @@
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 # Naming, sadly. PORT_NOTICE!
-ARCH_TARGET[amd64]=x86_64-unknown-linux-gnu
-ARCH_TARGET[armel]=armv7a-hardfloat-linux-gnueabi
-ARCH_TARGET[i386]=i686-pc-linux-gnu
-ARCH_TARGET[mipsn32el]=mips64el-linux-gnuabin32
-ARCH_TARGET[arm64]=aarch64-unknown-linux-gnu
-ARCH_RPM[amd64]=x86_64
-ARCH_RPM[armel]=armhfp # real story: we are using neon.
-ARCH_RPM[mipsn32el]=mips64el
-ARCH_RPM[arm64]=aarch64
+ARCH_TARGET['amd64']=x86_64-unknown-linux-gnu
+ARCH_TARGET['armel']=armv7a-hardfloat-linux-gnueabi
+ARCH_TARGET['i386']=i686-pc-linux-gnu
+ARCH_TARGET['mipsn32el']=mips64el-linux-gnuabin32
+ARCH_TARGET['arm64']=aarch64-unknown-linux-gnu
+ARCH_RPM['amd64']=x86_64
+ARCH_RPM['armel']=armhfp       # real story: we are using neon.
+ARCH_RPM['mipsn32el']=mips64el # wut
+ARCH_RPM['arm64']=aarch64
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
