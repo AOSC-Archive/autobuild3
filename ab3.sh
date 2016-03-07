@@ -8,7 +8,8 @@ export ABSET=/etc/autobuild
 export AB=$(cat "$ABSET/prefix" || dirname "$(readlink -e "$0")")
 export ABBLPREFIX=$AB/lib
 export ABBUILD ABHOST ABTARGET
-: "${ABHOST=$ABBUILD}" "${ABTARGET=$ABHOST}"
+# compat 1.x and fallback
+: "${ABBUILD=$ARCH}" "${ABHOST=${CROSS:-ABBUILD}}" "${ABTARGET=$ABHOST}"
 
 # For consistency of build output
 export LANG=C
