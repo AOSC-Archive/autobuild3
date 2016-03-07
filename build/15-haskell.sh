@@ -13,13 +13,14 @@ build_haskell_build(){
 	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" >> autobuild/postinst
 	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" >> autobuild/postrm
 	# A reminder
-	if bool $NOSTATIC ! grep -q ^NOSTATIC=no autobuild/defines; then
+	if bool "$NOSTATIC" && ! grep -q '^NOSTATIC=no' autobuild/defines; then
 		echo "# This is Haskell" >> autobuild/defines
 		echo "NOSTATIC=no" >> autobuild/defines
 	fi
-	# Execute reminder
+	# DO IT
 	export NOSTATIC=no
 	BUILD_START
+	# Is it intended to, uh, mimic configure?
 	runhaskell Setup configure -O -p \
 		--enable-split-objs --enable-shared \
 		--prefix=/usr --docdir=/usr/share/doc/$PKGNAME \
