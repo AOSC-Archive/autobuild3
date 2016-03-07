@@ -104,4 +104,5 @@ ABINSTALL="dpkg rpm"
 . "$AB"/etc/autobuild/ab3cfg.sh
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
-: "${ABBUILD="$(uname -m || echo amd64)"}"
+((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
+: "${ABBUILD:="$(uname -m || echo amd64)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
