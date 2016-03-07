@@ -4,7 +4,8 @@
 abtrylib arch || ablibret
 
 build_self_probe(){
-	[ -f `arch_findfile build` ]
+	[ -f `arch_findfile build` ] || [ -f `arch_findfile build.sh` ] || \
+	[ -f `arch_findfile build.bash` ] || [ -f `arch_findfile build.bsh` ]
 }
 
 build_self_build(){
