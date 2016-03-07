@@ -14,8 +14,8 @@ export ABBUILD ABHOST ABTARGET
 export LANG=C
 
 # Behavior
-[ $AB_NOISY ] && set -xv
-[ $AB_SELF ] && AB=$(dirname "$(readlink -e "$0")")
+((AB_NOISY)) && set -xv
+((AB_SELF)) && AB=$(dirname "$(readlink -e "$0")")
 
 # Check and load base library
 # TODO: split autobuild base libraries from the base libraries
