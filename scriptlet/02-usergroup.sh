@@ -7,7 +7,7 @@ user(){
 	local N=$1 IFS=,
 	shift 6
 	# $*: argv[1...].join(IFS[0])
-	echo "usermod -a '-G${*//\'/"'\''"}' '${N//\'/"'\''"}'" >> abscripts/preinst
+	(($#)) && echo "usermod -a '-G${*//\'/"'\''"}' '${N//\'/"'\''"}'" >> abscripts/preinst
 }
 
 # group NAME GID
