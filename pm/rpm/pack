@@ -6,7 +6,7 @@ PM_ALT=0 VER_S=' ' VER_E=''
 abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
 
 # Pre-RPM payload scripts
-if [ -f autobuild/pre-rpm ]; then 
+if [ -f autobuild/pre-rpm ]; then
 	. autobuild/pre-rpm
 fi
 
@@ -110,7 +110,7 @@ $(rpmfiles)
 _ab_rpm_endspec
 
 _rpmarch=$(rpmarch "${ABHOST}")
-rpmbuild "$_rpmarch" -bb abspec || aberr "RPM PACKING FAILED."
+rpmbuild --target "$_rpmarch" -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ] ; then
 	. autobuild/post-rpm
 fi
