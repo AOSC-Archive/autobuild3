@@ -37,6 +37,7 @@ abset_xor(){
 }
 # intersection (&) -- TODO: ditto.
 abset_and(){
+	_abset_AB
 	abset_loc __C
 	abset_add __C "${!__A[@]}" "${!__B[@]}"
 	abset_xor "$1" "$2"
