@@ -33,7 +33,7 @@ abset_xor(){
 	abset_add _setRet "${!__B[@]}"
 	abset_del __C "${!__B[@]}"
 	abset_del _setRet "${!__A[@]}"
-	abset_add _setRet "${!c[@]}"
+	abset_add _setRet "${!__C[@]}"
 }
 # intersection (&) -- TODO: ditto.
 abset_and(){
