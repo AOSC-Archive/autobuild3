@@ -83,7 +83,7 @@ QT5BIN="/usr/lib/qt5/bin"
 ##OS basic configuration flags
 AUTOTOOLS_DEF="--prefix=$PREFIX --sysconfdir=$SYSCONF --localstatedir=$STATDIR \
 --libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --disable-option-checking \
---disable-static --disable-debug --enable-shared"
+--disable-static --enable-shared"
 CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=$SYSCONF \
 -DCMAKE_SKIP_RPATH=ON"
