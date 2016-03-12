@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+
 
 # Wrapper TODO: accept $0 detection by checking ${HOSTTOOLPREFIX/abcross/abwrap}.
-if [[ $ABBUID == $ABHOST ]]; then
+if [[ $ABBUILD == $ABHOST ]]; then
 	if [ -d /opt/pseudo-multilib/bin ]; then
 		export PATH="/opt/pseudo-multilib/bin:$PATH"
 	else
