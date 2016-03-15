@@ -4,6 +4,7 @@
 # TODO: we may have to split this file. PKG/SRCDIR defs should be in ab3.sh.
 export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
+export PYTHON=/usr/bin/python2
 
 # Avoid dpkg-deb failure with larger packages on low RAM hosts.
 export TMPDIR="$SRCDIR"
@@ -46,6 +47,3 @@ fi
 # Programmable modules should be put here.
 arch_loadfile functions
 
-export `cat $AB/exportvars/*`
-
-export PYTHON=/usr/bin/python2

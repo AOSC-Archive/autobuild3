@@ -50,7 +50,7 @@ autobuild-plugin(){
 
 # Plugin and external command parser
 if [ "$1" ]; then
-	PATH="$AB/contrib:$PATH" PLUG="$1"
+	abexp_exec PATH="$AB/contrib:$PATH" PLUG="$1"
 	shift
 	ab_dbg "Starting autobuild-$PLUG"
 	"autobuild-$PLUG" "$@"

@@ -10,6 +10,10 @@ declare -x ABLIBS="|base|" # GLOBAL: ABLIBS='|base[|lib1|lib2]|'
 argprint(){ printf '%q ' "$@"; }
 readonly true=1 false=0 yes=1 no=0
 
+# exportvars usage
+alias abexp_exec='BASH_ENV=<(declare -p $(cat "$AB"/exportvars/{*,.arrays}))'
+
+
 bool(){
 	case "$1" in
 		[0fFnN]|false|no) return 1 ;;
