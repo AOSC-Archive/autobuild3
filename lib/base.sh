@@ -11,7 +11,8 @@ argprint(){ printf '%q ' "$@"; }
 readonly true=1 false=0 yes=1 no=0
 
 # exportvars usage
-alias abexp_exec='BASH_ENV=<(declare -p $(cat "$AB"/exportvars/{*,.arrays}))'
+# errors not filtered yet
+alias abexp_exec='BASH_ENV=<(declare -p -- BASH_ENV $(cat "$AB"/exportvars/{*,.arrays}))'
 
 
 bool(){
