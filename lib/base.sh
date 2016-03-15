@@ -13,7 +13,14 @@ readonly true=1 false=0 yes=1 no=0
 # exportvars usage
 # errors not filtered yet
 alias abexp_exec='BASH_ENV=<(declare -p -- BASH_ENV $(cat "$AB"/exportvars/{*,.arrays}))'
-
+# typeof -- for the current scope.
+abtypeof(){
+	local __typeof_{,t,v};
+	for __typeof_v; do
+		IFS=' ' read -n 80 __typeof_{,t,} <<< "$(declare -p "$__typeof_v")";
+		printf '%s\n' "$__typeof_t";
+	done;
+}
 
 bool(){
 	case "$1" in
