@@ -9,7 +9,7 @@ _abinternal_array=(
 )
 
 for _arr_v in $(<"$AB"/exportvars/*-array) "${_abinternal_array[@]}"; do
-	if [[ $(typeof "$arr_v") != *a* ]]; then
-		IFS=$' \t\n' read -d '' -ra "$arr_v" <<< "${!arr_v}"
+	if [[ $(typeof "$_arr_v") != *a* ]]; then
+		IFS=$' \t\n' read -d '' -ra "$_arr_v" <<< "${!_arr_v}"
 	fi
 done
