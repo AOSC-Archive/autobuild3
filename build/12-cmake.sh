@@ -9,7 +9,7 @@ build_cmake_probe(){
 
 build_cmake_build(){
 	local _ret
-	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
+	ABSHADOW=${ABSHADOW_CMAKE:-$ABSHADOW}
 	if bool $ABSHADOW
 	then
 		rm -rf build

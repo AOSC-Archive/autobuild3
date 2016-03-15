@@ -41,7 +41,7 @@ build_autotools_build() {
 		fi
 	fi
 
-	if bool $ABSHADOW
+	if bool "$ABSHADOW"
 	then
 		rm -rf build
 		mkdir -p build || abdie "Failed creating \$SRCDIR/build"
@@ -56,7 +56,7 @@ build_autotools_build() {
 	fi
 
 	BUILD_START
-	$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+	"$SRCDIR/${configure:=configure}" $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
 	returns $PIPESTATUS || abdie "Configuring failed."
 
 	BUILD_READY
@@ -64,7 +64,7 @@ build_autotools_build() {
 	returns $PIPESTATUS || abdie "Making failed."
 
 	BUILD_FINAL
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog
+	make install "BUILDROOT=$PKGDIR" "DESTDIR=$PKGDIR" $MAKE_AFTER | ablog
 	returns $PIPESTATUS || abdie "Installing failed."
 
 	if bool $ABSHADOW

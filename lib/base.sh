@@ -12,7 +12,7 @@ readonly true=1 false=0 yes=1 no=0
 
 # exportvars usage
 # errors not filtered yet
-alias abexp_exec='BASH_ENV=<(declare -p -- BASH_ENV $(cat "$AB"/exportvars/{*,.arrays}))'
+alias abexp_exec='BASH_ENV=<(declare -p -- BASH_ENV $(cat "$AB"/exportvars/*-array))'
 # typeof -- for the current scope.
 abtypeof(){
 	local __typeof_{,t,v};

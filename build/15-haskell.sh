@@ -9,9 +9,9 @@ build_haskell_probe(){
 
 build_haskell_build(){
 	local _ret
-	echo "/usr/share/haskell/$PKGNAME/register.sh" > autobuild/postinst
-	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" >> autobuild/postinst
-	echo "pushd /usr/share/doc/ghc/html/libraries; ./gen_contents_index; popd" >> autobuild/postrm
+	echo "bash /usr/share/haskell/$PKGNAME/register.sh" > autobuild/postinst
+	echo "( cd /usr/share/doc/ghc/html/libraries; ./gen_contents_index )" >> autobuild/postinst
+	echo "( cd /usr/share/doc/ghc/html/libraries; ./gen_contents_index )" >> autobuild/postrm
 	# A reminder
 	if bool "$NOSTATIC" && ! grep -q '^NOSTATIC=no' autobuild/defines; then
 		echo "# This is Haskell" >> autobuild/defines
