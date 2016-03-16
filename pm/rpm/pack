@@ -13,12 +13,8 @@ fi
 # Optional Tag: tagname pkgs
 rpmopttag(){
 	[ "$2" ] || return
-	echo -ne "$1:\t"; shift
+	printf "%s:\t" "$1"; shift
 	VER_NONE=${VER_NONE-1} pm_depcom "$@"
-}
-
-rpmopttag_extraprovide(){
-	[ "$RPMEXTRAPROVIDE" ] && echo -e "Provides:\t${RPMEXTRAPROVIDE}"
 }
 
 # Fscked-up varname.
@@ -47,7 +43,7 @@ rpmscripts(){
 rpmfiles(){
 	local _strlen_pkg="${#PKGDIR}"
 	# Question: Shall we just use -type f?
-	find "$PKGDIR" | while read i; do
+	for i in "$PKGDIR"/**; do
 		[[ -d "$i" && ! -L "$i" ]] && continue
 		if [ -e "$SRCDIR/autobuild/conffiles" ]; then
 			grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
@@ -82,12 +78,12 @@ License:	$(abcommaprint "${PKGLICENSE[@]:-Unknown}")
 URL:		Unknown
 $(rpmreqprov)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-$(VER_NONE=0 rpmopttag Requires $PKGDEP)
-$(rpmopttag Conflicts $PKGCONFL)
-$(rpmopttag Obsoletes $PKGREP)
-$(rpmopttag Provides $PKGPROV $PKGPROV_RPM)
-$(rpmopttag_extraprovide)
-$(rpmopttag Suggests $PKGSUG)
+$(VER_NONE=0 rpmopttag Requires "${PKGDEP[@]}")
+$(rpmopttag Conflicts "${PKGCONFL[@]}")
+$(rpmopttag Obsoletes "${PKGREP[@]}")
+$(rpmopttag Provides "${PKGPROV[@]}" "${PKGPROV_RPM[@]}")
+$([ "$RPMEXTRAPROVIDE" ] && printf "Provides:\t%s" "${RPMEXTRAPROVIDE}")
+$(rpmopttag Suggests "${PKGSUG[@]}")
 
 %description
 $PKGDES
@@ -100,7 +96,7 @@ true
 
 %install
 rm -rf "\$RPM_BUILD_ROOT"
-cp -ra $PKGDIR "\$RPM_BUILD_ROOT"
+cp -a "$PKGDIR" "\$RPM_BUILD_ROOT"
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"

@@ -5,6 +5,9 @@
 _abinternal_array=(
 	ABBUILDS
 	ABFILTERS
+	ABPACKAGE
+	DPKGDEBCOMP
+	PM_ROOTPARAM
 	filter_elf_dep_libs
 )
 

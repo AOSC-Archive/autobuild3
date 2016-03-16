@@ -4,7 +4,7 @@
 # dpkg field helper.
 _ab_pm_func+='dpkgfield dpkgpkgver dpkgctrl '
 dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
-dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
+dpkgpkgver(){ ((PKGEPOCH)) && echo -n "$PKGEPOCH":; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
 	local arch=${ABHOST%%\/*}
@@ -14,29 +14,31 @@ dpkgctrl(){
 	echo "Architecture: $arch"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
-	echo "Installed-Size: $(du -s $PKGDIR | cut -f 1)"
+	echo "Installed-Size: $instSIZE"
 	echo "Description: $PKGDES"
 	if ((PKGESS)); then
 		echo "Essential: yes"
 	else
 		echo "Essential: no"
 	fi
-	[ "$PKGDEP" ] && dpkgfield Depends $PKGDEP
+	dpkgfield Depends "${PKGDEP[@]}"
 	VER_NONE=1 # We don't autofill versions in optional fields
-	[ "$PKGRECOM" ] && dpkgfield Recommends $PKGRECOM
-	[ "$PKGREP" ] && dpkgfield Replaces $PKGREP
-	[ "$PKGCONFL" ] && dpkgfield Conflicts $PKGCONFL
-	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides $PKGPROV
-	[ "$PKGSUG" ] && dpkgfield Suggests $PKGSUG
-	[ "$PKGBREAK" ] && dpkgfield Breaks $PKGBREAK
+	# these checks are surprisingly still good for arrays...
+	[ "$PKGRECOM" ] && dpkgfield Recommends "${PKGRECOM[@]}"
+	[ "$PKGREP" ] && dpkgfield Replaces "${PKGREP[@]}"
+	[ "$PKGCONFL" ] && dpkgfield Conflicts "${PKGCONFL[@]}"
+	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides "${PKGPROV[@]}"
+	[ "$PKGSUG" ] && dpkgfield Suggests "${PKGSUG[@]}"
+	[ "$PKGBREAK" ] && dpkgfield Breaks "${PKGBREAK[@]}"
 	echo "$DPKGXTRACTRL"
 }
 
 # Auto-select xz level, use lower compression level on "Retro" architectures.
+# 
 if [[ "$ARCH" = "i586" || "$ARCH" = "powerpc" || "$ARCH" = "ppc64" ]]; then
-	DPKGDEBCOMP+="-Zxz -z3"
+	DPKGDEBCOMP=(-Zxz -z3 -Sextreme)
 else
-	DPKGDEBCOMP+="-Zxz -z6"
+	DPKGDEBCOMP=(-Zxz -z6 -Sextreme)
 fi
 
 instSIZE=$(du -s abdist | cut -f 1)
@@ -47,7 +49,7 @@ if [ -e "$SRCDIR/autobuild/conffiles" ]; then
 	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
-dpkg-deb $DPKGDEBCOMP -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
+dpkg-deb "${DPKGDEBCOMP[@]}" -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
-export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
+ABPACKAGE+=("${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb ")
