@@ -1,12 +1,13 @@
 #!/bin/bash
 ##proc/filter.sh: Now we run the filters
 ##@copyright GPL-2.0+
-recsr $AB/filter/*.sh
+ABFILTERS=()
+recsr "$AB/filter/*.sh"
 
-pushd $PKGDIR > /dev/null || return
+pushd "$PKGDIR" > /dev/null || return
 
-for ii in $ABFILTERS; do
-	filter_$ii
+for ab_filter in "${ABFILTERS[@]}"; do
+	"filter_$ab_filter"
 done
 
 popd > /dev/null

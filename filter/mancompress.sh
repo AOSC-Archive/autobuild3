@@ -1,7 +1,7 @@
 #!/bin/bash
 ##filter/mancompress.sh: Compresses manpages and break symlinks and boom
 ##@copyright GPL-2.0+
-((ABMANCOMPRESS)) || return
+false || return
 set_opt globstar
 __mancomp_todo=()
 for i in "$PKGDIR"/usr/share/man/**/*.[0-9nl]; do
@@ -18,3 +18,4 @@ done
 gzip -9 -- "${__to_comp[@]}"
 unset __mancomp_todo __mancomp_lnk
 rec_opt globstar
+# TODO: abfilterss

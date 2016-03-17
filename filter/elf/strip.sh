@@ -9,4 +9,4 @@ filter_elf_strip(){
 	elf_strip "$1"
 }
 
-export ABELFFILTERS="$ABELFFILTERS strip"
+ABELFFILTERS+=("strip")

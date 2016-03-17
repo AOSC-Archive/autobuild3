@@ -8,4 +8,5 @@ filter_perl(){
 	find "$PKGDIR" -name .packlist -delete
 }
 
-export ABFILTERS="$ABFILTERS perl"
+ABFILTERS+=("perllocal")
+

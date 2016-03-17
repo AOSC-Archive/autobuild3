@@ -8,4 +8,4 @@ filter_infodir(){
 	fi
 }
 
-export ABFILTERS="$ABFILTERS infodir"
+ABFILTERS+=("infodir")

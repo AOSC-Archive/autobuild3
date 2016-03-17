@@ -38,4 +38,4 @@ filter_elf_dep_post(){
 	return 0 # depset_add ret EAOSC_WRONGFMT(2) on ! [[ "$P" && "$P" != "$PKGNAME" ]], ignore it.
 }
 
-export ABELFFILTERS+=" dep"
+ABELFFILTERS+=("dep")
