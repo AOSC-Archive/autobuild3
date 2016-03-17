@@ -50,21 +50,21 @@ build_autotools_build() {
 
 	if [[ $ABHOST != $ABBUILD ]]
 	then
-		AUTOTOOLS_TARGET="--host=$HOST"
+		AUTOTOOLS_TARGET=("--host=$HOST")
 	else
-		AUTOTOOLS_TARGET="--build=${ARCH_TARGET[$ARCH]}"
+		AUTOTOOLS_TARGET=("--build=${ARCH_TARGET[$ARCH]}")
 	fi
 
 	BUILD_START
-	"$SRCDIR/${configure:=configure}" $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+	"$SRCDIR/${configure:=configure}" "${AUTOTOOLS_TARGET[@]}" "${AUTOTOOLS_DEF[@]}" "${AUTOTOOLS_AFTER[@]}" | ablog
 	returns $PIPESTATUS || abdie "Configuring failed."
 
 	BUILD_READY
-	make $ABMK $MAKE_AFTER | ablog
+	make "${ABMK[@]}" "${MAKE_AFTER[@]}" | ablog
 	returns $PIPESTATUS || abdie "Making failed."
 
 	BUILD_FINAL
-	make install "BUILDROOT=$PKGDIR" "DESTDIR=$PKGDIR" $MAKE_AFTER | ablog
+	make install "BUILDROOT=$PKGDIR" "DESTDIR=$PKGDIR" "${MAKE_AFTER[@]}" | ablog
 	returns $PIPESTATUS || abdie "Installing failed."
 
 	if bool $ABSHADOW
@@ -73,4 +73,4 @@ build_autotools_build() {
 	fi
 }
 
-ABBUILDS+=' autotools'
+ABBUILDS+=('autotools')

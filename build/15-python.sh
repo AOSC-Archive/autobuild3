@@ -9,17 +9,27 @@ build_python_probe(){
 }
 
 build_python_build(){
+	local snakes=()
+	if ! bool $NOPYTHON2; then
+		{
+			command -v python2 && snakes+=(python2);
+		} || {
+			command -v python  && snakes+=(python);
+		}
+	fi
+	if ! bool $NOPYTHON3; then
+		command -v python3 && snakes+=(python3)
+	fi
 	BUILD_START
-	for PYTHON in "$(bool $NOPYTHON2 || which python2 || which python || echo)" \
-	"$(bool $NOPYTHON3 || which python3 || echo)"; do
+	for PYTHON in "${snakes[@]}"; do
 		[ "$PYTHON" ] || continue
 		if bool $USE_PYTHON_BUILD_FIRST; then
 			BUILD_READY
 			"$PYTHON" build
 		fi
 		BUILD_FINAL
-		"$PYTHON" setup.py install $MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 || return $?
+		"$PYTHON" setup.py install "${MAKE_AFTER[@]}" "--prefix=$PREFIX" --root="$PKGDIR" --optimize=1  | ablog || return $PIPESTATUS
 		bool $NOPYTHONCLEAN || "$PYTHON" setup.py clean || true
 	done
 }
-ABBUILDS+=' python'
+ABBUILDS+=('python')

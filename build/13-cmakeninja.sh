@@ -17,9 +17,9 @@ build_cmakeninja_build(){
 		cd build
 	fi
 	BUILD_START
-	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER -GNinja
+	cmake $SRCDIR "${CMAKE_DEF[@]}" "${CMAKE_AFTER[@]}" -GNinja
 	BUILD_READY
-	ninja $ABMK $MAKE_AFTER
+	ninja $ABMK "${MAKE_AFTER[@]}"
 	BUILD_FINAL
 	DESTDIR=$PKGDIR ninja install || _ret=$PIPESTATUS
 	if bool $ABSHADOW
@@ -28,4 +28,4 @@ build_cmakeninja_build(){
 	fi
 	return $_ret
 }
-ABBUILDS+=' cmakeninja'
+ABBUILDS+=(cmakeninja)

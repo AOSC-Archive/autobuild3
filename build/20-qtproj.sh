@@ -11,8 +11,9 @@ build_qtproj_probe(){
 		[ -f "$_pro" ] && break
 	done || return "$?"
 
-	[ "$QT_SELECT" ] || 
-	if bool $USEQT5; then
+	if [ "$QT_SELECT" ]; then
+		: # all is well
+	elif bool $USEQT5; then
 		abwarn "\$USEQT5 is now deprecated. Use QT_SELECT=5."
 		QT_SELECT=5
 	elif bool $USEQT4; then
@@ -26,10 +27,10 @@ build_qtproj_probe(){
 
 build_qtproj_build(){
 	BUILD_START
-	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER
+	"$QTPREFIX/bin/qmake" "${QTPROJ_DEF[@]}" "${QTPROJ_AFTER[@]}"
 	BUILD_READY
-	make $ABMK $MAKE_AFTER
+	make "${ABMK[@]}" "${MAKE_AFTER[@]}"
 	BUILD_FINAL
-	make INSTALL_ROOT=$PKGDIR install
+	make install "INSTALL_ROOT=$PKGDIR" "${MAKE_INSTALL_DEF[@]}" "${MAKE_AFTER[@]}" 
 }
-ABBUILDS+=' qtproj'
+ABBUILDS+=('qtproj')

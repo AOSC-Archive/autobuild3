@@ -102,16 +102,39 @@ QT4BIN="/usr/lib/qt4/bin"
 QT5BIN="/usr/lib/qt5/bin"
 
 ##OS basic configuration flags
-AUTOTOOLS_DEF="--prefix=$PREFIX --sysconfdir=$SYSCONF --localstatedir=$STATDIR \
---libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --disable-option-checking \
---disable-static --enable-shared"
-CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=$SYSCONF \
--DCMAKE_SKIP_RPATH=ON"
-MESON_DEF="--prefix=/usr"
-WAF_DEF="--prefix=$PREFIX --configdir=$SYSCONF"
-QTPROJ_DEF="PREFIX=$PREFIX"
-MAKE_INSTALL_DEF="PREFIX=/usr BINDIR=/usr/bin SBINDIR=/usr/bin LIBDIR=/usr/lib"
+AUTOTOOLS_DEF=(
+	--prefix="$PREFIX"
+	--sysconfdir="$SYSCONF"
+	--localstatedir="$STATDIR"
+	--libdir="$LIBDIR"
+	--bindir="$BINDIR"
+	--sbindir="$BINDIR"
+	--disable-option-checking
+	--disable-static
+	--enable-shared
+)
+MESON_DEF=(--prefix=$PREFIX)
+CMAKE_DEF=(
+	-DCMAKE_INSTALL_PREFIX="$PREFIX"
+	-DCMAKE_BUILD_TYPE=Release
+	-DCMAKE_INSTALL_LIBDIR=lib
+	-DLIB_INSTALL_DIR=lib
+	-DSYSCONF_INSTALL_DIR="$SYSCONF"
+	-DCMAKE_SKIP_RPATH=ON
+)
+WAF_DEF=(
+	--prefix="$PREFIX"
+	--configdir="$SYSCONF"
+)
+QTPROJ_DEF=(
+	PREFIX="$PREFIX"
+)
+MAKE_INSTALL_DEF=(
+	PREFIX=/usr
+	BINDIR=/usr/bin
+	SBINDIR=/usr/bin
+	LIBDIR=/usr/lib
+)
 
 # AUTOTOOLS related
 RECONF=yes

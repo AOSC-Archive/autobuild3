@@ -8,6 +8,7 @@ _abinternal_array=(
 	ABELFFILTERS
 	ABPACKAGE
 	DPKGDEBCOMP
+	MAKEFLAGS
 	PM_ROOTPARAM
 	filter_elf_dep_libs
 )

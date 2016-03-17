@@ -13,4 +13,4 @@ build_npm_build(){
                     --prefix "$PKGDIR"/usr "$SRCDIR"/$PKGNAME-$PKGVER.tgz
 }
 
-ABBUILDS+=' npm'
+ABBUILDS+=(npm)

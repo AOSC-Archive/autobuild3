@@ -17,15 +17,15 @@ build_cmake_build(){
 		cd build
 	fi
 	BUILD_START
-	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER
+	cmake "$SRCDIR" "${CMAKE_DEF[@]}" "${CMAKE_AFTER[@]}"
 	BUILD_READY
-	make $ABMK $MAKE_AFTER
+	make "${ABMK[@]}" "${MAKE_AFTER[@]}"
 	BUILD_FINAL
-	make DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$PIPESTATUS
+	make "DESTDIR=$PKGDIR" "${MAKE_AFTER[@]}" install || _ret=$PIPESTATUS
 	if bool $ABSHADOW
 	then
 		cd ..
 	fi
 	return $_ret
 }
-ABBUILDS+=' cmake'
+ABBUILDS+=('cmake')
