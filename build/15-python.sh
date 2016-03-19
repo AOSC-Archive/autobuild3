@@ -20,6 +20,7 @@ build_python_build(){
 	if ! bool $NOPYTHON3; then
 		command -v python3 && snakes+=(python3)
 	fi
+	:
 	BUILD_START
 	for PYTHON in "${snakes[@]}"; do
 		[ "$PYTHON" ] || continue
