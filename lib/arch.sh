@@ -56,7 +56,7 @@ arch_loadfile(){
 }
 
 arch_initcross(){
-	if [[ $ABBUILD == $ABHOST ]]; then
+	if [[ $ABBUILD == $ABHOST || $HOST == NOARCH ]]; then
 		return 0
 	fi
 	: "${HOSTSYSROOT=/var/ab/cross-root/$ABHOST}"
@@ -66,5 +66,6 @@ arch_initcross(){
 	export PATH="$(dirname "$HOSTTOOLPREFIX"):$PATH"
 }
 
+# todo: make these variables I guess?
 arch_lib(){ echo "$(arch_crossroot "$@")/usr/lib"; }
 arch_crossroot() { echo "/var/ab/cross-root/$ABHOST"; }
