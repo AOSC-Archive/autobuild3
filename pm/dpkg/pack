@@ -7,9 +7,11 @@ dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
 dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
+	local arch=$ABHOST
+	[[ $arch == NOARCH ]] && arch=any
 	echo "Package: $PKGNAME"
 	echo "Version: $(dpkgpkgver)"
-	echo "Architecture: $ABHOST"
+	echo "Architecture: $arch"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
 	echo "Installed-Size: $(du -s $PKGDIR | cut -f 1)"

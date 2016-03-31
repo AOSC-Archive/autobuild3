@@ -3,8 +3,8 @@
 ##@copyright GPL-2.0+
 eval unset $_ab_pm
 PM_ALT=0 VER_S=' ' VER_E=''
-abtrycmd rpmarch || rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
 
+rpm_arch_host=${ARCH_RPM[$ABHOST]:-$ABHOST}
 # Pre-RPM payload scripts
 if [ -f autobuild/pre-rpm ]; then
 	. autobuild/pre-rpm
@@ -109,8 +109,7 @@ $(rpmscripts)
 $(rpmfiles)
 _ab_rpm_endspec
 
-_rpmarch=$(rpmarch "${ABHOST}")
-rpmbuild --target "$_rpmarch" -bb abspec || aberr "RPM PACKING FAILED."
+rpmbuild --target "$rpm_arch_host" -bb abspec || aberr "RPM PACKING FAILED."
 if [ -f autobuild/post-rpm ] ; then
 	. autobuild/post-rpm
 fi
