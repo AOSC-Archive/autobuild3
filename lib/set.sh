@@ -16,7 +16,7 @@ alias _abset_AB='declare -n __A="$1" __B="$2"'
 abset_add(){ declare -n __set="$1"; local __idx; for __idx in "${@:1}"; do __set["$__idx"]=1; done; }
 # del opts from set (won't complain if not found)
 # also handy for `difference` (-)
-abset_del(){ local __A=("${@:1}"); __A=("${a[@]/#/$1\[}"); unset "${a[@]/%/\]}"; }
+abset_del(){ declare -n __set="$1"; local __idx; for __idx in "${@:1}"; do unset '__set[$__idx]'; done; }
 
 ## Set-ish OP
 ## Convention: returned values stored in _setRet{set}.
