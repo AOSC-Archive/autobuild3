@@ -37,7 +37,7 @@ build_autotools_build() {
 		cd build
 	fi
 
-	if [[ $HOST ]]
+	if [[ $ABHOST != $ABBUILD ]]
 	then
 		AUTOTOOLS_TARGET="--host=$HOST"
 	fi
