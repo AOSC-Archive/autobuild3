@@ -16,7 +16,7 @@ HOST=${ARCH_TARGET["$ABHOST"]}
 
 _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
 [[ $ABHOST != $FAIL_ARCH ]] ||
-	die "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
+	abdie "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
 
 if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ABBUILD == amd64 ]]
 then
