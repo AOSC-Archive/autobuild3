@@ -36,9 +36,9 @@ OBJCFLAGS_COMMON_WEIRD=''
 # OBJCXX Flags.
 OBJCXXFLAGS_COMMON_WEIRD=''
 OBJCXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
-# Linker Flags.
+# Linker Flags. (actually passed to your CC, just FYI)
 # LDFLAGS writing helpers:
-ld_arg(){ echo -n -Wl; local arg ABCOMMA=,; for arg; do abmkcomma; echo -n "$arg"; done; }
+ld_arg(){ printf %s '-Wl'; local IFS=,; printf %s "$*"; }
 ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
 LDFLAGS_COMMON='-Wl,-O1,--sort-common,--as-needed '
 #LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
