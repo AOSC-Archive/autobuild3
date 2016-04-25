@@ -56,7 +56,7 @@ arch_loadfile(){
 }
 
 arch_initcross(){
-	if [[ $ABBUILD == $ABHOST || $ABHOST == NOARCH ]]; then
+	if [[ $ABBUILD == $ABHOST || $ABHOST == noarch ]]; then
 		return 0
 	fi
 	: "${HOSTSYSROOT=/var/ab/cross-root/$ABHOST}"

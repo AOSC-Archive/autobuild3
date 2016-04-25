@@ -13,7 +13,7 @@ ARCH_RPM['amd64']=x86_64
 ARCH_RPM['armel']=armhfp       # real story: we are using neon.
 ARCH_RPM['mipsn32el']=mips64el # wut
 ARCH_RPM['arm64']=aarch64
-ARCH_RPM['NOARCH']=noarch
+ARCH_RPM['noarch']=noarch
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
