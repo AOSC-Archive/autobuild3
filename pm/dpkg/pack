@@ -8,7 +8,7 @@ dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) 
 
 dpkgctrl(){
 	local arch=$ABHOST
-	[[ $arch == noarch ]] && arch=any
+	[[ $arch == noarch ]] && arch=all
 	echo "Package: $PKGNAME"
 	echo "Version: $(dpkgpkgver)"
 	echo "Architecture: $arch"
