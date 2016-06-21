@@ -19,7 +19,8 @@ ARCH_RPM['noarch']=noarch
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
-CFLAGS_COMMON_OPTI_LTO='-flto '
+bool $ABTHREADS || \
+CFLAGS_COMMON_OPTI_LTO='-flto=$ABTHREADS '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_CLANG='-fno-integrated-as '
 CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
