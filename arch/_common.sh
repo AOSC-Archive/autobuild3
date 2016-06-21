@@ -23,13 +23,13 @@ bool $ABTHREADS || \
 CFLAGS_COMMON_OPTI_LTO='-flto=$ABTHREADS '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_CLANG='-fno-integrated-as '
-CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
+CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize '
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
 CFLAGS_CLANG_OPTI_LTO='-O4 '
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
-CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor '
+CXXFLAGS_GCC_OPTI='-fdeclone-ctor-dtor -ftree-vectorize '
 CXXFLAGS_COMMON_WEIRD=''
 CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
