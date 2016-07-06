@@ -38,7 +38,11 @@ elf_strip()
 {
 	case "$(file -bi $1)" in
 		*application/x-sharedlib*)
-			eu-strip $1 ;;
+			if [ "$ARCH" = "arm64" ]; then # Workaround eu-strip issue on arm64
+				strip --strip-debug $1
+			else
+				eu-strip $1
+			fi ;;
 		*application/x-archive*)
 			strip --strip-debug $1 ;; #eu-strip on .a will change it to a ELF. FBI Warning!!!
 		*application/x-object*)
@@ -49,7 +53,11 @@ elf_strip()
 					continue ;;
 			esac ;;
 		*application/x-executable*)
-			eu-strip $1 ;;
+			if [ "$ARCH" = "arm64" ]; then
+				strip --strip-unneeded $1
+			else
+				eu-strip $1
+			fi ;;
 		*)
 			continue ;;
 	esac
