@@ -14,6 +14,14 @@ build_autotools_probe(){
 build_autotools_build() {
 	export ABSHADOW
 
+	if bool $ABCONFIGHACK
+	then
+		for i in $(find "$SRCDIR" -name config.guess -o -name config.sub); do \
+			abinfo "Copying replacement $i ..."
+			cp -v /usr/lib/rpm/redhat/$(basename $i) $i ; \
+		done
+	fi
+
 	if bool $RECONF
 	then
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
