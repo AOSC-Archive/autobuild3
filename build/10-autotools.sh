@@ -18,7 +18,10 @@ build_autotools_build() {
 	then
 		for i in $(find "$SRCDIR" -name config.guess -o -name config.sub); do \
 			abinfo "Copying replacement $i ..."
-			cp -v /usr/lib/rpm/redhat/$(basename $i) $i ; \
+			# FIXME: hard-coded automake version.
+			# Adapted from redhat-rpm-config.
+			# http://pkgs.fedoraproject.org/cgit/rpms/redhat-rpm-config.git/tree/macros#n35
+			cp -v /usr/share/automake-1.15/$(basename $i) $i ; \
 		done
 	fi
 
