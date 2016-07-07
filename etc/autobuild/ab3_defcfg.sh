@@ -3,13 +3,14 @@
 ##@copyright CC0
 
 ##Misc building flags
-ABARCHIVE=autobuild-aoscarchive # Archive program
-ABSHADOW=yes  # Shall shadow builds be performed by default?
-NOLTO=yes     # Shall we use LTO?
-USECLANG=no   # Are we using clang?
-NOSTATIC=yes  # Want those big fat static libraries?
-ABCLEAN=yes   # Clean before build
-NOLIBTOOL=yes # Hug pkg-config and CMake configurations?
+ABARCHIVE=autobuild-aoscarchive	# Archive program
+ABSHADOW=yes			# Shall shadow builds be performed by default?
+NOLTO=yes			# Shall we use LTO?
+USECLANG=no			# Are we using clang?
+NOSTATIC=yes			# Want those big fat static libraries?
+ABCLEAN=yes			# Clean before build?
+NOLIBTOOL=yes			# Hug pkg-config and CMake configurations?
+ABCONFIGHACK=yes		# Use config.{sub,guess} replacement for newer architectures?
 
 # Parallelism, the default value is an equation depending on the number of processors.
 # $ABTHREADS will take any integer larger than 0.
