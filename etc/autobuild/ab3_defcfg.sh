@@ -40,6 +40,10 @@ AB_FLAGS_PIE=1
 # Hardening specs?
 AB_FLAGS_SPECS=1
 
+AB_SAN_ADD=0
+AB_SAN_THR=0
+AB_SAN_LEK=0
+
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
 # Will be updated. Therefore not part of conffiles.

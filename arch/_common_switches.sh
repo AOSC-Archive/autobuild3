@@ -13,3 +13,7 @@ if bool $USECLANG; then
 	if ((AB_FLAGS_PIC)); then LDFLAGS_COMMON+=' -fPIC ' CFLAGS_COMMON+=' -fPIC '; fi
 	if ((AB_FLAGS_PIE)); then LDFLAGS_COMMON+=' -fPIE -pie ' CFLAGS_COMMON+=' -fPIE '; fi
 fi
+
+if ((AB_SAN_ADD)); then CFLAGS_COMMON+='-fsanitize=address '
+if ((AB_SAN_THR)); then CFLAGS_COMMON+='-fsanitize=thread '
+if ((AB_SAN_LEK)); then CFLAGS_COMMON+='-fsanitize=leak '
