@@ -105,5 +105,17 @@ ABINSTALL="dpkg rpm"
 . "$AB"/etc/autobuild/ab3cfg.sh
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
+abdetectarch(){
+	case "$(uname -m)" in
+		x86_64) echo amd64 ;;
+		i?86) echo i386 ;;
+		armv7l) echo armel ;;
+		armv8l) echo arm64 ;;
+		*) uname -m ;;
+	esac
+}
+
 ((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
-: "${ABBUILD:="$(uname -m || echo amd64)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
+: "${ABBUILD:="$(abdetectarch)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
+
+unset -f abdetectarch
