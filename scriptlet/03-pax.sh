@@ -6,14 +6,14 @@
 
 abpaxctl(){
 	local paxflags
-	echo "if [ -x /usr/bin/paxctl-ng ]; then"
+	echo "if [ -x /usr/bin/paxctl-ng ]; then" >> abscripts/postinst
 	paxflags="$1"
 	shift
 	for i
 	do
-		echo "	/usr/bin/paxctl-ng -v -$paxflags \"$i\""
+		echo "	/usr/bin/paxctl-ng -v -$paxflags \"$i\"" >> abscripts/postinst
 	done
-	echo "fi"
+	echo "fi" >> abscripts/postinst
 }
 
 if [ -e autobuild/pax ]
