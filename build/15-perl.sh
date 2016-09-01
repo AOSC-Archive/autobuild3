@@ -9,7 +9,7 @@ build_perl_probe(){
 
 build_perl_build(){
 	BUILD_START
-	yes | perl Makefile.PL
+	yes | PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
 	BUILD_READY
 	yes | make $MAKE_AFTER
 	BUILD_FINAL
