@@ -5,7 +5,12 @@
 ##Misc building flags
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
-NOLTO=yes			# Shall we use LTO?
+# LTO switches, enabled by default for x86_64 in accordance to Core 4.
+if [[ `uname -m` = "x86_64" ]]; then
+	NOLTO=no
+else
+	NOLTO=yes
+fi
 USECLANG=no			# Are we using clang?
 NOSTATIC=yes			# Want those big fat static libraries?
 ABCLEAN=yes			# Clean before build?
