@@ -24,11 +24,11 @@ ABMANCOMPRESS=no
 ABELFDEP=no   # Guess dependencies from ldd?
 ABSTRIP=yes   # Strip off some symbols?
 
-##Hardening flags
+##Hardening flags (other than PIC and PIE)
 # Work in progress: factor hardening-related flags into options
 # Parameters that are likely to cause trouble.
-AB_FLAGS_PIC=1
-AB_FLAGS_PIE=1
+#
+# PIC and PIE are enabled by GCC/LD specs.
 AB_FLAGS_SSP=1
 AB_FLAGS_RRO=1
 AB_FLAGS_NOW=1
