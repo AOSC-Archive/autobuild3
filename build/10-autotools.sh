@@ -53,11 +53,6 @@ build_autotools_build() {
 		AUTOTOOLS_TARGET="--host=$HOST"
 	fi
 
-	if [[ "${CROSS:-$ARCH}" = armel ]]; then
-		AUTOTOOLS_DEF+=" --host=armv7a-hardfloat-linux-gnueabi \
-				--build=armv7a-hardfloat-linux-gnueabi"
-	fi
-
 	BUILD_START
 	$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
 
