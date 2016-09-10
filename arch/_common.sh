@@ -10,11 +10,15 @@ ARCH_TARGET['i386']=i686-pc-linux-gnu
 ARCH_TARGET['mipsn32el']=mips64el-linux-gnuabin32
 ARCH_TARGET['mipsel']=mipsel-unknown-linux-gnu
 ARCH_TARGET['arm64']=aarch64-unknown-linux-gnu
+ARCH_TARGET['powerpc']=powerpc-unknown-linux-gnu
+ARCH_TARGET['ppc64']=powerpc64-unknown-linux-gnu
 ARCH_RPM['amd64']=x86_64
 ARCH_RPM['armel']=armhfp       # real story: we are using neon.
 ARCH_RPM['mipsn32el']=mips64el # wut
 ARCH_RPM['mipsel']=mipsel
 ARCH_RPM['arm64']=aarch64
+ARCH_RPM['powerpc']=ppc
+ARCH_RPM['ppc64']=ppc64
 ARCH_RPM['noarch']=noarch
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '

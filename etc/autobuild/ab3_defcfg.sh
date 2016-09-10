@@ -116,6 +116,8 @@ abdetectarch(){
 		i?86) echo i386 ;;
 		armv7l) echo armel ;;
 		armv8l) echo arm64 ;;
+		ppc) echo powerpc ;;
+		ppc64) echo ppc64 ;;
 		*) uname -m ;;
 	esac
 }
