@@ -26,13 +26,13 @@ CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
 CFLAGS_COMMON_OPTI_LTO="-flto=jobserver "
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_CLANG='-fno-integrated-as '
-CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize -specs=$AB/specs/hardened-cc1 "
+CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
 CFLAGS_CLANG_OPTI_LTO='-O4 '
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
-CXXFLAGS_GCC_OPTI="-fdeclone-ctor-dtor -ftree-vectorize -specs=$AB/specs/hardened-cc1 "
+CXXFLAGS_GCC_OPTI="-fdeclone-ctor-dtor -ftree-vectorize "
 CXXFLAGS_COMMON_WEIRD=''
 CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
@@ -46,7 +46,7 @@ OBJCXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # LDFLAGS writing helpers:
 ld_arg(){ printf %s '-Wl'; local IFS=,; printf %s "$*"; }
 ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
-LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed -specs=$AB/specs/hardened-ld "
+LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed "
 #LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 # temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
 # investigation advised.

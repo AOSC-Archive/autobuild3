@@ -24,15 +24,18 @@ ABMANCOMPRESS=no
 ABELFDEP=no   # Guess dependencies from ldd?
 ABSTRIP=yes   # Strip off some symbols?
 
-##Hardening flags (other than PIC and PIE)
-# Work in progress: factor hardening-related flags into options
-# Parameters that are likely to cause trouble.
-#
 # PIC and PIE are enabled by GCC/LD specs.
 AB_FLAGS_SSP=1
 AB_FLAGS_RRO=1
 AB_FLAGS_NOW=1
 AB_FLAGS_FTF=1
+
+# Fallback for Clang which does not support specs.
+AB_FLAGS_PIC=1
+AB_FLAGS_PIE=1
+
+# Hardening specs?
+AB_FLAGS_SPECS=1
 
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
