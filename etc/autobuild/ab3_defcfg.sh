@@ -24,6 +24,9 @@ ABMANCOMPRESS=no
 ABELFDEP=no   # Guess dependencies from ldd?
 ABSTRIP=yes   # Strip off some symbols?
 
+# Use -O3 instead?
+AB_FLAGS_O3=0
+
 # PIC and PIE are enabled by GCC/LD specs.
 AB_FLAGS_SSP=1
 AB_FLAGS_RRO=1

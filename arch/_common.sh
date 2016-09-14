@@ -36,7 +36,7 @@ CXXFLAGS_GCC_OPTI="-fdeclone-ctor-dtor -ftree-vectorize "
 CXXFLAGS_COMMON_WEIRD=''
 CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
-CPPFLAGS_COMMON='-O2 '
+CPPFLAGS_COMMON=' '
 # OBJC Flags.
 OBJCFLAGS_COMMON_WEIRD=''
 # OBJCXX Flags.
