@@ -4,14 +4,14 @@
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 # Naming, sadly. PORT_NOTICE!
-ARCH_TARGET['amd64']=x86_64-pc-linux-gnu
-ARCH_TARGET['armel']=armv7a-hardfloat-linux-gnueabi
-ARCH_TARGET['i386']=i686-pc-linux-gnu
-ARCH_TARGET['mipsn32el']=mips64el-linux-gnuabin32
-ARCH_TARGET['mipsel']=mipsel-unknown-linux-gnu
-ARCH_TARGET['arm64']=aarch64-unknown-linux-gnu
-ARCH_TARGET['powerpc']=powerpc-unknown-linux-gnu
-ARCH_TARGET['ppc64']=powerpc64-unknown-linux-gnu
+ARCH_TARGET['amd64']=x86_64-aosc-linux-gnu
+ARCH_TARGET['armel']=armv7a-aosc-linux-gnueabihf
+ARCH_TARGET['i386']=i686-aosc-linux-gnu
+ARCH_TARGET['mipsn32el']=mips64el-aosc-linux-gnuabin32
+ARCH_TARGET['mipsel']=mipsel-aosc-linux-gnu
+ARCH_TARGET['arm64']=aarch64-aosc-linux-gnu
+ARCH_TARGET['powerpc']=powerpc-aosc-linux-gnu
+ARCH_TARGET['ppc64']=powerpc64-aosc-linux-gnu
 ARCH_RPM['amd64']=x86_64
 ARCH_RPM['armel']=armhfp       # real story: we are using neon.
 ARCH_RPM['mipsn32el']=mips64el # wut
