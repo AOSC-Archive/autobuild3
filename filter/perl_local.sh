@@ -3,7 +3,9 @@
 ##@copyright GPL-2.0+
 filter_perllocal(){
 	abinfo "Removed perllocal.pod."
-	rm -f "$PKGDIR"/usr/lib/perl5/**/perllocal.pod
+	find "$PKGDIR" -name perllocal.pod -delete
+	abinfo "Removed .packlist."
+	find "$PKGDIR" -name .packlist -delete
 }
 
-export ABFILTERS="$ABFILTERS perllocal"
+export ABFILTERS="$ABFILTERS perl"
