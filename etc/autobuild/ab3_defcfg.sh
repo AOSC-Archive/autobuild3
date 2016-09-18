@@ -5,7 +5,12 @@
 ##Misc building flags
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
-NOLTO=yes			# Shall we use LTO?
+# LTO switches, enabled by default for x86_64 in accordance to Core 4.
+if [[ `uname -m` = "x86_64" ]]; then
+	NOLTO=no
+else
+	NOLTO=yes
+fi
 USECLANG=no			# Are we using clang?
 NOSTATIC=yes			# Want those big fat static libraries?
 ABCLEAN=yes			# Clean before build?
@@ -19,15 +24,21 @@ ABMANCOMPRESS=no
 ABELFDEP=no   # Guess dependencies from ldd?
 ABSTRIP=yes   # Strip off some symbols?
 
-##Hardening flags
-# Work in progress: factor hardening-related flags into options
-# Parameters that are likely to cause trouble.
-AB_FLAGS_PIC=1
-AB_FLAGS_PIE=1
+# Use -O3 instead?
+AB_FLAGS_O3=0
+
+# PIC and PIE are enabled by GCC/LD specs.
 AB_FLAGS_SSP=1
 AB_FLAGS_RRO=1
 AB_FLAGS_NOW=1
 AB_FLAGS_FTF=1
+
+# Fallback for Clang which does not support specs.
+AB_FLAGS_PIC=1
+AB_FLAGS_PIE=1
+
+# Hardening specs?
+AB_FLAGS_SPECS=1
 
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
@@ -111,6 +122,8 @@ abdetectarch(){
 		i?86) echo i386 ;;
 		armv7l) echo armel ;;
 		armv8l) echo arm64 ;;
+		ppc) echo powerpc ;;
+		ppc64) echo ppc64 ;;
 		*) uname -m ;;
 	esac
 }

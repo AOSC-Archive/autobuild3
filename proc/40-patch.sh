@@ -19,6 +19,9 @@ then
 		for i in autobuild/patches/*.{patch,diff}; do
 			patch -Np1 -i "$i"
 		done
+		for i in autobuild/patches/*.{patch,diff}."${CROSS:-$ARCH}"; do
+			patch -Np1 -i "$i"
+		done
 		touch .patch
 	fi
 fi
