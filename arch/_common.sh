@@ -23,12 +23,12 @@ ARCH_RPM['noarch']=noarch
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
-CFLAGS_COMMON_OPTI_LTO="-flto=jobserver "
+CFLAGS_GCC_OPTI_LTO="-flto=jobserver "
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_CLANG='-fno-integrated-as '
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
-CFLAGS_CLANG_OPTI_LTO='-O4 '
+CFLAGS_CLANG_OPTI_LTO='-flto '
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
@@ -50,6 +50,6 @@ LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed "
 #LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 # temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
 # investigation advised.
-LDFLAGS_COMMON_OPTI_LTO="-flto=jobserver -fuse-linker-plugin "
+LDFLAGS_COMMON_OPTI_LTO="-flto -fuse-linker-plugin "
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
