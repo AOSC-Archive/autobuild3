@@ -38,7 +38,11 @@ AB_FLAGS_PIC=1
 AB_FLAGS_PIE=1
 
 # Hardening specs?
-AB_FLAGS_SPECS=1
+if [[ "${CROSS:-$ARCH}" != "mipsel" ]]; then
+	AB_FLAGS_SPECS=1
+else
+	AB_FLAGS_SPECS=0
+fi
 
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
