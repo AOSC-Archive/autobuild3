@@ -9,7 +9,7 @@ addalt(){
 }
 
 # alternative path link prio [path2 link2 prio2 ..]
-alternative(){ while (($#)); do addalt "$1" "$(basename "$1")-$PKGNAME" "$2" "$3"; shift 3 || break; done; }
+alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 3 || break; done; }
 
 if [ -e autobuild/alternatives ]
 then
