@@ -31,7 +31,7 @@ build_autotools_build() {
 		if [ ! -x "$configure" ] || [ -e .patch ]; then
 			if [ -x autogen.sh ]; then
 				NOCONFIGURE=1 ./autogen.sh | ablog
-			elif [ -e configure.ac ]; then 
+			elif [ -e configure.ac ]; then
 				autoreconf -fis -Wcross 2>&1 | ablog
 			elif [ -e .patch ]; then
 				abwarn "Source patched but configure not regenerated."
@@ -51,6 +51,8 @@ build_autotools_build() {
 	if [[ $ABHOST != $ABBUILD ]]
 	then
 		AUTOTOOLS_TARGET="--host=$HOST"
+	else
+		AUTOTOOLS_TARGET="--build=${ARCH_TARGET[$ARCH]}"
 	fi
 
 	BUILD_START
