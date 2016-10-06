@@ -38,7 +38,7 @@ AB_FLAGS_PIC=1
 AB_FLAGS_PIE=1
 
 # Hardening specs?
-if [[ "${CROSS:-$ARCH}" != "mipsel" ]]; then
+if [[ $(uname -m) != mips* ]]; then
 	AB_FLAGS_SPECS=1
 else
 	AB_FLAGS_SPECS=0
