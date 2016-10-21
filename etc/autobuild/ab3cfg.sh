@@ -4,5 +4,4 @@
 ABMPM=dpkg  # Your main PM
 ABAPMS=  # Other PMs
 MTER="Null Packager <null@aosc.xyz>"
-ARCH=mipsel
 ABINSTALL=dpkg
