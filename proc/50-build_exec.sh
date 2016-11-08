@@ -24,7 +24,7 @@ for build_func in build_{start,ready,final}; do
 	done"
 done
 
-build_${ABTYPE}_build || abicu "Build failed: $?."
+build_${ABTYPE}_build || abdie "Build failed: $?."
 
 [ -d "$PKGDIR" ] || abicu "50-build: Suspecting build failure due to missing PKGDIR."
 #[ -d "`arch_findfile overrides`" ] && cp -rla "`arch_findfile overrides`"/* "$PKGDIR/"
