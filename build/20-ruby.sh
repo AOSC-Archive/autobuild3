@@ -4,7 +4,13 @@
 abtryexe ruby gem || ((!ABSTRICT)) || ablibret
 
 build_ruby_probe(){
-  [ -f *.gem ]
+	local _gems _gem
+	_gems=(*.gem)
+	((${#_gems[@]})) || return 1
+	for _gem in "${_gems[@]}"; do
+		[ -f "$_gem" ] && return 0
+	done
+	return 1
 }
 
 build_ruby_build(){

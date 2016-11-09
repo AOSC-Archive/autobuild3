@@ -4,7 +4,13 @@
 abtryexe qmake || ablibret
 export QT_SELECT
 build_qtproj_probe(){
-	[ -f *.pro ] || return $?
+	local _pros _pro
+	_pros=(*.pro)
+	((${#_pros[@]})) || return 1
+	for _pro in "${_pros[@]}"; do
+		[ -f "$_pro" ] && break
+	done || return "$?"
+
 	[ "$QT_SELECT" ] || 
 	if bool $USEQT5; then
 		abwarn "\$USEQT5 is now deprecated. Use QT_SELECT=5."
