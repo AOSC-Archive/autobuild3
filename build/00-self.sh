@@ -10,7 +10,9 @@ build_self_probe(){
 build_self_build(){
 	BUILD_START
 	arch_loadfile build
-	cd $SRCDIR
+	local _ret=$?
+	cd "$SRCDIR" &&
+	return "$_ret"
 }
 
 ABBUILDS='self'
