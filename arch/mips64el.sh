@@ -1,5 +1,5 @@
 #!/bin/bash
-##arch/mips64el.sh: Build definitions for mipsel (loongson 2f best).
+##arch/mips64el.sh: Build definitions for mip64el (optimized for Loongson 3A).
 ##@copyright GPL-2.0+
 # Configuration confirmed in #41@aosc-os-core.
 # Suggested, discussed by:
