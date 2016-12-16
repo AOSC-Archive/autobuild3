@@ -128,6 +128,7 @@ abdetectarch(){
 		armv8l) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
+		mips64) echo mips64el ;;
 		*) uname -m ;;
 	esac
 }
