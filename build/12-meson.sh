@@ -3,11 +3,11 @@
 ##@copyright GPL-2.0+
 abtryexe meson
 
-build_autotools_probe(){
+build_meson_probe(){
 	[ -e meson.build ]
 }
 
-build_autotools_build() {
+build_meson_build() {
 	meson ${MESON_DEF} ${MESON_AFTER}
 	ninja
 	DESTDIR="$PKGDIR" ninja install
