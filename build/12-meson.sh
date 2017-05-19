@@ -8,7 +8,7 @@ build_meson_probe(){
 }
 
 build_meson_build() {
-	meson ${MESON_DEF} ${MESON_AFTER}
+	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR"
 	ninja
 	DESTDIR="$PKGDIR" ninja install
 }
