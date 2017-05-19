@@ -8,9 +8,12 @@ build_meson_probe(){
 }
 
 build_meson_build() {
-	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR"
+	mkdir "$SRCDIR"/build
+	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build
+        cd "$SRCDIR"/build
 	ninja
 	DESTDIR="$PKGDIR" ninja install
+	cd "$SRCDIR"
 }
 
 ABBUILDS+=' meson'
