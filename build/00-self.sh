@@ -9,7 +9,9 @@ build_self_probe(){
 
 build_self_build(){
 	BUILD_START
+	set -e
 	arch_loadfile build
+	set +e
 	local _ret=$?
 	cd "$SRCDIR" &&
 	return "$_ret"
