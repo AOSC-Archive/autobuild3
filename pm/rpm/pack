@@ -49,7 +49,9 @@ rpmfiles(){
 	# Question: Shall we just use -type f?
 	find "$PKGDIR" | while read i; do
 		[[ -d "$i" && ! -L "$i" ]] && continue
-		grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		if [ -e "$SRCDIR/autobuild/conffiles" ]; then
+			grep -Fx "$i" "$SRCDIR/autobuild/conffiles" && echo "%config"
+		fi
 		echo "%defattr($(stat --printf %a,%U,%G "$i"),-)"
 		rpm_transform "${i:_strlen_pkg}"
 	done

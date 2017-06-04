@@ -48,7 +48,9 @@ instSIZE=$(du -s abdist | cut -f 1)
 
 mkdir -p $PKGDIR/DEBIAN
 cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
-cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
+if [ -e "$SRCDIR/autobuild/conffiles" ]; then
+	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
+fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
 dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
