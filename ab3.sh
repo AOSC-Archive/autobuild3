@@ -5,7 +5,9 @@
 # Basic environment declarations
 export VERSION=3
 export ABSET=/etc/autobuild
-export AB=$(cat "$ABSET/prefix" || dirname "$(readlink -e "$0")")
+if [ ! "$AB" ]; then
+	export AB=$(cat "$ABSET/prefix" || dirname "$(readlink -e "$0")")
+fi
 export ABBLPREFIX=$AB/lib
 export ABBUILD ABHOST ABTARGET
 # compat 1.x and fallback
