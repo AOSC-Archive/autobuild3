@@ -14,18 +14,18 @@ then
 	then
 		for i in $(grep -v '^#' autobuild/patches/series); do
 			abinfo "Applying patch $i ..."
-			patch $PATCHFLAGS -i autobuild/patches/$i
+			patch $PATCHFLAGS -i autobuild/patches/$i || abdie "Applying patch $i failed"
 		done
 		touch .patch
 	elif [ -d autobuild/patches ]
 	then
 		for i in autobuild/patches/*.{patch,diff}; do
 			abinfo "Applying patch $i ..."
-			patch $PATCHFLAGS -i "$i"
+			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
 		done
 		for i in autobuild/patches/*.{patch,diff}."${CROSS:-$ARCH}"; do
 			abinfo "Applying patch $i ..."
-			patch $PATCHFLAGS -i "$i"
+			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
 		done
 		touch .patch
 	fi
