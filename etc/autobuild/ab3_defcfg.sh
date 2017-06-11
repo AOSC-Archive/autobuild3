@@ -38,11 +38,7 @@ AB_FLAGS_PIC=1
 AB_FLAGS_PIE=1
 
 # Hardening specs?
-if [[ $(uname -m) != mips* ]]; then
-	AB_FLAGS_SPECS=1
-else
-	AB_FLAGS_SPECS=0
-fi
+AB_FLAGS_SPECS=1
 
 ##OS Directory Tree
 # Built-in variables for OS3 directory tree.
