@@ -36,7 +36,7 @@ mvln(){	# not using cp -s because we want the main part to be in the target
 
 if [ "$TREE" == 1 ];
 then
-	for _layout in {a..k} lib{a..z} {l..z} _UNSORTED; do [[ $1 == "$_layout"* ]] && break; done || abwarn "$1 NOT SORTED"
+	for _layout in {a..k} lib{a..z} {l..z} {0..9} _UNSORTED; do [[ $1 == "$_layout"* ]] && break; done || abwarn "$1 NOT SORTED"
 else
 	abinfo "Not using an alphabetical tree."
 fi
