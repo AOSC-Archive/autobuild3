@@ -51,5 +51,5 @@ LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed "
 # temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
 # investigation advised.
 LDFLAGS_COMMON_OPTI_LTO="-flto -fuse-linker-plugin "
-LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fno-use-linker-plugin '
+LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fuse-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
