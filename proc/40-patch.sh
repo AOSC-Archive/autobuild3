@@ -7,7 +7,7 @@ PATCHFLAGS="-Np1 -t"
 
 if [ ! -f .patch ]
 then
-	if arch_loadfile patch
+	if arch_loadfile_strict patch
 	then
 		touch .patch
 	elif [ -f autobuild/patches/series ]
