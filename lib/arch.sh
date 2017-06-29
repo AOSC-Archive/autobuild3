@@ -55,6 +55,16 @@ arch_loadfile(){
 	. "$_abarchf" "$@";
 }
 
+# TODO: This function is still not strict at all
+arch_loadfile_strict(){
+	local _abarchf _arch_trymore=${arch_trymore:-1};
+	_abarchf="$(arch_findfile "$1")" || return $?;
+	shift;
+	set -e
+	. "$_abarchf" "$@";
+	set +e
+}
+
 arch_initcross(){
 	if [[ $ABBUILD == $ABHOST || $ABHOST == noarch ]]; then
 		return 0
