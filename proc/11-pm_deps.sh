@@ -8,6 +8,6 @@ FLATDEP="$(pm_deflat $PKGDEP $BUILDDEP)"
 if ! pm_exists $FLATDEP; then
 	abinfo "Build or runtime dependencies not satisfied, now fetching needed packages."
 	pm_repoupdate
-	pm_repoinstall $FLATDEP
+	pm_repoinstall $FLATDEP || abdie "Cannot install needed dependencies."
 fi
 unset FLATDEP
