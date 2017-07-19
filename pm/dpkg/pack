@@ -16,6 +16,11 @@ dpkgctrl(){
 	echo "Maintainer: $MTER"
 	echo "Installed-Size: $(du -s $PKGDIR | cut -f 1)"
 	echo "Description: $PKGDES"
+	if ((PKGESS)); then
+		echo "Essential: yes"
+	else
+		echo "Essential: no"
+	fi
 	dpkgfield Depends $PKGDEP
 	VER_NONE=1 # We don't autofill versions in optional fields
 	[ "$PKGRECOM" ] && dpkgfield Recommends $PKGRECOM
