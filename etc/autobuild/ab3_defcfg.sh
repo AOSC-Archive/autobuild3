@@ -122,7 +122,8 @@ abdetectarch(){
 		x86_64) echo amd64 ;;
 		i?86) echo i386 ;;
 		armv7l) echo armel ;;
-		armv8l) echo arm64 ;;
+		armv8l) echo armel ;;
+		aarch64) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
 		mips64) echo mips64el ;;
