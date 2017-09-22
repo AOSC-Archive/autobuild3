@@ -14,7 +14,7 @@ export ABBUILD ABHOST ABTARGET
 : "${ABBUILD=$ARCH}" "${ABHOST=${CROSS:-$ABBUILD}}" "${ABTARGET=$ABHOST}"
 
 # For consistency of build output
-export LANG=C
+export LANG=C.UTF-8
 
 # Behavior
 ((AB_NOISY)) && set -xv
