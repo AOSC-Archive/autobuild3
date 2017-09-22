@@ -1,5 +1,5 @@
 #!/bin/bash
-##11-qasec.sh: Kick the bucket if the section looks bad
+##10-qa_sections.sh: Kick the bucket if the section looks bad
 ##@copyright GPL-2.0+
 bool $ABQA || return
 if echo "$PKGSEC" | grep -q '/'; then
