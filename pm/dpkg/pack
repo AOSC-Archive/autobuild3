@@ -60,4 +60,4 @@ dpkgctrl > $PKGDIR/DEBIAN/control &&
 dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
-export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb "
+export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "

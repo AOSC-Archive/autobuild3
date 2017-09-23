@@ -13,7 +13,7 @@ export TMPDIR="$SRCDIR"
 
 abrequire arch
 . "$AB/arch/_common.sh"
-. "$AB/arch/$ABHOST.sh"
+. "$AB/arch/${ABHOST//\//_}.sh" # Also load overlay configuration.
 BUILD=${ARCH_TARGET["$ABBUILD"]}
 HOST=${ARCH_TARGET["$ABHOST"]}
 
