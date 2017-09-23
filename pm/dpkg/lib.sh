@@ -25,5 +25,5 @@ pm_repoinstall(){
 }
 pm_chroot(){
 	export PM_ROOT=$1
-	export PM_ROOTPARAM="--root=$1 --admindir=$1/var/lib/dpkg --force-architecture" 
+	export PM_ROOTPARAM="--root=$1 --admindir=$1/var/lib/dpkg --force-architecture"
 }
