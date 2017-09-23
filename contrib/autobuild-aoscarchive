@@ -15,7 +15,8 @@ DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 
 TREE=1
-TARGET_DIR=/os-"$ABHOST"
+TARGET_DIR=/os-"${ABHOST%%\/*}"
+TARGET_SUBDIR="${ABHOST##*\/}"
 
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
 . $AB/lib/base.sh
@@ -44,11 +45,22 @@ fi
 # in place
 if [ "$SORT" == 1 ]; then
 	mkdir -p "$TARGET_DIR"/os3-{ab,dpkg}/"$_layout"
+	if ! -z "$TARGET_SUBDIR"; then
+		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/os3-{ab,dpkg}/"$_layout"
+	fi
 else
 	mkdir -p "$TARGET_DIR"/"$_layout"
+	if ! -z "$TARGET_SUBDIR"; then
+		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/"$_layout"
+	fi
 fi
 
-cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$(prefixprint ab)/$_layout"
-cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$(prefixprint dpkg)/$_layout"
+if ! -z "$TARGET_SUBDIR"; then
+	cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint ab)/$_layout"
+	cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint dpkg)/$_layout"
+else
+	cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$(prefixprint ab)/$_layout"
+	cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$(prefixprint dpkg)/$_layout"
+fi
 abinfo "abRepoArchive done."
 

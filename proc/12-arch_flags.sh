@@ -22,7 +22,7 @@ AB_FLAGS_FEATURES_DEF="$(
 			echo -n NO
 		elif ((u)); then
 			: # do nothing
-		else 
+		else
 			echo -n $def # default
 		fi
 		echo -n "$f "
