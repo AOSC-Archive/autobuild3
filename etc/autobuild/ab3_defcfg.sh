@@ -127,9 +127,9 @@ abdetectarch(){
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
 		mips64) if "$(readelf -h /bin/bash | grep -c "mips3")" == "0" then;
-			echo mips64el
+			echo mips64r2el
 			else
-			echo mipsel
+			echo mips64el
 			fi ;;
 		*) uname -m ;;
 	esac
