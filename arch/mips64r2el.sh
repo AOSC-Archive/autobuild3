@@ -8,4 +8,4 @@
 #   - Bob Cao <bobcao3@aosc.xyz>
 #   - Mingcong Bai <jeffbai@aosc.xyz>
 
-CFLAGS_COMMON_ARCH=' -mabi=64 -march=mips64r2 -mtune=loongson3a '
+CFLAGS_COMMON_ARCH=' -mabi=64 -march=mips64r2 -mtune=loongson3a -mfix-loongson3-llsc -mfx-loongson3-loads'

@@ -126,7 +126,7 @@ abdetectarch() {
 		aarch64) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
-		mips64) if [[ "$(readelf -h /bin/bash | grep -c "mips3")" == "0" ]]
+		mips64) if [[ "$(readelf -h /bin/bash | grep -c "mips3")" == "0" || "$(readelf -h /bin/bash | grep -c "loongson2f")" == "0" ]]
 			then echo mips64r2el
 			else echo mips64el
 			fi ;;
