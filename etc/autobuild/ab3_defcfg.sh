@@ -127,6 +127,7 @@ abdetectarch(){
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
 		mips64) echo mips64el ;;
+		riscv64) echo riscv64 ;;
 		*) uname -m ;;
 	esac
 }

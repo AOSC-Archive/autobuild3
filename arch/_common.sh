@@ -12,6 +12,7 @@ ARCH_TARGET['mipsel']=mipsel-aosc-linux-gnu
 ARCH_TARGET['arm64']=aarch64-aosc-linux-gnu
 ARCH_TARGET['powerpc']=powerpc-aosc-linux-gnu
 ARCH_TARGET['ppc64']=powerpc64-aosc-linux-gnu
+ARCH_TARGET['riscv64']=riscv64-aosc-linux-gnu
 ARCH_RPM['amd64']=x86_64
 ARCH_RPM['armel']=armhfp       # real story: we are using neon.
 ARCH_RPM['mips64el']=mips64el
@@ -20,6 +21,7 @@ ARCH_RPM['arm64']=aarch64
 ARCH_RPM['powerpc']=ppc
 ARCH_RPM['ppc64']=ppc64
 ARCH_RPM['noarch']=noarch
+ARCH_RPM['riscv64']=riscv64
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-fomit-frame-pointer -O2 '
