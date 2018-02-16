@@ -52,7 +52,7 @@ elf_strip()
 				*.ko)
 					strip --strip-unneeded $1 ;; # eu-strip on .ko is not tested.
 				*)
-					continue ;;
+					true ;;
 			esac ;;
 		*application/x-executable*)
 			if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "riscv64" ]; then
