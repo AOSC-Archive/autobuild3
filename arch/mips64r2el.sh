@@ -11,7 +11,7 @@
 #   - Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
-CFLAGS_COMMON_ARCH='-EL  -mabi=64 -march=mips64r2 -mtune=loongson3a  -mllsc -without-madd4'
+CFLAGS_COMMON_ARCH='-EL  -mabi=64 -march=mips64r2 -mtune=loongson3a  -mllsc -mno-madd4'
 
 # Loongson binutils fixes -mfix-loongson3-llsc, -mfix-loongson3-load is disableed. And should
 # be enabled in binutils patch.
