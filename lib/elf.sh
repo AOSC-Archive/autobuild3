@@ -38,7 +38,9 @@ elf_strip()
 {
 	case "$(file -bi $1)" in
 		*application/x-sharedlib*)
-			if [ "$ARCH" = "arm64" ]; then # Workaround eu-strip issue on arm64
+			# Workaround eu-strip issue on arm64; as RISC-V is a new architecture I
+			# think use GNU tool will be more safe
+			if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "riscv64" ]; then 
 				strip --strip-debug $1
 			else
 				eu-strip $1
@@ -50,10 +52,10 @@ elf_strip()
 				*.ko)
 					strip --strip-unneeded $1 ;; # eu-strip on .ko is not tested.
 				*)
-					continue ;;
+					true ;;
 			esac ;;
 		*application/x-executable*)
-			if [ "$ARCH" = "arm64" ]; then
+			if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "riscv64" ]; then
 				strip --strip-unneeded $1
 			else
 				eu-strip $1
