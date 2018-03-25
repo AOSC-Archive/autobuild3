@@ -6,7 +6,7 @@
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
 # LTO switches, enabled by default for x86_64 in accordance to Core 4.
-if [[ `uname -m` = "x86_64" ]]; then
+if [[ $(uname -m) = "x86_64" ]]; then
 	NOLTO=no
 else
 	NOLTO=yes
@@ -117,7 +117,7 @@ ABINSTALL="dpkg rpm"
 . "$AB"/etc/autobuild/ab3cfg.sh
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
-abdetectarch(){
+abdetectarch() {
 	case "$(uname -m)" in
 		x86_64) echo amd64 ;;
 		i?86) echo i386 ;;
@@ -126,8 +126,8 @@ abdetectarch(){
 		aarch64) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
-		mips64) echo mips64el ;;
 		riscv64) echo riscv64 ;;
+		mips64) echo mips64r2el ;;
 		*) uname -m ;;
 	esac
 }
