@@ -12,6 +12,7 @@
 
 
 CFLAGS_COMMON_ARCH='-EL  -mabi=64 -march=mips64r2 -mtune=loongson3a  -mllsc -mno-madd4'
+LDFLAGS_COMMON_CROSS='-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,/var/ab/cross-root/mips64r2el/usr/lib -L/var/ab/cross-root/mips64r2el/usr/lib '
 
 # Loongson binutils fixes -mfix-loongson3-llsc, -mfix-loongson3-load is disableed. And should
 # be enabled in binutils patch.
