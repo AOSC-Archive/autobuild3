@@ -21,7 +21,7 @@ build_autotools_build() {
 			# FIXME: hard-coded automake version.
 			# Adapted from redhat-rpm-config.
 			# http://pkgs.fedoraproject.org/cgit/rpms/redhat-rpm-config.git/tree/macros#n35
-			cp -v /usr/share/automake-1.15/$(basename $i) $i ; \
+			cp -v /usr/share/automake-1.16/$(basename $i) $i ; \
 		done
 	fi
 
