@@ -21,7 +21,7 @@ dpkgctrl(){
 	else
 		echo "Essential: no"
 	fi
-	dpkgfield Depends $PKGDEP
+	[ "$PKGDEP" ] && dpkgfield Depends $PKGDEP
 	VER_NONE=1 # We don't autofill versions in optional fields
 	[ "$PKGRECOM" ] && dpkgfield Recommends $PKGRECOM
 	[ "$PKGREP" ] && dpkgfield Replaces $PKGREP
