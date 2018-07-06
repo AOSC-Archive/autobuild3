@@ -61,7 +61,7 @@ elf_strip()
 				eu-strip $1
 			fi ;;
 		*)
-			continue ;;
+			true ;;
 	esac
 }
 
