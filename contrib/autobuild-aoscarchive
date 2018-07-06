@@ -45,12 +45,12 @@ fi
 # in place
 if [ "$SORT" == 1 ]; then
 	mkdir -p "$TARGET_DIR"/os3-{ab,dpkg}/"$_layout"
-	if ! -z "$TARGET_SUBDIR"; then
+	if [[ ! -z "$TARGET_SUBDIR" ]]; then
 		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/os3-{ab,dpkg}/"$_layout"
 	fi
 else
 	mkdir -p "$TARGET_DIR"/"$_layout"
-	if ! -z "$TARGET_SUBDIR"; then
+	if [[ ! -z "$TARGET_SUBDIR" ]]; then
 		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/"$_layout"
 	fi
 fi
