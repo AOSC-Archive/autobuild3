@@ -16,7 +16,9 @@ DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
 
 TREE=1
 TARGET_DIR=/os-"${ABHOST%%\/*}"
-TARGET_SUBDIR="${ABHOST##*\/}"
+if [[ "$ABHOST" = *'/'* ]]; then
+	TARGET_SUBDIR="${ABHOST##*\/}"
+fi
 
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
 . $AB/lib/base.sh
