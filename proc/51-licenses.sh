@@ -11,7 +11,7 @@ rec_opt nullglob
 if ! [ -r /usr/share/spdx-licenses/exceptions ]; then
 	abwarn detailed license processing skipped due to missing files.
 	mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
-	((${#_license_files[@]})) && cp -a "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+	((${#_license_files[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
 fi
 
 declare -A _license_exception
@@ -50,4 +50,4 @@ for _license_tmp in "${PKGLICENSES[@]}"; do _license_tmp_dedup["$_license_tmp"]=
 PKGLICENSES=("${!_license_tmp_dedup[@]}")
 unset _license_tmp_dedup _license_tmp _license_f _license_o
 
-((${#_license_files_real[@]})) && cp -a "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+((${#_license_files_real[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
