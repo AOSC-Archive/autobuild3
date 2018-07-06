@@ -7,7 +7,7 @@ dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
 dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
-	local arch=$ABHOST
+	local arch=${ABHOST%%\/*}
 	[[ $arch == noarch ]] && arch=all
 	echo "Package: $PKGNAME"
 	echo "Version: $(dpkgpkgver)"
@@ -57,7 +57,7 @@ if [ -e "$SRCDIR/autobuild/conffiles" ]; then
 	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
-dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST}.deb || return $?
+dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
 export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
