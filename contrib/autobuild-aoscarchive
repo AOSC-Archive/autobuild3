@@ -55,7 +55,7 @@ else
 	fi
 fi
 
-if ! -z "$TARGET_SUBDIR"; then
+if [[ ! -z "$TARGET_SUBDIR" ]]; then
 	cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint ab)/$_layout"
 	cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint dpkg)/$_layout"
 else
