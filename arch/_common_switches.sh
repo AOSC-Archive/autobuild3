@@ -14,6 +14,6 @@ if bool $USECLANG; then
 	if ((AB_FLAGS_PIE)); then LDFLAGS_COMMON+=' -fPIE -pie ' CFLAGS_COMMON+=' -fPIE '; fi
 fi
 
-if ((AB_SAN_ADD)); then CFLAGS_COMMON+='-fsanitize=address '
-if ((AB_SAN_THR)); then CFLAGS_COMMON+='-fsanitize=thread '
-if ((AB_SAN_LEK)); then CFLAGS_COMMON+='-fsanitize=leak '
+if ((AB_SAN_ADD)); then CFLAGS_COMMON+='-fsanitize=address '; fi
+if ((AB_SAN_THR)); then CFLAGS_COMMON+='-fsanitize=thread '; fi
+if ((AB_SAN_LEK)); then CFLAGS_COMMON+='-fsanitize=leak '; fi
