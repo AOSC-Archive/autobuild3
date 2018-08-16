@@ -5,9 +5,6 @@
 # SYNTAX: autobuild abrepoarchive PKGNAME PKGVER PKGREL
 # CURRENTLY DEFINED PKGMGRs: dpkg, rpm.
 
-# Useful for OS3 layout.
-SORT=1; NAME_PREFIX="os3-"
-
 # Directory Tree with priorities.
 DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
 	liba libb libc libd libe libf libg libh libi libj libk libl libm libn libo
@@ -15,10 +12,7 @@ DIR_TREE="a b c d e f g h i j k m n o p q r s t u v w x y z
         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 
 TREE=1
-TARGET_DIR=/os-"${ABHOST%%\/*}"
-if [[ "$ABHOST" = *'/'* ]]; then
-	TARGET_SUBDIR="${ABHOST##*\/}"
-fi
+TARGET_DIR=/debs
 
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
 . $AB/lib/base.sh
@@ -27,11 +21,6 @@ fi
 . $AB/lib/arch.sh
 . $AB/arch/_common.sh
 
-# RPM architectural translation.
-# rpmarch(){ echo "${ARCH_RPM[$1]:-$1}"; }
-# _rpmarch=$(rpmarch "${ABHOST}")
-
-prefixprint(){ [ "$SORT" == 1 ] && echo -ne "$NAME_PREFIX$1"; }
 mvln(){	# not using cp -s because we want the main part to be in the target
 	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed: $?"
 	ln -s "$2" "$1" || aberr "Link from [$2] to [$1] failed: $?"
@@ -45,24 +34,8 @@ else
 fi
 
 # in place
-if [ "$SORT" == 1 ]; then
-	mkdir -p "$TARGET_DIR"/os3-{ab,dpkg}/"$_layout"
-	if [[ ! -z "$TARGET_SUBDIR" ]]; then
-		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/os3-{ab,dpkg}/"$_layout"
-	fi
-else
-	mkdir -p "$TARGET_DIR"/"$_layout"
-	if [[ ! -z "$TARGET_SUBDIR" ]]; then
-		mkdir -p "$TARGET_DIR"/"$TARGET_SUBDIR"/"$_layout"
-	fi
-fi
+mkdir -p "$TARGET_DIR"/"$_layout"
+cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$_layout"
 
-if [[ ! -z "$TARGET_SUBDIR" ]]; then
-	cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint ab)/$_layout"
-	cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$TARGET_SUBDIR/$(prefixprint dpkg)/$_layout"
-else
-	cp "$SRCDIR"/"$1_$2-$3"*.tar.xz "$TARGET_DIR/$(prefixprint ab)/$_layout"
-	cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$(prefixprint dpkg)/$_layout"
-fi
 abinfo "abRepoArchive done."
 
