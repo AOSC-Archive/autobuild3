@@ -9,7 +9,7 @@ build_ruby_build(){
   mv -fv $PKGNAME-$PKGVER.{bin,gem} || true
   gem install --ignore-dependencies --no-user-install \
     -i "$PKGDIR/$GEMDIR" -n "$PKGDIR/usr/bin" $PKGNAME-$PKGVER.gem
-  rm "$PKGDIR/$GEMDIR/cache/"*
+  rm -v "$PKGDIR/$GEMDIR/cache/"*
 }
 
 ABBUILDS+=' ruby'
