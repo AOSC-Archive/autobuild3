@@ -5,6 +5,7 @@ AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
 AB_FLAGS_FEATURES='LTO PERMISSIVE '
 # Naming, sadly. PORT_NOTICE!
 ARCH_TARGET['amd64']=x86_64-aosc-linux-gnu
+ARCH_TARGET['amd64/avx+']=x86_64-aosc-linux-gnu
 ARCH_TARGET['amd64/avx2+']=x86_64-aosc-linux-gnu
 ARCH_TARGET['armel']=armv7a-aosc-linux-gnueabihf
 ARCH_TARGET['i386']=i686-aosc-linux-gnu
@@ -14,6 +15,7 @@ ARCH_TARGET['powerpc']=powerpc-aosc-linux-gnu
 ARCH_TARGET['ppc64']=powerpc64-aosc-linux-gnu
 ARCH_TARGET['riscv64']=riscv64-aosc-linux-gnu
 ARCH_RPM['amd64']=x86_64
+ARCH_RPM['amd64/avx+']=x86_64
 ARCH_RPM['amd64/avx2+']=x86_64
 ARCH_RPM['armel']=armhfp       # real story: we are using neon.
 ARCH_RPM['mips64r2el']=mips64r2el
