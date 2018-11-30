@@ -1,0 +1,7 @@
+#!/bin/bash
+##proc/ld_switch: Switch to classic (BFD) GNU Linker if specified.
+##@copyright GPL-2.0+
+if bool AB_LD_BFD; then
+	abinfo "Swaping out Gold Linker as specified..."
+	ln -sv /usr/bin/ld.bfd "$SRCDIR"/ld
+fi
