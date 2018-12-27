@@ -27,7 +27,7 @@ ARCH_RPM['riscv64']=riscv64
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
-CFLAGS_GCC_OPTI_LTO="-flto=jobserver "
+CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_CLANG='-fno-integrated-as '
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
