@@ -2,7 +2,7 @@
 ##arch/_common.sh: Common arch defs for all ab arches, defines-mutable.
 ##@copyright GPL-2.0+
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
-AB_FLAGS_FEATURES='LTO PERMISSIVE '
+AB_FLAGS_FEATURES='LTO PERMISSIVE ANNOBIN '
 # Naming, sadly. PORT_NOTICE!
 ARCH_TARGET['amd64']=x86_64-aosc-linux-gnu
 ARCH_TARGET['amd64/avx+']=x86_64-aosc-linux-gnu
@@ -25,13 +25,15 @@ ARCH_RPM['ppc64']=ppc64
 ARCH_RPM['noarch']=noarch
 ARCH_RPM['riscv64']=riscv64
 # C Compiler Flags.
-CFLAGS_COMMON='-pipe -Wno-error '
+CFLAGS_COMMON='-fexceptions -pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
-CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
-CFLAGS_CLANG='-fno-integrated-as '
+CFLAGS_GCC="-fstack-clash-protection "
+CFLAGS_GCC_ANNOBIN="-fplugin=annobin "
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
+CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
+CFLAGS_CLANG='-fno-integrated-as '
 CFLAGS_CLANG_OPTI_LTO='-flto '
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
@@ -40,7 +42,7 @@ CXXFLAGS_GCC_OPTI="-fdeclone-ctor-dtor -ftree-vectorize "
 CXXFLAGS_COMMON_WEIRD=''
 CXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # Preprocesser Flags.
-CPPFLAGS_COMMON=' '
+CPPFLAGS_COMMON="-D_GLIBCXX_ASSERTIONS "
 # OBJC Flags.
 OBJCFLAGS_COMMON_WEIRD=''
 # OBJCXX Flags.
