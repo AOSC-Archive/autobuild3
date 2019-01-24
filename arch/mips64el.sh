@@ -1,5 +1,5 @@
 #!/bin/bash
-##arch/mipsel.sh: Build definitions for mipsel (optimized for Loongson 2F).
+##arch/mips64el.sh: Build definitions for mips64el (optimized for Loongson 2F).
 ##@copyright GPL-2.0+
 
 # '-mabi=64 -march=mips3 -mtune=loongson2f' are configured to be the default for GCC
