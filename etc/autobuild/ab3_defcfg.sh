@@ -131,9 +131,9 @@ abdetectarch() {
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
 		mips64) if [[ $(readelf -h /bin/bash | grep -c mips64r2) = 1 ]];
-						then echo mips64r2el
-						else echo mips64el
-						fi ;;
+			then echo mips64r2el
+			else echo mips64el
+			fi ;;
 		riscv64) echo riscv64 ;;
 		*) uname -m ;;
 	esac
