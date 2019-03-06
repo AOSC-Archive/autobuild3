@@ -38,7 +38,7 @@ elf_strip()
 {
 	case "$(file -bi $1)" in
 		*application/x-sharedlib*)
-			strip --strip-debug $1
+			strip --strip-debug $1 ;;
 		*application/x-archive*)
 			strip --strip-debug $1 ;; #eu-strip on .a will change it to a ELF. FBI Warning!!!
 		*application/x-object*)
@@ -49,7 +49,7 @@ elf_strip()
 					true ;;
 			esac ;;
 		*application/x-executable*)
-			strip --strip-unneeded $1
+			strip --strip-unneeded $1 ;;
 		*)
 			true ;;
 	esac
