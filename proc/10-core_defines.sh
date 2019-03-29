@@ -8,6 +8,10 @@ export PKGDIR="$PWD/abdist"
 # Avoid dpkg-deb failure with larger packages on low RAM hosts.
 export TMPDIR="$SRCDIR"
 
+BUILD_START(){ true; }
+BUILD_READY(){ true; }
+BUILD_FINAL(){ true; }
+
 # Autobuild settings
 . "$AB"/etc/autobuild/ab3_defcfg.sh
 
