@@ -55,13 +55,13 @@ arch_loadfile(){
 	. "$_abarchf" "$@";
 }
 
-# TODO: This function is still not strict at all
+# TODO: Figure out a better way to handle this crap
 arch_loadfile_strict(){
 	local _abarchf _arch_trymore=${arch_trymore:-1};
 	_abarchf="$(arch_findfile "$1")" || return $?;
 	shift;
 	set -e
-	. "$_abarchf" "$@";
+	bash -c "$_abarchf $*";
 	set +e
 }
 
