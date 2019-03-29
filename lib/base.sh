@@ -24,7 +24,13 @@ abreqexe(){
 		which $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
-alias abtryexe='ABSTRICT=0 abreqexe'
+
+abtryexe(){
+	local i;
+	for i; do
+		which $i &> /dev/null || abinfo "No executable ‘$i’ has been found; returned value: $?."
+	done
+}
 
 _whichcmd(){ (alias; declare -f) | /usr/bin/which -i --read-functions "$1"; }
 which --version 2>/dev/null | grep -q GNU || _whichcmd(){ alias "$1" || declare -f "$1" || which "$1"; }
@@ -35,7 +41,14 @@ abreqcmd(){
 		abicu "Command ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
-alias abtrycmd='ABSTRICT=0 abreqcmd'
+
+abtrycmd(){
+	local i;
+	for i; do
+		type "$i" &> /dev/null ||
+		abinfo "No command ‘$i’ has been found, returned value: $?."
+	done
+}
 
 abcmdstub(){
 	local i;
