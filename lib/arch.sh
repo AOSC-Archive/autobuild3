@@ -61,7 +61,7 @@ arch_loadfile_strict(){
 	_abarchf="$(arch_findfile "$1")" || return $?;
 	shift;
 	set -e
-	bash -c "set -e; . $_abarchf $*";
+	. "$_abarchf" "$@";
 	set +e
 }
 
