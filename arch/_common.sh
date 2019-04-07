@@ -2,7 +2,7 @@
 ##arch/_common.sh: Common arch defs for all ab arches, defines-mutable.
 ##@copyright GPL-2.0+
 AB_FLAGS_TYPES='_OPTI _ARCH _WEIRD '
-AB_FLAGS_FEATURES='LTO PERMISSIVE ANNOBIN '
+AB_FLAGS_FEATURES='LTO PERMISSIVE '
 # Naming, sadly. PORT_NOTICE!
 ARCH_TARGET['amd64']=x86_64-aosc-linux-gnu
 ARCH_TARGET['amd64/avx+']=x86_64-aosc-linux-gnu
@@ -29,7 +29,6 @@ CFLAGS_COMMON='-fexceptions -pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_GCC="-fstack-clash-protection "
-CFLAGS_GCC_ANNOBIN="-fplugin=annobin "
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
 CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
