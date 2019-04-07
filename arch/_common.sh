@@ -25,7 +25,7 @@ ARCH_RPM['ppc64']=ppc64
 ARCH_RPM['noarch']=noarch
 ARCH_RPM['riscv64']=riscv64
 # C Compiler Flags.
-CFLAGS_COMMON='-fexceptions -pipe -Wno-error '
+CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_GCC="-fstack-clash-protection "
