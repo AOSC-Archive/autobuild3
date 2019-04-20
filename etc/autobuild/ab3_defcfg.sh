@@ -6,7 +6,8 @@
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
 # LTO switches, enabled by default for x86_64 in accordance to Core 4.
-if [[ $(uname -m) = "x86_64" ]]; then
+# Also enable it by default for i586, as we will share the same build hosts.
+if [[ $(uname -m) = "x86_64" || $(uname -m) = "i586" ]]; then
 	NOLTO=no
 else
 	NOLTO=yes
