@@ -127,7 +127,8 @@ ABINSTALL="dpkg rpm"
 abdetectarch() {
 	case "$(uname -m)" in
 		x86_64) echo amd64 ;;
-		i?86) echo i386 ;;
+		i586) echo i586 ;;
+		i686) echo i386 ;;
 		armv7l) echo armel ;;
 		armv8l) echo armel ;;
 		aarch64) echo arm64 ;;
