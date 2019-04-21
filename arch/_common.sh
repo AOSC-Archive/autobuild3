@@ -30,7 +30,7 @@ ARCH_RPM['i586']=i586
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
-CFLAGS_GCC="-fstack-clash-protection "
+CFLAGS_GCC=' '
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
 CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
