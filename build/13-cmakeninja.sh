@@ -1,5 +1,5 @@
 #!/bin/bash
-# 12-cmakeninja.sh: Builds cmake with Ninja
+# 13-cmakeninja.sh: Builds cmake with Ninja
 ##@copyright GPL-2.0+
 (abtryexe cmake && abtryexe ninja) || ablibret
 
