@@ -50,4 +50,4 @@ for _license_tmp in "${PKGLICENSES[@]}"; do _license_tmp_dedup["$_license_tmp"]=
 PKGLICENSES=("${!_license_tmp_dedup[@]}")
 unset _license_tmp_dedup _license_tmp _license_f _license_o
 
-((${#_license_files_real[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+((${#_license_files_real[@]})) && cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
