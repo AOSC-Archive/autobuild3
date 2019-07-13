@@ -35,7 +35,7 @@ fi
 
 # in place
 mkdir -p "$TARGET_DIR"/"$_layout"
-cp "$SRCDIR"/"$1_$2-$3"*.deb "$TARGET_DIR/$_layout"
+cp "$PWD/$1_$2-$3_$4.deb" "$TARGET_DIR/$_layout"
 
 abinfo "abRepoArchive done."
 
