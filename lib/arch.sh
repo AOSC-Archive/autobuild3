@@ -31,7 +31,9 @@ arch_findfile(){
 # Initialise variables with architectural suffixes.
 arch_loadvar(){
         declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
-        _commonvar+=" $_archvar"
+        if [[ "$_archvar" ]]; then
+		_commonvar="$_archvar"
+	fi
         export $1
 }
 
