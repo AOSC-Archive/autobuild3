@@ -28,6 +28,13 @@ arch_findfile(){
 	return 127
 }
 
+# Initialise variables with architectural suffixes.
+arch_loadvar(){
+        declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
+        _commonvar+=" $_archvar"
+        export $1
+}
+
 # FIXME: We need to figure out a way of handling multiple return vals!
 arch_loadfiles(){
 	local _archpath _archpidx j _archokay=0
@@ -39,6 +46,9 @@ arch_loadfiles(){
 		for j in "${_arch_suf[@]}"; do
 			if [ -e "$_archpath/$1$j" ]; then
 				. "$_archpath/$1$j"
+				for var in `cat $AB/exportvars/*`; do
+					arch_loadvar $var
+				done
 				_archokay=1
 				break
 			fi
