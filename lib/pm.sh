@@ -8,11 +8,11 @@ _ab_pm='' # package manager spec variables
 # genver <pkgspec> -> pkgname[<ver_s><op>verstr<ver_e>]
 _ab_pm+="OP_{EQ,LE,GE} VER_{S,E} "
 pm_genver(){
-	local store IFS ver name       # IFS is also used foo holding OP.
+	local store IFS ver name       # IFS is also used for holding OP.
 	: "${OP_EQ== } ${OP_LE=<= } ${OP_GE=>= } ${VER_S= (} ${VER_E=)}"
 	if ((VER_NONE_ALL)); then			# name-only
 		name="${1/%_}"
-		echo "${name/[<>=]=}"; return
+		echo "${name/[<>=]=*}"; return
 	elif [[ "$1" =~ [\<\>=]= ]]; then		# nameOP[ver] -> name OP_ ver
 		IFS="$BASH_REMATCH"	# split string using each char in OP
 		read -ra store <<< "$1" 
