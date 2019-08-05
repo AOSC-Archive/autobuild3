@@ -12,4 +12,6 @@ build_ruby_build(){
   rm -v "$PKGDIR/$GEMDIR/cache/"*
 }
 
+build_ruby_probe(){ false; }
+
 ABBUILDS+=' ruby'
