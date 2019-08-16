@@ -136,6 +136,7 @@ abdetectarch() {
 		aarch64) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
+		ppc64le) echo ppc64el ;;
 		riscv64) echo riscv64 ;;
 		mips64) echo mips64r2el ;;
 		*) uname -m ;;
