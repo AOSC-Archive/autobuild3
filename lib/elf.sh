@@ -48,6 +48,8 @@ elf_strip()
 				*)
 					true ;;
 			esac ;;
+                *application/x-pie-executable*)
+			strip --strip-unneeded $1 ;;
 		*application/x-executable*)
 			strip --strip-unneeded $1 ;;
 		*)
