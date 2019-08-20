@@ -32,24 +32,14 @@ dpkgctrl(){
 	echo "$DPKGXTRACTRL"
 }
 
-# Auto-select xz level, += preserves the possiblility of extra things
-dpkgflagsel(){
-	if ((instSIZE >= 8386000)); then
-		if ((instSIZE < 16775000)); then
-			DPKGDEBCOMP+="-z7"
-		else 
-			if ((instSIZE < 33552000)); then
-				DPKGDEBCOMP+="-z8"
-			else DPKGDEBCOMP+="-z9"
-			fi
-		fi
-	else
-		DPKGDEBCOMP+="-z6"
-	fi
-}
+# Auto-select xz level, use lower compression level on "Retro" architectures.
+if [[ "$ARCH" = "i586" || "$ARCH" = "powerpc" || "$ARCH" = "ppc64" ]]; then
+	DPKGDEBCOMP+="-Zxz -z3"
+else
+	DPKGDEBCOMP+="-Zxz -z6"
+fi
 
 instSIZE=$(du -s abdist | cut -f 1)
-[[ "$DPKGDEBCOMP" == "*-z*" ]] || dpkgflagsel
 
 mkdir -p $PKGDIR/DEBIAN
 cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
@@ -57,7 +47,7 @@ if [ -e "$SRCDIR/autobuild/conffiles" ]; then
 	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
-dpkg-deb -Zxz $DPKGDEBCOMP -Sextreme -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
+dpkg-deb $DPKGDEBCOMP -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
 export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
