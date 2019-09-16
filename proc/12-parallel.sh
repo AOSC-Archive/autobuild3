@@ -18,7 +18,10 @@ if ! bool $NOPARALLEL && boolopt NO_DISTCC && _which distcc &>/dev/null; then
 fi
 if boolopt CCACHE && ((!ab_distccpump)) && _which ccache &>/dev/null; then
 	ab_ccache=1
+	# we do acbs in random directories, so we must use file_macro to make them still work
+	export CCACHE_SLOPPINESS=file_macro
 	((ab_distcc)) && export CCACHE_PREFIX=distcc
+	abinfo "We have the big ccache by our side!"
 fi
 # Final merge.
 if ((ab_distcc)) && ! bool $NOPARALLEL; then
