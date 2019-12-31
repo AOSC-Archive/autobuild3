@@ -36,7 +36,7 @@ CFLAGS_GCC=' '
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
 CFLAGS_GCC_OPTI_LTO="-flto=$ABTHREADS "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
-CFLAGS_CLANG='-fno-integrated-as '
+# CFLAGS_CLANG='-fno-integrated-as ' # GNU as has compatibility issue with clang on ARMv8.[01]
 CFLAGS_CLANG_OPTI_LTO='-flto '
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
