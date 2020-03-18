@@ -27,7 +27,7 @@ export LANG=C.UTF-8
 
 autobuild-help(){
 	abinfo "Help Requested."
-	echo -e "\e[1mAutobuild ${VERSION:-3}\e[0m, the next generation of autobuild for AOSC OS3,\nwith multiple package manager support.\nAutobuild 3 is Licensed under the GNU General Public License, version 2.\n
+	echo -e "\e[1mAutobuild ${VERSION:-3}\e[0m, the next generation of autobuild for AOSC OS,\nwith multiple package manager support.\nAutobuild 3 is Licensed under the GNU General Public License, version 2.\n
   \e[1mBRIEF HELP:\tEnvironment variables\e[0m
   \e[1mAB_NOISY\e[0m\tRuns \`set -xv' if set to a non-empty value.
   \e[1mAB_SELF\e[0m\tBuilds autobuild itself in the source tree if set to a non-empty value.\n\t\tDefault if $ABSET/prefix doesn't exist.
