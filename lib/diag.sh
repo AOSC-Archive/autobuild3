@@ -36,13 +36,13 @@ diag_print_backtrace() {
 		local src="${BASH_SOURCE[i]}"
 		# reverse order, most recent call last
 		if [ $i -eq $(($depth-1)) ]; then
-			buffer="In file included from $(normalize_location "${src}" "${line}")\n${buffer}"
+			buffer="In file included from $(diag_normalize_location "${src}" "${line}")\n${buffer}"
 		elif [ -z "$buffer" ]; then
 			sample="$(sed -n "${line},$(($line+1))p;$(($line+2))q" "${src}")"  # grab the lines around the error
 			# GCC style error message
-			buffer="$(normalize_location "${src}" "${line}"): \e[91merror: \e[39mcommand exited with \e[93m$_ret\e[39m\n$(format_sample "${line}" "${sample}")\n${buffer}"
+			buffer="$(diag_normalize_location "${src}" "${line}"): \e[91merror: \e[39mcommand exited with \e[93m$_ret\e[39m\n$(diag_format_sample "${line}" "${sample}")\n${buffer}"
 		else
-			buffer="                 from $(normalize_location "${src}" "${line}")\n${buffer}"
+			buffer="                 from $(diag_normalize_location "${src}" "${line}")\n${buffer}"
 		fi
 	done
 	echo -e "\e[1m${buffer}\e[0m"

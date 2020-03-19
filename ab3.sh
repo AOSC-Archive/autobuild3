@@ -24,6 +24,7 @@ export LANG=C.UTF-8
 # TODO: split autobuild base libraries from the base libraries
 #	or the other way around.
 . $AB/lib/base.sh || { echo "\e[1;91m FATAL: Cannot open base library! exiting."; exit 1; }
+. $AB/lib/diag.sh || { echo "\e[1;91m FATAL: Cannot open stacktrace printing library! exiting."; exit 1; }
 
 autobuild-help(){
 	abinfo "Help Requested."
