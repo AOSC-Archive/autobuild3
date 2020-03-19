@@ -21,9 +21,11 @@ build_gomod_build(){
 	mkdir build || abdie 'Failed to create $SRCDIR/build'
 	cd build
 
+    abinfo 'Fetching Go modules dependencies...'
 	GOPATH="$SRCDIR/abgopath" go get ..
 	BUILD_READY
 	mkdir -p "$PKGDIR/usr/bin/"
+    abinfo 'Compiling the Go module ...'
 	GOPATH="$SRCDIR/abgopath" go build .. ${GO_BUILD_AFTER}
 	cp -av * "$PKGDIR/usr/bin/"
 	BUILD_FINAL
