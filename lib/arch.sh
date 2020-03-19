@@ -67,12 +67,14 @@ arch_loadfile(){
 	. "$_abarchf" "$@";
 }
 
-# TODO: This function is still not strict at all
 arch_loadfile_strict(){
 	local _abarchf _arch_trymore=${arch_trymore:-1};
 	_abarchf="$(arch_findfile "$1")" || return $?;
 	shift;
-	. "$_abarchf" "$@";
+	echo -e 'trap - ERR; trap "abdie \"Build script error: ${BASH_SOURCE[0]/.wrap.sh/}\"" ERR\n' > "${_abarchf}.wrap.sh"
+	cat "$_abarchf" >> "${_abarchf}.wrap.sh"
+	echo -e '\ntrap - ERR' >> "${_abarchf}.wrap.sh"
+	. "${_abarchf}.wrap.sh" "$@";
 }
 
 arch_initcross(){
