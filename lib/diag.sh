@@ -26,8 +26,8 @@ diag_format_sample() {
 }
 
 diag_print_backtrace() {
-	abwarn "Scripting error detected. EMERGENCY DROP!"
 	local _ret=$?
+	abwarn "Scripting error detected. EMERGENCY DROP!"
 	local depth="${#BASH_SOURCE[@]}"
 	local buffer=""
 	# Skip the first frame, the first frame should be the command specified on the command line (most likely what the user/packager typed in the shell)
