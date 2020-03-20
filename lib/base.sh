@@ -96,8 +96,7 @@ abicu(){
 }
 
 abdie() {
-	local frame=0
-	while caller "$frame"; do ((frame++)); done 1>&2
+	diag_print_backtrace
 	echo -e "\e[1;31mautobuild encountered an error and couldn't continue.\e[0m" 1>&2
 	echo -e "${1-Look at the stacktrace to see what happened.}" 1>&2
 	echo "------------------------------autobuild ${VERSION:-3}------------------------------" 1>&2

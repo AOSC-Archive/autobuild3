@@ -27,7 +27,7 @@ diag_format_sample() {
 
 diag_print_backtrace() {
 	local _ret=$?
-	abwarn "Scripting error detected. EMERGENCY DROP!"
+	echo -e "[\e[31mERROR\e[0m]: \e[1mScripting error detected. EMERGENCY DROP!\e[0m" >&2
 	local depth="${#BASH_SOURCE[@]}"
 	local buffer=""
 	# Skip the first frame, the first frame should be the command specified on the command line (most likely what the user/packager typed in the shell)
@@ -36,15 +36,17 @@ diag_print_backtrace() {
 		local src="${BASH_SOURCE[i]}"
 		# reverse order, most recent call last
 		if [ $i -eq $(($depth-1)) ]; then
-			buffer="In file included from $(diag_normalize_location "${src}" "${line}")\n${buffer}"
+			buffer="\e[0mIn file included from \e[1m$(diag_normalize_location "${src}" "${line}")\n${buffer}"
 		elif [ -z "$buffer" ]; then
 			sample="$(sed -n "${line},$(($line+1))p;$(($line+2))q" "${src}")"  # grab the lines around the error
 			# GCC style error message
+			current_func=${FUNCNAME[$((i+1))]}
+			[ "${current_func}" = "source" ] && current_func="(unknown)" || current_func="\`${current_func}'"
 			buffer="$(diag_normalize_location "${src}" "${line}"): \e[91merror: \e[39mcommand exited with \e[93m$_ret\e[39m\n$(diag_format_sample "${line}" "${sample}")\n${buffer}"
+			buffer="$(diag_normalize_location "${src}" "${line}"): \e[0mIn function \e[1m${current_func}:\n${buffer}"
 		else
-			buffer="                 from $(diag_normalize_location "${src}" "${line}")\n${buffer}"
+			buffer="\e[0m                 from \e[1m$(diag_normalize_location "${src}" "${line}")\n${buffer}"
 		fi
 	done
 	echo -e "\e[1m${buffer}\e[0m"
-	abdie
 }
