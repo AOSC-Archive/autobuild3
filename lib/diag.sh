@@ -16,9 +16,9 @@ diag_normalize_location() {
 diag_format_sample() {
 	# $1 line number
 	# $2 sample content
-	local IFS=$'\n'
 	local lineno="$1"
-	for line in $2; do
+	mapfile -td$'\n' lines <<< $2
+	for line in "${lines[@]}"; do
 		[ "$lineno" -eq "$1" ] && indicator='\e[1m>' || indicator=' '  # bold the first line
 		printf "%s%4s | %s\e[0m\n" "${indicator}" "$lineno" "$line"
 		lineno="$(($lineno+1))"
@@ -27,11 +27,11 @@ diag_format_sample() {
 
 diag_print_backtrace() {
 	local _ret=$?
-	echo -e "[\e[31mERROR\e[0m]: \e[1mScripting error detected. EMERGENCY DROP!\e[0m" >&2
+	echo -e "[\e[31mERROR\e[0m]: \e[1mBuild error detected ^o^\e[0m" >&2
 	local depth="${#BASH_SOURCE[@]}"
 	local buffer=""
-	# Skip the first frame, the first frame should be the command specified on the command line (most likely what the user/packager typed in the shell)
-	for ((i=1; i<depth; i++)); do
+	# Skip the first two frames, one is `abdie` and the other is `diag_print_backtrace` itself
+	for ((i=2; i<depth; i++)); do
 		local line="${BASH_LINENO[$((i-1))]}"
 		local src="${BASH_SOURCE[i]}"
 		# reverse order, most recent call last
