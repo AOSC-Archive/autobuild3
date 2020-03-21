@@ -38,7 +38,8 @@ diag_print_backtrace() {
 		if [ $i -eq $(($depth-1)) ]; then
 			buffer="\e[0mIn file included from \e[1m$(diag_normalize_location "${src}" "${line}")\n${buffer}"
 		elif [ -z "$buffer" ]; then
-			sample="$(sed -n "${line},$(($line+1))p;$(($line+2))q" "${src}")"  # grab the lines around the error
+			[ -f "$src" ] && src_real="${src}" || src_real="$SRCDIR/${src}"
+			sample="$(sed -n "${line},$(($line+1))p;$(($line+2))q" "${src_real}")"  # grab the lines around the error
 			# GCC style error message
 			current_func=${FUNCNAME[$((i+1))]}
 			[ "${current_func}" = "source" ] && current_func="(unknown)" || current_func="\`${current_func}'"
