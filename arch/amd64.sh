@@ -1,4 +1,4 @@
 #!/bin/bash
 ##arch/amd64.sh: Build definitions for amd64.
 ##@copyright GPL-2.0+
-CFLAGS_COMMON_ARCH='-fomit-frame-pointer -march=x86-64 -mtune=sandybridge -msse3 -mhle '
+CFLAGS_COMMON_ARCH='-fomit-frame-pointer -march=x86-64 -mtune=sandybridge -msse3 '
