@@ -29,29 +29,23 @@ abreqexe strip file
 
 elf_iself()
 {
-	file -F $'\n' "$1" | grep -q '^ ELF' 
+	file -F $'\n' "$1" | grep -q '^ ELF'
 }
 
-# TODO: A2, can you show me the code here?
-# are you blind?
 elf_strip()
 {
-	case "$(file -bi $1)" in
-		*application/x-sharedlib*)
-			strip --strip-debug $1 ;;
-		*application/x-archive*)
-			strip --strip-debug $1 ;; #eu-strip on .a will change it to a ELF. FBI Warning!!!
-		*application/x-object*)
+	case "$(readelf -h $1)" in
+		*Type:*'DYN (Shared object file)'*)
+			strip --strip-unneeded --remove-section=.comment --remove-section=.note $1 ;;
+                *Type:*'EXEC (Executable file)'*)
+			strip --strip-all --remove-section=.comment --remove-section=.note $1 ;;
+		*Type:*'REL (Relocatable file)'*)
 			case "$1" in
 				*.ko)
-					strip --strip-unneeded $1 ;; # eu-strip on .ko is not tested.
+					strip --strip-unneeded --remove-section=.comment --remove-section=.note $1 ;;
 				*)
-					true ;;
+					strip --strip-debug --enable-deterministic-archives --remove-section=.comment --remove-section=.note $1 ;;
 			esac ;;
-                *application/x-pie-executable*)
-			strip --strip-unneeded $1 ;;
-		*application/x-executable*)
-			strip --strip-unneeded $1 ;;
 		*)
 			true ;;
 	esac
