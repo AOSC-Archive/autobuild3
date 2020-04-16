@@ -43,7 +43,9 @@ instSIZE=$(du -s abdist | cut -f 1)
 
 mkdir -p $PKGDIR/DEBIAN
 cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
-if [ -e "$SRCDIR/autobuild/conffiles" ]; then
+if [ -e "$SRCDIR/autobuild/$ARCH/conffiles" ]; then
+	cp -l $SRCDIR/autobuild/$ARCH/conffiles $PKGDIR/DEBIAN 2>/dev/null
+elif [ -e "$SRCDIR/autobuild/conffiles" ]; then
 	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
 fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
