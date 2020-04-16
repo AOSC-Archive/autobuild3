@@ -21,7 +21,7 @@ ABCONFIGHACK=yes		# Use config.{sub,guess} replacement for newer architectures?
 # Parallelism, the default value is an equation depending on the number of processors.
 # $ABTHREADS will take any integer larger than 0.
 ABTHREADS=$(( $(nproc) + 1))
-ABMANCOMPRESS=no
+ABMANCOMPRESS=yes
 ABELFDEP=no   # Guess dependencies from ldd?
 ABSTRIP=yes   # Strip off some symbols?
 
