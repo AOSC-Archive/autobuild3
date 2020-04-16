@@ -28,6 +28,9 @@ ABSTRIP=yes   # Strip off some symbols?
 # Use -O3 instead?
 AB_FLAGS_O3=0
 
+# Use -Os instead?
+AB_FLAGS_OS=0
+
 # PIC and PIE are enabled by GCC/LD specs.
 AB_FLAGS_SSP=1
 AB_FLAGS_SCP=1
