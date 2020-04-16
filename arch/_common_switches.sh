@@ -8,6 +8,7 @@ if ((AB_FLAGS_NOW)); then LDFLAGS_COMMON+=' -Wl,-z,now '; fi
 if ((AB_FLAGS_FTF)); then CPPFLAGS_COMMON+=' -D_FORTIFY_SOURCE=2 '; fi
 if ((AB_FLAGS_SPECS)); then LDFLAGS_COMMON+=" -specs=/usr/lib/gcc/specs/hardened-ld "; CFLAGS_GCC_OPTI+=" -specs=/usr/lib/gcc/specs/hardened-cc1 "; fi
 if ((AB_FLAGS_O3)); then CFLAGS_COMMON_OPTI="${CFLAGS_COMMON_OPTI/O2/O3}"; fi
+if ((AB_FLAGS_OS)); then CFLAGS_COMMON_OPTI="${CFLAGS_COMMON_OPTI/O2/Os}"; fi
 if ((AB_FLAGS_EXC)); then CFLAGS_COMMON+=' -fexceptions '; fi
 
 # Clang can handle PIE and PIC properly, let it do the old job.
