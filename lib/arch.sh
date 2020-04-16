@@ -30,9 +30,9 @@ arch_findfile(){
 
 # Initialise variables with architectural suffixes.
 arch_loadvar(){
-        declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
-        _commonvar="${_archvar-$_commonvar}"
-        export $1
+	declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
+	_commonvar="${_archvar-$_commonvar}"
+	export $1
 }
 
 # FIXME: We need to figure out a way of handling multiple return vals!
