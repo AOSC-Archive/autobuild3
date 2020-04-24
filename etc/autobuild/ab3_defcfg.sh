@@ -18,6 +18,9 @@ ABCLEAN=yes			# Clean before build?
 NOLIBTOOL=yes			# Hug pkg-config and CMake configurations?
 ABCONFIGHACK=yes		# Use config.{sub,guess} replacement for newer architectures?
 
+# Strict Autotools option checking?
+AUTOTOOLS_STRICT=yes
+
 # Parallelism, the default value is an equation depending on the number of processors.
 # $ABTHREADS will take any integer larger than 0.
 ABTHREADS=$(( $(nproc) + 1))
@@ -109,7 +112,7 @@ QT5BIN="/usr/lib/qt5/bin"
 
 ##OS basic configuration flags
 AUTOTOOLS_DEF="--prefix=$PREFIX --sysconfdir=$SYSCONF --localstatedir=$STATDIR \
---libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --enable-option-checking=fatal"
+--libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR"
 CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib -DSYSCONF_INSTALL_DIR=$SYSCONF \
 -DCMAKE_SKIP_RPATH=ON"

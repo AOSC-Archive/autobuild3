@@ -56,8 +56,14 @@ build_autotools_build() {
 	fi
 
 	BUILD_START
-	$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
-	returns $PIPESTATUS || abdie "Configuring failed."
+	if bool $AUTOTOOLS_STRICT; then
+		$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
+			--enable-option-checking=fatal | ablog
+                returns $PIPESTATUS || abdie "Configuring failed."
+	else
+		$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
+		returns $PIPESTATUS || abdie "Configuring failed."
+	fi
 
 	BUILD_READY
 	make $ABMK $MAKE_AFTER | ablog
