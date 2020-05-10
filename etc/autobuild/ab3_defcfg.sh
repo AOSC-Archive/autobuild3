@@ -5,13 +5,7 @@
 ##Misc building flags
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
-# LTO switches, enabled by default for x86_64 in accordance to Core 4.
-# Also enable it by default for i486, as we will share the same build hosts.
-if [[ $(uname -m) = "x86_64" || $(uname -m) = "i486" ]]; then
-	NOLTO=no
-else
-	NOLTO=yes
-fi
+NOLTO=no			# Enable LTO by default.
 USECLANG=no			# Are we using clang?
 NOSTATIC=yes			# Want those big fat static libraries?
 ABCLEAN=yes			# Clean before build?
