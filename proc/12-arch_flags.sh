@@ -30,7 +30,7 @@ AB_FLAGS_FEATURES_DEF="$(
 )"  # 'NOPONY NOCLA LTO GOTHIC' + ((USEPONY)) ((NOLTO)) -> '_PONY _NOCLA _NOLTO _GOTHIC'
 _flags_weird_buf=()
 _flags_current_i=0
-for ABFLAG in {LD,C{,PP,XX},OBJC{,XX}}FLAGS; do
+for ABFLAG in {LD,C{,PP,XX},OBJC{,XX},RUST}FLAGS; do
 	export $ABFLAG
 	declare -n FLAG="$ABFLAG"
 	for ABFLAGCC in COMMON $ABCC; do
@@ -53,7 +53,7 @@ _flags_current_i=0
 CXXFLAGS="$CFLAGS $CXXFLAGS"
 OBJCFLAGS="$CFLAGS $OBJCFLAGS"
 OBJCXXFLAGS="$OBJCFLAGS $CXXFLAGS"
-for ABFLAG in {LD,C{,PP,XX},OBJC{,XX}}FLAGS; do
+for ABFLAG in {LD,C{,PP,XX},OBJC{,XX},RUST}FLAGS; do
 	declare -n FLAG="$ABFLAG";
 	FLAG+="${_flags_weird_buf[_flags_current_i]}"; ((_flags_current_i++));
 	unset -n FLAG;
