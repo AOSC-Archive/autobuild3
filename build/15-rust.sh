@@ -17,8 +17,8 @@ build_rust_build(){
     abinfo 'Building...'
 	cargo build --release $CARGO_AFTER
     abinfo 'Installing...'
-    install -d "$PKGDIR/usr/bin/"
-    find target/release/ -maxdepth 1 -type f -not -name '*.*' -exec 'install' '-Dm755' '{}' "$PKGDIR/usr/bin/"
+    install -vd "$PKGDIR/usr/bin/"
+    find target/release/ -maxdepth 1 -type f -not -name '*.*' -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/"
     BUILD_FINAL
 }
 ABBUILDS+=' rust'
