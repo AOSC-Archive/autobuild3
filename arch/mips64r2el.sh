@@ -1,5 +1,5 @@
 #!/bin/bash
-##arch/mips64el.sh: Build definitions for mip64r2el (optimized for Loongson 3A).
+##arch/mips64r2el.sh: Build definitions for mips64el, MIPS64r2 ISA.
 ##@copyright GPL-2.0+
 # Configuration of old mips64el originally confirmed in #41@aosc-os-core.
 # Suggested, discussed by:
@@ -10,11 +10,4 @@
 # Switched to mips64r2el by:
 #   - Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-
-CFLAGS_COMMON_ARCH='-EL  -mabi=64 -march=mips64r2 -mtune=loongson3a  -mllsc -mno-madd4'
-LDFLAGS_COMMON_CROSS='-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,/var/ab/cross-root/mips64r2el/usr/lib -L/var/ab/cross-root/mips64r2el/usr/lib '
-
-# Loongson binutils fixes -mfix-loongson3-llsc, -mfix-loongson3-load is disableed. And should
-# be enabled in binutils patch.
-# Disable madd4 instructions beacuse Loongson have madd4 implementation that is different
-# from standard mips64r2. 
+CFLAGS_COMMON_ARCH='-mabi=64 -march=mips64r2 -mtune=gs464e -mno-fused-madd -mno-madd4 -Wa,-mfix-loongson3-llsc '
