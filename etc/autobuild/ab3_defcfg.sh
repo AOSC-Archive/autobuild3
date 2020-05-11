@@ -120,7 +120,7 @@ RECONF=yes
 
 ##Packaging info
 ABQA=yes
-ABINSTALL="dpkg rpm"
+ABINSTALL="dpkg"
 
 # Old, default.
 [[ -d "$AB"/etc/autobuild/defaults ]] && recsr "$AB"/etc/autobuild/defaults/*!(.dpkg*|dist)

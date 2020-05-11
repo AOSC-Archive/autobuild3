@@ -16,7 +16,6 @@ Autobuild3 is a successor to the original [Autobuild](https://github.com/AOSC-De
 
 - DPKG, the most "native" backend of all, using `dpkg-deb` and Autobuild variables to control the generation of DPKG control files, and henceforth building the packages.
   - The "native" part is largely caused by some autobuild2 heritage in our brains and in the build scripts, which ended up infecting many other parts of ab3. For example, the architecture names in `ABHOST` and `ABBUILD` are dpkg names, the PM dep model is based on dpkg representations, ...
-- RPM, using Autobuild variables to generate .spec files, and invoking `rpmbuild` to build RPM packages.
 - PKGBUILD (coming soon), using Autobuild variables to generate `PKGBUILD` files, using a temporary install root, to provide `makepkg` with a fake binary packaging process.
 
 Installing autobuild3

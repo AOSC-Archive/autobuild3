@@ -25,7 +25,7 @@ PKGEPOCH=1
 PKGVER=1.5.7$( ((_GIT)) && echo "+$(timestamp_convert $(git log -1 --date=raw --pretty=format:%cd))")
 PKGDES="Automatic package building tool."
 PKGRECOM="distcc ccache"
-PKGDEP="dpkg bash rpm apt coreutils autoconf automake autogen spdx-licenses"
+PKGDEP="dpkg bash apt coreutils autoconf automake autogen spdx-licenses"
 PKGREP="autobuild"
 PKGSEC=devel
 

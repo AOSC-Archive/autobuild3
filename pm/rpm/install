@@ -1,5 +1,0 @@
-#!/bin/bash
-##rpm/install: Procedure to install RPM stuffs
-##@copyright GPL-2.0+
-
-rpm $PM_ROOTPARAM -Uvh "/root/rpmbuild/RPMS/${rpm_arch_host}/$PKGNAME-$PKGVER-$PKGREL"*.rpm
