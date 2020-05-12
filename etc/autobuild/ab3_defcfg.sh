@@ -82,7 +82,7 @@ FDOICO="/usr/share/icons"
 FONTDIR="/usr/share/fonts"
 USRSRC="/usr/src"
 VARLIB="/var/lib"
-RUNDIR="/var/run"
+RUNDIR="/run"
 DOCDIR="/usr/share/doc"
 LICDIR="/usr/share/doc/licenses"
 SYDDIR="/usr/lib/systemd/system"
@@ -106,7 +106,7 @@ QT5BIN="/usr/lib/qt5/bin"
 
 ##OS basic configuration flags
 AUTOTOOLS_DEF="--prefix=$PREFIX --sysconfdir=$SYSCONF --localstatedir=$STATDIR \
---libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --mandir=$MANDIR"
+--libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --mandir=$MANDIR --with-rundir=$RUNDIR"
 CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib \
 -DSYSCONF_INSTALL_DIR=$SYSCONF -DCMAKE_INSTALL_SBINDIR=$BINDIR -DCMAKE_SKIP_RPATH=ON"
