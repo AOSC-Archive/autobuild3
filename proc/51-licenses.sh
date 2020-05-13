@@ -8,7 +8,7 @@ set_opt nullglob
 ((${#_license_files[@]})) || _license_files=( {COPYING,LICENSE}* )
 rec_opt nullglob
 
-if ! [ -r /usr/share/spdx-licenses/exceptions ]; then
+if ! [ -r /usr/share/spdx-licenses/exception ]; then
 	abwarn detailed license processing skipped due to missing files.
 	mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
 	((${#_license_files[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
