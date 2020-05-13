@@ -13,8 +13,9 @@ pm_getver(){
 }
 
 pm_exists(){
-	dpkg $PM_ROOTPARAM -l "$@" | grep ^ii &>/dev/null
-	return $((PIPESTATUS[0] ? PIPESTATUS[0] : PIPESTATUS[1]))
+	for p in "$@"; do
+		dpkg $PM_ROOTPARAM -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
+	done
 }
 
 pm_repoupdate(){
