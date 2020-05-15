@@ -10,4 +10,8 @@
 # Switched to mips64r2el by:
 #   - Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-CFLAGS_COMMON_ARCH='-mabi=64 -march=mips64r2 -mtune=gs464e -mno-fused-madd -mno-madd4 -Wa,-mfix-loongson3-llsc '
+# `-mno-fused-madd` and `-mno-madd4` disable the MIPS multiply-add instructions,
+# since Loongson chips implement them as fused multiply-add, which is different
+# from what is specified in the MIPS64r2 specification.
+
+CFLAGS_COMMON_ARCH='-mabi=64 -march=mips64r2 -mtune=gs464e -mno-madd4 -Wa,-mfix-loongson3-llsc '
