@@ -4,21 +4,30 @@
 
 abtryexe rustc cargo || ((!ABSTRICT)) || ablibret
 
+LTO_INJECT_FAIL_MSG='Unable to inject LTO directives to Cargo.toml: please manually add `lto = true` under [profile.release] section.'
+
 build_rust_probe(){
 	[ -f Cargo.toml ]
 }
 
+build_rust_inject_lto() {
+	abinfo 'Injecting Rust LTO directives...'
+	grep 'lto = true' Cargo.toml > /dev/null 2>&1 && abinfo "LTO directive already exists" && return
+	# parsing TOML in bash will be hard
+	grep 'profile.release' Cargo.toml > /dev/null 2>&1 && abdie "$LTO_INJECT_FAIL_MSG"
+	echo -e "[profile.release]\nlto = true\n" >> Cargo.toml
+}
+
 build_rust_build(){
 	BUILD_START
-    [ -f Cargo.lock ] || abwarn "This project is lacking the lock file. Please report this issue to the upstream."
-    abinfo 'Pre-flight checking...'
-	cargo check $CARGO_AFTER
-    BUILD_READY
-    abinfo 'Building...'
-	cargo build --release $CARGO_AFTER
-    abinfo 'Installing...'
-    install -vd "$PKGDIR/usr/bin/"
-    find target/release/ -maxdepth 1 -type f -not -name '*.*' -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/"
-    BUILD_FINAL
+	[ -f Cargo.lock ] || abwarn "This project is lacking the lock file. Please report this issue to the upstream."
+	$(bool $NOLTO) || build_rust_inject_lto
+	BUILD_READY
+	abinfo 'Building...'
+	cargo build --release $CARGO_AFTER || abdie "Compilation failed: $?"
+	abinfo 'Installing...'
+	install -vd "$PKGDIR/usr/bin/"
+	find target/release/ -maxdepth 1 -type f -not -name '*.*' -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';' || abdie "install failed: $?"
+	BUILD_FINAL
 }
 ABBUILDS+=' rust'
