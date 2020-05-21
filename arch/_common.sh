@@ -43,7 +43,7 @@ OBJCXXFLAGS_COMMON_WEIRD=''
 OBJCXXFLAGS_COMMON_PERMISSIVE="-fpermissive "
 # RUST Flags.
 RUSTFLAGS_COMMON=''
-RUSTFLAGS_COMMON_OPTI='-Ccodegen-units=1 -O '
+RUSTFLAGS_COMMON_OPTI='-Ccodegen-units=1 -Copt-level=3 '
 RUSTFLAGS_COMMON_WEIRD=''
 # LLVMGold is specified here otherwise it will try to find lld for lto
 RUSTFLAGS_COMMON_OPTI_LTO='-Clinker-plugin-lto="/usr/lib/LLVMgold.so" '
