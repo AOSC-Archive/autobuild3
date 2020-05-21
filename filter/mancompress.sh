@@ -2,7 +2,6 @@
 ##filter/mancompress.sh: Compresses manpages and break symlinks and boom
 ##@copyright GPL-2.0+
 ((ABMANCOMPRESS)) || return
-set_opt globstar
 __mancomp_todo=()
 
 if [ -d "$PKGDIR"/usr/share/man ]; then
@@ -23,4 +22,3 @@ if [ -d "$PKGDIR"/usr/share/man ]; then
 fi
 
 unset __mancomp_todo __mancomp_lnk
-rec_opt globstar
