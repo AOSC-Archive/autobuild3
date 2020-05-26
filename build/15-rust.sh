@@ -18,6 +18,16 @@ build_rust_inject_lto() {
 	echo -e "[profile.release]\nlto = true\n" >> Cargo.toml
 }
 
+build_rust_audit() {
+	abinfo 'Auditing dependencies...'
+	if ! command -v cargo-audit > /dev/null; then
+		abwarn "cargo audit not found. Audit skipped"
+	else
+		[ -f Cargo.lock ] || abdie 'No lock file found -- Dependency information unreliable. Unable to conduct audit.'
+		cargo audit || abdie 'Vulnerabilities detected! Refusing to continue.'
+	fi
+}
+
 build_rust_build(){
 	BUILD_START
 	[ -f Cargo.lock ] || abwarn "This project is lacking the lock file. Please report this issue to the upstream."
@@ -25,6 +35,7 @@ build_rust_build(){
 	BUILD_READY
 	abinfo 'Building...'
 	cargo build --release $CARGO_AFTER || abdie "Compilation failed: $?"
+	build_rust_audit
 	abinfo 'Installing...'
 	install -vd "$PKGDIR/usr/bin/"
 	find target/release/ -maxdepth 1 -type f -not -name '*.*' -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';' || abdie "install failed: $?"
