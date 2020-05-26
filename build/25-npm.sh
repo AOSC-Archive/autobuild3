@@ -9,8 +9,9 @@ build_npm_probe(){
 }
 
 build_npm_build(){
+	# requires npm 5+
 	npm install -g --user root \
-                    --prefix "$PKGDIR"/usr "$SRCDIR"/$PKGNAME-$PKGVER.tgz
+                    --prefix "$PKGDIR"/usr . || abdie "Could not install from archives"
 }
 
 ABBUILDS+=' npm'
