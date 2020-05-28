@@ -1,8 +1,5 @@
 #!/bin/bash
 ##lingering_files: Check for lingering files.
 ##@copyright GPL-2.0+
-for i in "$PKGDIR"/* "$PKGDIR"/usr/* "$PKGDIR"/usr/share/*; do
-	if test -f "$i"; then
-		abicu "QA (E321): Lingering file found at $i, incorrect install location?"
-	fi
-done
+FILES="$(find "$PKGDIR" "$PKGDIR/usr/" "$PKGDIR/usr/share/" -maxdepth 1 -type f -print)"
+[ ! -z "$FILES" ] && abicu "QA (E321): Lingering file(s) found, incorrect install location?\n $FILES" || true
