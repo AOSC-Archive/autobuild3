@@ -1,0 +1,5 @@
+#!/bin/bash
+##10-mter: Check maintainer information.
+##@copyright GPL-2.0+
+if [[ "$MTER" = "Null Packager <null@aosc.xyz>" ]]; then
+	abdie "QA: Maintainer information not set."
