@@ -37,8 +37,3 @@ fi
 arch_loadfile_strict beyond
 
 unalias BUILD_{START,READY,FINAL}
-
-# Inline: QA Dir
-if bool "$ABQA"; then
-	[ -e "$PKGDIR/usr/local" ] && abicu "QA: found \$PKGDIR/usr/local." || true
-fi
