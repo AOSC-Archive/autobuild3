@@ -8,4 +8,4 @@ else
 	QASEC="$PKGSEC"
 fi
 grep -qF "$QASEC" "$AB/sets/section" ||
-	abicu "QA: $QASEC not in sets/section."
+	abdie "QA: $QASEC not in sets/section."
