@@ -28,17 +28,13 @@ build_autotools_build() {
 	if bool $RECONF
 	then
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
-		if [ ! -x "$configure" ] || [ -e .patch ]; then
-			if [ -x autogen.sh ]; then
-				NOCONFIGURE=1 ./autogen.sh | ablog
-			elif [ -e configure.ac ]; then
-				autoreconf -fis -Wcross 2>&1 | ablog
-			elif [ -e .patch ]; then
-				abwarn "Source patched but configure not regenerated."
-			else
-				abdie "$configure is not executable and no fallbacks found."
-			fi || abicu 'Reconfiguration failed: $?.'
-		fi
+		if [ -x autogen.sh ]; then
+			NOCONFIGURE=1 ./autogen.sh | ablog
+		elif [ -e configure.ac ]; then
+			autoreconf -fvis -Wcross 2>&1 | ablog
+		else
+			abwarn 'Necessary files not found for script regeneration - non-standard Autotools source?'
+		fi || abdie 'Reconfiguration failed: $?.'
 	fi
 
 	if bool $ABSHADOW
