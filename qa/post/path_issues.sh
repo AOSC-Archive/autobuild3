@@ -1,5 +1,5 @@
 #!/bin/bash
-##30-path_issues: Check for incorrectly installed paths.
+##path_issues: Check for incorrectly installed paths.
 ##@copyright GPL-2.0+
 
 for i in bin sbin lib lib64 run usr/sbin usr/lib64 \

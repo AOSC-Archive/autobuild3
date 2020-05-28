@@ -1,5 +1,5 @@
 #!/bin/bash
-##10-sections.sh: Kick the bucket if the section looks bad
+##sections.sh: Kick the bucket if the section looks bad
 ##@copyright GPL-2.0+
 if echo "$PKGSEC" | grep -q '/'; then
 	QASEC="$(echo $PKGSEC | cut -d / -f 2-)"
