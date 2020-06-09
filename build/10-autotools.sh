@@ -39,9 +39,6 @@ build_autotools_build() {
 		fi
 	fi
 
-	abinfo "Touching configure to avoid Automake timestamping issue ..."
-	touch "$SRCDIR"/configure
-
 	if bool $ABSHADOW
 	then
 		rm -rf build
