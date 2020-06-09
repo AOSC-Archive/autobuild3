@@ -28,17 +28,14 @@ build_autotools_build() {
 	if bool $RECONF
 	then
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
-		if [ -x bootstrap ]; then
-			./bootstrap | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
-		elif [ -x autogen.sh ]; then
-			NOCONFIGURE=1 ./autogen.sh | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
-		elif [ -e configure.ac ]; then
-			autoreconf -fvis 2>&1 | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
-		else
-			abdie 'Necessary files not found for script regeneration - non-standard Autotools source?'
+		if [ ! -x "$configure" ] || [ -e .patch ]; then
+			if [ -x autogen.sh ]; then
+				NOCONFIGURE=1 ./autogen.sh | ablog
+			elif [ -e configure.ac ]; then
+				autoreconf -fvis -Wcross 2>&1 | ablog
+			else
+				abwarn 'Necessary files not found for script regeneration - non-standard Autotools source?'
+			fi || abdie 'Reconfiguration failed: $?.'
 		fi
 	fi
 
