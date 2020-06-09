@@ -43,9 +43,11 @@ build_autotools_build() {
 	find "$SRCDIR" \
 		-name configure \
 		-o -name config.status \
+		-o -name config.h* \
 		-o -name Makefile.in \
 		-o -name Makefile.am \
 		-o -name '*.m4' \
+		-o -name '*.mk' \
 		| xargs touch
 
 	if bool $ABSHADOW
