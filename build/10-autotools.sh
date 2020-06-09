@@ -40,12 +40,7 @@ build_autotools_build() {
 	fi
 
 	abinfo "Touching Autotools files to avoid Automake timestamping issue ..."
-	find "$SRCDIR" \
-		-name configure \
-		-o -name config.status \
-		-o -name Makefile.in \
-		-o -name Makefile.am \
-		-o -name '*.m4' \
+	find "$SRCDIR" -name configure -o -name config.status -o -name Makefile.in \
 		| xargs touch
 
 	if bool $ABSHADOW
