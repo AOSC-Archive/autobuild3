@@ -39,8 +39,9 @@ build_autotools_build() {
 		fi
 	fi
 
-	abinfo "Touching configure to avoid Automake timestamping issue ..."
-	touch "$SRCDIR"/configure
+	abinfo "Touching Autotools files to avoid Automake timestamping issue ..."
+	find "$SRCDIR" -name configure -o -name config.status -o -name Makefile.in \
+		| xargs touch
 
 	if bool $ABSHADOW
 	then
