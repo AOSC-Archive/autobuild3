@@ -28,10 +28,10 @@ build_autotools_build() {
 	if bool $RECONF
 	then
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
-		if [ -x bootstrap ]; then
+		if [[ -x bootstrap && ! -d bootstrap ]]; then
 			./bootstrap | ablog
 			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
-		elif [ -x autogen.sh ]; then
+		elif [[ -x autogen.sh && ! -d autogen.sh ]]; then
 			NOCONFIGURE=1 ./autogen.sh | ablog
 			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
 		elif [ -e configure.ac ]; then
