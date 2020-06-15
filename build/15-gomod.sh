@@ -17,8 +17,8 @@ build_gomod_build(){
 		abdie 'ABSHADOW must be set to true for this build type!'
 	fi
 
-	rm -rf build
-	mkdir build || abdie 'Failed to create $SRCDIR/build'
+	rm -rf abbuild
+	mkdir abbuild || abdie 'Failed to create $SRCDIR/abbuild'
 	cd build
 
     abinfo 'Fetching Go modules dependencies...'
@@ -26,7 +26,7 @@ build_gomod_build(){
 	BUILD_READY
 	mkdir -p "$PKGDIR/usr/bin/"
     abinfo 'Compiling the Go module ...'
-	GOPATH="$SRCDIR/abgopath" go build .. ${GO_BUILD_AFTER}
+	GOPATH="$SRCDIR/abgopath" go build .. -buildmode=pie ${GO_BUILD_AFTER}
 	cp -av * "$PKGDIR/usr/bin/"
 	BUILD_FINAL
 	cd ..
