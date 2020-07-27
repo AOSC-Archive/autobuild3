@@ -136,8 +136,7 @@ abdetectarch() {
 		x86_64) echo amd64 ;;
 		i486) echo i486 ;;
 		i686) echo i386 ;;
-		armv7l) echo armel ;;
-		armv8l) echo armel ;;
+		armv?l) [ -e /lib/ld-linux-armhf.so.3 ] && echo armhf || echo armel ;;
 		aarch64) echo arm64 ;;
 		ppc) echo powerpc ;;
 		ppc64) echo ppc64 ;;
