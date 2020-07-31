@@ -34,7 +34,7 @@ build_autotools_build() {
 		elif [[ -x autogen.sh && ! -d autogen.sh ]]; then
 			NOCONFIGURE=1 ./autogen.sh | ablog
 			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
-		elif [ -e configure.ac ]; then
+		elif [ -e configure.ac ] || [ -e configure.in ]; then
 			autoreconf -fvis 2>&1 | ablog
 			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
 		else
