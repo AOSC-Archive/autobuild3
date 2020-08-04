@@ -4,7 +4,7 @@
 abtryexe node npm || ((!ABSTRICT)) || ablibret
 
 build_dummy_build(){
-	abinfo "Building dummy package ..."
+	abinfo "Creating a dummy package ..."
 	mkdir -pv "$PKGDIR"
 }
 
