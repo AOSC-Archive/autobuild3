@@ -1,5 +1,5 @@
 #!/bin/bash
-##20-npm.sh: Builds NPM registry archives
+##25-npm.sh: Builds NPM registry archives
 ##@copyright GPL-2.0+
 abtryexe node npm || ((!ABSTRICT)) || ablibret
 
