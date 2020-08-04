@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+
 abtryexe node npm || ((!ABSTRICT)) || ablibret
 
-build_npm_build(){
+build_dummy_build(){
 	abinfo "Building dummy package ..."
 	mkdir -pv "$PKGDIR"
 }
