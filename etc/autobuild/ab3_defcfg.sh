@@ -132,7 +132,7 @@ ABINSTALL="dpkg"
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
 abdetectarch() {
-	dpkg --print-architecture
+	type dpkg >/dev/null 2>&1 && dpkg --print-architecture || ( echo "[!!!] Cannot find dpkg executable, exiting ..." && exit 1 )
 }
 
 ((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
