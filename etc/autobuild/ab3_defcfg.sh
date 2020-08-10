@@ -132,19 +132,7 @@ ABINSTALL="dpkg"
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
 abdetectarch() {
-	case "$(uname -m)" in
-		x86_64) echo amd64 ;;
-		i486) echo i486 ;;
-		i686) echo i386 ;;
-		armv?l) [ -e /lib/ld-linux-armhf.so.3 ] && echo armhf || echo armel ;;
-		aarch64) echo arm64 ;;
-		ppc) echo powerpc ;;
-		ppc64) echo ppc64 ;;
-		ppc64le) echo ppc64el ;;
-		riscv64) echo riscv64 ;;
-		mips64) [[ ! $(file /bin/bash | grep MIPS-III) ]] && echo mips64r2el || echo loongson2f ;;
-		*) uname -m ;;
-	esac
+	dpkg --print-architecture
 }
 
 ((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
