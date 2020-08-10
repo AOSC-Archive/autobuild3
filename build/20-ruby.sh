@@ -5,10 +5,10 @@ abtryexe ruby gem || ((!ABSTRICT)) || ablibret
 
 build_ruby_build(){
 	GEMDIR="$(ruby -e'puts Gem.default_dir')"
-	abwarn "For recent ACBS change which now saves all files with a .bin suffix."
-	mv -fv $PKGNAME-$PKGVER.{bin,gem} || true
+	abinfo "Building and installing Ruby (Gem) package ..."
 	gem install --ignore-dependencies --no-user-install \
 		-i "$PKGDIR/$GEMDIR" -n "$PKGDIR/usr/bin" $PKGNAME-$PKGVER.gem
+	abinfo 'Removing Gem cache from $PKGDIR ...'
 	rm -v "$PKGDIR/$GEMDIR/cache/"*
 }
 

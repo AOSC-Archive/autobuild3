@@ -13,14 +13,18 @@ build_cmake_build(){
 	if bool $ABSHADOW
 	then
 		rm -rf build
+		abinfo "Creating directory for shadow build ..."
 		mkdir build || abdie "Failed creating \$SRCDIR/build"
 		cd build
 	fi
 	BUILD_START
+	abinfo "Running CMakeLists.txt to generate Makefile ..."
 	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER
 	BUILD_READY
+	abinfo "Building binaries ..."
 	make $ABMK $MAKE_AFTER
 	BUILD_FINAL
+	abinfo "Installing binaries ..."
 	make DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$PIPESTATUS
 	if bool $ABSHADOW
 	then

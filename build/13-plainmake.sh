@@ -11,11 +11,14 @@ build_plainmake_probe(){
 build_plainmake_build(){
 	BUILD_START
 	if [ -e "$BUILD_PLAINMAKE_DOTCONFIG" ]; then
-	       cp "$BUILD_PLAINMAKE_DOTCONFIG" "$SRCDIR/.config"
+		abinfo 'Copying .config file as defined in $BUILD_PLAINMAKE_DOTCONFIG ...'
+		cp "$BUILD_PLAINMAKE_DOTCONFIG" "$SRCDIR/.config"
 	fi | ablog
 	BUILD_READY
+	abinfo "Building binaries using Makefile ..."
 	make $ABMK $MAKE_AFTER | ablog
 	BUILD_FINAL
+	abinfo "Installing binaries ..."
 	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER | ablog
 }
 

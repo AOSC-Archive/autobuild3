@@ -11,7 +11,7 @@ build_qtproj_probe(){
 		[ -f "$_pro" ] && break
 	done || return "$?"
 
-	[ "$QT_SELECT" ] || 
+	[ "$QT_SELECT" ] ||
 	if bool $USEQT5; then
 		abwarn "\$USEQT5 is now deprecated. Use QT_SELECT=5."
 		QT_SELECT=5
@@ -26,10 +26,13 @@ build_qtproj_probe(){
 
 build_qtproj_build(){
 	BUILD_START
+	abinfo "Running qmake to generate Makefile ..."
 	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER
 	BUILD_READY
+	abinfo "Building binaries ..."
 	make $ABMK $MAKE_AFTER
 	BUILD_FINAL
+	abinfo "Installing binaries ..."
 	make INSTALL_ROOT=$PKGDIR install
 }
 ABBUILDS+=' qtproj'

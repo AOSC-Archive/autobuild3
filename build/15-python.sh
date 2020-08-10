@@ -15,10 +15,13 @@ build_python_build(){
 		[ "$PYTHON" ] || continue
 		if bool $USE_PYTHON_BUILD_FIRST; then
 			BUILD_READY
+			abinfo "Building Python (PyPI) package using $PYTHON ..."
 			"$PYTHON" build
 		fi
 		BUILD_FINAL
+		abinfo "Installing Python (PyPI) package using $PYTHON ..."
 		"$PYTHON" setup.py install $MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 || return $?
+		abinfo "Cleaning Python (PyPI) package source tree ..."
 		bool $NOPYTHONCLEAN || "$PYTHON" setup.py clean || true
 	done
 }

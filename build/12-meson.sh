@@ -9,9 +9,12 @@ build_meson_probe(){
 
 build_meson_build() {
 	mkdir "$SRCDIR"/build
+	abinfo "Running Meson ..."
 	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build
         cd "$SRCDIR"/build
+	abinfo "Building binaries ..."
 	ninja
+	abinfo "Installing binaries ..."
 	DESTDIR="$PKGDIR" ninja install
 	cd "$SRCDIR"
 }

@@ -19,7 +19,9 @@ build_npm_audit(){
 
 build_npm_build(){
 	build_npm_audit
+	abinfo "Creating a symlink to make NPM happy ..."
 	ln -sv "$SRCDIR/../$PKGNAME-$PKGVER."* "$PKGNAME-$PKGVER.tgz"
+	abinfo "Installing NPM package ..."
 	npm install --production -g --user root \
                     --prefix "$PKGDIR"/usr "$PKGNAME-$PKGVER.tgz" || abdie "Could not install from archives"
 }

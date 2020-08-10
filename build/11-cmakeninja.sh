@@ -13,14 +13,18 @@ build_cmakeninja_build(){
 	if bool $ABSHADOW
 	then
 		rm -rf build
+		abinfo "Creating directory for shadow build ..."
 		mkdir build || abdie "Failed creating \$SRCDIR/build"
 		cd build
 	fi
 	BUILD_START
+	abinfo "Running CMakeLists.txt to generate Makefile ..."
 	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER -GNinja
 	BUILD_READY
+	abinfo "Building binaries ..."
 	ninja $ABMK $MAKE_AFTER
 	BUILD_FINAL
+	abinfo "Installing binaries ..."
 	DESTDIR=$PKGDIR ninja install || _ret=$PIPESTATUS
 	if bool $ABSHADOW
 	then
