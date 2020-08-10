@@ -1,5 +1,5 @@
 #!/bin/bash
-# 10-autotools.sh: Builds GNU autotools stuffs
+# 10-autotools.sh: Builds GNU autotools stuff
 ##@copyright GPL-2.0+
 abtryexe autoconf automake autoreconf
 

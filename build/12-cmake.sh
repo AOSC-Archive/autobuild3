@@ -1,5 +1,5 @@
 #!/bin/bash
-# 12-cmake.sh: Builds cmake stuffs
+# 12-cmake.sh: Builds cmake stuff
 ##@copyright GPL-2.0+
 abtryexe cmake || ablibret
 

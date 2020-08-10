@@ -1,5 +1,5 @@
 #!/bin/bash
-##15-perl.sh: Builds Makefile.PL stuffs
+##15-perl.sh: Builds Makefile.PL stuff
 ##@copyright GPL-2.0+
 abtryexe perl || ablibret
 

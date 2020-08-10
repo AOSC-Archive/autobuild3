@@ -9,7 +9,7 @@ if bool $ABCLEAN; then
 	abinfo "Pre-build clean up..."
 	rm -rf "$SRCDIR"/ab{dist,-dpkg,spec,scripts}
 else
-	abinfo "Moving away ab stuffs.."
+	abinfo "Moving away ab stuff.."
 	t="$(date -u +%s)_$RANDOM"
 	mkdir -p "$SRCDIR"/_ab_backs/$t"
 	mv "$SRCDIR"/ab{dist,-dpkg,spec,scripts} "$SRCDIR"/_ab_backs/$t"

@@ -1,5 +1,5 @@
 #!/bin/bash
-##12-waf.sh: Builds WAF stuffs
+##12-waf.sh: Builds WAF stuff
 ##@copyright GPL-2.0+
 abtryexe python2 || ablibret
 

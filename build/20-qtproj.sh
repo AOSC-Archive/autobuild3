@@ -1,5 +1,5 @@
 #!/bin/bash
-##20-qtproj.sh: Builds qmake stuffs
+##20-qtproj.sh: Builds qmake stuff
 ##@copyright GPL-2.0+
 abtryexe qmake || ablibret
 export QT_SELECT

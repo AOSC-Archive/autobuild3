@@ -1,5 +1,5 @@
 #!/bin/bash
-##15-python.sh: Builds Python stuffs
+##15-python.sh: Builds Python stuff
 ##@copyright GPL-2.0+
 abtryexe python || ablibret
 abtryexe python2 python3 || ((!ABSTRICT)) || ablibret

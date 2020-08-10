@@ -14,7 +14,7 @@ and good documentation for pending features.
 Pull Requests
 -------------
 
-Always, write `module/file[, ...]: msg` as title and add extra stuffs below,
+Always, write `module/file[, ...]: msg` as title and add extra stuff below,
 with a blank line as spacing so git (and hub) will take it as descriptions.
 Sign-Off should NOT be used in regular commits or you are flooding our
 Channel.
