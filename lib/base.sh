@@ -21,14 +21,14 @@ bool(){
 abreqexe(){
 	local i;
 	for i; do
-		which $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
+		type $i &> /dev/null || abicu "Executable ‘$i’ not found; returned value: $?."{\ Expect\ failures.,}
 	done
 }
 
 abtryexe(){
 	local i;
 	for i; do
-		which $i &> /dev/null || abinfo "No executable ‘$i’ has been found; returned value: $?."
+		type $i &> /dev/null || abinfo "No executable ‘$i’ has been found; returned value: $?."
 	done
 }
 
