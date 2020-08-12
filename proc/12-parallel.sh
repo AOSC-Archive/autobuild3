@@ -4,8 +4,10 @@
 
 if bool $NOPARALLEL; then
 	abwarn "Parallel build DISABLED, get a cup of coffee, now!"
+else
+	abinfo "Parallel build ENABLED"
 fi
-abinfo "Parallel build ENABLED"
+
 # Advanced building. Need some code cleaning.
 if ! bool $NOPARALLEL && boolopt NO_DISTCC && _which distcc &>/dev/null; then
 	ab_distcc=1
