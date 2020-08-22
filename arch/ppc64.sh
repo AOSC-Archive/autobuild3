@@ -14,6 +14,6 @@ RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=g5 -Ctarget-features=+altivec,+secure-plt,+h
 # LLD does not support POWER ABI v1.
 RUSTFLAGS_COMMON_OPTI_LTO='-Clink-arg=-fuse-ld=bfd -Clink-arg=-Wl,-build-id=sha1'
 
-# Position-independent executable buildmode is not available on PowerPC 64-bit 
+# Position-independent executable buildmode is not available on PowerPC 64-bit
 # (Big Endian) architecture. Removing for ppc64 target.
 GOFLAGS=${GOFLAGS/-buildmode=pie/}
