@@ -1,5 +1,5 @@
 #!/bin/bash
-##arch/i386.sh: Build definitions for i386 (subsystem only).
+##arch/i386.sh: Build definitions for i386 (the subsystem that runs on amd64 cpus)
 ##@copyright GPL-2.0+
 [[ $ABBUILD != $ABHOST ]] || abdie "The i386 arch is cross-only, for multilib purposes."
 CFLAGS_COMMON_ARCH='-fomit-frame-pointer -march=pentium4 -mtune=core2 -msse -msse2 -msse3 '
