@@ -26,7 +26,8 @@ build_gomod_build(){
 	BUILD_READY
 	mkdir -p "$PKGDIR/usr/bin/"
 	abinfo 'Compiling the Go module ...'
-	GOPATH="$SRCDIR/abgopath" go build .. -buildmode=pie ${GO_BUILD_AFTER}
+	GOPATH="$SRCDIR/abgopath" \
+		go build -buildmode=pie ${GO_BUILD_AFTER} ..
 	find . -type f -executable -exec cp -av '{}' "$PKGDIR/usr/bin/" ';'
 	BUILD_FINAL
 	cd ..
