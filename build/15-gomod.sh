@@ -19,7 +19,7 @@ build_gomod_build(){
 
 	rm -rf abbuild
 	mkdir abbuild || abdie 'Failed to create $SRCDIR/abbuild'
-	cd build
+	cd abbuild
 
 	abinfo 'Fetching Go modules dependencies...'
 	GOPATH="$SRCDIR/abgopath" go get ..
