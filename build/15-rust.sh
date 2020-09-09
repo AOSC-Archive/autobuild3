@@ -11,6 +11,8 @@ build_rust_probe(){
 }
 
 build_rust_inject_lto() {
+        $(bool ${USECLANG}) || abdie 'Please set `USECLANG=1` in your defines to enable proper LTO.'
+        command -v ld.lld > /dev/null || abdie 'Please add `llvm` to your $BUILDDEP to enable proper LTO.'
 	abinfo 'Injecting Rust LTO directives...'
 	grep 'lto = true' Cargo.toml > /dev/null 2>&1 && abinfo "LTO directive already exists" && return
 	# parsing TOML in bash will be hard
