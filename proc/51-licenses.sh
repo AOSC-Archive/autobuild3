@@ -7,7 +7,8 @@
 _license_files=( {COPYING,LICENSE}* )
 
 mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
-((${#_license_files[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+if [ -d "$SRCDIR"/LICENSES
+((${#_license_files[@]})) && cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
 
 # Original implementation broken.
 : <<'END_COMMENT'
@@ -18,7 +19,7 @@ rec_opt nullglob
 if ! [ -r /usr/share/spdx-licenses/exception ]; then
 	abwarn detailed license processing skipped due to missing files.
 	mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
-	((${#_license_files[@]})) && cp --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+	((${#_license_files[@]})) && cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
 fi
 
 declare -A _license_exception
