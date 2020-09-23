@@ -7,7 +7,6 @@
 _license_files=( {COPYING,LICENSE}* )
 
 mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
-if [ -d "$SRCDIR"/LICENSES
 ((${#_license_files[@]})) && cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
 
 # Original implementation broken.
