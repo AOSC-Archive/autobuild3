@@ -29,6 +29,12 @@ dpkgctrl(){
 	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides $PKGPROV
 	[ "$PKGSUG" ] && dpkgfield Suggests $PKGSUG
 	[ "$PKGBREAK" ] && dpkgfield Breaks $PKGBREAK
+	if [ -e "$SRCDIR"/autobuild/extra-dpkg-control ]; then
+		cat "$SRCDIR"/autobuild/extra-dpkg-control
+	fi
+	if dpkg -l autobuild3 >/dev/null 2>&1; then
+		echo "X-AOSC-Autobuild3-Version: $(dpkg-query -f '${Version}' -W autobuild3)"
+	fi
 	echo "$DPKGXTRACTRL"
 }
 
