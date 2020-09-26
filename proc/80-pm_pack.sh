@@ -5,8 +5,6 @@ for i in $ABMPM $ABAPMS; do
 	. "$AB"/pm/"$i"/pack || aberr $i packing returned $?.
 done
 
-tar cvfJ "${PKGNAME}_${PKGVER}-${PKGREL}.tar.xz" autobuild/
-
 if [ "$ABARCHIVE" ]; then
 	abinfo "Using $ABARCHIVE as autobuild archiver."
 	$ABARCHIVE "$PKGNAME" "$PKGVER" "$PKGREL" "$ABHOST"
