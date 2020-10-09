@@ -18,7 +18,7 @@ if [ -d "$PKGDIR"/usr/share/man ]; then
 	done
 
 	abinfo "Compressing man page ${__mancomp_todo[@]} ..."
-	xz -9e -- "${__mancomp_todo[@]}"
+	xz -6e -- "${__mancomp_todo[@]}"
 fi
 
 unset __mancomp_todo __mancomp_lnk
