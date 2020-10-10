@@ -22,10 +22,10 @@ build_cmake_build(){
 	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make $ABMK $MAKE_AFTER
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$PIPESTATUS
+	make V=1 VERBOSE=1 DESTDIR=$PKGDIR $MAKE_AFTER install || _ret=$PIPESTATUS
 	if bool $ABSHADOW
 	then
 		cd ..

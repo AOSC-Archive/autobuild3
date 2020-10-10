@@ -16,10 +16,10 @@ build_plainmake_build(){
 	fi | ablog
 	BUILD_READY
 	abinfo "Building binaries using Makefile ..."
-	make $ABMK $MAKE_AFTER | ablog
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER | ablog
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER | ablog
+	make V=1 VERBOSE=1 install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER | ablog
 }
 
 ABBUILDS+=' plainmake'

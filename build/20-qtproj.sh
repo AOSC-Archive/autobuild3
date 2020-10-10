@@ -30,9 +30,9 @@ build_qtproj_build(){
 	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make $ABMK $MAKE_AFTER
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make INSTALL_ROOT=$PKGDIR install
+	make V=1 VERBOSE=1 INSTALL_ROOT=$PKGDIR install
 }
 ABBUILDS+=' qtproj'

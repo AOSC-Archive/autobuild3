@@ -72,12 +72,12 @@ build_autotools_build() {
 
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make $ABMK $MAKE_AFTER | ablog
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER | ablog
 	returns $PIPESTATUS || abdie "Making failed."
 
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog
+	make install V=1 VERBOSE=1 BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog
 	returns $PIPESTATUS || abdie "Installing failed."
 
 	if bool $ABSHADOW
