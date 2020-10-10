@@ -18,9 +18,10 @@ AUTOTOOLS_STRICT=yes
 # Parallelism, the default value is an equation depending on the number of processors.
 # $ABTHREADS will take any integer larger than 0.
 ABTHREADS=$(( $(nproc) + 1))
-ABMANCOMPRESS=yes
-ABELFDEP=no   # Guess dependencies from ldd?
-ABSTRIP=yes   # Strip off some symbols?
+ABMANCOMPRESS=1
+ABINFOCOMPRESS=1
+ABELFDEP=0	# Guess dependencies from ldd?
+ABSTRIP=1	# Strip off some symbols?
 
 # Use -O3 instead?
 AB_FLAGS_O3=0
