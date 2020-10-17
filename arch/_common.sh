@@ -46,7 +46,7 @@ RUSTFLAGS_COMMON=''
 RUSTFLAGS_COMMON_OPTI='-Ccodegen-units=1 -Copt-level=3 '
 RUSTFLAGS_COMMON_WEIRD=''
 # LLVMGold is specified here otherwise it will try to find lld for lto
-RUSTFLAGS_COMMON_OPTI_LTO=''
+RUSTFLAGS_COMMON_OPTI_LTO='-Clink-arg=-flto -Clink-arg=-fuse-linker-plugin -Clink-arg=-fuse-ld=gold -Clink-arg=-Wl,-plugin -Clink-arg=-Wl,/usr/lib/LLVMgold.so '
 # Linker Flags. (actually passed to your CC, just FYI)
 # LDFLAGS writing helpers:
 ld_arg(){ printf %s '-Wl'; local IFS=,; printf %s "$*"; }
