@@ -5,6 +5,5 @@
 # Retro: Overriding mainline definitions, and take more interest in reducing code size.
 CFLAGS_COMMON_OPTI='-Os '
 # Retro: Keeping -ftree-vectorization for AltiVec.
-CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 
 CFLAGS_COMMON_ARCH=' -m64 -mcpu=G5 -maltivec -mabi=altivec -msecure-plt -mhard-float '
