@@ -7,4 +7,4 @@ CFLAGS_COMMON_OPTI='-Os '
 # Retro: Keeping -ftree-vectorization for AltiVec.
 CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 
-CFLAGS_COMMON_ARCH=' -m64 -mtune=G5 -maltivec -mabi=altivec -msecure-plt -mhard-float '
+CFLAGS_COMMON_ARCH=' -m64 -mcpu=G5 -maltivec -mabi=altivec -msecure-plt -mhard-float '
