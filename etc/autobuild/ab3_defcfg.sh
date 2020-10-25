@@ -19,6 +19,7 @@ NOCARGOAUDIT=no			# Audit Cargo (Rust) dependencies?
 NONPMAUDIT=no			# Audit NPM dependencies?
 ABUSECMAKEBUILD=yes		# Use cmake build for cmake* ABTYPEs?
 ABSPLITDBG=yes			# Split out debug package containing symbols (-dbg)?
+BUILDDEPONLY=0			# Avoid installing runtime dependencies when building?
 
 # Strict Autotools option checking?
 AUTOTOOLS_STRICT=yes
