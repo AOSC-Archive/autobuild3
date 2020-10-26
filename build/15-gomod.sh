@@ -26,8 +26,13 @@ build_gomod_build(){
 	BUILD_READY
 	mkdir -p "$PKGDIR/usr/bin/"
 	abinfo 'Compiling the Go module ...'
-	GOPATH="$SRCDIR/abgopath" \
-		go build -buildmode=pie ${GO_BUILD_AFTER} ..
+	if [[ "${CROSS:-$ARCH}" != "loongson3" ]]; then
+		GOPATH="$SRCDIR/abgopath" \
+			go build -buildmode=pie ${GO_BUILD_AFTER} ..
+	else
+		GOPATH="$SRCDIR/abgopath" \
+			go build ${GO_BUILD_AFTER} ..
+	fi
 	find . -type f -executable -exec cp -av '{}' "$PKGDIR/usr/bin/" ';'
 	BUILD_FINAL
 	cd ..
