@@ -26,6 +26,8 @@ done
 
 build_${ABTYPE}_build || abdie "Build failed: $?."
 
+cd "$SRCDIR"
+
 [ -d "$PKGDIR" ] || abdie "50-build: Suspecting build failure due to missing PKGDIR."
 #[ -d "`arch_findfile overrides`" ] && cp -rla "`arch_findfile overrides`"/* "$PKGDIR/"
 [ -d "`arch_findfile overrides`" ] && cp -ra "`arch_findfile overrides`"/* "$PKGDIR/"
