@@ -24,7 +24,7 @@ CFLAGS_COMMON_OPTI='-O2 '
 CFLAGS_COMMON_DEBUG='-O0 '	# not that frequently used since autotools know it.
 CFLAGS_GCC=' '
 CFLAGS_GCC_OPTI="-fira-loop-pressure -fira-hoist-pressure -ftree-vectorize "
-CFLAGS_GCC_OPTI_LTO="-flto=auto "
+CFLAGS_GCC_OPTI_LTO="-flto=auto -ffat-lto-objects "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
 # CFLAGS_CLANG='-fno-integrated-as ' # GNU as has compatibility issue with clang on ARMv8.[01]
 CFLAGS_CLANG_OPTI_LTO='-flto '
