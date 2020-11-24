@@ -10,7 +10,7 @@ build_dune_probe(){
 build_dune_build(){
 	BUILD_START
 	abinfo "Building Dune project $PKGNAME ..."
-	dune
+	dune build
 	abinfo "Installing Dune project $PKGNAME ..."
 	mkdir -pv "$PKGDIR"/$(ocamlfind printconf destdir)
 	dune install \
