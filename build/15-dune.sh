@@ -16,6 +16,15 @@ build_dune_build(){
 	dune install \
 		--prefix "$PKGDIR"/usr \
 		--libdir "$PKGDIR"/$(ocamlfind printconf destdir)
+	abinfo "Correcting directories ..."
+	if [ -d "$PKGDIR"/usr/doc ]; then
+		mkdir -pv "$PKGDIR"/usr/share
+		mv -v "$PKGDIR"/usr/{,share/}doc
+	fi
+	if [ -d "$PKGDIR"/usr/man ]; then
+		mkdir -pv "$PKGDIR"/usr/share
+		mv -v "$PKGDIR"/usr/{,share/}man
+	fi
 }
 
 ABBUILDS+=' dune'
