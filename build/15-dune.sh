@@ -7,7 +7,7 @@ build_dune_probe(){
 	[ -f dune-project ]
 }
 
-build_gomod_build(){
+build_dune_build(){
 	BUILD_START
 	abinfo "Building Dune project $PKGNAME ..."
 	dune
