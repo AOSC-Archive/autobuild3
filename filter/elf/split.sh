@@ -9,7 +9,8 @@ filter_elf_splitdbg_pre()
 {
 	bool $ABSTRIP || return 0
 	bool $ABSPLITDBG || return 0
-	mkdir -p "$_SYM_PKGDIR"
+	abdbg "Creating debug symbol install directory: $SYMDIR"
+	mkdir -p "$SYMDIR"
 }
 
 filter_elf_splitdbg()

@@ -68,15 +68,15 @@ elf_strip()
 elf_copydbg()
 {
 	BUILD_ID=$(elf_buildid_sha1 $1)
-	SYMDIR="$2"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
-	mkdir -p "${SYMDIR}"
+	SYM_INSTDIR="$2"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
+	mkdir -p "${SYM_INSTDIR}"
 	case "$(readelf -h $1)" in
 		*Type:*'DYN (Shared object file)'*)
 			;&
 		*Type:*'EXEC (Executable file)'*)
 			;&
 		*Type:*'REL (Relocatable file)'*)
-			objcopy --only-keep-debug "$1" "${SYMDIR}"/${BUILD_ID:2}.debug ;;
+			objcopy --only-keep-debug "$1" "${SYM_INSTDIR}"/${BUILD_ID:2}.debug ;;
 		*)
 			true ;;
 	esac
