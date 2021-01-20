@@ -28,6 +28,7 @@ CFLAGS_GCC_OPTI_LTO="-flto=auto "
 CFLAGS_GCC_DEBUG='-Og '		# note: not enabled for clang
 # CFLAGS_CLANG='-fno-integrated-as ' # GNU as has compatibility issue with clang on ARMv8.[01]
 CFLAGS_CLANG_OPTI_LTO='-flto '
+CFLAGS_DBG_SYM='-ggdb'  # Appended when ABSPLITDBG is turned on
 # C Specific Flags.
 CFLAGS_COMMON_WEIRD=''
 # What to add for C++ Compiler Flags.
