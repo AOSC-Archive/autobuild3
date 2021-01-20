@@ -8,6 +8,9 @@ done
 if [ "$ABARCHIVE" ]; then
 	abinfo "Using $ABARCHIVE as autobuild archiver."
 	$ABARCHIVE "$PKGNAME" "$PKGVER" "$PKGREL" "$ABHOST"
+	# FIXME: should consult ABPACKAGE for the actual list of package to copy.
+	#   ~cth
+	bool $ABSPLITDBG && $ABARCHIVE "$PKGNAME"-dbg "$PKGVER" "$PKGREL" "$ABHOST"
 else
 	abinfo "Not using an archiver."
 fi
