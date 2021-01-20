@@ -5,8 +5,6 @@
 # Note: This must be done before strip
 abrequire elf
 
-_SYM_PKGDIR="${SRCDIR}/abdist-dbg"
-
 filter_elf_splitdbg_pre()
 {
 	bool $ABSTRIP || return 0
@@ -21,7 +19,7 @@ filter_elf_splitdbg()
 	# ABSTRIP = true and ABSPLITDBG = false => Don't split
 	bool $ABSPLITDBG || return 0
 	abdbg "Saving debug symbol of $1 .."
-	elf_copydbg "$1" "$_SYM_PKGDIR"
+	elf_copydbg "$1" "${SYMDIR}"
 }
 
 export ABELFFILTERS="$ABELFFILTERS splitdbg"
