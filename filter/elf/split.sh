@@ -1,0 +1,27 @@
+#!/bin/bash
+##filter/elf/splitdbg.sh: Saves a copy of debug symbols around
+##@copyright GPL-2.0+
+
+# Note: This must be done before strip
+abrequire elf
+
+_SYM_PKGDIR="${SRCDIR}/abdist-dbg"
+
+filter_elf_splitdbg_pre()
+{
+	bool $ABSTRIP || return 0
+	bool $ABSPLITDBG || return 0
+	mkdir -p "$_SYM_PKGDIR"
+}
+
+filter_elf_splitdbg()
+{
+	# ABSTRIP = false => Don't split
+	bool $ABSTRIP || return 0
+	# ABSTRIP = true and ABSPLITDBG = false => Don't split
+	bool $ABSPLITDBG || return 0
+	abdbg "Saving debug symbol of $1 .."
+	elf_copydbg "$1" "$_SYM_PKGDIR"
+}
+
+export ABELFFILTERS="$ABELFFILTERS splitdbg"
