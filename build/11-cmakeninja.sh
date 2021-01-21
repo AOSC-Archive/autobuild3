@@ -22,7 +22,7 @@ build_cmakeninja_build(){
 	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER -GNinja || _ret="${PIPESTATUS[0]}"
 	BUILD_READY
 	abinfo "Building and installing binaries ..."
-	DESTDIR=$PKGDIR ninja $ABMK $MAKE_AFTER install || _ret="${PIPESTATUS[0]}"
+	DESTDIR="$PKGDIR" cmake --install . -- $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_FINAL
 	if bool "$ABSHADOW"
 	then

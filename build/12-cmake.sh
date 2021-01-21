@@ -10,7 +10,7 @@ build_cmake_probe(){
 build_cmake_build(){
 	local _ret
 	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
-	if bool $ABSHADOW
+	if bool "$ABSHADOW"
 	then
 		rm -rf build
 		abinfo "Creating directory for shadow build ..."
@@ -19,14 +19,14 @@ build_cmake_build(){
 	fi
 	BUILD_START
 	abinfo "Running CMakeLists.txt to generate Makefile ..."
-	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER || _ret="${PIPESTATUS[0]}"
+	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
+	cmake --build . -- V=1 VERBOSE=1 $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make V=1 VERBOSE=1 DESTDIR=$PKGDIR $MAKE_AFTER install || _ret="${PIPESTATUS[0]}"
-	if bool $ABSHADOW
+	cmake --install . -- V=1 VERBOSE=1 DESTDIR="$PKGDIR" $MAKE_AFTER install || _ret="${PIPESTATUS[0]}"
+	if bool "$ABSHADOW"
 	then
 		cd ..
 	fi
