@@ -12,14 +12,14 @@ build_gomod_build(){
 	export GO111MODULE=on
 	abinfo 'Note, this build type only works with Go 1.11+ modules'
 	[ -f Makefile ] && abwarn "This project might be using other build tools than Go itself."
-	if ! bool $ABSHADOW
+	if ! bool "$ABSHADOW"
 	then
 		abdie 'ABSHADOW must be set to true for this build type!'
 	fi
 
 	rm -rf abbuild
-	mkdir abbuild || abdie 'Failed to create $SRCDIR/abbuild'
-	cd abbuild || "Failed to cd $SRCDIR/abbuild"
+	mkdir abbuild || abdie "Failed to create $SRCDIR/abbuild"
+	cd abbuild || abdie "Failed to cd $SRCDIR/abbuild"
 
 	abinfo 'Fetching Go modules dependencies...'
 	GOPATH="$SRCDIR/abgopath" go get ..

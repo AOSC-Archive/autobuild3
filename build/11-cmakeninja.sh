@@ -19,13 +19,13 @@ build_cmakeninja_build(){
 	fi
 	BUILD_START
 	abinfo "Running CMakeLists.txt to generate Makefile ..."
-	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER -GNinja || _ret=${PIPESTATUS[0]}
+	cmake $SRCDIR $CMAKE_DEF $CMAKE_AFTER -GNinja || _ret="${PIPESTATUS[0]}"
 	BUILD_READY
 	abinfo "Building binaries ..."
-	ninja $ABMK $MAKE_AFTER || _ret=${PIPESTATUS[0]}
+	ninja $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	DESTDIR=$PKGDIR ninja install || _ret=${PIPESTATUS[0]}
+	DESTDIR=$PKGDIR ninja install || _ret="${PIPESTATUS[0]}"
 	if bool "$ABSHADOW"
 	then
 		cd ..

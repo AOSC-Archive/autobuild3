@@ -14,7 +14,7 @@ build_autotools_probe(){
 build_autotools_build() {
 	export ABSHADOW
 
-	if bool $ABCONFIGHACK
+	if bool "$ABCONFIGHACK"
 	then
 		for i in $(find "$SRCDIR" -name config.guess -o -name config.sub); do \
 			abinfo "Copying replacement $i ..."
@@ -30,11 +30,11 @@ build_autotools_build() {
 		abinfo "Re-generating Autotools scripts ..."
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
 		if [[ -x bootstrap && ! -d bootstrap ]]; then
-			./bootstrap || abdie 'Reconfiguration failed: $?.'
+			"$SRCDIR/bootstrap" || abdie "Reconfiguration failed: $?."
 		elif [[ -x autogen.sh && ! -d autogen.sh ]]; then
-			NOCONFIGURE=1 ./autogen.sh || abdie 'Reconfiguration failed: $?.'
+			NOCONFIGURE=1 "$SRCDIR/autogen.sh" || abdie "Reconfiguration failed: $?."
 		elif [ -e configure.ac ] || [ -e configure.in ]; then
-			autoreconf -fvis 2>&1 || abdie 'Reconfiguration failed: $?.'
+			autoreconf -fvis 2>&1 || abdie "Reconfiguration failed: $?."
 		else
 			abdie 'Necessary files not found for script regeneration - non-standard Autotools source?'
 		fi
@@ -48,7 +48,7 @@ build_autotools_build() {
 		cd build || abdie "Unable to cd to build"
 	fi
 
-	if [[ $ABHOST != "$ABBUILD" ]]
+	if [[ "$ABHOST" != "$ABBUILD" ]]
 	then
 		AUTOTOOLS_TARGET="--host=$HOST"
 	else
