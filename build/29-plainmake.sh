@@ -13,13 +13,13 @@ build_plainmake_build(){
 	if [ -e "$BUILD_PLAINMAKE_DOTCONFIG" ]; then
 		abinfo 'Copying .config file as defined in $BUILD_PLAINMAKE_DOTCONFIG ...'
 		cp "$BUILD_PLAINMAKE_DOTCONFIG" "$SRCDIR/.config"
-	fi | ablog
+	fi
 	BUILD_READY
 	abinfo "Building binaries using Makefile ..."
-	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER | ablog
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER || abdie "Make failed: $?"
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make V=1 VERBOSE=1 install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER | ablog
+	make V=1 VERBOSE=1 install BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_INSTALL_DEF $MAKE_AFTER || abdie "Install failed: $?"
 }
 
 ABBUILDS+=' plainmake'

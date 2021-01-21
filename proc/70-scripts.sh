@@ -9,4 +9,4 @@ for i in postinst prerm postrm preinst; do
 	chmod 755 abscripts/$i
 done
 
-recsr $AB/scriptlet/*.sh
+recsr "$AB/scriptlet"/*.sh

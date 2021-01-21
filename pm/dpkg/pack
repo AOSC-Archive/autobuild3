@@ -4,7 +4,7 @@
 # dpkg field helper.
 _ab_pm_func+='dpkgfield dpkgpkgver dpkgctrl '
 dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
-dpkgpkgver(){ ((PKGEPOCH)) && echo -n $PKGEPOCH:; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
+dpkgpkgver(){ ((PKGEPOCH)) && echo -n "$PKGEPOCH":; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
 	local arch=${ABHOST%%\/*}
@@ -14,21 +14,21 @@ dpkgctrl(){
 	echo "Architecture: $arch"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
-	echo "Installed-Size: $(du -s $PKGDIR | cut -f 1)"
+	echo "Installed-Size: $(du -s "$PKGDIR" | cut -f 1)"
 	echo "Description: $PKGDES"
 	if ((PKGESS)); then
 		echo "Essential: yes"
 	else
 		echo "Essential: no"
 	fi
-	[ "$PKGDEP" ] && dpkgfield Depends $PKGDEP
+	[ "$PKGDEP" ] && dpkgfield Depends "$PKGDEP"
 	VER_NONE=1 # We don't autofill versions in optional fields
-	[ "$PKGRECOM" ] && dpkgfield Recommends $PKGRECOM
-	[ "$PKGREP" ] && dpkgfield Replaces $PKGREP
-	[ "$PKGCONFL" ] && dpkgfield Conflicts $PKGCONFL
-	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides $PKGPROV
-	[ "$PKGSUG" ] && dpkgfield Suggests $PKGSUG
-	[ "$PKGBREAK" ] && dpkgfield Breaks $PKGBREAK
+	[ "$PKGRECOM" ] && dpkgfield Recommends "$PKGRECOM"
+	[ "$PKGREP" ] && dpkgfield Replaces "$PKGREP"
+	[ "$PKGCONFL" ] && dpkgfield Conflicts "$PKGCONFL"
+	[ "$PKGPROV" ] && VER_NONE=1 dpkgfield Provides "$PKGPROV"
+	[ "$PKGSUG" ] && dpkgfield Suggests "$PKGSUG"
+	[ "$PKGBREAK" ] && dpkgfield Breaks "$PKGBREAK"
 	if [ -e "$SRCDIR"/autobuild/extra-dpkg-control ]; then
 		cat "$SRCDIR"/autobuild/extra-dpkg-control
 	fi

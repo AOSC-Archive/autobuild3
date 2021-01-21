@@ -74,7 +74,7 @@ abrequire(){
 alias abtrylib='ABSTRICT=0 abrequire'
 
 ablog(){
-	if bool $ABDUMB
+	if bool "$ABDUMB"
 	then cat > ablog
 	else tee ablog
 	fi

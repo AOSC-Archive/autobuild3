@@ -25,12 +25,6 @@ _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero val
 [[ ${ABHOST%%\/*} != $FAIL_ARCH ]] ||
 	abdie "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
 
-if bool "$32SUBSYSBUILD" || [[ "$PKGNAME" == *+32 && ABBUILD == amd64 ]]
-then
-	abinfo "Detected 32subsys build."
-	ABHOST=i386
-fi
-
 arch_initcross
 # PKGREL Parameter, pkg and rpm friendly
 # Test used for those who wants to override.

@@ -13,10 +13,10 @@ build_python_build(){
 	for PYTHON in "$(bool $NOPYTHON2 || command -v python2 || command -v python || echo)" \
 	"$(bool $NOPYTHON3 || command -v python3 || echo)"; do
 		[ "$PYTHON" ] || continue
-		if bool $USE_PYTHON_BUILD_FIRST; then
+		if bool "$USE_PYTHON_BUILD_FIRST"; then
 			BUILD_READY
 			abinfo "Building Python (PyPI) package using $PYTHON ..."
-			"$PYTHON" build
+			"$PYTHON" build || abdie "Build failed."
 		fi
 		BUILD_FINAL
 		abinfo "Installing Python (PyPI) package using $PYTHON ..."

@@ -4,17 +4,17 @@
 abreqexe dpkg dpkg-deb dpkg-query apt-get
 
 pm_whoprov(){
-	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -S $1 2> /dev/null | cut -d: -f 1
+	dpkg-query --admindir="$PM_ROOT/var/lib/dpkg" -S "$1" 2> /dev/null | cut -d: -f 1
 	# This just give a nice list of formatted dependencies.
 }
 
 pm_getver(){
-	dpkg-query --admindir=$PM_ROOT/var/lib/dpkg -f '${Version}' -W $1 2>/dev/null
+	dpkg-query --admindir="$PM_ROOT/var/lib/dpkg" -f '${Version}' -W "$1" 2>/dev/null
 }
 
 pm_exists(){
 	for p in "$@"; do
-		dpkg $PM_ROOTPARAM -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
+		dpkg "$PM_ROOTPARAM" -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
 	done
 }
 

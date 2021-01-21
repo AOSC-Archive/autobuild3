@@ -21,37 +21,34 @@ build_autotools_build() {
 			# FIXME: hard-coded automake version.
 			# Adapted from redhat-rpm-config.
 			# http://pkgs.fedoraproject.org/cgit/rpms/redhat-rpm-config.git/tree/macros#n35
-			cp -v /usr/share/automake-1.16/$(basename $i) $i ; \
+			cp -v "/usr/share/automake-1.16/$(basename "$i")" "$i" ; \
 		done
 	fi
 
-	if bool $RECONF
+	if bool "$RECONF"
 	then
 		abinfo "Re-generating Autotools scripts ..."
 		[ -x bootstrap ] && ! [ -e autogen.sh ] && ln -s bootstrap autogen.sh
 		if [[ -x bootstrap && ! -d bootstrap ]]; then
-			./bootstrap | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
+			./bootstrap || abdie 'Reconfiguration failed: $?.'
 		elif [[ -x autogen.sh && ! -d autogen.sh ]]; then
-			NOCONFIGURE=1 ./autogen.sh | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
+			NOCONFIGURE=1 ./autogen.sh || abdie 'Reconfiguration failed: $?.'
 		elif [ -e configure.ac ] || [ -e configure.in ]; then
-			autoreconf -fvis 2>&1 | ablog
-			returns $PIPESTATUS || abdie 'Reconfiguration failed: $?.'
+			autoreconf -fvis 2>&1 || abdie 'Reconfiguration failed: $?.'
 		else
 			abdie 'Necessary files not found for script regeneration - non-standard Autotools source?'
 		fi
 	fi
 
-	if bool $ABSHADOW
+	if bool "$ABSHADOW"
 	then
 		rm -rf build
 		abinfo "Creating directory for shadow build ..."
 		mkdir -p build || abdie "Failed creating \$SRCDIR/build"
-		cd build
+		cd build || abdie "Unable to cd to build"
 	fi
 
-	if [[ $ABHOST != $ABBUILD ]]
+	if [[ $ABHOST != "$ABBUILD" ]]
 	then
 		AUTOTOOLS_TARGET="--host=$HOST"
 	else
@@ -60,29 +57,27 @@ build_autotools_build() {
 
 	BUILD_START
 	abinfo "Running configure ..."
-	if bool $AUTOTOOLS_STRICT; then
-		$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
-			--enable-option-checking=fatal | ablog
-                returns $PIPESTATUS || abdie "Configuring failed."
+	if bool "$AUTOTOOLS_STRICT"; then
+		"$SRCDIR"/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
+			--enable-option-checking=fatal || abdie "Configuring failed."
 	else
 		abwarn "Strict Autotools option checking disabled !!"
-		$SRCDIR/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER | ablog
-		returns $PIPESTATUS || abdie "Configuring failed."
+		"$SRCDIR"/${configure:=configure} $AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
+			|| abdie "Configuring failed."
 	fi
 
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER | ablog
-	returns $PIPESTATUS || abdie "Making failed."
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER || abdie "Making failed."
 
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make install V=1 VERBOSE=1 BUILDROOT=$PKGDIR DESTDIR=$PKGDIR $MAKE_AFTER | ablog
-	returns $PIPESTATUS || abdie "Installing failed."
+	make install V=1 VERBOSE=1 BUILDROOT="$PKGDIR" DESTDIR="$PKGDIR" $MAKE_AFTER \
+		|| abdie "Installing failed."
 
-	if bool $ABSHADOW
+	if bool "$ABSHADOW"
 	then
-		cd "$SRCDIR"
+		cd "$SRCDIR" || abdie "Unable to cd to $SRCDIR: $?."
 	fi
 }
 

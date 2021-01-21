@@ -10,12 +10,12 @@ build_dune_probe(){
 build_dune_build(){
 	BUILD_START
 	abinfo "Building Dune project $PKGNAME ..."
-	dune build
+	dune build || abdie "Build failed"
 	abinfo "Installing Dune project $PKGNAME ..."
-	mkdir -pv "$PKGDIR"/$(ocamlfind printconf destdir)
+	mkdir -pv "$PKGDIR"/"$(ocamlfind printconf destdir)"
 	dune install \
 		--prefix "$PKGDIR"/usr \
-		--libdir "$PKGDIR"/$(ocamlfind printconf destdir)
+		--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" || abdie "Install failed"
 	abinfo "Correcting directories ..."
 	if [ -d "$PKGDIR"/usr/doc ]; then
 		mkdir -pv "$PKGDIR"/usr/share

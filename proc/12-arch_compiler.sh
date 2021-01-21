@@ -3,11 +3,11 @@
 ##@copyright GPL-2.0+
 
 # Wrapper TODO: accept $0 detection by checking ${HOSTTOOLPREFIX/abcross/abwrap}.
-if [[ $ABBUILD == $ABHOST ]]; then
+if [[ $ABBUILD == "$ABHOST" ]]; then
 	if [ -d /opt/pseudo-multilib/bin ]; then
 		export PATH="/opt/pseudo-multilib/bin:$PATH"
 	else
-		if bool $USECLANG; then
+		if bool "$USECLANG"; then
 			export CC=clang CXX=clang++ OBJC=clang OBJCXX=clang++
 		else
 			# gcc should work for objc too. hmm?

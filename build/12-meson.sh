@@ -10,13 +10,13 @@ build_meson_probe(){
 build_meson_build() {
 	mkdir "$SRCDIR"/build
 	abinfo "Running Meson ..."
-	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build
-        cd "$SRCDIR"/build
+	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build || return "${PIPESTATUS[0]}"
+    cd "$SRCDIR"/build || return 1
 	abinfo "Building binaries ..."
-	ninja
+	ninja || return "${PIPESTATUS[0]}"
 	abinfo "Installing binaries ..."
-	DESTDIR="$PKGDIR" ninja install
-	cd "$SRCDIR"
+	DESTDIR="$PKGDIR" ninja install || return "${PIPESTATUS[0]}"
+	cd "$SRCDIR" || return 1
 }
 
 ABBUILDS+=' meson'

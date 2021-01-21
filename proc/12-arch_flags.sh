@@ -8,7 +8,7 @@ ABCC="${ABCC^^}"
 
 . "$AB/arch/_common_switches.sh"
 
-if [[ $ABBUILD != $ABHOST ]]; then
+if [[ $ABBUILD != "$ABHOST" ]]; then
 	AB_FLAGS_TYPES+="_CROSS _CROSS_$ABBUILD "
 fi
 
