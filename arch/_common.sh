@@ -59,3 +59,8 @@ LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed "
 LDFLAGS_COMMON_OPTI_LTO="-flto -fuse-linker-plugin "
 LDFLAGS_COMMON_OPTI_NOLTO='-fno-lto -fuse-linker-plugin '
 LDFLAGS_COMMON_CROSS_BASE="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link $(ld_path) "
+
+# Default values for ABSPLITDBG
+ABSPLITDBG_NOARCH=0
+ABSPLITDBG_OTHERS=1
+

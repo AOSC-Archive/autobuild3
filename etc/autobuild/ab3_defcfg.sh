@@ -22,7 +22,6 @@ ABMANCOMPRESS=1
 ABINFOCOMPRESS=1
 ABELFDEP=0	# Guess dependencies from ldd?
 ABSTRIP=1	# Should ELF be stripped off debug and unneeded symbols?
-ABSPLITDBG=0    # Should the stripped symbols and sections be saved to a dedicated file?
 
 # Use -O3 instead?
 AB_FLAGS_O3=0

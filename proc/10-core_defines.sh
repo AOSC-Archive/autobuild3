@@ -22,6 +22,7 @@ abrequire arch
 BUILD=${ARCH_TARGET["$ABBUILD"]}
 HOST=${ARCH_TARGET["$ABHOST"]}
 
+
 _arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
 [[ ${ABHOST%%\/*} != $FAIL_ARCH ]] ||
 	abdie "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
@@ -30,6 +31,18 @@ if ! bool $ABSTRIP && bool $ABSPLITDBG; then
 	abwarn "QA: ELF stripping is turned OFF."
 	abwarn "    Won't package debug symbols as they are shipped in ELF themselves."
 	ABSPLITDBG=0
+fi
+
+# FIXME This should really be handled elsewhere, preferably alongside with other arch-specific defaults
+#  ~cth Jan 21 2020
+if [[ $ABHOST == noarch ]]; then
+	if [[ -z $ABSPLITDBG ]]; then
+		ABSPLITDBG=$ABSPLITDBG_NOARCH
+	else
+		abwarn "ABSPLITDBG is set for a noarch package. Please double check whether this package actually contains ELF files."
+	fi
+elif [[ -z $ABSPLITDBG ]]; then
+	ABSPLITDBG=$ABSPLITDBG_OTHERS
 fi
 
 arch_initcross
