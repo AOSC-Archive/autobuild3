@@ -47,7 +47,7 @@ dpkgctrl_dbg_sym() {
 	echo "Section: debug"
 	echo "Maintainer: $MTER"
 	echo "Installed-Size: $(du -s $SYMDIR | cut -f 1)"
-	echo "Description: $PKGDES"
+	echo "Description: Debug symbols for $PKGNAME"
 	echo "Depends: ${PKGNAME} (=$(dpkgpkgver))"
 	if dpkg -l autobuild3 >/dev/null 2>&1; then
 		echo "X-AOSC-Autobuild3-Version: $(dpkg-query -f '${Version}' -W autobuild3)"
