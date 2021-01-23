@@ -79,10 +79,18 @@ dpkg-deb $DPKGDEBCOMP -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.d
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
 
 if bool $ABSPLITDBG; then
-	mkdir -p "$SYMDIR"/DEBIAN
-	dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
-	dpkg-deb $DPKGDEBCOMP -b $SYMDIR ${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
-	export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
+	# Check whether there are any symbol files getting genereted
+	if [[ -d "${SYMDIR}" ]] && [ "$(ls -A $SYMDIR)" ]; then
+		# Actually pack them
+		mkdir -p "$SYMDIR"/DEBIAN
+		dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
+		dpkg-deb $DPKGDEBCOMP -b $SYMDIR ${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
+		export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
+	else
+		abicu "ABSPLITDBG is set, but we can't find any symbol files."
+		abicu "Cannot build symbol package."
+		ABSPLITDBG=0
+	fi
 fi
 
 export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
