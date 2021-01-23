@@ -2,3 +2,7 @@
 # dpkg/install: Defines the install procedure for DPKG
 ##@copyright GPL-2.0+
 dpkg $PM_ROOTPARAM -i --auto-deconfigure "${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb"
+
+if bool $ABSPLITDBG; then
+	dpkg $PM_ROOTPARAM -i --auto-deconfigure "${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb"
+fi
