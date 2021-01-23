@@ -29,10 +29,16 @@ build_${ABTYPE}_build || abdie "Build failed: $?."
 cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
 
 [ -d "$PKGDIR" ] || abdie "50-build: Suspecting build failure due to missing PKGDIR."
-[ -d "$(arch_findfile overrides)" ] && cp -ra "$(arch_findfile overrides)"/* "$PKGDIR/"
+
+if [ -d "$(arch_findfile overrides)" ] ; then
+	cp -ra "$(arch_findfile overrides)"/* "$PKGDIR/"
+fi
+
 arch_loadfile_strict beyond
 
 unalias BUILD_{START,READY,FINAL}
 
 # Inline: QA Dir
-bool "$ABQA" && [ -e "$PKGDIR/usr/local" ] && abicu "QA: found \$PKGDIR/usr/local."
+if bool "$ABQA"; then
+	[ -e "$PKGDIR/usr/local" ] && abicu "QA: found \$PKGDIR/usr/local." || true
+fi

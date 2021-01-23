@@ -7,4 +7,8 @@
 _license_files=( {COPYING,LICENSE}* )
 
 mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
-((${#_license_files[@]})) && cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+if ((${#_license_files[@]})); then
+	cp -r --no-preserve=mode "${_license_files[@]}" "$PKGDIR/usr/share/doc/$PKGNAME"
+else
+	abwarn "This package does not contain a COPYING or LICENCE file!"
+fi

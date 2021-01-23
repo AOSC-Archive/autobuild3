@@ -10,7 +10,9 @@ if [ "$ABARCHIVE" ]; then
 	$ABARCHIVE "$PKGNAME" "$PKGVER" "$PKGREL" "$ABHOST"
 	# FIXME: should consult ABPACKAGE for the actual list of package to copy.
 	#   ~cth
-	bool $ABSPLITDBG && $ABARCHIVE "$PKGNAME"-dbg "$PKGVER" "$PKGREL" "$ABHOST"
+	if bool $ABSPLITDBG; then
+		$ABARCHIVE "$PKGNAME"-dbg "$PKGVER" "$PKGREL" "$ABHOST"
+	fi
 else
 	abinfo "Not using an archiver."
 fi
