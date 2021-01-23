@@ -43,12 +43,13 @@ elf_buildid_sha1()
 }
 
 # $1 = symbol file to install
-# $2 = PKGDIR
+# $2 = BUILD_ID of this ELF in sha1
+# $3 = PKGDIR
 # This function may be manually called by 'beyond' for packages that generates their own symbols.
 elf_install_symfile()
 {
-	BUILD_ID=$(elf_buildid_sha1 $1)
-	SYM_INSTDIR="$2"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
+	BUILD_ID="$2"
+	SYM_INSTDIR="$3"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
 	install -Dm644 -o root -g root "$1" "${SYM_INSTDIR}"/${BUILD_ID:2}.debug
 }
 
@@ -83,9 +84,14 @@ elf_copydbg()
 		*Type:*'EXEC (Executable file)'*)
 			;&
 		*Type:*'REL (Relocatable file)'*)
+			BUILD_ID=$(elf_buildid_sha1 $1)
+			if (( $? )); then
+				abicu "$1 does not contain a BuildID in SHA1!"
+				return 1
+			fi
 			TMP_SYMFILE=$(mktemp ab3_elf_sym.XXXXXXXX)
 			objcopy --only-keep-debug "$1" "${TMP_SYMFILE}" 
-			elf_install_symfile "${TMP_SYMFILE}" "$2"
+			elf_install_symfile "${TMP_SYMFILE}" "$BUILD_ID" "$2"
 			rm -f ${TMP_SYMFILE}
 			;;
 		*)
