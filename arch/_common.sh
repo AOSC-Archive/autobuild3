@@ -52,7 +52,7 @@ RUSTFLAGS_COMMON_OPTI_LTO='-Clinker-plugin-lto -Clinker=clang -Clink-arg=-flto -
 # LDFLAGS writing helpers:
 ld_arg(){ printf %s '-Wl'; local IFS=,; printf %s "$*"; }
 ld_path(){ local path=$(arch_lib "$@"); ld_arg "$path"; echo -n " -L$path"; }
-LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed "
+LDFLAGS_COMMON="-Wl,-O1,--sort-common,--as-needed -Wl,-build-id=sha1"
 #LDFLAGS_COMMON_OPTI='-Wl,--relax '	# on some arches this interfere with debugging, therefore put into OPTI.
 # temporarily disabled because this breaks core-devel/glibc build (-r cannot be used together with --relax).
 # investigation advised.
