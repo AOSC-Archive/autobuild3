@@ -28,7 +28,7 @@
 # Adapted for splitting debug symbols from ELF
 # ~cth451, Jan 20 2021
 
-abreqexe strip file objcopy
+abreqexe strip file objcopy install
 
 elf_iself()
 {
@@ -40,6 +40,16 @@ elf_iself()
 elf_buildid_sha1()
 {
 	file -b "$1" | grep -oP '(?<=BuildID\[sha1\]=)[0-9a-f]+'
+}
+
+# $1 = symbol file to install
+# $2 = PKGDIR
+# This function may be manually called by 'beyond' for packages that generates their own symbols.
+elf_install_symfile()
+{
+	BUILD_ID=$(elf_buildid_sha1 $1)
+	SYM_INSTDIR="$2"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
+	install -Dm644 -o root -g root "$1" "${SYM_INSTDIR}"/${BUILD_ID:2}.debug
 }
 
 # $1 = path to ELF to strip
@@ -62,21 +72,22 @@ elf_strip()
 	esac
 }
 
-# $1 = path to ELF
+# $1 = path to original ELF
 # $2 = PKGDIR
-# By default split symbols will be saved in /usr/lib/debug/.build-id/BU/ILD_ID_OF_ELF_IN_SHA1.debug
+# Copies symbols of an ELF $1 to $2/usr/lib/debug/.build-id/BU/ILD_ID_OF_ELF_IN_SHA1.debug
 elf_copydbg()
 {
-	BUILD_ID=$(elf_buildid_sha1 $1)
-	SYM_INSTDIR="$2"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
-	mkdir -p "${SYM_INSTDIR}"
 	case "$(readelf -h $1)" in
 		*Type:*'DYN (Shared object file)'*)
 			;&
 		*Type:*'EXEC (Executable file)'*)
 			;&
 		*Type:*'REL (Relocatable file)'*)
-			objcopy --only-keep-debug "$1" "${SYM_INSTDIR}"/${BUILD_ID:2}.debug ;;
+			TMP_SYMFILE=$(mktemp ab3_elf_sym.XXXXXXXX)
+			objcopy --only-keep-debug "$1" "${TMP_SYMFILE}" 
+			elf_install_symfile "${TMP_SYMFILE}" "$2"
+			rm -f ${TMP_SYMFILE}
+			;;
 		*)
 			true ;;
 	esac
