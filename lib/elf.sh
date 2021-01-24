@@ -42,6 +42,12 @@ elf_buildid_sha1()
 	file -b "$1" | grep -oP '(?<=BuildID\[sha1\]=)[0-9a-f]+'
 }
 
+# $1 = path to ELF
+elf_has_debug()
+{
+	objdump -h "$1" | grep -qP '[0-9]+ +\.debug_'
+}
+
 # $1 = symbol file to install
 # $2 = BUILD_ID of this ELF in sha1
 # $3 = PKGDIR
@@ -84,10 +90,14 @@ elf_copydbg()
 		*Type:*'EXEC (Executable file)'*)
 			;&
 		*Type:*'REL (Relocatable file)'*)
-			BUILD_ID=$(elf_buildid_sha1 $1)
+			BUILD_ID=$(elf_buildid_sha1 "$1")
 			if (( $? )); then
 				abicu "$1 does not contain a BuildID in SHA1!"
 				return 1
+			fi
+			if ! elf_has_debug "$1"; then
+				abwarn "Skipped $1 as it does not contain debug symbols."
+				return 0
 			fi
 			TMP_SYMFILE=$(mktemp ab3_elf_sym.XXXXXXXX)
 			objcopy --only-keep-debug "$1" "${TMP_SYMFILE}" 
