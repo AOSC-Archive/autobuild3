@@ -110,11 +110,11 @@ abdie() {
 
 # Should these information be redirected into ablog()?
 # new ref impl: https://github.com/Arthur2e5/MobileConstructionVehicle/blob/master/common.sh
-abwarn(){ echo -e "[\e[33mWARN\e[0m]: \e[1m$*\e[0m" >&2; }
-aberr(){ echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
-abinfo(){ echo -e "[\e[96mINFO\e[0m]: \e[1m$*\e[0m" >&2; }
-abdbg(){ echo -e "[\e[32mDEBUG\e[0m]:\e[1m$*\e[0m" >&2; }
-ab_dbg(){ local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; }
+abwarn() { echo -e "[\e[33mWARN\e[0m]:  \e[1m$*\e[0m" >&2; }
+aberr()  { echo -e "[\e[31mERROR\e[0m]: \e[1m$*\e[0m" >&2; }
+abinfo() { echo -e "[\e[96mINFO\e[0m]:  \e[1m$*\e[0m" >&2; }
+abdbg()  { echo -e "[\e[32mDEBUG\e[0m]: \e[1m$*\e[0m" >&2; }
+ab_dbg() { local _ret=$?; [ $AB_DBG ] && abdbg "$@"; return $_ret; }
 recsr(){ for sr in "$@"; do . $sr; done }
 # Special Source, looks like stacktrace
 .(){

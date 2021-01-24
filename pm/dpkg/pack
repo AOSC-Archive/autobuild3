@@ -38,6 +38,23 @@ dpkgctrl(){
 	echo "$DPKGXTRACTRL"
 }
 
+dpkgctrl_dbg_sym() {
+	local arch=${ABHOST%%\/*}
+	[[ $arch == noarch ]] && arch=all
+	echo "Package: $PKGNAME-dbg"
+	echo "Version: $(dpkgpkgver)"
+	echo "Architecture: $arch"
+	echo "Section: debug"
+	echo "Maintainer: $MTER"
+	echo "Installed-Size: $(du -s $SYMDIR | cut -f 1)"
+	echo "Description: Debug symbols for $PKGNAME"
+	echo "Depends: ${PKGNAME} (=$(dpkgpkgver))"
+	if dpkg -l autobuild3 >/dev/null 2>&1; then
+		echo "X-AOSC-Autobuild3-Version: $(dpkg-query -f '${Version}' -W autobuild3)"
+	fi
+	echo "$DPKGXTRACTRL"
+}
+
 # Auto-select xz level, use lower compression level on "Retro" architectures.
 if [[ "$ARCH" = "i586" || "$ARCH" = "powerpc" || "$ARCH" = "ppc64" ]]; then
 	DPKGDEBCOMP+="-Zxz -z3"
@@ -60,5 +77,20 @@ fi
 dpkgctrl > $PKGDIR/DEBIAN/control &&
 dpkg-deb $DPKGDEBCOMP -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
 mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
+
+if bool $ABSPLITDBG; then
+	# Check whether there are any symbol files getting genereted
+	if [[ -d "${SYMDIR}" ]] && [ "$(ls -A $SYMDIR)" ]; then
+		# Actually pack them
+		mkdir -p "$SYMDIR"/DEBIAN
+		dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
+		dpkg-deb $DPKGDEBCOMP -b $SYMDIR ${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
+		export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
+	else
+		abicu "ABSPLITDBG is set, but we can't find any symbol files."
+		abicu "Cannot build symbol package."
+		ABSPLITDBG=0
+	fi
+fi
 
 export ABPACKAGE+="${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "

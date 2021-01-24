@@ -21,7 +21,7 @@ ABTHREADS=$(( $(nproc) + 1))
 ABMANCOMPRESS=1
 ABINFOCOMPRESS=1
 ABELFDEP=0	# Guess dependencies from ldd?
-ABSTRIP=1	# Strip off some symbols?
+ABSTRIP=1	# Should ELF be stripped off debug and unneeded symbols?
 
 # Use -O3 instead?
 AB_FLAGS_O3=0
@@ -106,11 +106,25 @@ QT4BIN="/usr/lib/qt4/bin"
 QT5BIN="/usr/lib/qt5/bin"
 
 ##OS basic configuration flags
-AUTOTOOLS_DEF="--prefix=$PREFIX --sysconfdir=$SYSCONF --localstatedir=$STATDIR \
---libdir=$LIBDIR --bindir=$BINDIR --sbindir=$BINDIR --mandir=$MANDIR"
-CMAKE_DEF="-DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_LIBDIR=lib -DLIB_INSTALL_DIR=lib \
--DSYSCONF_INSTALL_DIR=$SYSCONF -DCMAKE_INSTALL_SBINDIR=$BINDIR -DCMAKE_SKIP_RPATH=ON"
+AUTOTOOLS_DEF="""
+	--prefix=$PREFIX
+	--sysconfdir=$SYSCONF
+	--localstatedir=$STATDIR
+	--libdir=$LIBDIR
+	--bindir=$BINDIR
+	--sbindir=$BINDIR
+	--mandir=$MANDIR
+"""
+CMAKE_DEF="""
+	-DCMAKE_INSTALL_PREFIX=$PREFIX
+	-DCMAKE_BUILD_TYPE=Release
+	-DCMAKE_INSTALL_LIBDIR=lib
+	-DLIB_INSTALL_DIR=lib
+	-DSYSCONF_INSTALL_DIR=$SYSCONF
+	-DCMAKE_INSTALL_SBINDIR=$BINDIR
+	-DCMAKE_SKIP_RPATH=ON
+	-DCMAKE_VERBOSE_MAKEFILE=ON
+"""
 MESON_DEF="--prefix=$PREFIX --sbindir=$BINDIR"
 WAF_DEF="--prefix=$PREFIX --configdir=$SYSCONF"
 QTPROJ_DEF="PREFIX=$PREFIX"

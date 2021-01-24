@@ -22,10 +22,10 @@ build_cmake_build(){
 	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_READY
 	abinfo "Building binaries ..."
-	cmake --build . -- V=1 VERBOSE=1 $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
+	cmake --build . -- $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	cmake --install . -- V=1 VERBOSE=1 DESTDIR="$PKGDIR" $MAKE_AFTER install || _ret="${PIPESTATUS[0]}"
+	DESTDIR="$PKGDIR" cmake --install . || _ret="${PIPESTATUS[0]}"
 	if bool "$ABSHADOW"
 	then
 		cd ..
