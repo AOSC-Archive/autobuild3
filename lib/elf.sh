@@ -32,7 +32,7 @@ abreqexe strip file objcopy install
 
 elf_iself()
 {
-	file -F $'\n' "$1" | grep -q '^ ELF'
+	file -F $'\n' "$1" | grep -Eq '^ (ELF|thin archive|current ar)'
 }
 
 # $1 = path to ELF
@@ -56,7 +56,7 @@ elf_install_symfile()
 {
 	BUILD_ID="$2"
 	SYM_INSTDIR="$3"/usr/lib/debug/.build-id/${BUILD_ID:0:2}
-	install -Dm644 -o root -g root "$1" "${SYM_INSTDIR}"/${BUILD_ID:2}.debug
+	install -Dm644 -o root -g root "$1" "${SYM_INSTDIR}/${BUILD_ID:2}".debug
 }
 
 # $1 = path to ELF to strip
@@ -84,6 +84,8 @@ elf_strip()
 # Copies symbols of an ELF $1 to $2/usr/lib/debug/.build-id/BU/ILD_ID_OF_ELF_IN_SHA1.debug
 elf_copydbg()
 {
+	file -F $'\n' "$1" | grep -Eq '^ (thin archive|current ar)' \
+		&& abinfo "Skipped $1 as it is a static library." && return 0
 	case "$(readelf -h $1)" in
 		*Type:*'DYN (Shared object file)'*)
 			;&
@@ -102,7 +104,7 @@ elf_copydbg()
 			TMP_SYMFILE=$(mktemp ab3_elf_sym.XXXXXXXX)
 			objcopy --only-keep-debug "$1" "${TMP_SYMFILE}" 
 			elf_install_symfile "${TMP_SYMFILE}" "$BUILD_ID" "$2"
-			rm -f ${TMP_SYMFILE}
+			rm -f "${TMP_SYMFILE}"
 			;;
 		*)
 			true ;;

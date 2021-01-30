@@ -22,7 +22,7 @@ filter_elf(){
 		! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?"
 	done
 	for i in "$PKGDIR"/{opt/*/*/,opt/*/,usr/,}{lib{,64,exec},{s,}bin}/**; do filter_elf__process "$i"; done
-	cd "$PKGDIR"
+	cd "$PKGDIR" || abdie "cannot enter $PKGDIR"
 	for _elf_f in $ABELFFILTER; do
 		_elf_cmd=filter_elf_${_elf_f}_post;
 		! _which $_elf_cmd &>/dev/null || $_elf_cmd || abwarn "$(argprint $_elf_cmd "$@"): $?";
