@@ -8,7 +8,8 @@ build_dummy_probe(){
 
 build_dummy_build(){
 	abinfo "Creating a dummy package ..."
-	mkdir -pv "$PKGDIR"
+	mkdir -pv "$PKGDIR" \
+		|| abdie "Failed to create a dummy package: $?."
 }
 
 ABBUILDS+=' dummy'

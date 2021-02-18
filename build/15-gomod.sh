@@ -4,7 +4,8 @@
 abtryexe go || ablibret
 
 build_gomod_probe(){
-	[ -f go.mod ] && [ -f go.sum ]  # go.sum is required for security reasons
+	[ -f "$SRCDIR"/go.mod ] \
+		&& [ -f "$SRCDIR"/go.sum ] # go.sum is required for security reasons
 }
 
 build_gomod_build(){
@@ -12,30 +13,37 @@ build_gomod_build(){
 	export GO111MODULE=on
 	abinfo 'Note, this build type only works with Go 1.11+ modules'
 	[ -f Makefile ] && abwarn "This project might be using other build tools than Go itself."
-	if ! bool "$ABSHADOW"
-	then
-		abdie 'ABSHADOW must be set to true for this build type!'
+	if ! bool "$ABSHADOW"; then
+		abdie "ABSHADOW must be set to true for this build type: $?."
 	fi
 
-	rm -rf abbuild
-	mkdir abbuild || abdie "Failed to create $SRCDIR/abbuild"
-	cd abbuild || abdie "Failed to cd $SRCDIR/abbuild"
+	mkdir "$SRCDIR"/abbuild \
+		|| abdie "Failed to create $SRCDIR/abbuild: $?."
+	cd "$SRCDIR"/abbuild \
+		|| abdie "Failed to cd $SRCDIR/abbuild: $?."
 
-	abinfo 'Fetching Go modules dependencies...'
-	GOPATH="$SRCDIR/abgopath" go get ..
+	abinfo "Fetching Go modules dependencies ..."
+	GOPATH="$SRCDIR/abgopath" go get .. \
+		|| abdie "Failed to fetch Go module dependencies: $?."
 	BUILD_READY
-	mkdir -p "$PKGDIR/usr/bin/"
-	abinfo 'Compiling the Go module ...'
+	mkdir -pv "$PKGDIR/usr/bin/"
+	abinfo "Compiling Go module ..."
 	if [[ "${CROSS:-$ARCH}" != "loongson3" ]]; then
 		GOPATH="$SRCDIR/abgopath" \
-			go build -buildmode=pie ${GO_BUILD_AFTER} ..
+			go build -buildmode=pie ${GO_BUILD_AFTER} .. \
+			|| abdie "Failed to build Go module: $?."
 	else
 		GOPATH="$SRCDIR/abgopath" \
-			go build ${GO_BUILD_AFTER} ..
+			go build ${GO_BUILD_AFTER} .. \
+			|| abdie "Failed to build Go module: $?."
 	fi
-	find . -type f -executable -exec cp -av '{}' "$PKGDIR/usr/bin/" ';'
+	abinfo "Copying executable file(s) ..."
+	find "$SRCDIR" -type f -executable \
+		-exec cp -av '{}' "$PKGDIR/usr/bin/" ';' \
+		|| abdie "Failed to copy executable file(s): $?."
 	BUILD_FINAL
-	cd ..
+	cd "$SRCDIR" \
+		|| abdie "Failed to return to source directory: $?."
 }
 
 ABBUILDS+=' gomod'

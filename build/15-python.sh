@@ -5,7 +5,7 @@ abtryexe python || ablibret
 abtryexe python2 python3 || ((!ABSTRICT)) || ablibret
 
 build_python_probe(){
-	[ -f setup.py ]
+	[ -f "$SRCDIR"/setup.py ]
 }
 
 build_python_build(){
@@ -16,13 +16,19 @@ build_python_build(){
 		if bool "$USE_PYTHON_BUILD_FIRST"; then
 			BUILD_READY
 			abinfo "Building Python (PyPI) package using $PYTHON ..."
-			"$PYTHON" build || abdie "Build failed."
+			"$PYTHON" build \
+				|| abdie "Failed to build Python (PyPI) package using ${PYTHON}: $?."
 		fi
 		BUILD_FINAL
 		abinfo "Installing Python (PyPI) package using $PYTHON ..."
-		"$PYTHON" setup.py install $MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 || return $?
+		"$PYTHON" setup.py install \
+			$MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 \
+			|| abdie "Failed to install Python (PyPI) package using ${PYTHON}: $?."
 		abinfo "Cleaning Python (PyPI) package source tree ..."
-		bool $NOPYTHONCLEAN || "$PYTHON" setup.py clean || true
+		bool $NOPYTHONCLEAN \
+			|| ( "$PYTHON" setup.py clean \
+				|| abdie "Failed to clean up Python (PyPI) package source tree: $?." ) \
+			|| true
 	done
 }
 ABBUILDS+=' python'

@@ -3,9 +3,10 @@
 ##@copyright GPL-2.0+
 abtryexe qmake || ablibret
 export QT_SELECT
+
 build_qtproj_probe(){
 	local _pros _pro
-	_pros=(*.pro)
+	_pros=("$SRCDIR"/*.pro)
 	((${#_pros[@]})) || return 1
 	for _pro in "${_pros[@]}"; do
 		[ -f "$_pro" ] && break
@@ -27,12 +28,16 @@ build_qtproj_probe(){
 build_qtproj_build(){
 	BUILD_START
 	abinfo "Running qmake to generate Makefile ..."
-	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER
+	"$QTPREFIX/bin/qmake" $QTPROJ_DEF $QTPROJ_AFTER \
+		|| abdie "Failed while running qmake to generate Makefile: $?."
 	BUILD_READY
 	abinfo "Building binaries ..."
-	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER || abdie "Make failed."
+	make V=1 VERBOSE=1 $ABMK $MAKE_AFTER \
+		|| abdie "Failed to build binaries: $?."
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	make V=1 VERBOSE=1 INSTALL_ROOT=$PKGDIR install || abdie "Install failed."
+	make V=1 VERBOSE=1 INSTALL_ROOT=$PKGDIR install \
+		|| abdie "Failed to install binaries: $?."
 }
+
 ABBUILDS+=' qtproj'

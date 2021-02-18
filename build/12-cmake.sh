@@ -4,32 +4,34 @@
 abtryexe cmake || ablibret
 
 build_cmake_probe(){
-	[ -f CMakeLists.txt ]
+	[ -f "$SRCDIR"/CMakeLists.txt ]
 }
 
 build_cmake_build(){
-	local _ret
 	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
-	if bool "$ABSHADOW"
-	then
-		rm -rf build
+	if bool "$ABSHADOW"; then
 		abinfo "Creating directory for shadow build ..."
-		mkdir build || abdie "Failed creating \$SRCDIR/build"
-		cd build || _ret=1
+		mkdir -pv "$SRCDIR"/abbuild \
+			|| abdie "Failed to create shadow build directory: $?."
+		cd "$SRCDIR"/abbuild \
+			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 	BUILD_START
 	abinfo "Running CMakeLists.txt to generate Makefile ..."
-	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER || _ret="${PIPESTATUS[0]}"
+	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER \
+		|| abdie "Failed to run CMakeLists.txt: $?."
 	BUILD_READY
 	abinfo "Building binaries ..."
-	cmake --build . -- $ABMK $MAKE_AFTER || _ret="${PIPESTATUS[0]}"
+	cmake --build . -- $ABMK $MAKE_AFTER \
+		|| abdie "Failed to build binaries: $?."
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	DESTDIR="$PKGDIR" cmake --install . || _ret="${PIPESTATUS[0]}"
-	if bool "$ABSHADOW"
-	then
-		cd ..
+	DESTDIR="$PKGDIR" cmake --install . \
+		|| abide "Failed to install binaries: $?."
+	if bool "$ABSHADOW"; then
+		cd "$SRCDIR" \
+			|| abdie "Failed to return to source directory: $?."
 	fi
-	return $_ret
 }
+
 ABBUILDS+=' cmake'

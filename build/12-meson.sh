@@ -4,19 +4,25 @@
 abtryexe meson
 
 build_meson_probe(){
-	[ -e meson.build ]
+	[ -e "$SRCDIR"/meson.build ]
 }
 
 build_meson_build() {
-	mkdir "$SRCDIR"/build
+	mkdir "$SRCDIR"/build \
+		|| abdie "Failed to create build directory: $?."
 	abinfo "Running Meson ..."
-	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build || return "${PIPESTATUS[0]}"
-    cd "$SRCDIR"/build || return 1
+	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build \
+		|| abdie "Failed to run Meson ..."
+	cd "$SRCDIR"/build \
+		|| abdie "Failed to enter build directory: $?."
 	abinfo "Building binaries ..."
-	ninja || return "${PIPESTATUS[0]}"
+	ninja \
+		|| abdie "Failed to run build binaries: $?."
 	abinfo "Installing binaries ..."
-	DESTDIR="$PKGDIR" ninja install || return "${PIPESTATUS[0]}"
-	cd "$SRCDIR" || return 1
+	DESTDIR="$PKGDIR" ninja install \
+		|| abdie "Failed to install binaries: $?."
+	cd "$SRCDIR" \
+		|| abdie "Failed to return to source directory: $?."
 }
 
 ABBUILDS+=' meson'

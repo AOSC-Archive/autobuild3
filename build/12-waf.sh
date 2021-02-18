@@ -4,20 +4,22 @@
 abtryexe python2 || ablibret
 
 build_waf_probe(){
-	[ -f waf ]
+	[ -f "$SRCDIR"/waf ]
 }
 
 build_waf_build(){
-	local _ret
 	BUILD_START
 	abinfo "Running Waf script(s) ..."
-	python2 waf configure ${WAF_DEF} ${WAF_AFTER} || _ret="${PIPESTATUS[0]}"
+	python2 waf configure ${WAF_DEF} ${WAF_AFTER} \
+		|| abdie "Failed to run Waf script(s): $?."
 	BUILD_READY
 	abinfo "Building binaries ..."
-	python2 waf build ${ABMK} ${MAKE_AFTER} ${MAKEFLAGS} || _ret="${PIPESTATUS[0]}"
+	python2 waf build ${ABMK} ${MAKE_AFTER} ${MAKEFLAGS} \
+		|| abdie "Failed to build binaries: $?."
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	python2 waf install --destdir=${PKGDIR} || _ret="${PIPESTATUS[0]}"
-	return $_ret
+	python2 waf install --destdir=${PKGDIR} \
+		|| abdie "Failed to install binaries: $?."
 }
+
 ABBUILDS+=' waf'

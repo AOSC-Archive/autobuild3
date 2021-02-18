@@ -4,33 +4,36 @@
 (abtryexe cmake && abtryexe ninja) || ablibret
 
 build_cmakeninja_probe(){
-	[ -f CMakeLists.txt ]
+	[ -f "$SRCDIR"/CMakeLists.txt ]
 }
 
 build_cmakeninja_build(){
-	local _ret
 	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
 	if bool "$ABSHADOW"
 	then
-		rm -rf build
 		abinfo "Creating directory for shadow build ..."
-		mkdir build || abdie "Failed creating \$SRCDIR/build"
-		cd build || abdie "Failed to enter $SRCDIR/build"
+		mkdir -pv "$SRCDIR"/abbuild \
+			|| abdie "Failed to create shadow build directory: $?."
+		cd -pv "$SRCDIR"/abbuild \
+			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 	BUILD_START
 	abinfo "Running CMakeLists.txt to generate Ninja configuration ..."
-	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER -GNinja || _ret="${PIPESTATUS[0]}"
+	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER -GNinja \
+		|| abdie "Failed to run CMakeList.txt: $?."
 	BUILD_READY
 	abinfo "Building binaries ..."
-	cmake --build . || _ret="${PIPESTATUS[0]}"
+	cmake --build . \
+		|| abdie "Failed to build binaries: $?."
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
-	DESTDIR="$PKGDIR" cmake --install . || _ret="${PIPESTATUS[0]}"
+	DESTDIR="$PKGDIR" cmake --install . \
+		|| abdie "Failed to install binaries: $?."
 	BUILD_READY
-	if bool "$ABSHADOW"
-	then
-		cd ..
+	if bool "$ABSHADOW"; then
+		cd "$SRCDIR" \
+			|| abdie "Failed to return to source directory: $?."
 	fi
-	return $_ret
 }
+
 ABBUILDS+=' cmakeninja'

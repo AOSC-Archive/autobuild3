@@ -4,18 +4,20 @@
 abtryexe dune || ablibret
 
 build_dune_probe(){
-	[ -f dune-project ]
+	[ -f "$SRCDIR"/dune-project ]
 }
 
 build_dune_build(){
 	BUILD_START
 	abinfo "Building Dune project $PKGNAME ..."
-	dune build || abdie "Build failed"
+	dune build \
+		|| abdie "Failed to build Dune project $PKGNAME: $?."
 	abinfo "Installing Dune project $PKGNAME ..."
 	mkdir -pv "$PKGDIR"/"$(ocamlfind printconf destdir)"
 	dune install \
 		--prefix "$PKGDIR"/usr \
-		--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" || abdie "Install failed"
+		--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
+		|| abdie "Failed to install Dune project $PKGNAME: $?."
 	abinfo "Correcting directories ..."
 	if [ -d "$PKGDIR"/usr/doc ]; then
 		mkdir -pv "$PKGDIR"/usr/share
