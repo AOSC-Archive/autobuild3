@@ -6,6 +6,7 @@ recsr $AB/filter/*.sh
 pushd $PKGDIR > /dev/null || return
 
 for ii in $ABFILTERS; do
+	abinfo "Running filter for $ii ..."
 	filter_$ii
 done
 
