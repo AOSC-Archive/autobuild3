@@ -14,7 +14,7 @@ build_cmakeninja_build(){
 		abinfo "Creating directory for shadow build ..."
 		mkdir -pv "$SRCDIR"/abbuild \
 			|| abdie "Failed to create shadow build directory: $?."
-		cd -pv "$SRCDIR"/abbuild \
+		cd "$SRCDIR"/abbuild \
 			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 	BUILD_START
