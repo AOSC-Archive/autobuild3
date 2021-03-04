@@ -47,7 +47,7 @@ build_rust_build(){
 	abinfo "Building Cargo package ..."
 	cargo build --locked --release $CARGO_AFTER \
 		|| abdie "Compilation failed: $?."
-	abindo "Auditing Cargo packge ..."
+	abinfo "Auditing Cargo packge ..."
 	build_rust_audit \
 		|| abdie "Failed to audit Cargo package: $?."
 	abinfo "Installing Cargo package ..."
