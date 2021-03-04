@@ -10,7 +10,7 @@ build_ruby_build(){
 		-i "$PKGDIR/$GEMDIR" -n "$PKGDIR/usr/bin" "$PKGNAME-$PKGVER.gem" \
 		|| abdie "Failed to build and install Ruby (Gem) package: $?."
 	abinfo 'Removing Gem cache from $PKGDIR ...'
-	rm -v "$PKGDIR/$GEMDIR/cache/"*
+	rm -v "$PKGDIR/$GEMDIR/cache/"* \
 		|| abdie "Failed to remove Gem cache from PKGDIR: $?."
 }
 
