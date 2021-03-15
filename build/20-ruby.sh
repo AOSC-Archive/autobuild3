@@ -3,6 +3,10 @@
 ##@copyright GPL-2.0+
 abtryexe ruby gem || ((!ABSTRICT)) || ablibret
 
+build_ruby_probe(){
+	[ -f "$SRCDIR"/*.gem ]
+}
+
 build_ruby_build(){
 	GEMDIR="$(ruby -e'puts Gem.default_dir')"
 	abinfo "Building and installing Ruby (Gem) package ..."
