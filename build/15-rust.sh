@@ -29,11 +29,11 @@ build_rust_audit() {
 	abinfo 'Auditing dependencies...'
 	if ! command -v cargo-audit > /dev/null; then
 		abdie "cargo-audit not found: $?."
-	else
-		[ -f "$SRCDIR"/Cargo.lock ] \
-			|| abdie 'No lock file found -- Dependency information unreliable. Unable to conduct audit.'
+	elif [ -f "$SRCDIR"/Cargo.lock ]; then
 		cargo audit \
 			|| abdie 'Vulnerabilities detected! Refusing to continue.'
+	else
+		abdie 'No lock file found -- Dependency information unreliable. Unable to conduct audit.'
 	fi
 }
 
