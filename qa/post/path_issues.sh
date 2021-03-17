@@ -46,9 +46,9 @@ ACCEPTABLE3="
 "$PKGDIR"/usr/local/share
 "$PKGDIR"/usr/local/src
 "
-PATHS="$(find "$PKGDIR" -maxdepth 1 -type d -print)"
-PATHS2="$(find "$PKGDIR"/usr -mindepth 1 -maxdepth 1 -type d -print)"
-PATHS3="$(find "$PKGDIR"/usr/local -mindepth 1 -maxdepth 1 -type d -print)"
+PATHS="$(find "$PKGDIR" -maxdepth 1 -type d -print 2>/dev/null)"
+PATHS2="$(find "$PKGDIR"/usr -mindepth 1 -maxdepth 1 -type d -print 2>/dev/null)"
+PATHS3="$(find "$PKGDIR"/usr/local -mindepth 1 -maxdepth 1 -type d -print 2>/dev/null)"
 for i in $PATHS; do
 	if ! echo $ACCEPTABLE | grep -q $i; then
 		aberr "QA (E321): found unexpected path(s) in package:\n    $i"
