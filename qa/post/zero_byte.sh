@@ -3,6 +3,6 @@
 ##@copyright GPL-2.0+
 FILES="$(find "$PKGDIR" -type f -size 0 -print)"
 if [ ! -z "$FILES" ]; then
-	abwarn "QA (W322): Zero-byte files found:\n $FILES." | \
+	abwarn "QA (W322): Zero-byte files found:\n\n$FILES\n" | \
 		tee -a "$SRCDIR"/abqawarn.log
 fi
