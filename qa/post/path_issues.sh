@@ -27,19 +27,6 @@ ACCEPTABLE="
 "$PKGDIR"/sys
 "$PKGDIR"/tmp
 "$PKGDIR"/usr
-"$PKGDIR"/usr/bin
-"$PKGDIR"/usr/include
-"$PKGDIR"/usr/lib
-"$PKGDIR"/usr/libexec
-"$PKGDIR"/usr/local
-"$PKGDIR"/usr/local/bin
-"$PKGDIR"/usr/local/include
-"$PKGDIR"/usr/local/lib
-"$PKGDIR"/usr/local/libexec
-"$PKGDIR"/usr/local/share
-"$PKGDIR"/usr/local/src
-"$PKGDIR"/usr/share
-"$PKGDIR"/usr/src
 "$PKGDIR"/var
 "
 ACCEPTABLE2="
@@ -60,8 +47,8 @@ ACCEPTABLE3="
 "$PKGDIR"/usr/local/src
 "
 PATHS="$(find "$PKGDIR" -maxdepth 1 -type d -print)"
-PATHS2="$(find "$PKGDIR" -mindepth 2 -maxdepth 2 -type d -print)"
-PATHS3="$(find "$PKGDIR" -mindepth 3 -maxdepth 3 -type d -print)"
+PATHS2="$(find "$PKGDIR"/usr -mindepth 1 -maxdepth 1 -type d -print)"
+PATHS3="$(find "$PKGDIR"/usr/local -mindepth 1 -maxdepth 1 -type d -print)"
 for i in $PATHS; do
 	if ! echo $ACCEPTABLE | grep -q $i; then
 		aberr "QA (E321): found unexpected path(s) in package:\n    $i"
