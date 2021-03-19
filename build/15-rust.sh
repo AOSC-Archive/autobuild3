@@ -30,10 +30,11 @@ build_rust_audit() {
 	if ! command -v cargo-audit > /dev/null; then
 		abdie "cargo-audit not found: $?."
 	elif [ -f "$SRCDIR"/Cargo.lock ]; then
-		cargo audit || \
-			( abinfo 'Vulnerabilities detected! Attempting automatic fix ...'
-			cargo audit fix ) \
+		if ! cargo audit; then
+			abinfo 'Vulnerabilities detected! Attempting automatic fix ...'
+			cargo audit fix \
 				|| abdie 'Unable to fix vulnerability! Refusing to continue.'
+		fi
 	else
 		abdie 'No lock file found -- Dependency information unreliable. Unable to conduct audit.'
 	fi
