@@ -15,7 +15,7 @@ pm_getver(){
 
 pm_exists(){
 	for p in "$@"; do
-		dpkg "$PM_ROOTPARAM" -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
+		dpkg $PM_ROOTPARAM -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
 	done
 }
 
