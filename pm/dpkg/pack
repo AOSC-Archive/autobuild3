@@ -75,7 +75,7 @@ if [ -e "$SRCDIR/autobuild/triggers" ]; then
 	cp -l "$SRCDIR"/autobuild/triggers "$PKGDIR"/DEBIAN 2>/dev/null
 fi
 dpkgctrl > "$PKGDIR"/DEBIAN/control &&
-dpkg-deb "$DPKGDEBCOMP" -b "$PKGDIR" "${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
+dpkg-deb $DPKGDEBCOMP -b "$PKGDIR" "${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
 	|| abdie "Failed to package .deb package: $?."
 mv "$PKGDIR"/DEBIAN "$SRCDIR"/ab-dpkg
 
@@ -85,7 +85,7 @@ if bool "$ABSPLITDBG"; then
 		# Actually pack them
 		mkdir -p "$SYMDIR"/DEBIAN
 		dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
-		dpkg-deb "$DPKGDEBCOMP" -b "$SYMDIR" "${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
+		dpkg-deb $DPKGDEBCOMP -b "$SYMDIR" "${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
 			|| "Failed to build debug .deb package: $?."
 		export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
 	else
