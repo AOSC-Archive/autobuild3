@@ -15,11 +15,11 @@ TREE=1
 TARGET_DIR=/debs
 
 # Functions, etc. ABSET, AB as exported by autobuild. ARCH as exported.
-. "$AB"/lib/base.sh
+. "$AB"/lib/base.sh >/dev/null 2>&1
 
 # Make it architecturally aware.
-. "$AB"/lib/arch.sh
-. "$AB"/arch/_common.sh
+. "$AB"/lib/arch.sh >/dev/null 2>&1
+. "$AB"/arch/_common.sh >/dev/null 2>&1
 
 mvln(){	# not using cp -s because we want the main part to be in the target
 	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed: $?"
