@@ -20,7 +20,8 @@ build_npm_audit(){
 }
 
 build_npm_build(){
-	build_npm_audit
+	bool "$NONPMAUDIT" \
+		|| build_npm_audit
 	abinfo "Creating a symlink to make NPM happy ..."
 	ln -sv "$SRCDIR/../$PKGNAME-$PKGVER."* "$PKGNAME-$PKGVER.tgz" \
 		|| abdie "Failed to make NPM happy: $?."

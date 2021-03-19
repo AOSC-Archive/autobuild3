@@ -12,6 +12,7 @@ ABCLEAN=yes			# Clean before build?
 NOLIBTOOL=yes			# Hug pkg-config and CMake configurations?
 ABCONFIGHACK=yes		# Use config.{sub,guess} replacement for newer architectures?
 NOCARGOAUDIT=no			# Audit Cargo (Rust) dependencies?
+NONPMAUDIT=no			# Audit NPM dependencies?
 
 # Strict Autotools option checking?
 AUTOTOOLS_STRICT=yes
