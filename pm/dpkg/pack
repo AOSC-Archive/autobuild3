@@ -7,14 +7,14 @@ dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
 dpkgpkgver(){ ((PKGEPOCH)) && echo -n "$PKGEPOCH":; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
 
 dpkgctrl(){
-	local arch=${ABHOST%%\/*}
-	[[ $arch == noarch ]] && arch=all
+	local arch="${ABHOST%%\/*}"
+	[[ "$arch" == noarch ]] && arch=all
 	echo "Package: $PKGNAME"
 	echo "Version: $(dpkgpkgver)"
 	echo "Architecture: $arch"
 	[ "$PKGSEC" ] && echo "Section: $PKGSEC"
 	echo "Maintainer: $MTER"
-	echo "Installed-Size: $(du -s "$PKGDIR" | cut -f 1)"
+	echo "Installed-Size: $(du -s ""$PKGDIR"" | cut -f 1)"
 	echo "Description: $PKGDES"
 	if ((PKGESS)); then
 		echo "Essential: yes"
@@ -39,8 +39,8 @@ dpkgctrl(){
 }
 
 dpkgctrl_dbg_sym() {
-	local arch=${ABHOST%%\/*}
-	[[ $arch == noarch ]] && arch=all
+	local arch="${ABHOST%%\/*}"
+	[[ "$arch" == noarch ]] && arch=all
 	echo "Package: $PKGNAME-dbg"
 	echo "Version: $(dpkgpkgver)"
 	echo "Architecture: $arch"
@@ -64,27 +64,29 @@ fi
 
 instSIZE=$(du -s abdist | cut -f 1)
 
-mkdir -p $PKGDIR/DEBIAN
-cp -rl $SRCDIR/abscripts/* $PKGDIR/DEBIAN
+mkdir -p "$PKGDIR"/DEBIAN
+cp -rl "$SRCDIR"/abscripts/* "$PKGDIR"/DEBIAN
 if [ -e "$SRCDIR/autobuild/$ARCH/conffiles" ]; then
-	cp -l $SRCDIR/autobuild/$ARCH/conffiles $PKGDIR/DEBIAN 2>/dev/null
+	cp -l "$SRCDIR"/autobuild/"$ARCH"/conffiles "$PKGDIR"/DEBIAN 2>/dev/null
 elif [ -e "$SRCDIR/autobuild/conffiles" ]; then
-	cp -l $SRCDIR/autobuild/conffiles $PKGDIR/DEBIAN 2>/dev/null
+	cp -l "$SRCDIR"/autobuild/conffiles "$PKGDIR"/DEBIAN 2>/dev/null
 fi
 if [ -e "$SRCDIR/autobuild/triggers" ]; then
-	cp -l $SRCDIR/autobuild/triggers $PKGDIR/DEBIAN 2>/dev/null
+	cp -l "$SRCDIR"/autobuild/triggers "$PKGDIR"/DEBIAN 2>/dev/null
 fi
-dpkgctrl > $PKGDIR/DEBIAN/control &&
-dpkg-deb $DPKGDEBCOMP -b $PKGDIR ${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
-mv $PKGDIR/DEBIAN $SRCDIR/ab-dpkg
+dpkgctrl > "$PKGDIR"/DEBIAN/control &&
+dpkg-deb "$DPKGDEBCOMP" -b "$PKGDIR" "${PKGNAME}_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
+	|| abdie "Failed to package .deb package: $?."
+mv "$PKGDIR"/DEBIAN "$SRCDIR"/ab-dpkg
 
-if bool $ABSPLITDBG; then
+if bool "$ABSPLITDBG"; then
 	# Check whether there are any symbol files getting genereted
 	if [[ -d "${SYMDIR}" ]] && [ "$(ls -A $SYMDIR)" ]; then
 		# Actually pack them
 		mkdir -p "$SYMDIR"/DEBIAN
 		dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
-		dpkg-deb $DPKGDEBCOMP -b $SYMDIR ${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb || return $?
+		dpkg-deb "$DPKGDEBCOMP" -b "$SYMDIR" "${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
+			|| "Failed to build debug .deb package: $?."
 		export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
 	else
 		abicu "ABSPLITDBG is set, but we can't find any symbol files."

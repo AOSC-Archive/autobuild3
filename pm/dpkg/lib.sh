@@ -15,7 +15,7 @@ pm_getver(){
 
 pm_exists(){
 	for p in "$@"; do
-		dpkg $PM_ROOTPARAM -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
+		dpkg "$PM_ROOTPARAM" -l "$p" | grep ^ii >/dev/null 2>&1 || return 1
 	done
 }
 
@@ -28,6 +28,6 @@ pm_repoinstall(){
 }
 
 pm_chroot(){
-	export PM_ROOT=$1
+	export PM_ROOT="$1"
 	export PM_ROOTPARAM="--root=$1 --admindir=$1/var/lib/dpkg --force-architecture"
 }
