@@ -30,8 +30,10 @@ build_rust_audit() {
 	if ! command -v cargo-audit > /dev/null; then
 		abdie "cargo-audit not found: $?."
 	elif [ -f "$SRCDIR"/Cargo.lock ]; then
-		cargo audit \
-			|| abdie 'Vulnerabilities detected! Refusing to continue.'
+		cargo audit || \
+			( abinfo 'Vulnerabilities detected! Attempting automatic fix ...'
+			cargo audit fix ) \
+				|| abdie 'Unable to fix vulnerability! Refusing to continue.'
 	else
 		abdie 'No lock file found -- Dependency information unreliable. Unable to conduct audit.'
 	fi
@@ -43,13 +45,12 @@ build_rust_build(){
 		|| abwarn "This project is lacking the lock file. Please report this issue to the upstream."
 	bool "$NOLTO" \
 		|| build_rust_inject_lto
+	bool "$NOCARGOAUDIT" \
+		|| build_rust_audit
 	BUILD_READY
 	abinfo "Building Cargo package ..."
 	cargo build --locked --release $CARGO_AFTER \
 		|| abdie "Compilation failed: $?."
-	abinfo "Auditing Cargo packge ..."
-	build_rust_audit \
-		|| abdie "Failed to audit Cargo package: $?."
 	abinfo "Installing Cargo package ..."
 	install -vd "$PKGDIR/usr/bin/"
 	find "$SRCDIR"/target/release/ \
