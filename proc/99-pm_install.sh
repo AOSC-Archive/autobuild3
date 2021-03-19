@@ -6,5 +6,5 @@
 
 for i in $ABINSTALL
 do
-	. "$AB"/pm/"$i"/install || aberr "$i install returned $?."
+	. "$AB"/pm/"$i"/install || abdie "$i install returned $?."
 done
