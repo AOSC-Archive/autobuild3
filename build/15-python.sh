@@ -13,20 +13,18 @@ build_python_build(){
 	for PYTHON in "$(bool $NOPYTHON2 || command -v python2 || command -v python || echo)" \
 	"$(bool $NOPYTHON3 || command -v python3 || echo)"; do
 		[ "$PYTHON" ] || continue
-		if bool "$USE_PYTHON_BUILD_FIRST"; then
-			BUILD_READY
-			abinfo "Building Python (PyPI) package using $PYTHON ..."
-			"$PYTHON" build \
-				|| abdie "Failed to build Python (PyPI) package using ${PYTHON}: $?."
-		fi
+		BUILD_READY
+		abinfo "Building Python (PyPI) package using $PYTHON ..."
+		"$PYTHON" "$SRCDIR"/setup.py build \
+			|| abdie "Failed to build Python (PyPI) package using ${PYTHON}: $?."
 		BUILD_FINAL
 		abinfo "Installing Python (PyPI) package using $PYTHON ..."
-		"$PYTHON" setup.py install \
+		"$PYTHON" "$SRCDIR"/setup.py install \
 			$MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 \
 			|| abdie "Failed to install Python (PyPI) package using ${PYTHON}: $?."
 		abinfo "Cleaning Python (PyPI) package source tree ..."
 		bool $NOPYTHONCLEAN \
-			|| ( "$PYTHON" setup.py clean \
+			|| ( "$PYTHON" "$SRCDIR"/setup.py clean \
 				|| abdie "Failed to clean up Python (PyPI) package source tree: $?." ) \
 			|| true
 	done
