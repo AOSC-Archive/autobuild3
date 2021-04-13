@@ -62,7 +62,7 @@ else
 	DPKGDEBCOMP+="-Zxz -z6"
 fi
 
-instSIZE=$(du -s abdist | cut -f 1)
+instSIZE=$(du -s "$PKGDIR" | cut -f 1)
 
 mkdir -p "$PKGDIR"/DEBIAN
 cp -rl "$SRCDIR"/abscripts/* "$PKGDIR"/DEBIAN
