@@ -8,12 +8,12 @@ build_meson_probe(){
 }
 
 build_meson_build() {
-	mkdir "$SRCDIR"/build \
+	mkdir "$SRCDIR"/abbuild \
 		|| abdie "Failed to create build directory: $?."
 	abinfo "Running Meson ..."
 	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build \
 		|| abdie "Failed to run Meson ..."
-	cd "$SRCDIR"/build \
+	cd "$SRCDIR"/abbuild \
 		|| abdie "Failed to enter build directory: $?."
 	abinfo "Building binaries ..."
 	ninja \
