@@ -11,7 +11,8 @@ build_meson_build() {
 	mkdir "$SRCDIR"/abbuild \
 		|| abdie "Failed to create build directory: $?."
 	abinfo "Running Meson ..."
-	meson ${MESON_DEF} ${MESON_AFTER} "$SRCDIR" "$SRCDIR"/build \
+	meson ${MESON_DEF} ${MESON_AFTER} \
+		"$SRCDIR" "$SRCDIR"/abbuild \
 		|| abdie "Failed to run Meson ..."
 	cd "$SRCDIR"/abbuild \
 		|| abdie "Failed to enter build directory: $?."
