@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+
 
 for i in \
-	bin sbin lib lib64 run usr/sbin usr/lib64 \
+	bin sbin lib lib64 usr/sbin usr/lib64 \
 	usr/local usr/man usr/doc usr/etc usr/var; do
 	if [ -e "$PKGDIR"/${i} ]; then
 		aberr "QA (E321): Found known bad path in package:\n\n${i}\n" | \
