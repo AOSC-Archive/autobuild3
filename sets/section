@@ -10,7 +10,7 @@ debug
 devel
 doc
 editors
-eletronics
+electronics
 embedded
 fonts
 games
@@ -69,7 +69,7 @@ non-free/debug
 non-free/devel
 non-free/doc
 non-free/editors
-non-free/eletronics
+non-free/electronics
 non-free/embedded
 non-free/fonts
 non-free/games
@@ -128,7 +128,7 @@ contrib/debug
 contrib/devel
 contrib/doc
 contrib/editors
-contrib/eletronics
+contrib/electronics
 contrib/embedded
 contrib/fonts
 contrib/games
