@@ -49,6 +49,7 @@ shells
 sound
 tex
 text
+Trinity
 utils
 vcs
 video
@@ -108,6 +109,7 @@ non-free/shells
 non-free/sound
 non-free/tex
 non-free/text
+non-free/Trinity
 non-free/utils
 non-free/vcs
 non-free/video
@@ -167,6 +169,7 @@ contrib/shells
 contrib/sound
 contrib/tex
 contrib/text
+contrib/Trinity
 contrib/utils
 contrib/vcs
 contrib/video
