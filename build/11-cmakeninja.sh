@@ -33,13 +33,10 @@ build_cmakeninja_build(){
 		DESTDIR="$PKGDIR" cmake --install . \
 			|| abdie "Failed to install binaries: $?."
 	else
-		abinfo "Building binaries ..."
-		make $ABMK $MAKE_AFTER \
-			|| abdie "Failed to build binaries: $?."
-		abinfo "Installing binaries ..."
-		make install \
-			DESTDIR="$PKGDIR" $ABMK $MAKE_AFTER \
-			|| abdie "Failed to install binaries: $?."
+		abinfo "Building and installing binaries ..."
+		DESTDIR="$PKGDIR" \
+			ninja $ABMK $MAKE_AFTER install \
+			|| abdie "Failed to build and install binaries: $?."
         fi
 
 	if bool "$ABSHADOW"; then
