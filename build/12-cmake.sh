@@ -17,10 +17,13 @@ build_cmake_build(){
 			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 	BUILD_START
+
 	abinfo "Running CMakeLists.txt to generate Makefile ..."
 	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER \
 		|| abdie "Failed to run CMakeLists.txt: $?."
 	BUILD_READY
+
+	if bool "$ABUSECMAKEBUILD"; then
 	abinfo "Building binaries ..."
 	cmake --build . -- $ABMK $MAKE_AFTER \
 		|| abdie "Failed to build binaries: $?."
@@ -28,6 +31,16 @@ build_cmake_build(){
 	abinfo "Installing binaries ..."
 	DESTDIR="$PKGDIR" cmake --install . \
 		|| abdie "Failed to install binaries: $?."
+	else
+	abinfo "Building binaries ..."
+	make $ABMK $MAKE_AFTER \
+		|| abdie "Failed to build binaries: $?."
+	abinfo "Installing binaries ..."
+	make install \
+		DESTDIR="$PKGDIR" $ABMK $MAKE_AFTER \
+		|| abdie "Failed to install binaries: $?."
+	fi
+
 	if bool "$ABSHADOW"; then
 		cd "$SRCDIR" \
 			|| abdie "Failed to return to source directory: $?."
