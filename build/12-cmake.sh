@@ -27,7 +27,7 @@ build_cmake_build(){
 	BUILD_FINAL
 	abinfo "Installing binaries ..."
 	DESTDIR="$PKGDIR" cmake --install . \
-		|| abide "Failed to install binaries: $?."
+		|| abdie "Failed to install binaries: $?."
 	if bool "$ABSHADOW"; then
 		cd "$SRCDIR" \
 			|| abdie "Failed to return to source directory: $?."
