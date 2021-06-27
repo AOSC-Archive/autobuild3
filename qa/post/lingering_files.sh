@@ -3,6 +3,6 @@
 ##@copyright GPL-2.0+
 FILES="$(find "$PKGDIR" "$PKGDIR/usr/" "$PKGDIR/usr/share/" -maxdepth 1 -type f -print 2>/dev/null)"
 if [ ! -z "$FILES" ]; then
-	abdie "QA (E321): Lingering file(s) found (incorrect install location?):\n\n${FILES}\n" | \
+	aberr "QA (E321): Lingering file(s) found (incorrect install location?):\n\n${FILES}\n" | \
 		tee -a "$SRCDIR"/abqaerr.log
 fi

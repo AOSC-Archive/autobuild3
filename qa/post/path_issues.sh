@@ -6,7 +6,7 @@ for i in \
 	bin sbin lib lib64 usr/sbin usr/lib64 \
 	usr/local usr/man usr/doc usr/etc usr/var; do
 	if [ -e "$PKGDIR"/${i} ]; then
-		abdie "QA (E321): Found known bad path in package:\n\n${i}\n" | \
+		aberr "QA (E321): Found known bad path in package:\n\n${i}\n" | \
 			tee -a "$SRCDIR"/abqaerr.log
 	fi
 done
@@ -51,17 +51,17 @@ PATHS2="$(find "$PKGDIR"/usr -mindepth 1 -maxdepth 1 -type d -print 2>/dev/null)
 PATHS3="$(find "$PKGDIR"/usr/local -mindepth 1 -maxdepth 1 -type d -print 2>/dev/null)"
 for i in $PATHS; do
 	if ! echo $ACCEPTABLE | grep -q $i; then
-		abdie "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
+		aberr "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
 	fi
 done
 for i in $PATHS2; do
         if ! echo $ACCEPTABLE2 | grep -q $i; then
-                abdie "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
+                aberr "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
         fi
 done
 for i in $PATHS3; do
         if ! echo $ACCEPTABLE3 | grep -q $i; then
-                abdie "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
+                aberr "QA (E321): found unexpected path(s) in package:\n\n${i}\n"
         fi
 done
 

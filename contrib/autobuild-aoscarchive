@@ -22,8 +22,8 @@ TARGET_DIR=/debs
 . "$AB"/arch/_common.sh >/dev/null 2>&1
 
 mvln(){	# not using cp -s because we want the main part to be in the target
-	mv "$1" "$2" || abdie "Move from [$1] to [$2] failed: $?"
-	ln -s "$2" "$1" || abdie "Link from [$2] to [$1] failed: $?"
+	mv "$1" "$2" || aberr "Move from [$1] to [$2] failed: $?"
+	ln -s "$2" "$1" || aberr "Link from [$2] to [$1] failed: $?"
 }
 
 if [ "$TREE" == 1 ];

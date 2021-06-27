@@ -56,7 +56,7 @@ if [ "$1" ]; then
 	ab_dbg "Starting autobuild-$PLUG"
 	"autobuild-$PLUG" "$@"
 	_ret=$?
-	((!_ret)) || abdie "autobuild-$PLUG returned ${_ret}."
+	((!_ret)) || aberr "autobuild-$PLUG returned ${_ret}."
 	exit $_ret
 fi
 
