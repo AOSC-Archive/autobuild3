@@ -33,16 +33,9 @@ if ! bool $ABSTRIP && bool $ABSPLITDBG; then
 	ABSPLITDBG=0
 fi
 
-# FIXME This should really be handled elsewhere, preferably alongside with other arch-specific defaults
-#  ~cth Jan 21 2020
 if [[ $ABHOST == noarch ]]; then
-	if [[ -z $ABSPLITDBG ]]; then
-		ABSPLITDBG=$ABSPLITDBG_NOARCH
-	else
-		abwarn "ABSPLITDBG is set for a noarch package. Please double check whether this package actually contains ELF files."
-	fi
-elif [[ -z $ABSPLITDBG ]]; then
-	ABSPLITDBG=$ABSPLITDBG_OTHERS
+	abinfo "Architecture-agnostic (noarch) package detected, disabling -dbg package split ..."
+	ABSPLITDBG=0
 fi
 
 arch_initcross
