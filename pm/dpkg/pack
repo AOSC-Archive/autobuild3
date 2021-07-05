@@ -86,7 +86,7 @@ if bool "$ABSPLITDBG"; then
 		mkdir -p "$SYMDIR"/DEBIAN
 		dpkgctrl_dbg_sym > "$SYMDIR"/DEBIAN/control &&
 		dpkg-deb $DPKGDEBCOMP -b "$SYMDIR" "${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb" \
-			|| "Failed to build debug .deb package: $?."
+			|| echo "Failed to build debug .deb package: $?."
 		export ABPACKAGE+="${PKGNAME}-dbg_${PKGVER}-${PKGREL}_${ABHOST%%\/*}.deb "
 	else
 		abdie "ABSPLITDBG is set, but we can't find any symbol files."
