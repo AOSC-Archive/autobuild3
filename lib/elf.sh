@@ -32,7 +32,7 @@ abreqexe strip file objcopy install
 
 elf_iself()
 {
-	file -F $'\n' "$1" | grep -Eq '^ (ELF|thin archive|current ar)'
+	file -F $'\n' "$1" | grep -Eq '^ (\w+ (ELF|thin archive|current ar)|(ELF|thin archive|current ar))'
 }
 
 # $1 = path to ELF
