@@ -1,5 +1,5 @@
 #!/bin/bash
-##arch/armel.sh: Build definitions for armel.
+##arch/armv4.sh: Build definitions for ARMv4 (w/o THUMB).
 ##@copyright GPL-2.0+
 
 # Retro: Overriding mainline definitions, and take more interest in reducing code size.
@@ -7,4 +7,4 @@ CFLAGS_COMMON_OPTI='-Os '
 # Retro: Also disabling -ftree-vectorization which could potentially enlarge code size.
 CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 
-CFLAGS_COMMON_ARCH='-march=armv5te -mtune=arm1176jzf-s -mfloat-abi=soft '
+CFLAGS_COMMON_ARCH='-march=armv4 -mtune=strongarm110 -mfloat-abi=soft '
