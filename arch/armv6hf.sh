@@ -4,6 +4,7 @@
 
 # Retro: Overriding mainline definitions, and take more interest in reducing code size.
 CFLAGS_COMMON_OPTI='-Os '
-# Retro: Keeping -ftree-vectorization for NEON.
+# Retro: Also disabling -ftree-vectorization which could potentially enlarge code size.
+CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 
-CFLAGS_COMMON_ARCH='-march=armv6 -mtune=arm1176jz-s -mfloat-abi=hard -mthumb '
+CFLAGS_COMMON_ARCH='-march=armv6 -mtune=arm1176jz-s -mfloat-abi=hard '
