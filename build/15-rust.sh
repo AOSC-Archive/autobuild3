@@ -44,8 +44,9 @@ build_rust_build(){
 	BUILD_START
 	[ -f "$SRCDIR"/Cargo.lock ] \
 		|| abwarn "This project is lacking the lock file. Please report this issue to the upstream."
-	bool "$NOLTO" \
-		|| build_rust_inject_lto
+	if [[ "${CROSS:-$ARCH" != "ppc64" && ! bool "$NOLTO" ]]; then
+		build_rust_inject_lto
+	fi
 	bool "$NOCARGOAUDIT" \
 		|| build_rust_audit
 	BUILD_READY
