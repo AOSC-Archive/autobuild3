@@ -4,6 +4,7 @@ Cinnamon
 cli-mono
 comm
 cryptocurrency
+Cutefish
 database
 debian-installer
 debug
@@ -64,6 +65,7 @@ non-free/Cinnamon
 non-free/cli-mono
 non-free/comm
 non-free/cryptocurrency
+non-free/Cutefish
 non-free/database
 non-free/debian-installer
 non-free/debug
@@ -124,6 +126,7 @@ contrib/Cinnamon
 contrib/cli-mono
 contrib/comm
 contrib/cryptocurrency
+contrib/Cutefish
 contrib/database
 contrib/debian-installer
 contrib/debug
