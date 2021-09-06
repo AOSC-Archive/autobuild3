@@ -154,7 +154,13 @@ abdetectarch() {
 	type dpkg >/dev/null 2>&1 && dpkg --print-architecture || ( echo "[!!!] Cannot find dpkg executable, exiting ..." && exit 1 )
 }
 
+abassigngroup() {
+	basename "$(grep -lr "$1" sets/arch_groups/)"
+}
+
 ((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
 : "${ABBUILD:="$(abdetectarch)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
+ABHOST_GROUP="$(abassigngroup $ABHOST)"
 
 unset -f abdetectarch
+unset -f abassigngroup

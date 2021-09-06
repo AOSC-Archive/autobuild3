@@ -30,8 +30,9 @@ arch_findfile(){
 
 # Initialise variables with architectural suffixes.
 arch_loadvar(){
-	declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
-	_commonvar="${_archvar-$_commonvar}"
+	declare -n _archvar=${1}__${ABHOST^^} _archgrpvar=${1}__${ABHOST_GROUP^^} _commonvar=${1}
+	_parchvar="${_archvar-$_archgrpvar}"
+	_commonvar="${_parchvar-$_commonvar}"
 	export $1
 }
 
