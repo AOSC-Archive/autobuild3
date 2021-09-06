@@ -9,7 +9,7 @@ abrequire pm
 # translations from dpkg representation to generic ones.
 # Sorry, top level! Scoping made me do this.
 declare -gA ARCH_TARGET
-ARCH_FINDFILELIST=("autobuild/${ABHOST_GROUP}" "autobuild/$ABHOST"{-cross{-"$ABBUILD",},} autobuild)
+ARCH_FINDFILELIST=("autobuild/$ABHOST"{-cross{-"$ABBUILD",},} "autobuild/${ABHOST_GROUP}" autobuild)
 ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
 	local i j _arch_suf
