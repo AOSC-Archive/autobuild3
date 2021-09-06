@@ -4,7 +4,7 @@
 abrequire pm
 
 # compat 1.x.
-((AB_COMPAT > 1)) || declare -gn ARCH=ABBUILD CROSS=ABHOST
+((AB_COMPAT > 1)) || declare -gn ARCH=ABBUILD CROSS=ABHOST ARCH_GROUP=ABHOST_GROUP
 
 # translations from dpkg representation to generic ones.
 # Sorry, top level! Scoping made me do this.
