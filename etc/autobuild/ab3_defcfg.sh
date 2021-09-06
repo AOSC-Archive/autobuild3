@@ -162,5 +162,4 @@ abassigngroup() {
 : "${ABBUILD:="$(abdetectarch)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
 ABHOST_GROUP="$(abassigngroup $ABHOST)"
 
-unset -f abdetectarch
-unset -f abassigngroup
+unset -f abdetectarch abassigngroup
