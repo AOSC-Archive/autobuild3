@@ -5,5 +5,5 @@
 abinfo 'Setting $SHELL to /bin/bash ...'
 export SHELL="/bin/bash"
 
-abinfo 'Setting $HOME to /tmp ...'
+abinfo 'Setting $HOME to /root ...'
 export HOME="/root"
