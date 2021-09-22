@@ -4,7 +4,7 @@
 # _license_atom: _license [ " WITH " _exception ]
 # TODO: Multiple exceptions, Unknown exceptions
 
-_license_files=( {COPYING,LICENSE}* )
+_license_files=( {COPYING,LICENSE,LICENCE}* )
 
 mkdir -p "$PKGDIR/usr/share/doc/$PKGNAME"
 if ((${#_license_files[@]})); then
