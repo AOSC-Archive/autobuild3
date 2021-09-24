@@ -6,9 +6,6 @@ export SRCDIR="$PWD"
 export PKGDIR="$PWD/abdist"
 export SYMDIR="$PWD/abdist-dbg"
 
-# Avoid dpkg-deb failure with larger packages on low RAM hosts.
-export TMPDIR="$SRCDIR"
-
 BUILD_START(){ true; }
 BUILD_READY(){ true; }
 BUILD_FINAL(){ true; }

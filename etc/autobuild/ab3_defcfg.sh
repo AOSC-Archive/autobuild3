@@ -2,7 +2,11 @@
 ##Autobuild default config file
 ##@copyright CC0
 
-##Misc building flags
+# Environmental Settings
+# Avoid setting TMPDIR as tmpfs mount points.
+TMPDIR="$SRCDIR"
+
+# Misc building flags
 ABARCHIVE=autobuild-aoscarchive	# Archive program
 ABSHADOW=yes			# Shall shadow builds be performed by default?
 NOLTO=no			# Enable LTO by default.
@@ -58,10 +62,8 @@ AB_SAN_LEK=0
 AB_LD_BFD=0
 
 ##OS Directory Tree
-# Built-in variables for OS3 directory tree.
+# Built-in variables for AOSC OS directory tree.
 # Will be updated. Therefore not part of conffiles.
-#
-# COPYLEFT TO WHOEVER NEEDS IT.
 #
 PREFIX="/usr"
 BINDIR="/usr/bin"
@@ -79,7 +81,6 @@ X11CONF="/etc/X11/xorg.conf.d"
 STATDIR="/var"
 INCLUDE="/usr/include"
 BOOTDIR="/boot"
-TMPDIR="/tmp"
 LIBEXEC="/usr/libexec"
 MANDIR="/usr/share/man"
 FDOAPP="/usr/share/applications"
