@@ -24,8 +24,8 @@ then
 			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
 		done
 		for i in autobuild/patches/*.{patch,diff}."${CROSS:-$ARCH}"; do
-			abinfo "Applying patch $i ..."
-			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
+			abinfo "Applying patch $i (for ${CROSS:-$ARCH}) ..."
+			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i for ${CROSS:-$ARCH} failed: $?."
 		done
 		touch .patch
 	fi
