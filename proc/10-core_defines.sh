@@ -3,8 +3,9 @@
 ##@copyright GPL-2.0+
 # TODO: we may have to split this file. PKG/SRCDIR defs should be in ab3.sh.
 export SRCDIR="$PWD"
-export PKGDIR="$PWD/abdist"
-export SYMDIR="$PWD/abdist-dbg"
+export BLDDIR="$SRCDIR/abbuild"
+export PKGDIR="$SRCDIR/abdist"
+export SYMDIR="$SRCDIR/abdist-dbg"
 
 BUILD_START(){ true; }
 BUILD_READY(){ true; }

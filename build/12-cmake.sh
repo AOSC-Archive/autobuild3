@@ -11,9 +11,9 @@ build_cmake_build(){
 	ABSHADOW=${ABSHADOW_CMAKE-$ABSHADOW}
 	if bool "$ABSHADOW"; then
 		abinfo "Creating directory for shadow build ..."
-		mkdir -pv "$SRCDIR"/abbuild \
+		mkdir -pv "$BLDDIR" \
 			|| abdie "Failed to create shadow build directory: $?."
-		cd "$SRCDIR"/abbuild \
+		cd "$BLDDIR" \
 			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 	BUILD_START

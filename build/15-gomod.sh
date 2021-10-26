@@ -17,9 +17,9 @@ build_gomod_build(){
 		abdie "ABSHADOW must be set to true for this build type: $?."
 	fi
 
-	mkdir "$SRCDIR"/abbuild \
+	mkdir "$BLDDIR" \
 		|| abdie "Failed to create $SRCDIR/abbuild: $?."
-	cd "$SRCDIR"/abbuild \
+	cd "$BLDDIR" \
 		|| abdie "Failed to cd $SRCDIR/abbuild: $?."
 
 	abinfo "Fetching Go modules dependencies ..."
