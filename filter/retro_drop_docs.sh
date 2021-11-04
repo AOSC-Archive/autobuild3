@@ -1,7 +1,7 @@
 #!/bin/bash
 ##filter/retro_drop_docs.sh: Drop /usr/share/{,gtk-}doc for Retro architectures.
 ##@copyright GPL-2.0+
-filter_retro_docs() {
+filter_retro_drop_docs() {
 	if [[ "${CROSS:-$ARCH}" = "armv4" || \
 	      "${CROSS:-$ARCH}" = "armv6hf" || \
 	      "${CROSS:-$ARCH}" = "armv7hf" || \
@@ -18,7 +18,9 @@ filter_retro_docs() {
 			abinfo "Dropping gtk-doc ..."
 			rm -r "$PKGDIR"/usr/share/gtk-doc
 		fi
+	else
+		abinfo "Non-Retro architectures detected, skipping retro_drop_docs ..."
 	fi
 }
 
-export ABFILTERS+=" retro_docs"
+export ABFILTERS+=" retro_drop_docs"
