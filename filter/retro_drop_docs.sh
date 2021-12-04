@@ -14,7 +14,10 @@ filter_retro_drop_docs() {
 			rm -r "$PKGDIR"/usr/share/doc
 		fi
 
-		if [ -d "$PKGDIR"/usr/share/gtk-doc ]; then
+		# GTK-Doc stores Python modules in /usr/share/gtk-doc,
+		# dropping this directory will render its tools unusable.
+		if [[ "$PKGNAME" != "gtk-doc" && \
+			-d "$PKGDIR"/usr/share/gtk-doc ]]; then
 			abinfo "Dropping gtk-doc ..."
 			rm -r "$PKGDIR"/usr/share/gtk-doc
 		fi
