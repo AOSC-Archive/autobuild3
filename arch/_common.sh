@@ -20,6 +20,7 @@ ARCH_TARGET['powerpc']=powerpc-aosc-linux-gnu
 ARCH_TARGET['ppc64']=powerpc64-aosc-linux-gnu
 ARCH_TARGET['ppc64el']=powerpc64le-aosc-linux-gnu
 ARCH_TARGET['riscv64']=riscv64-aosc-linux-gnu
+ARCH_TARGET['alpha']=alpha-aosc-linux-gnu
 # C Compiler Flags.
 CFLAGS_COMMON='-pipe -Wno-error '
 CFLAGS_COMMON_OPTI='-O2 '
