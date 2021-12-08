@@ -7,15 +7,19 @@ RPATCHFLAGS="-Rp1 -t"
 
 ab_apply_patches() {
 	for i in "$@"; do
-		abinfo "Applying patch $i ..."
-		patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
+		if [[ -e $i ]];then
+			abinfo "Applying patch $i ..."
+			patch $PATCHFLAGS -i "$i" || abdie "Applying patch $i failed"
+		fi
 	done
 }
 
 ab_reverse_patches() {
 	for i in "$@"; do
-		abinfo "Reverting patch $i ..."
-		patch $RPATCHFLAGS -i "$i" || abdie "Reverting patch $i failed"
+		if [[ -e $i ]];then
+			abinfo "Reverting patch $i ..."
+			patch $RPATCHFLAGS -i "$i" || abdie "Reverting patch $i failed"
+		fi
 	done
 }
 
