@@ -62,8 +62,13 @@ elf_install_symfile()
 # $1 = path to ELF to strip
 elf_strip()
 {
-	case "$(readelf -h $1)" in
-		*Type:*'DYN (Shared object file)'*)
+	READELF_OUT="$(readelf -h $1)"
+	if (($?)); then
+		# This is probably not an ELF
+		return
+	fi
+	case "${READELF_OUT}" in
+		*Type:*'DYN'*)
 			strip --strip-unneeded --remove-section=.comment --remove-section=.note $1 ;;
 		*Type:*'EXEC (Executable file)'*)
 			strip --strip-all --remove-section=.comment --remove-section=.note $1 ;;
@@ -75,7 +80,7 @@ elf_strip()
 					strip --strip-debug --enable-deterministic-archives --remove-section=.comment --remove-section=.note $1 ;;
 			esac ;;
 		*)
-			true ;;
+			abwarn "Format of $1 is unsupported!" ;;
 	esac
 }
 
@@ -86,8 +91,13 @@ elf_copydbg()
 {
 	file -F $'\n' "$1" | grep -Eq '^ (thin archive|current ar)' \
 		&& abinfo "Skipped $1 as it is a static library." && return 0
-	case "$(readelf -h $1)" in
-		*Type:*'DYN (Shared object file)'*)
+	READELF_OUT="$(readelf -h $1)"
+	if (($?)); then
+		# This is probably not an ELF
+		return
+	fi
+	case "${READELF_OUT}" in
+		*Type:*'DYN'*)
 			;&
 		*Type:*'EXEC (Executable file)'*)
 			;&
@@ -107,7 +117,7 @@ elf_copydbg()
 			rm -f "${TMP_SYMFILE}"
 			;;
 		*)
-			true ;;
+			abwarn "Format of $1 is unsupported!" ;;
 	esac
 }
 
