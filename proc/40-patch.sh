@@ -21,3 +21,5 @@ then
 		touch "$SRCDIR"/.patch
 	fi
 fi
+
+cd "$SRCDIR"
