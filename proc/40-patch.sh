@@ -3,7 +3,7 @@
 ##@copyright GPL-2.0+
 abrequire arch
 
-if [ ! -f .patch ]
+if [ ! -f "$SRCDIR"/.patch ]
 then
 	if arch_loadfile_strict patch; then
 		touch "$SRCDIR"/.patch
