@@ -3,6 +3,8 @@
 ##@copyright GPL-2.0+
 arch_loadfile_strict prepare
 
+cd "$SRCDIR"
+
 for build_func in build_{start,ready,final}; do
 	abcmdstub "$build_func"
 	alias "${build_func^^}=_ret=\$PIPESTATUS
