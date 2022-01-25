@@ -9,7 +9,7 @@ then
 		touch "$SRCDIR"/.patch
 	elif [ -f "$SRCDIR"/autobuild/patches/series ]; then
 		ab_apply_patches \
-			"$SRCDIR"/autobuild/patches/$(grep -v '^#' autobuild/patches/series)
+			$(grep -v '^#' autobuild/patches/series | sed "s@^@$SRCDIR/autobuild/patches/@")
 		touch "$SRCDIR"/.patch
 	elif [ -d "$SRCDIR"/autobuild/patches ]; then
 		ab_apply_patches \
