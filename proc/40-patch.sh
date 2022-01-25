@@ -16,7 +16,7 @@ then
 			"$SRCDIR"/autobuild/patches/*.{patch,diff} \
 			"$SRCDIR"/autobuild/patches/*.{patch,diff}."${CROSS:-$ARCH}"
 		ab_reverse_patches \
-			"$SRCDIR"/autobuild/patches/r*.{patch,diff} \
+			"$SRCDIR"/autobuild/patches/*.r{patch,diff} \
 			"$SRCDIR"/autobuild/patches/*.r{patch,diff}."${CROSS:-$ARCH}"
 		touch "$SRCDIR"/.patch
 	fi
