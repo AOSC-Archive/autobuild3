@@ -4,7 +4,15 @@
 # dpkg field helper.
 _ab_pm_func+='dpkgfield dpkgpkgver dpkgctrl '
 dpkgfield(){ echo -ne "$1: "; shift; pm_depcom "$@"; echo; }
-dpkgpkgver(){ ((PKGEPOCH)) && echo -n "$PKGEPOCH":; echo -n "$PKGVER"; ((PKGREL)) && echo "-$PKGREL"; }
+dpkgpkgver(){
+	((PKGEPOCH)) && echo -n "$PKGEPOCH":
+	echo -n "$PKGVER"
+	if [ "$PKGREL" == 0 ]; then
+		:
+	else
+		echo "-$PKGREL"
+	fi
+}
 
 dpkgctrl(){
 	local arch="${ABHOST%%\/*}"
