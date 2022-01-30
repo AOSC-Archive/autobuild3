@@ -52,14 +52,10 @@ build_rust_build(){
 		|| build_rust_audit
 	BUILD_READY
 	abinfo "Building Cargo package ..."
-	cargo build --locked --release $CARGO_AFTER \
-		|| abdie "Compilation failed: $?."
-	abinfo "Installing Cargo package ..."
 	install -vd "$PKGDIR/usr/bin/"
-	find "$SRCDIR"/target/release/ \
-		-maxdepth 1 -type f -not -name '*.*' \
-		-exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';' \
-		|| abdie "Failed to install Cargo package: $?."
+	cargo install --locked -f --path "$SRCDIR" \
+              --root="$PKGDIR/usr/" $CARGO_AFTER \
+		|| abdie "Compilation failed: $?."
 	BUILD_FINAL
 }
 
