@@ -26,6 +26,8 @@ build_rust_inject_lto() {
 }
 
 build_rust_audit() {
+	abinfo 'Setting up build environment: $PKG_CONFIG_SYSROOT_DIR= hack ...'
+	export PKG_CONFIG_SYSROOT_DIR=/
 	abinfo 'Auditing dependencies...'
 	if ! command -v cargo-audit > /dev/null; then
 		abdie "cargo-audit not found: $?."
