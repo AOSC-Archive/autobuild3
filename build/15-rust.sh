@@ -53,11 +53,13 @@ build_rust_build(){
 	bool "$NOCARGOAUDIT" \
 		|| build_rust_audit
 	BUILD_READY
-	abinfo "Building Cargo package ..."
+	abinfo 'Building Cargo package ...'
 	install -vd "$PKGDIR/usr/bin/"
 	cargo install --locked -f --path "$SRCDIR" \
               --root="$PKGDIR/usr/" $CARGO_AFTER \
 		|| abdie "Compilation failed: $?."
+	abinfo 'Dropping lingering files ...'
+	rm -v "$PKGDIR"/usr/.crates{.toml,2.json}
 	BUILD_FINAL
 }
 
