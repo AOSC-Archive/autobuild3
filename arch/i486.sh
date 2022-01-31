@@ -9,3 +9,5 @@ CFLAGS_GCC_OPTI='-fira-loop-pressure -fira-hoist-pressure '
 
 CFLAGS_COMMON_ARCH='-march=i486 -mtune=bonnell -ffunction-sections -fdata-sections '
 LDFLAGS_COMMON_ARCH='-Wl,--gc-sections '
+
+RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=i486 -Clink-args=-latomic '
