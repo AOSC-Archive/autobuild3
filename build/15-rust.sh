@@ -42,6 +42,12 @@ build_rust_audit() {
 	fi
 }
 
+fallback_build() {
+	cargo build --release --locked $CARGO_AFTER || abdie "Compilation failed: $?."
+	abinfo "Installing binaries in the workspace ..."
+	find "$SRCDIR"/target/release -maxdepth 1 -executable -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';'
+}
+
 build_rust_build(){
 	BUILD_START
 	[ -f "$SRCDIR"/Cargo.lock ] \
@@ -55,9 +61,14 @@ build_rust_build(){
 	BUILD_READY
 	abinfo 'Building Cargo package ...'
 	install -vd "$PKGDIR/usr/bin/"
-	cargo install --locked -f --path "$SRCDIR" \
-              --root="$PKGDIR/usr/" $CARGO_AFTER \
-		|| abdie "Compilation failed: $?."
+	if ! grep '\[workspace\]' Cargo.toml > /dev/null; then
+		cargo install --locked -f --path "$SRCDIR" \
+				--root="$PKGDIR/usr/" $CARGO_AFTER \
+			|| abdie "Compilation failed: $?."
+	else
+		abinfo 'Using fallback build method ...'
+		fallback_build
+	fi
 	abinfo 'Dropping lingering files ...'
 	rm -v "$PKGDIR"/usr/.crates{.toml,2.json}
 	BUILD_FINAL
