@@ -100,7 +100,7 @@ abdie() {
 	echo -e "\e[1;31mautobuild encountered an error and couldn't continue.\e[0m" 1>&2
 	echo -e "${1-Look at the stacktrace to see what happened.}" 1>&2
 	echo "------------------------------autobuild ${VERSION:-3}------------------------------" 1>&2
-	echo -e "Go to ‘\e[1mhttp://github.com/AOSC-Dev/autobuild3\e[0m’ for more information on this error." 1>&2
+	echo -e "Go to ‘\e[1mhttps://github.com/AOSC-Dev/autobuild3\e[0m’ for more information on this error." 1>&2
 	if ((AB_DBG)); then
 		read -n 1 -p "AUTOBUILD_DEBUG: CONTINUE? (Y/N)" -t 5 AB_DBGRUN || AB_DBGRUN=false
 		bool $AB_DBGRUN && abwarn "Forced AUTOBUILD_DIE continue." && return 0 || abdbg "AUTOBUILD_DIE EXIT - NO_CONTINUE"
