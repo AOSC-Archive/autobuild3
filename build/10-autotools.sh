@@ -21,7 +21,7 @@ build_autotools_build() {
 			abinfo "Copying replacement $i ..."
 			# FIXME: hard-coded automake version.
 			# Adapted from redhat-rpm-config.
-			# http://pkgs.fedoraproject.org/cgit/rpms/redhat-rpm-config.git/tree/macros#n35
+			# https://src.fedoraproject.org/rpms/redhat-rpm-config/blob/rawhide/f/macros#_192
 			cp -v "/usr/share/automake-1.16/$(basename "$i")" "$i" \
 				|| abdie "Failed to copy replacement $i: $?."; \
 		done
