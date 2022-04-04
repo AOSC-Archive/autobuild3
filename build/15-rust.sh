@@ -22,7 +22,7 @@ build_rust_inject_lto() {
 	# parsing TOML in bash will be hard
 	grep 'profile.release' "$SRCDIR"/Cargo.toml > /dev/null 2>&1 \
 		&& abdie "$LTO_INJECT_FAIL_MSG"
-	echo -e "[profile.release]\nlto = true\n" >> "$SRCDIR"/Cargo.toml
+	echo -e "\n[profile.release]\nlto = true\n" >> "$SRCDIR"/Cargo.toml
 }
 
 build_rust_audit() {
