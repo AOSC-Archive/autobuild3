@@ -28,15 +28,9 @@ build_gomod_build(){
 	BUILD_READY
 	mkdir -pv "$PKGDIR/usr/bin/"
 	abinfo "Compiling Go module ..."
-	if [[ "${CROSS:-$ARCH}" != "loongson3" ]]; then
-		GOPATH="$SRCDIR/abgopath" \
-			go build -buildmode=pie ${GO_BUILD_AFTER} .. \
-			|| abdie "Failed to build Go module: $?."
-	else
-		GOPATH="$SRCDIR/abgopath" \
-			go build ${GO_BUILD_AFTER} .. \
-			|| abdie "Failed to build Go module: $?."
-	fi
+	GOPATH="$SRCDIR/abgopath" \
+		go build ${GO_BUILD_AFTER} .. \
+		|| abdie "Failed to build Go module: $?."
 	abinfo "Copying executable file(s) ..."
 	find "$SRCDIR" -type f -executable \
 		-exec cp -av '{}' "$PKGDIR/usr/bin/" ';' \
