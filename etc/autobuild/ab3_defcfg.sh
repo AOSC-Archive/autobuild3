@@ -146,10 +146,10 @@ ABQA=yes
 ABINSTALL="dpkg"
 
 # Golang default build flags | Adapted from Arch Linux's Go package guildline.
-GOFLAGS+=" -mod=readonly" # Ensure module files are not updated during building process.
-GOFLAGS+=" -trimpath"     # Required for eproducible build.
-GOFLAGS+=" -modcacherw"   # Ensures that go modules creates a write-able path.
-GOFLAGS+=" -buildmode=pie"# Hardening binary.
+GOFLAGS+=" -mod=readonly"  # Ensure module files are not updated during building process.
+GOFLAGS+=" -trimpath"      # Required for eproducible build.
+GOFLAGS+=" -modcacherw"    # Ensures that go modules creates a write-able path.
+GOFLAGS+=" -buildmode=pie" # Hardening binary.
 
 # Old, default.
 [[ -d "$AB"/etc/autobuild/defaults ]] && recsr "$AB"/etc/autobuild/defaults/*!(.dpkg*|dist)
