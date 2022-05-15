@@ -14,4 +14,4 @@ LDFLAGS_GCC_OPTI_LTO="${LDFLAGS_COMMON_OPTI_LTO} -mxgot -flto-partition=none "
 
 # Position-independent executable buildmode is not available on any mips architecture.
 # Removing for loongson2f target.
-GOFLAGS=${GOFLGAS/-buildmode=pie/}
+GOFLAGS=${GOFLAGS/-buildmode=pie/}

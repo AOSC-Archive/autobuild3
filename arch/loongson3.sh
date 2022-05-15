@@ -9,4 +9,4 @@ RUSTFLAGS_COMMON_OPTI_LTO="${RUSTFLAGS_COMMON_OPTI_LTO} -Clink-arg=-Wl,-build-id
 
 # Position-independent executable buildmode is not available on any mips architecture.
 # Removing for loongson3 target.
-GOFLAGS=${GOFLGAS/-buildmode=pie/}
+GOFLAGS=${GOFLAGS/-buildmode=pie/}

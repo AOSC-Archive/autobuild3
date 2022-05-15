@@ -11,4 +11,4 @@ CFLAGS_COMMON_ARCH=' -m32 -mcpu=G3 -mtune=G4 -mno-altivec -msecure-plt -mhard-fl
 
 # Position-independent executable buildmode is not available on PowerPC 32-bit architecture.
 # Removing for powerpc target.
-GOFLAGS=${GOFLGAS/-buildmode=pie/}
+GOFLAGS=${GOFLAGS/-buildmode=pie/}
