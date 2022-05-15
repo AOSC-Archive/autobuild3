@@ -15,4 +15,4 @@ RUSTFLAGS_COMMON_OPTI_LTO='-Clink-arg=-fuse-ld=bfd -Clink-arg=-Wl,-build-id=sha1
 
 # Position-independent executable buildmode is not available on PowerPC 64-bit 
 # (Big Endian) architecture. Removing for ppc64 target.
-GOFLAGS=${GOFLGAS/-buildmode=pie/}
+GOFLAGS=${GOFLAGS/-buildmode=pie/}
