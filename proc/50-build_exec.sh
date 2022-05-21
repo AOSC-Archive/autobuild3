@@ -38,4 +38,6 @@ fi
 
 arch_loadfile_strict beyond
 
+cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
+
 unalias BUILD_{START,READY,FINAL}
