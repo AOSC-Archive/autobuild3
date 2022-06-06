@@ -3,13 +3,22 @@
 ##Part of AB3 build-time package integrity check implementation.
 ##@copyright GPL-2.0+
 
-. "$AB/tests"/_base.sh
+abtrylib tests || ablibret
 
-for i in "$SRCDIR"/tests/T*.sh
-do
-    arch_loadfile $i
-    abtest || abtest_non-zero-handler $? $i
-    abtest_unprivileged || abtest_non-zero-handler $? $i
-    unset abtest abtest_unprivileged
-done
+abtest_self_files_probe() {
+    [ -d "$SRCDIR"/autobuild/tests ]
+}
 
+abtest_self_files_test() {
+    . "$AB/lib/tests.sh"
+
+    for i in "$SRCDIR"/tests/T*.sh
+    do
+        arch_loadfile $i
+        abtest || abtest_non-zero-handler $? $i
+        abtest_unprivileged || abtest_non-zero-handler $? $i
+        unset abtest abtest_unprivileged
+    done
+}
+
+ABTEST_TESTPROBES+=' self_files'

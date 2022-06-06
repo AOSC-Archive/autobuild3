@@ -1,5 +1,5 @@
 #!/bin/bash
-##tests/_base.sh: Basic functions of build-time package integrity check modules.
+##lib/tests.sh: Basic functions of build-time package integrity check modules.
 ##@copyright GPL-2.0+
 
 abtest_non-zero-handler() {
