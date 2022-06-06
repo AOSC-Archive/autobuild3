@@ -169,4 +169,7 @@ abassigngroup() {
 : "${ABBUILD:="$(abdetectarch)"}"  "${ABHOST:=$ABBUILD}" "${ABTARGET:=$ABHOST}"
 ABHOST_GROUP="$(abassigngroup $ABHOST)"
 
+# Default configurations for ab3 package integrity check module.
+[ ! -v $ABTEST_ENABLED ] || ABTEST_ENABLED=0 # Disabled during current development cycle
+
 unset -f abdetectarch abassigngroup
