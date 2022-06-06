@@ -12,7 +12,7 @@ abtest_self_files_probe() {
 abtest_self_files_test() {
     . "$AB/lib/tests.sh"
 
-    for i in "$SRCDIR"/tests/T*.sh
+    for i in "$SRCDIR"/autobuild/tests/T*.sh
     do
         arch_loadfile $i
         abtest || abtest_non-zero-handler $? $i

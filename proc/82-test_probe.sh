@@ -9,7 +9,7 @@ if bool $ABTEST_ENABLED; then
     if [ -z "$ABTEST_TYPE"]; then
         for i in $ABTEST_TESTPROBES; do
             if abtest_${i}_probe; then
-                ABTEST_TYPE=$i
+                export ABTEST_TYPE=$i
                 break
             fi
         done

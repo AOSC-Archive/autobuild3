@@ -23,7 +23,7 @@ abtest_self_file_test() {
     }
 
     # Redefine 
-    arch_loadfile "$SRCDIR"/test
+    arch_loadfile test
 
     abtest || abtest_non-zero-handler $1 "$SRCDIR"/test
     abtest_unprivileged || abtest_unprivileged_non-zero-handler $1 "$SRCDIR"/test
