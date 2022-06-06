@@ -13,20 +13,20 @@ abtest_self_file_test() {
     . "$AB/lib/tests.sh"
 
     abtest() {
-        abwarn "ABTEST_TYPE is set to self, but no abtest() found in autobuild{,/\$ARCH}/test"
+        abwarn "ABTEST_TYPE is set to self_file, but no abtest() found in autobuild{,/\$ARCH}/test"
         return 127
     }
 
     abtest_unprivileged() {
-        abwarn "ABTEST_TYPE is set to self, but no abtest_unprivileged() found in autobuild{,/\$ARCH}/test"
+        abwarn "ABTEST_TYPE is set to self_file, but no abtest_unprivileged() found in autobuild{,/\$ARCH}/test"
         return 127
     }
 
     # Redefine 
     arch_loadfile test
 
-    abtest || abtest_non-zero-handler $1 "$SRCDIR"/test
-    abtest_unprivileged || abtest_unprivileged_non-zero-handler $1 "$SRCDIR"/test
+    abtest || abtest_non-zero-handler $? "$SRCDIR"/test
+    abtest_unprivileged || abtest_unprivileged_non-zero-handler $? "$SRCDIR"/test
 }
 
 ABTEST_TESTPROBES+=' self_file'

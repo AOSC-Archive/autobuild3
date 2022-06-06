@@ -7,9 +7,11 @@
 
 if bool $ABTEST_ENABLED; then
     if [ -z "$ABTEST_TYPE"]; then
+        abinfo "No $ABTEST_TYPE set, automatically determining ..."
         for i in $ABTEST_TESTPROBES; do
             if abtest_${i}_probe; then
-                export ABTEST_TYPE=$i
+                abinfo "Automatically set ABTEST_TYPE to ${i}"
+                ABTEST_TYPE=$i
                 break
             fi
         done
