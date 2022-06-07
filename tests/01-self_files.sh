@@ -19,7 +19,7 @@ abtest_self_files_test() {
         abinfo "Loading test case file ${i} and performing tests ..."
         . $i
         abtest || abtest_non-zero-handler $? $i
-        abtest_unprivileged || abtest_non-zero-handler $? $i
+        abtest_unprivileged || abtest_unprivileged_non-zero-handler $? $i
         unset abtest abtest_unprivileged
     done
 }
