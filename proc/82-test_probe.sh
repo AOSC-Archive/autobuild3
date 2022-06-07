@@ -1,9 +1,7 @@
 #!/bin/bash
-##proc/81-test_probe.sh: TBF
-##FIXME: is there a better name for this?
+##proc/82-test_probe.sh: Determining test type
+##Part of AB3 integrated package build-time test module
 ##@copyright GPL-2.0+
-
-. "$AB/lib/tests.sh"
 
 if bool $ABTEST_ENABLED; then
     if [ -z "$ABTEST_TYPE"]; then
@@ -16,7 +14,4 @@ if bool $ABTEST_ENABLED; then
             fi
         done
     fi
-else
-    abinfo "Build-time package integrity check is disabled. Skipping ..."
 fi
-

@@ -1,7 +1,9 @@
 #!/bin/bash
 ##tests/01-self_files.sh: invoke testing function defined in `autobuild/tests/T*.sh`
-##Part of AB3 build-time package integrity check implementation.
+##Part of AB3 integrated package build-time test module
 ##@copyright GPL-2.0+
+
+##FIXME: implement unprivileged tests
 
 abtrylib tests || ablibret
 

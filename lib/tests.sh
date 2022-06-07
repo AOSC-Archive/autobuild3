@@ -1,5 +1,6 @@
 #!/bin/bash
-##lib/tests.sh: Basic functions of build-time package integrity check modules.
+##lib/tests.sh: Functions for test modules.
+##Part of AB3 integrated package test module
 ##@copyright GPL-2.0+
 
 abtest_non-zero-handler() {

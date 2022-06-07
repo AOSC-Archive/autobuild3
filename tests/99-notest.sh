@@ -1,6 +1,6 @@
 #!/bin/bash
-##tests/99-notest.sh: Dummy file indicates that test is not available.
-##Part of AB3 build-time package integrity check implementation.
+##tests/99-notest.sh: Dummy file indicates that test is not available or skipped.
+##Part of AB3 integrated package build-time test module
 ##@copyright GPL-2.0+
 
 abtest_notest_probe() {

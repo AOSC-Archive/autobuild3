@@ -1,7 +1,9 @@
 #!/bin/bash
 ##tests/00-self_file.sh: invoke testing function defined in `autobuild/test`
-##Part of AB3 build-time package integrity check implementation.
+##Part of AB3 integrated package build-time test module
 ##@copyright GPL-2.0+
+
+##FIXME: implement unprivileged tests
 
 abtrylib arch tests || ablibret
 
@@ -10,7 +12,6 @@ abtest_self_file_probe() {
 }
 
 abtest_self_file_test() {
-    . "$AB/lib/tests.sh"
 
     abtest() {
         abwarn "ABTEST_TYPE is set to self_file, but no abtest() found in autobuild{,/\$ARCH}/test"
