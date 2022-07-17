@@ -1,7 +1,8 @@
-LOONGSON2F
-ARMV4
-ARMV6HF
-ARMV7HF
-I486
-POWERPC
-PPC64
+armv4
+armv6hf
+armv7hf
+i486
+loongson2f
+m68k
+powerpc
+ppc64

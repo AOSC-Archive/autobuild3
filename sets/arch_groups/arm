@@ -1,4 +1,4 @@
-ARMV4
-ARMV6HF
-ARMV7HF
-ARM64
+armv4
+armv6hf
+armv7hf
+arm64
