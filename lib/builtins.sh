@@ -25,13 +25,20 @@ ab_reverse_patches() {
 
 ab_match_arch() {
 	if [[ ${ABHOST%%\/*} = $1 ]]; then
-		abinfo "Architecture '$ABHOST' matches '$1': taking true branch."
-		return 0
-	elif [[ ${ABHOST_GROUP%%\/*} = $1 ]]; then
-		abinfo "Architecture group '$ABHOST_GROUP' matches '$1': taking true branch."
+		abinfo "Architecture $ABHOST matches $1: taking true branch."
 		return 0
 	else
-		abinfo "Architecture '$ABHOST' mismatches '$1': taking false branch."
+		abinfo "Architecture $ABHOST mismatches $1: taking false branch."
 		return 1
 	fi
+}
+
+ab_match_archgroup() {
+	if [[ ${ABHOST_GROUP%%\/*} = $1 ]]; then
+		abinfo "Architecture group $ABHOST_GROUP matches $1: taking true branch."
+		return 0
+	else
+		abinfo "Architecture group $ABHOST_GROUP mismatches $1: taking false branch."
+                return 1
+        fi
 }
