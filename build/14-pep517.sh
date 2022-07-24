@@ -18,9 +18,18 @@ build_pep517_build(){
 		abwarn "PEP517 is only supported in Python 3. Please specify NOPYTHON2=1 to suppress this warning."
 	fi
 	BUILD_READY
-	abinfo "Building Python (PEP517) package"
-	pip3 install --use-pep517 --compile --no-binary ":all:" --no-index --prefix="$PKGDIR"/usr $MAKE_AFTER "$SRCDIR" \
-		|| abdie "Failed to install Python (PEP517) from the source directory: $?."
+	abinfo "Building Python (PEP517) package ..."
+	python3 \
+		-m build \
+		--no-isolation \
+		--wheel \
+		|| abdie "Failed to build Python (PEP517) package: $?."
+
+	abinfo "Installing Python (PEP517) package ..."
+	python3 \
+		-m installer \
+		--destdir="$PKGDIR" \
+		"$SRCDIR"/dist/*.whl
 	BUILD_FINAL
 }
 ABBUILDS+=' pep517'
