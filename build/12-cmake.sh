@@ -19,8 +19,13 @@ build_cmake_build(){
 	BUILD_START
 
 	abinfo "Running CMakeLists.txt to generate Makefile ..."
-	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER \
-		|| abdie "Failed to run CMakeLists.txt: $?."
+	if abisarray CMAKE_AFTER; then
+		cmake "$SRCDIR" $CMAKE_DEF "${CMAKE_AFTER[@]}" \
+			|| abdie "Failed to run CMakeLists.txt: $?."
+	else
+		cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER \
+			|| abdie "Failed to run CMakeLists.txt: $?."
+	fi
 	BUILD_READY
 
 	if bool "$ABUSECMAKEBUILD"; then
