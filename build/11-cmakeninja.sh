@@ -19,9 +19,14 @@ build_cmakeninja_build(){
 	fi
 	BUILD_START
 
-	abinfo "Running CMakeLists.txt to generate Ninja configuration ..."
-	cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER -GNinja \
-		|| abdie "Failed to run CMakeList.txt: $?."
+	abinfo "Running CMakeLists.txt to generate Ninja Configuration ..."
+	if abisarray CMAKE_AFTER; then
+		cmake "$SRCDIR" $CMAKE_DEF "${CMAKE_AFTER[@]}" -GNinja \
+			|| abdie "Failed to run CMakeLists.txt: $?."
+	else
+		cmake "$SRCDIR" $CMAKE_DEF $CMAKE_AFTER -GNinja \
+			|| abdie "Failed to run CMakeLists.txt: $?."
+	fi
 	BUILD_READY
 
 	if bool "$ABUSECMAKEBUILD"; then
@@ -37,7 +42,7 @@ build_cmakeninja_build(){
 		DESTDIR="$PKGDIR" \
 			ninja $ABMK $MAKE_AFTER install \
 			|| abdie "Failed to build and install binaries: $?."
-        fi
+	fi
 
 	if bool "$ABSHADOW"; then
 		cd "$SRCDIR" \
