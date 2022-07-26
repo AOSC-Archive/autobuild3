@@ -198,3 +198,16 @@ boolopt(){
 		return 0
 	fi
 }
+
+# <SOMETHING>_AFTER type checking
+# returns 0 if $1 points to an array
+abisarray() {
+	local VARIABLE_NAME="$1"
+	local VARIABLE_DECL=$( (declare -p $VARIABLE_NAME 2>/dev/null ) | head -1 | cut -f 2 -d ' ' )
+
+	if [[ "${VARIABLE_DECL}" == -*a* ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
