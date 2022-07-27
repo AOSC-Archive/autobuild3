@@ -63,15 +63,19 @@ build_autotools_build() {
 
 	BUILD_START
 	abinfo "Running configure ..."
+	local AUTOTOOLS_OPTION_CHECKING
 	if bool "$AUTOTOOLS_STRICT"; then
+		AUTOTOOLS_OPTION_CHECKING="--enable-option-checking=fatal"
+	fi
+	if abisarray AUTOTOOLS_AFTER; then
 		${configure:="$SRCDIR"/configure} \
-			$AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
-			--enable-option-checking=fatal \
+			$AUTOTOOLS_TARGET $AUTOTOOLS_DEF "${AUTOTOOLS_AFTER[@]}" \
+			$AUTOTOOLS_OPTION_CHECKING \
 			|| abdie "Failed to run configure: $?."
 	else
-		abwarn "Strict Autotools option checking disabled !!"
 		${configure:="$SRCDIR"/configure} \
 			$AUTOTOOLS_TARGET $AUTOTOOLS_DEF $AUTOTOOLS_AFTER \
+			$AUTOTOOLS_OPTION_CHECKING \
 			|| abdie "Failed to run configure: $?."
 	fi
 
