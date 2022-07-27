@@ -11,9 +11,15 @@ build_meson_build() {
 	mkdir "$BLDDIR" \
 		|| abdie "Failed to create build directory: $?."
 	abinfo "Running Meson ..."
-	meson ${MESON_DEF} ${MESON_AFTER} \
-		"$SRCDIR" "$BLDDIR" \
-		|| abdie "Failed to run Meson ..."
+	if abisarray MESON_AFTER; then
+		meson ${MESON_DEF} "${MESON_AFTER[@]}" \
+			"$SRCDIR" "$BLDDIR" \
+			|| abdie "Failed to run Meson ..."
+	else
+		meson ${MESON_DEF} ${MESON_AFTER} \
+			"$SRCDIR" "$BLDDIR" \
+			|| abdie "Failed to run Meson ..."
+	fi
 	cd "$BLDDIR" \
 		|| abdie "Failed to enter build directory: $?."
 	abinfo "Building binaries ..."
