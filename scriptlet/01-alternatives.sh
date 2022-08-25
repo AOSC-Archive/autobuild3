@@ -13,11 +13,16 @@ addalt(){
 # alternative path link prio [path2 link2 prio2 ..]
 alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 3 || break; done; }
 
-if [ -e autobuild/alternatives ]
-then
+if [ -e "$SRCDIR"/autobuild/${CROSS:-$ARCH}/alternatives ]; then
 	echo "#>start 01-alternatives" >> abscripts/postinst
 	echo "#>start 01-alternatives" >> abscripts/prerm
-	. autobuild/alternatives
+	. "$SRCDIR"/autobuild/${CROSS:-$ARCH}/alternatives
+	echo "#>end 01-alternatives" >> abscripts/postinst
+	echo "#>end 01-alternatives" >> abscripts/prerm
+elif [ -e "$SRCDIR"/autobuild/${CROSS:-$ARCH}/alternatives ]; then
+	echo "#>start 01-alternatives" >> abscripts/postinst
+	echo "#>start 01-alternatives" >> abscripts/prerm
+	. "$SRCDIR"/autobuild/alternatives
 	echo "#>end 01-alternatives" >> abscripts/postinst
 	echo "#>end 01-alternatives" >> abscripts/prerm
 fi
