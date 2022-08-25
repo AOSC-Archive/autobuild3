@@ -32,11 +32,13 @@ cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
 
 [ -d "$PKGDIR" ] || abdie "50-build: Suspecting build failure due to missing PKGDIR."
 
-if [ -d "$(arch_findfile overrides)" ] ; then
-	cp -ra "$(arch_findfile overrides)"/* "$PKGDIR/"
-fi
-
 arch_loadfile_strict beyond
+
+if [ -d "$(arch_findfile overrides)" ] ; then
+	abinfo "Deploying files in overrides ..."
+	cp -arv "$(arch_findfile overrides)"/* "$PKGDIR/" || \
+		abdie "Failed to deploy files in overrides: $?."
+fi
 
 cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
 
