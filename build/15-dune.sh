@@ -16,8 +16,8 @@ build_dune_build(){
 
 	BUILD_READY
 	abinfo "Building Dune project $PKGNAME ..."
-	if [ -n DUNE_PACKAGES ]; then
-		abinfo "Setting dune build target packages: $DUNE_PACKAGES"
+	if [[ -n $DUNE_PACKAGES ]]; then
+		abinfo "Setting dune build target packages to: $DUNE_PACKAGES"
 		_DUNE_BUILD_PACKAGES="-p ${DUNE_PACKAGES// /,}"
 	fi
 	dune build \
@@ -28,22 +28,22 @@ build_dune_build(){
 	mkdir -pv "$PKGDIR"/"$(ocamlfind printconf destdir)"
 
 	BUILD_FINAL
-	if [ -n DUNE_PACKAGES ]; then
-		dune install \
-			--prefix "$PKGDIR"/usr \
-			--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
-			"$DUNE_INSTALL_AFTER" \
-			|| abdie "Failed to install Dune project $PKGNAME: $?."
-	else
+	if [[ -n $DUNE_PACKAGES ]]; then
 		# Install all components one by one
 		for _pkg in $DUNE_PACKAGES; do
 			abinfo "Installing component $_pkg ..."
-			dune install "_pkg" \
+			dune install "$_pkg" \
 			--prefix "$PKGDIR"/usr \
 			--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
-			"$DUNE_INSTALL_AFTER" \
+			$DUNE_INSTALL_AFTER \
 			|| abdie "Failed to install Dune project $PKGNAME component $_pkg: $?."
 		done
+	else
+		dune install \
+			--prefix "$PKGDIR"/usr \
+			--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
+			$DUNE_INSTALL_AFTER \
+			|| abdie "Failed to install Dune project $PKGNAME: $?."
 	fi
 	abinfo "Correcting directories ..."
 	if [ -d "$PKGDIR"/usr/doc ]; then
