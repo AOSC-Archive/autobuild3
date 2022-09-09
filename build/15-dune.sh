@@ -3,8 +3,6 @@
 ##@copyright GPL-2.0+
 abtryexe dune || ablibret
 
-_OCAML_NATIVE_ARCH="(amd64|arm64|ppc64el)"
-
 build_dune_probe(){
 	[ -f "$SRCDIR"/dune-project ]
 }
