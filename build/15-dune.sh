@@ -3,21 +3,50 @@
 ##@copyright GPL-2.0+
 abtryexe dune || ablibret
 
+_OCAML_NATIVE_ARCH="(amd64|arm64|ppc64el)"
+
 build_dune_probe(){
 	[ -f "$SRCDIR"/dune-project ]
 }
 
 build_dune_build(){
 	BUILD_START
+	if ab_match_arch "!$_OCAML_NATIVE_ARCH"; then
+		abinfo "Non native code architecture for OCaml detected. Disabling ABSPLITDBG and ABSTRIP ..."
+		export ABSPLITDBG=0 ABSTRIP=0
+	fi
+
+	BUILD_READY
 	abinfo "Building Dune project $PKGNAME ..."
+	if [ -n DUNE_PACKAGES ]; then
+		abinfo "Setting dune build target packages: $DUNE_PACKAGES"
+		_DUNE_BUILD_PACKAGES="-p ${DUNE_PACKAGES// /,}"
+	fi
 	dune build \
+		$_DUNE_BUILD_PACKAGES \
+		$DUNE_BUILD_AFTER \
 		|| abdie "Failed to build Dune project $PKGNAME: $?."
 	abinfo "Installing Dune project $PKGNAME ..."
 	mkdir -pv "$PKGDIR"/"$(ocamlfind printconf destdir)"
-	dune install \
-		--prefix "$PKGDIR"/usr \
-		--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
-		|| abdie "Failed to install Dune project $PKGNAME: $?."
+
+	BUILD_FINAL
+	if [ -n DUNE_PACKAGES ]; then
+		dune install \
+			--prefix "$PKGDIR"/usr \
+			--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
+			"$DUNE_INSTALL_AFTER" \
+			|| abdie "Failed to install Dune project $PKGNAME: $?."
+	else
+		# Install all components one by one
+		for _pkg in $DUNE_PACKAGES; do
+			abinfo "Installing component $_pkg ..."
+			dune install "_pkg" \
+			--prefix "$PKGDIR"/usr \
+			--libdir "$PKGDIR"/"$(ocamlfind printconf destdir)" \
+			"$DUNE_INSTALL_AFTER" \
+			|| abdie "Failed to install Dune project $PKGNAME component $_pkg: $?."
+		done
+	fi
 	abinfo "Correcting directories ..."
 	if [ -d "$PKGDIR"/usr/doc ]; then
 		mkdir -pv "$PKGDIR"/usr/share
