@@ -34,9 +34,7 @@ ab_match_arch() {
 }
 
 ab_match_archgroup() {
-	# Ensure perfect match
-	_ABHOST_GROUP=". $ABHOST_GROUP ."
-	if (echo $_ABHOST_GROUP | grep " $1 " - &> /dev/null) ; then
+	if (echo $ABHOST_GROUP | grep -qFx "$1" -) ; then
 		abinfo "Architecture group $ABHOST_GROUP matches $1: taking true branch."
 		return 0
 	else
