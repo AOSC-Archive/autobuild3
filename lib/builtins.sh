@@ -34,11 +34,13 @@ ab_match_arch() {
 }
 
 ab_match_archgroup() {
-	if [[ ${ABHOST_GROUP%%\/*} = $1 ]]; then
+	# Ensure perfect match
+	_ABHOST_GROUP=". $ABHOST_GROUP ."
+	if (echo $_ABHOST_GROUP | grep " $1 " - &> /dev/null) ; then
 		abinfo "Architecture group $ABHOST_GROUP matches $1: taking true branch."
 		return 0
 	else
 		abinfo "Architecture group $ABHOST_GROUP mismatches $1: taking false branch."
-                return 1
-        fi
+		return 1
+	fi
 }

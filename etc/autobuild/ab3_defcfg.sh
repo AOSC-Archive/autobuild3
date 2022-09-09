@@ -162,7 +162,7 @@ abdetectarch() {
 }
 
 abassigngroup() {
-	basename "$(grep -lr "$1" "$AB/sets/arch_groups/")"
+	basename -a $(grep -lr "$1" "$AB/sets/arch_groups/")
 }
 
 ((AB_COMPAT > 1)) || : "${ABBUILD:=$ARCH}" "${ABHOST:=$CROSS}"
