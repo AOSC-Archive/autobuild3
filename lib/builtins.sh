@@ -34,11 +34,11 @@ ab_match_arch() {
 }
 
 ab_match_archgroup() {
-	if (echo $ABHOST_GROUP | grep -qFx "$1" -) ; then
-		abinfo "Architecture group $ABHOST_GROUP matches $1: taking true branch."
+	if (echo "$ABHOST_GROUP" | grep -qFx "$1" -) ; then
+		abinfo "Architecture group '${ABHOST_GROUP//$'\n'/,}' matches $1: taking true branch."
 		return 0
 	else
-		abinfo "Architecture group $ABHOST_GROUP mismatches $1: taking false branch."
+		abinfo "Architecture group '${ABHOST_GROUP//$'\n'/,}' mismatches $1: taking false branch."
 		return 1
 	fi
 }
