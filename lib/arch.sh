@@ -9,7 +9,13 @@ abrequire pm
 # translations from dpkg representation to generic ones.
 # Sorry, top level! Scoping made me do this.
 declare -gA ARCH_TARGET
-ARCH_FINDFILELIST=("autobuild/$ABHOST"{-cross{-"$ABBUILD",},} "autobuild/${ABHOST_GROUP}" autobuild)
+# Construct ARCH_FINDFILELIST
+## FIXME: Find a way to handle ambiguous abhost groups
+## e.g., autobuild/{mainline,ocaml-native}
+ARCH_FINDFILELIST=("autobuild/$ABHOST"{-cross{-"$ABBUILD",},} \
+	"autobuild/`eval echo ${ABHOST_GROUP//$'\n'/,}`" \
+	autobuild)
+
 ARCH_SUFFIX=('' .sh .bash .bsh)
 arch_findfile(){
 	local i j _arch_suf
@@ -34,14 +40,17 @@ arch_loadvar(){
 	if [[ "${_archvar-_}" != '_' ]]; then
 		_commonvar="${_archvar}"
 	else
+		# Need to try to match group one by one
 		for _GROUP in ${ABHOST_GROUP}; do
 			declare -n _archgrpvar=${1}__${_GROUP^^}
 			if [[ "${_archgrpvar-_}" != '_' ]]; then
 				if [[ $_assignedGroup ]]; then
-					aberr "Refuse to assign ${1} to ${1}__${_GROUP^^} because it is already assigned to ${1}__${_assignedGroup^^}"
-					abdbg "Current ABHOST ${ABHOST} belongs to the following groups:"
-					abdbg "${ABHOST_GROUP//$'\n'/, }"
-					abdie "Ambiguous architecture group variable detected!"
+					aberr "Refuse to assign ${1} to group-specific variable ${1}__${_GROUP^^}"
+					aberr "... because it is already assigned to ${1}__${_assignedGroup^^}"
+					abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
+					abinfo "${ABHOST_GROUP//$'\n'/, }"
+					abinfo "Using ${1}__${ABHOST^^} will suppress the conflict."
+					abdie "Ambiguous architecture group variable detected! Refuse to proceed."
 					break
 				fi
 				_commonvar=${_archgrpvar}
