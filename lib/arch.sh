@@ -30,11 +30,24 @@ arch_findfile(){
 
 # Initialise variables with architectural suffixes.
 arch_loadvar(){
-	declare -n _archvar=${1}__${ABHOST^^} _archgrpvar=${1}__${ABHOST_GROUP^^} _commonvar=${1}
+	declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
 	if [[ "${_archvar-_}" != '_' ]]; then
 		_commonvar="${_archvar}"
-	elif [[ "${_archgrpvar-_}" != '_' ]]; then
-		_commonvar="${_archgrpvar}"
+	else
+		for _GROUP in ${ABHOST_GROUP}; do
+			declare -n _archgrpvar=${1}__${_GROUP^^}
+			if [[ "${_archgrpvar-_}" != '_' ]]; then
+				if [[ $_assignedGroup ]]; then
+					aberr "Refuse to assign ${1} to ${1}__${_GROUP^^} because it is already assigned to ${1}__${_assignedGroup^^}"
+					abdbg "Current ABHOST ${ABHOST} belongs to the following groups:"
+					abdbg "${ABHOST_GROUP//$'\n'/, }"
+					abdie "Ambiguous architecture group variable detected!"
+					break
+				fi
+				_commonvar=${_archgrpvar}
+				_assignedGroup=${_GROUP}
+			fi
+		done
 	fi
 	export $1
 }
