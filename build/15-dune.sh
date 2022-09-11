@@ -10,7 +10,7 @@ build_dune_probe(){
 build_dune_build(){
 	BUILD_START
 	if ! ab_match_archgroup ocaml_native; then
-		abinfo "Non native code architecture for OCaml detected. Disabling ABSPLITDBG and ABSTRIP ..."
+		abinfo "OCaml has no native code generation for $ABHOST. Disabling ABSPLITDBG and ABSTRIP ..."
 		export ABSPLITDBG=0 ABSTRIP=0
 	fi
 

@@ -45,11 +45,11 @@ arch_loadvar(){
 			declare -n _archgrpvar=${1}__${_GROUP^^}
 			if [[ "${_archgrpvar-_}" != '_' ]]; then
 				if [[ $_assignedGroup ]]; then
-					aberr "Refuse to assign ${1} to group-specific variable ${1}__${_GROUP^^}"
+					aberr "Refusing to assign ${1} to group-specific variable ${1}__${_GROUP^^}"
 					aberr "... because it is already assigned to ${1}__${_assignedGroup^^}"
 					abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
 					abinfo "${ABHOST_GROUP//$'\n'/, }"
-					abinfo "Using ${1}__${ABHOST^^} will suppress the conflict."
+					abinfo "Use ${1}__${ABHOST^^} instead to suppress the conflict"
 					abdie "Ambiguous architecture group variable detected! Refuse to proceed."
 					break
 				fi

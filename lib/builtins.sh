@@ -45,7 +45,7 @@ ab_match_arch() {
 
 ## ab_match_archgroup "group_match_pattern"
 ## Check whether current ABHOST is in a specific arch group, using bash pattern matching.
-## See /sets/arch_groups/ for group infomation
+## See /sets/arch_groups/ for group information
 ## Example: ab_match_archgroup "+(mainline|ocaml_native)"
 ab_match_archgroup() {
 	# Check whether the calling of function is illegal
@@ -56,7 +56,7 @@ ab_match_archgroup() {
 	fi
 	# A little more robustness here
 	if [[ ! $ABHOST_GROUP ]]; then
-		abwarn "Current ABHOST $ABHOST is not belong to any arch group."
+		abwarn "Current ABHOST $ABHOST does not belong to any arch group."
 		abwarn "Taking false branch."
 		return 1
 	fi
@@ -65,7 +65,7 @@ ab_match_archgroup() {
 			abinfo "Member '${_grp}' in Architecture group '${ABHOST_GROUP//$'\n'/,}' matches $1: taking true branch."
 			return 0
 		else 
-			abdbg "Member '${_grp}' in Architecture group '${ABHOST_GROUP//$'\n'/,}' mismatches $1"
+			abdbg "Member '${_grp}' in Architecture group '${ABHOST_GROUP//$'\n'/,}' mismatches $1."
 		fi
 	done
 	abinfo "All architecture group members '${ABHOST_GROUP//$'\n'/,}' mismatches $1: taking false branch."
