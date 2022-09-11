@@ -23,13 +23,16 @@ ab_reverse_patches() {
 	done
 }
 
+## FIXME: Find a way to make the output about what action will be taken more specific.
+## Maybe a traceback message (does not print by default) is ideal?
+
 ## ab_match_arch "match_pattern"
 ## Check whether current ABHOST matches the match_pattern
 ## Example: ab_match_arch "+(amd64|arm64)"
 ## See also: https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html
 ab_match_arch() {
 	# Check whether the calling of function is illegal
-	if [[ ! $1 ]]; then
+	if [[ -z $1 ]]; then
 		aberr "ab_match_arch() was called but no pattern was specified."
 		abinfo "Usage: ab_match_arch \"match_pattern\""
 		abdie "Misuse of ab_match_arch()! Refuse to proceed."
@@ -49,7 +52,7 @@ ab_match_arch() {
 ## Example: ab_match_archgroup "+(mainline|ocaml_native)"
 ab_match_archgroup() {
 	# Check whether the calling of function is illegal
-	if [[ ! $1 ]]; then
+	if [[ -z $1 ]]; then
 		aberr "ab_match_archgroup() was called but no group was specified."
 		abinfo "Usage: ab_match_archgroup \"group_match_pattern\""
 		abdie "Misuse of ab_match_archgroup()! Refuse to proceed."
