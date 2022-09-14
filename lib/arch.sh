@@ -39,6 +39,7 @@ arch_loadvar(){
 	declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
 	if [[ "${_archvar-_}" != '_' ]]; then
 		_commonvar="${_archvar}"
+		abdbg "Assigning ${1} to arch-specific variable ${1}__${ABHOST^^}"
 	else
 		# Need to try to match group one by one
 		for _GROUP in ${ABHOST_GROUP}; do
@@ -53,12 +54,16 @@ arch_loadvar(){
 					abdie "Ambiguous architecture group variable detected! Refuse to proceed."
 					break
 				fi
+				abdbg "Assigning ${1} to group-specific variable ${1}__${_GROUP^^}"
 				_commonvar=${_archgrpvar}
 				_assignedGroup=${_GROUP}
 			fi
 		done
 	fi
 	export $1
+	# Fixes #134
+	# Need to unset it to prevent pollution
+	unset _assignedGroup
 }
 
 # FIXME: We need to figure out a way of handling multiple return vals!
