@@ -15,28 +15,28 @@ alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 
 
 _hasAlternative=0
 
-if [ -e "$SRCDIR"/autobuild/alternatives ]; then
-	abdbg "Found common alternatives file: ${SRCDIR}/autobuild/alternatives"
+if [ -f "$SRCDIR"/autobuild/alternatives ]; then
+	abdbg "Found general alternatives file: ${SRCDIR}/autobuild/alternatives"
 	_hasAlternative=1
 fi
 
-## ${CROSS:-$ARCH} or $ABHOST is always prior than arch groups
-if [ -e "$SRCDIR"/autobuild/${CROSS:-$ARCH}/alternatives ]; then
-	abdbg "Found arch-specific alternatives file: ${SRCDIR}/autobuild/${CROSS:-$ARCH}/alternatives"
+## More specific per-arch alternatives file always take precedence over per-group ones
+if [ -f "$SRCDIR"/autobuild/${ABHOST}/alternatives ]; then
+	abdbg "Found per-arch alternatives file: ${SRCDIR}/autobuild/${ABHOST}/alternatives"
 	_hasAlternative=1
-	_archTarget="/${CROSS:-$ARCH}"
+	_archTarget="/${ABHOST}"
 else
 	for _grp in ${ABHOST_GROUP}; do
-		if [ -e "$SRCDIR"/autobuild/${_grp}/alternatives ]; then
+		if [ -f "$SRCDIR"/autobuild/${_grp}/alternatives ]; then
 			if [ $_assignedGroup ]; then
-				aberr "Refusing to treat autobuild/${_grp}/alternatives as the group-specific alternative file"
-				aberr "... because there is another file: autobuild/${_assignedGroup}/alternatives"
+				aberr "Refusing to use autobuild/${_grp}/alternatives for group-specific alternatives"
+				aberr "... because another file autobuild/${_assignedGroup}/alternatives is also valid for target architecture"
 				abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
 				abinfo "${ABHOST_GROUP//$'\n'/, }"
-				abinfo "Create autobuild/${CROSS:-$ARCH}/alternatives instead to suppress the conflict"
-				abdie "Ambiguous group-specific alternative file detected! Refuse to proceed."
+				abinfo "Create per-arch autobuild/${ABHOST}/alternatives instead to resolve the conflict"
+				abdie "Multiple per-group alternative files for target architecture detected! Refuse to proceed."
 			fi
-			abdbg "Found arch-group-specific alternatives file: ${SRCDIR}/autobuild/${_grp}/alternatives"
+			abdbg "Found per-group alternatives file: ${SRCDIR}/autobuild/${_grp}/alternatives"
 			_hasAlternative=1
 			_archTarget="/${_grp}"
 			_assignedGroup=${_grp}
