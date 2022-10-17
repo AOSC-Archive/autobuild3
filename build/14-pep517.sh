@@ -11,10 +11,10 @@ build_pep517_probe(){
 
 build_pep517_build(){
 	BUILD_START
-	if bool NOPYTHON3; then
+	if bool "$NOPYTHON3"; then
 		abdie "PEP517 is only supported in Python 3. Specifying NOPYTHON3 is contradictory!"
 	fi
-	if ! bool NOPYTHON2; then
+	if ! bool "$NOPYTHON2"; then
 		abwarn "PEP517 is only supported in Python 3. Please specify NOPYTHON2=1 to suppress this warning."
 	fi
 	BUILD_READY
