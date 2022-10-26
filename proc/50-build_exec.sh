@@ -1,7 +1,21 @@
 #!/bin/bash
 ##proc/build_do: So we build it now
 ##@copyright GPL-2.0+
-arch_loadfile_strict prepare
+
+if ! bool $ABSTAGE2; then
+	arch_loadfile_strict prepare
+else
+	if arch_findfile prepare.stage2; then
+		abwarn "ABSTAGE2 returned true, running stage2 prepare script ..."
+		arch_loadfile_strict prepare.stage2
+	elif arch_findfile prepare; then
+		abwarn "ABSTAGE2 returned true, running stage2 prepare script ..."
+		abwarn "Could not find stage2 prepare script, falling back to normal prepare script ..."
+		arch_loadfile_strict prepare
+	else
+		true
+	fi
+fi
 
 cd "$SRCDIR"
 
@@ -32,7 +46,20 @@ cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
 
 [ -d "$PKGDIR" ] || abdie "50-build: Suspecting build failure due to missing PKGDIR."
 
-arch_loadfile_strict beyond
+if ! bool $ABSTAGE2; then
+	arch_loadfile_strict beyond
+else
+	if arch_findfile beyond.stage2; then
+		abwarn "ABSTAGE2 returned true, running stage2 beyond script ..."
+		arch_loadfile_strict beyond.stage2
+	elif arch_findfile beyond; then
+		abwarn "ABSTAGE2 returned true, running stage2 beyond script ..."
+		abwarn "Could not find stage2 beyond script, falling back to normal beyond script ..."
+		arch_loadfile_strict beyond
+	else
+		true
+	fi
+fi
 
 if [ -d "$(arch_findfile overrides)" ] ; then
 	abinfo "Deploying files in overrides ..."
