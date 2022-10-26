@@ -20,8 +20,20 @@ abrequire arch
 BUILD=${ARCH_TARGET["$ABBUILD"]}
 HOST=${ARCH_TARGET["$ABHOST"]}
 
-
-_arch_trymore=1 arch_loadfiles defines || abdie "defines returned a non-zero value: $?." 
+if ! bool $ABSTAGE2; then
+	_arch_trymore=1 arch_loadfiles defines || \
+		abdie "Failed to source defines file: $?."
+else
+	abwarn "ABSTAGE2 returned true, loading stage2 defines ..."
+	if arch_findfile defines.stage2; then
+		_arch_trymore=1 arch_loadfiles defines.stage2 || \
+                        abdie "Failed to source stage2 defines file: $?."
+	else
+		abwarn "Unable to find stage2 defines, falling back to normal defines ..."
+		_arch_trymore=1 arch_loadfiles defines || \
+			abdie "Failed to source defines file: $?."
+	fi
+fi
 [[ ${ABHOST%%\/*} != $FAIL_ARCH ]] ||
 	abdie "This package cannot be built for $FAIL_ARCH, e.g. $ABHOST."
 
