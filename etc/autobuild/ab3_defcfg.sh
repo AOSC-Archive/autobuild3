@@ -157,6 +157,13 @@ GOFLAGS+=" -buildmode=pie" # Hardening binary.
 . "$AB"/etc/autobuild/ab3cfg.sh
 [[ -d "$AB"/etc/autobuild/ab3cfg.d ]] && recsr "$AB"/etc/autobuild/ab3cfg.d/*!(.dpkg*|dist)
 
+if bool $ABSTAGE2; then
+	abwarn "Autobuild3 running in stage2 mode ..."
+	NOCARGOAUDIT=yes
+	NONPMAUDIT=yes
+	ABSPLITDBG=no
+fi
+
 abdetectarch() {
 	type dpkg >/dev/null 2>&1 && dpkg --print-architecture || ( echo "[!!!] Cannot find dpkg executable, exiting ..." && exit 1 )
 }
