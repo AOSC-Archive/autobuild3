@@ -15,28 +15,35 @@ alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 
 
 _hasAlternative=0
 
-if [ -f "$SRCDIR"/autobuild/alternatives ]; then
-	abdbg "Found general alternatives file: ${SRCDIR}/autobuild/alternatives"
+if ! bool $ABSTAGE2; then
+	ABALTDEFINES=alternatives
+else
+	abwarn "Stage 2 mode detected, using alternatives.stage2 ..."
+	ABALTDEFINES=alternatives.stage2
+fi
+
+if [ -f "$SRCDIR"/autobuild/${ABALTDEFINES} ]; then
+	abdbg "Found general alternatives file: ${SRCDIR}/autobuild/${ABALTDEFINES}"
 	_hasAlternative=1
 fi
 
 ## More specific per-arch alternatives file always take precedence over per-group ones
-if [ -f "$SRCDIR"/autobuild/${ABHOST}/alternatives ]; then
-	abdbg "Found per-arch alternatives file: ${SRCDIR}/autobuild/${ABHOST}/alternatives"
+if [ -f "$SRCDIR"/autobuild/${ABHOST}/${ABALTDEFINES} ]; then
+	abdbg "Found per-arch alternatives file: ${SRCDIR}/autobuild/${ABHOST}/${ABALTDEFINES}"
 	_hasAlternative=1
 	_archTarget="/${ABHOST}"
 else
 	for _grp in ${ABHOST_GROUP}; do
-		if [ -f "$SRCDIR"/autobuild/${_grp}/alternatives ]; then
+		if [ -f "$SRCDIR"/autobuild/${_grp}/${ABALTDEFINES} ]; then
 			if [ $_assignedGroup ]; then
-				aberr "Refusing to use autobuild/${_grp}/alternatives for group-specific alternatives"
-				aberr "... because another file autobuild/${_assignedGroup}/alternatives is also valid for target architecture"
+				aberr "Refusing to use autobuild/${_grp}/${ABALTDEFINES} for group-specific alternatives"
+				aberr "... because another file autobuild/${_assignedGroup}/${ABALTDEFINES} is also valid for target architecture"
 				abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
 				abinfo "${ABHOST_GROUP//$'\n'/, }"
-				abinfo "Create per-arch autobuild/${ABHOST}/alternatives instead to resolve the conflict"
+				abinfo "Create per-arch autobuild/${ABHOST}/${ABALTDEFINES} instead to resolve the conflict"
 				abdie "Multiple per-group alternative files for target architecture detected! Refuse to proceed."
 			fi
-			abdbg "Found per-group alternatives file: ${SRCDIR}/autobuild/${_grp}/alternatives"
+			abdbg "Found per-group alternatives file: ${SRCDIR}/autobuild/${_grp}/${ABALTDEFINES}"
 			_hasAlternative=1
 			_archTarget="/${_grp}"
 			_assignedGroup=${_grp}
@@ -44,10 +51,10 @@ else
 	done
 fi
 if bool "$_hasAlternative"; then
-	abinfo "Taking alternatives file: ${SRCDIR}/autobuild${_archTarget}/alternatives"
+	abinfo "Taking alternatives file: ${SRCDIR}/autobuild${_archTarget}/${ABALTDEFINES}"
 	echo "#>start 01-alternatives" >> abscripts/postinst
 	echo "#>start 01-alternatives" >> abscripts/prerm
-	. "$SRCDIR"/autobuild"$_archTarget"/alternatives
+	. "$SRCDIR"/autobuild"$_archTarget"/${ABALTDEFINES}
 	echo "#>end 01-alternatives" >> abscripts/postinst
 	echo "#>end 01-alternatives" >> abscripts/prerm
 else
