@@ -61,6 +61,8 @@ else
 	fi
 fi
 
+cd "$SRCDIR" || abdie "Unable to cd $SRCDIR: $?."
+
 if [ -d "$(arch_findfile overrides)" ] ; then
 	abinfo "Deploying files in overrides ..."
 	cp -arv "$(arch_findfile overrides)"/* "$PKGDIR/" || \
