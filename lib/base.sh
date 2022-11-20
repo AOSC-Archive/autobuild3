@@ -211,3 +211,43 @@ abisarray() {
 		return 1
 	fi
 }
+
+# $1 = NAME of variable to check
+# return 0 if $1 points to a defined variable regardless of type
+abisdefined() {
+	local VARIABLE_NAME="$1"
+	declare -p $VARIABLE_NAME 2>/dev/null 
+}
+
+# $1 = NAME of source variable, single string or array
+# $2 = NAME of destination variable of the same type
+# This function will aberr if type doesn't match
+abcopyvar() {
+	local src=$1
+	local dst=$2
+
+	# Type checking
+	abisarray $src
+	local -i src_is_array=$?
+	abisarray $dst
+	local -i dst_is_array=$?
+
+	if [[ $src_is_array -ne $dst_is_array ]]; then
+		if [[ $src_is_array -eq 0 ]]; then
+			aberr "$src is an array, but $dst is a single string."
+		else
+			aberr "$src is a single string, but $dst is an array."
+		fi
+		abdie "Cannot copy variables of different type!"
+	fi
+
+	# Create references for content r/w
+	local -n ref_read_src=$src
+	local -n ref_write_dst=$dst
+
+	if [[ $src_is_array -eq 0 ]]; then
+		ref_write_dst=("${ref_read_src[@]}")
+	else
+		ref_write_dst="${ref_read_src}"
+	fi
+}
