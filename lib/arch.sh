@@ -36,34 +36,34 @@ arch_findfile(){
 
 # Initialise variables with architectural suffixes.
 arch_loadvar(){
-	declare -n _archvar=${1}__${ABHOST^^} _commonvar=${1}
-	if [[ "${_archvar-_}" != '_' ]]; then
-		_commonvar="${_archvar}"
-		abdbg "Assigning ${1} to arch-specific variable ${1}__${ABHOST^^}"
+	local name_archvar=${1}__${ABHOST^^}
+	local name_commonvar=${1}
+	if abisdefined $name_archvar; then
+		abcopyvar $name_archvar $name_commonvar
+		abdbg "Setting ${name_commonvar} to arch-specific variable $name_archvar"
 	else
 		# Need to try to match group one by one
 		for _GROUP in ${ABHOST_GROUP}; do
-			declare -n _archgrpvar=${1}__${_GROUP^^}
-			if [[ "${_archgrpvar-_}" != '_' ]]; then
+			local name_groupvar=${1}__${_GROUP^^}
+			if abisdefined $name_groupvar; then
 				if [[ $_assignedGroup ]]; then
-					aberr "Refusing to assign ${1} to group-specific variable ${1}__${_GROUP^^}"
+					aberr "Refusing to assign $name_commonvar to group-specific variable $name_groupvar"
 					aberr "... because it is already assigned to ${1}__${_assignedGroup^^}"
 					abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
 					abinfo "${ABHOST_GROUP//$'\n'/, }"
-					abinfo "Use ${1}__${ABHOST^^} instead to suppress the conflict"
+					abinfo "Add a more specific $name_archvar instead to suppress the conflict."
 					abdie "Ambiguous architecture group variable detected! Refuse to proceed."
 					break
 				fi
-				abdbg "Assigning ${1} to group-specific variable ${1}__${_GROUP^^}"
-				_commonvar=${_archgrpvar}
+				abdbg "Setting $name_commonvar to group-specific variable $name_groupvar"
+				abcopyvar $name_groupvar $name_commonvar
 				_assignedGroup=${_GROUP}
 			fi
 		done
+		# Fixes #134
+		# Need to unset it to prevent pollution
+		unset _assignedGroup
 	fi
-	export $1
-	# Fixes #134
-	# Need to unset it to prevent pollution
-	unset _assignedGroup
 }
 
 # FIXME: We need to figure out a way of handling multiple return vals!
