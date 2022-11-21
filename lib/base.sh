@@ -238,7 +238,7 @@ abcopyvar() {
 		else
 			aberr "$src is a single string, but $dst is an array."
 		fi
-		abdie "Cannot copy variables of different type!"
+		abdie "Refusing to copy variables of different type!"
 	fi
 
 	# Create references for content r/w

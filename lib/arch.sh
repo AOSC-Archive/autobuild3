@@ -39,8 +39,8 @@ arch_loadvar(){
 	local name_archvar=${1}__${ABHOST^^}
 	local name_commonvar=${1}
 	if abisdefined $name_archvar; then
+		abdbg "Setting ${name_commonvar} from arch-specific variable $name_archvar"
 		abcopyvar $name_archvar $name_commonvar
-		abdbg "Setting ${name_commonvar} to arch-specific variable $name_archvar"
 	else
 		# Need to try to match group one by one
 		for _GROUP in ${ABHOST_GROUP}; do
@@ -55,7 +55,7 @@ arch_loadvar(){
 					abdie "Ambiguous architecture group variable detected! Refuse to proceed."
 					break
 				fi
-				abdbg "Setting $name_commonvar to group-specific variable $name_groupvar"
+				abdbg "Setting $name_commonvar from group-specific variable $name_groupvar"
 				abcopyvar $name_groupvar $name_commonvar
 				_assignedGroup=${_GROUP}
 			fi
