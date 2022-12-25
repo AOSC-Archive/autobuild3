@@ -9,7 +9,7 @@ filter_elf_splitdbg_pre()
 {
 	bool $ABSTRIP || return 0
 	bool $ABSPLITDBG || return 0
-	abdbg "Creating debug symbol install directory: $SYMDIR"
+	abdbg "Creating installation directory for debug symbols: $SYMDIR"
 	mkdir -p "$SYMDIR"
 }
 
@@ -19,7 +19,7 @@ filter_elf_splitdbg()
 	bool $ABSTRIP || return 0
 	# ABSTRIP = true and ABSPLITDBG = false => Don't split
 	bool $ABSPLITDBG || return 0
-	abdbg "Saving debug symbol of $1 .."
+	abdbg "Saving debug symbols from $1 .."
 	elf_copydbg "$1" "${SYMDIR}"
 }
 
