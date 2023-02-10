@@ -15,16 +15,22 @@ alternative(){ while (($#)); do addalt "$1" "$(basename "$1")" "$2" "$3"; shift 
 
 _hasAlternative=0
 
-if ! bool $ABSTAGE2; then
-	ABALTDEFINES=alternatives
-else
-	abwarn "Stage 2 mode detected, using alternatives.stage2 ..."
-	ABALTDEFINES=alternatives.stage2
-fi
+ABALTDEFINES=alternatives
 
 if [ -f "$SRCDIR"/autobuild/${ABALTDEFINES} ]; then
-	abdbg "Found general alternatives file: ${SRCDIR}/autobuild/${ABALTDEFINES}"
-	_hasAlternative=1
+	if ! bool $ABSTAGE2; then
+		abdbg "Found general alternatives file: ${SRCDIR}/autobuild/${ABALTDEFINES}"
+		_hasAlternative=1
+	else
+		if [ -f "$SRCDIR"/autobuild/${ABALTDEFINES}.stage2 ]; then
+			abdbg "stage2: Found stage2 alternatives file, using ${ABALTDEFINES}.stage2 ..."
+			ABALTDEFINES=alternatives.stage2
+			_hasAlternative=1
+		else
+			abdbg "stage2: Found general alternatives file: ${SRCDIR}/autobuild/${ABALTDEFINES}"
+			_hasAlternative=1
+		fi
+	fi
 fi
 
 ## More specific per-arch alternatives file always take precedence over per-group ones
