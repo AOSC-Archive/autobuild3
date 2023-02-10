@@ -76,12 +76,15 @@ mkdir -p "$PKGDIR"/DEBIAN \
 	|| abdie "Failed to create DEBIAN directory for .deb metadata: $?."
 cp -rl "$SRCDIR"/abscripts/* "$PKGDIR"/DEBIAN \
 	|| abdie "Failed to copy .deb scripts: $?."
-if [ -e "$SRCDIR/autobuild/$ARCH/conffiles" ]; then
-	cp -l "$SRCDIR"/autobuild/"$ARCH"/conffiles "$PKGDIR"/DEBIAN 2>/dev/null \
-		|| abdie "Failed to copy conffiles: $?."
-elif [ -e "$SRCDIR/autobuild/conffiles" ]; then
-	cp -l "$SRCDIR"/autobuild/conffiles "$PKGDIR"/DEBIAN 2>/dev/null \
-		|| abdie "Failed to copy conffiles: $?."
+# Do not handle conffiles in stage2.
+if ! bool $ABSTAGE2; then
+	if [ -e "$SRCDIR/autobuild/$ARCH/conffiles" ]; then
+		cp -l "$SRCDIR"/autobuild/"$ARCH"/conffiles "$PKGDIR"/DEBIAN 2>/dev/null \
+			|| abdie "Failed to copy conffiles: $?."
+	elif [ -e "$SRCDIR/autobuild/conffiles" ]; then
+		cp -l "$SRCDIR"/autobuild/conffiles "$PKGDIR"/DEBIAN 2>/dev/null \
+			|| abdie "Failed to copy conffiles: $?."
+	fi
 fi
 if [ -e "$SRCDIR/autobuild/triggers" ]; then
 	cp -l "$SRCDIR"/autobuild/triggers "$PKGDIR"/DEBIAN 2>/dev/null \
