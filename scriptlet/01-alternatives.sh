@@ -84,18 +84,20 @@ else
 		_archTarget="/${ABHOST}"
 	else
 		for _grp in ${ABHOST_GROUP}; do
-			if [ $_assignedGroup ]; then
-				aberr "Refusing to use autobuild/${_grp}/${ABALTDEFINES} for group-specific alternatives"
-				aberr "... because another file autobuild/${_assignedGroup}/${ABALTDEFINES} is also valid for target architecture"
-				abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
-				abinfo "${ABHOST_GROUP//$'\n'/, }"
-				abinfo "Create per-arch autobuild/${ABHOST}/${ABALTDEFINES} instead to resolve the conflict"
-				abdie "Multiple per-group alternative files for target architecture detected! Refuse to proceed."
+			if [ -f "$SRCDIR"/autobuild/${_grp}/${ABALTDEFINES} ]; then
+				if [ $_assignedGroup ]; then
+					aberr "Refusing to use autobuild/${_grp}/${ABALTDEFINES} for group-specific alternatives"
+					aberr "... because another file autobuild/${_assignedGroup}/${ABALTDEFINES} is also valid for target architecture"
+					abinfo "Current ABHOST ${ABHOST} belongs to the following groups:"
+					abinfo "${ABHOST_GROUP//$'\n'/, }"
+					abinfo "Create per-arch autobuild/${ABHOST}/${ABALTDEFINES} instead to resolve the conflict"
+					abdie "Multiple per-group alternative files for target architecture detected! Refuse to proceed."
+				fi
+				abdbg "Found per-group alternatives file: ${SRCDIR}/autobuild/${_grp}/${ABALTDEFINES}"
+				_hasAlternative=1
+				_archTarget="/${_grp}"
+				_assignedGroup=${_grp}
 			fi
-			abdbg "Found per-group alternatives file: ${SRCDIR}/autobuild/${_grp}/${ABALTDEFINES}"
-			_hasAlternative=1
-			_archTarget="/${_grp}"
-			_assignedGroup=${_grp}
 		done
 	fi
 fi
