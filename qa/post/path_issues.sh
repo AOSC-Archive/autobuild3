@@ -24,6 +24,8 @@ ACCEPTABLE="
 "$PKGDIR"/proc
 "$PKGDIR"/root
 "$PKGDIR"/run
+"$PKGDIR"/snap
+"$PKGDIR"/snapd
 "$PKGDIR"/srv
 "$PKGDIR"/sys
 "$PKGDIR"/tmp
