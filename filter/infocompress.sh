@@ -19,7 +19,7 @@ filter_infocompress() {
 		done
 
 		abinfo "Compressing Texinfo page ${__infocomp_todo[@]} ..."
-		xz -6e -- "${__infocomp_todo[@]}"
+		xz --lzma2=preset=6e,pb=0 -- "${__infocomp_todo[@]}"
 	fi
 
 	unset __infocomp_todo __infocomp_lnk
