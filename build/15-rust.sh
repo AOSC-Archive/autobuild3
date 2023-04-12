@@ -4,7 +4,7 @@
 
 abtryexe rustc cargo || ((!ABSTRICT)) || ablibret
 
-LTO_INJECT_FAIL_MSG='Unable to inject LTO directives to Cargo.toml: please manually add `lto = true` under [profile.release] section.'
+LTO_INJECT_FAIL_MSG='Unable to inject LTO directives to Cargo.toml: please manually add "lto = true" under [profile.release] section.'
 
 build_rust_probe(){
 	[ -f "$SRCDIR"/Cargo.toml ]
@@ -12,9 +12,9 @@ build_rust_probe(){
 
 build_rust_inject_lto() {
         bool "${USECLANG}" \
-		|| abdie "Please set `USECLANG=1` in your defines to enable proper LTO."
+		|| abdie 'Please set "USECLANG=1" in your defines to enable proper LTO.'
         command -v ld.lld > /dev/null \
-		|| abdie "Please add `llvm` to your $BUILDDEP to enable proper LTO."
+		|| abdie 'Please add "llvm" to your $BUILDDEP to enable proper LTO.'
 }
 
 build_rust_audit() {
