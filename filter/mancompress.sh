@@ -19,7 +19,7 @@ filter_mancompress() {
 		done
 
 		abinfo "Compressing man page ${__mancomp_todo[@]} ..."
-		xz -6e -- "${__mancomp_todo[@]}"
+		xz --lzma2=preset=6e,pb=0 -- "${__mancomp_todo[@]}"
 	fi
 
 	unset __mancomp_todo __mancomp_lnk
