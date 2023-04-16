@@ -52,7 +52,7 @@ RUSTFLAGS_COMMON=''
 RUSTFLAGS_COMMON_OPTI='-Ccodegen-units=1 -Copt-level=3 '
 RUSTFLAGS_COMMON_WEIRD=''
 # Use clang + lld for processing LTO
-RUSTFLAGS_COMMON_OPTI_LTO='-Cembed-bitcode=yes -Clto -Clinker-plugin-lto -Clinker=clang -Clink-arg=-flto -Clink-arg=-fuse-ld=lld -Clink-arg=-Wl,-build-id=sha1 -Clink-arg=-Wl,-z,notext'
+RUSTFLAGS_COMMON_OPTI_LTO='-Cembed-bitcode=yes -Clinker-plugin-lto -Clinker=clang -Clink-arg=-flto -Clink-arg=-fuse-ld=lld -Clink-arg=-Wl,-build-id=sha1 -Clink-arg=-Wl,--lto-O3'
 # Linker Flags. (actually passed to your CC, just FYI)
 # LDFLAGS writing helpers:
 ld_arg(){ printf %s '-Wl'; local IFS=,; printf %s "$*"; }
