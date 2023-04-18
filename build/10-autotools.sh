@@ -19,10 +19,10 @@ build_autotools_build() {
 	then
 		for i in $(find "$SRCDIR" -name config.guess -o -name config.sub); do \
 			abinfo "Copying replacement $i ..."
-			# FIXME: hard-coded automake version.
 			# Adapted from redhat-rpm-config.
 			# https://src.fedoraproject.org/rpms/redhat-rpm-config/blob/rawhide/f/macros#_192
-			cp -v "/usr/share/automake-1.16/$(basename "$i")" "$i" \
+			# Note: config.guess and config.sub provided by the 'config' package.
+			cp -v "/usr/bin/$(basename "$i")" "$i" \
 				|| abdie "Failed to copy replacement $i: $?."; \
 		done
 	fi
