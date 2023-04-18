@@ -3,3 +3,7 @@
 ##@copyright GPL-2.0+
 
 CFLAGS_GCC_ARCH='-mabi=lp64d -march=la464 -mtune=la464'
+
+# Position-independent executable buildmode is not available on the LoongArch
+# architecture. Removing for the loongarch64 (loong64) target.
+GOFLAGS=${GOFLAGS/-buildmode=pie/}
