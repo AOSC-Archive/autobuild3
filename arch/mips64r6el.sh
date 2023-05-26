@@ -11,4 +11,4 @@ CFLAGS_COMMON_ARCH='-march=mips64r6 -mtune=mips64r6 -mcompact-branches=always -m
 # rustix contains MIPS64 R2 assembly, without being able to distinguish between
 # R2 and R6 assemblies. Enabling this options instructs rustix to use the libc
 # backend instead.
-RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=mips64r6 -Cdebuginfo=0 --cfg=rustix_use_libc '
+RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=mips64r6 -Cdebuginfo=0 -Ctarget-feature=+msa -Cllvm-args=--mips-compact-branches=always --cfg=rustix_use_libc '
