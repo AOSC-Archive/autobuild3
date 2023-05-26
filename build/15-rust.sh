@@ -4,7 +4,15 @@
 
 abtryexe rustc cargo || ((!ABSTRICT)) || ablibret
 
-LTO_INJECT_FAIL_MSG='Unable to inject LTO directives to Cargo.toml: please manually add "lto = true" under [profile.release] section.'
+build_rust_prepare_registry() {
+	local REGISTRY_URL='https://github.com/rust-lang/crates.io-index'
+	local REGISTRY_DIR='github.com-1ecc6299db9ec823'
+	local THIS_REGISTRY_DIR="$HOME/.cargo/registry/index/${REGISTRY_DIR}/.git"
+
+	if [ ! -d "${THIS_REGISTRY_DIR}" ]; then
+		git clone --bare "${REGISTRY_URL}" "${THIS_REGISTRY_DIR}"
+	fi
+}
 
 build_rust_probe(){
 	[ -f "$SRCDIR"/Cargo.toml ]
@@ -44,6 +52,7 @@ build_rust_build(){
 	BUILD_START
 	[ -f "$SRCDIR"/Cargo.lock ] \
 		|| abwarn "This project is lacking the lock file. Please report this issue to the upstream."
+	build_rust_prepare_registry
 	if [[ "${CROSS:-$ARCH}" != "ppc64" ]] && \
 		! bool "$NOLTO"; then
 		build_rust_inject_lto
