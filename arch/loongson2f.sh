@@ -12,6 +12,7 @@ CFLAGS_GCC_ARCH='-mloongson-mmi -Wa,-mfix-loongson2f-nop '
 CFLAGS_GCC_OPTI_LTO="${CFLAGS_COMMON_OPTI_LTO} -flto-partition=none "
 LDFLAGS_GCC_OPTI_LTO="${LDFLAGS_COMMON_OPTI_LTO} -mxgot -flto-partition=none "
 
+RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=mips3 -Ctarget-features=+xgot '
 RUSTFLAGS_COMMON_OPTI_LTO="${RUSTFLAGS_COMMON_OPTI_LTO} -Clink-arg=-Wl,-z,notext "
 
 # Position-independent executable buildmode is not available on any mips architecture.
