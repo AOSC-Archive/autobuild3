@@ -7,6 +7,10 @@ filter_mancompress() {
 
 	if [ -d "$PKGDIR"/usr/share/man ]; then
 		for i in "$PKGDIR"/usr/share/man/**/*.*; do
+			if [[ $i == *.gz || $i == *.bz2 || $i = *.zst || $i == *.xz ]]; then
+				continue
+			fi
+		
 			if [[ -L $i ]]; then
 				__mancomp_lnk=$(namei "$i" | tail -1 | awk '{print $NF}')
 				rm "$i"
