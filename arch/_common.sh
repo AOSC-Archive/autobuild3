@@ -17,6 +17,7 @@ ARCH_TARGET['loongson2f']=mips64el-aosc-linux-gnuabi64
 ARCH_TARGET['loongson3']=mips64el-aosc-linux-gnuabi64
 ARCH_TARGET['loongarch64']=loongarch64-aosc-linux-gnu
 ARCH_TARGET['m68k']=m68k-aosc-linux-gnu
+ARCH_TARGET['mips32r6el']=mipsisa32r6el-aosc-linux-gnu
 ARCH_TARGET['mips64r6el']=mipsisa64r6el-aosc-linux-gnuabi64
 ARCH_TARGET['powerpc']=powerpc-aosc-linux-gnu
 ARCH_TARGET['ppc64']=powerpc64-aosc-linux-gnu
