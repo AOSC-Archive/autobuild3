@@ -72,8 +72,11 @@ dpkgctrl_dbg_sym() {
 }
 
 # Auto-select xz level, use lower compression level on "Retro" architectures.
-if [[ "$ARCH" = "i586" || "$ARCH" = "powerpc" || "$ARCH" = "ppc64" ]]; then
-	DPKGDEBCOMP+="-Zxz -z3"
+if ab_match_archgroup retro; then
+	DPKGDEBCOMP+="-Zxz -z3 --threads-max=1"
+# Only 2GiB of user-addressable memory.
+elif ab_match_arch mips32r6el; then
+	DPKGDEBCOMP+="-Zxz -z6 --threads-max=1"
 else
 	DPKGDEBCOMP+="-Zxz -z6"
 fi
