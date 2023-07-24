@@ -4,6 +4,12 @@
 
 abtryexe rustc cargo || ((!ABSTRICT)) || ablibret
 
+DEFAULT_CARGO_CONFIG=(
+--config 'profile.release.lto = true'
+--config 'profile.release.incremental = false'
+--config 'profile.release.codegen-units = 1'
+)
+
 build_rust_prepare_registry() {
 	local REGISTRY_URL='https://github.com/rust-lang/crates.io-index'
 	local REGISTRY_DIR='github.com-1ecc6299db9ec823'
@@ -12,6 +18,10 @@ build_rust_prepare_registry() {
 	if [ ! -d "${THIS_REGISTRY_DIR}" ]; then
 		git clone --bare "${REGISTRY_URL}" "${THIS_REGISTRY_DIR}"
 	fi
+}
+
+build_rust_get_installed_rust_version() {
+    rustc --version | perl -ne '/^rustc\s+(\d+\.\d+\.\d+)\s+\(/ && print"$1\n"'
 }
 
 build_rust_probe(){
@@ -43,7 +53,7 @@ build_rust_audit() {
 }
 
 fallback_build() {
-	cargo build --config "profile.release.lto = true" --release --locked $CARGO_AFTER || abdie "Compilation failed: $?."
+	cargo build "${DEFAULT_CARGO_CONFIG[@]}" --release --locked $CARGO_AFTER || abdie "Compilation failed: $?."
 	abinfo "Installing binaries in the workspace ..."
 	find "$SRCDIR"/target/release -maxdepth 1 -executable -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';'
 }
@@ -52,7 +62,9 @@ build_rust_build(){
 	BUILD_START
 	[ -f "$SRCDIR"/Cargo.lock ] \
 		|| abwarn "This project is lacking the lock file. Please report this issue to the upstream."
-	build_rust_prepare_registry
+	if ! dpkg --compare-versions "$(build_rust_get_installed_rust_version)" ge '1.70.0'; then
+		build_rust_prepare_registry
+	fi
 	if [[ "${CROSS:-$ARCH}" != "ppc64" ]] && \
 		! bool "$NOLTO"; then
 		build_rust_inject_lto
@@ -62,9 +74,9 @@ build_rust_build(){
 	BUILD_READY
 	abinfo 'Building Cargo package ...'
 	install -vd "$PKGDIR/usr/bin/"
-	if ! grep '\[workspace\]' Cargo.toml > /dev/null; then
+	if ! cargo read-manifest 2> /dev/null; then
 		cargo install --locked -f --path "$SRCDIR" \
-                              --config "profile.release.lto = true" \
+			      "${DEFAULT_CARGO_CONFIG[@]}" \
 			      --root="$PKGDIR/usr/" $CARGO_AFTER \
 			|| abdie "Compilation failed: $?."
 	else
