@@ -10,7 +10,7 @@ if bool $ABBUILDDEPONLY; then
 	fi
 	FLATDEP="$(pm_deflat $BUILDDEP)"
 else
-	FLATDEP="$(pm_deflat $PKGDEP $BUILDDEP $PKGPRDEP)"
+	FLATDEP="$(pm_deflat $PKGDEP $BUILDDEP $PKGPRDEP $TESTDEP)"
 fi
 
 if ! pm_exists $FLATDEP; then

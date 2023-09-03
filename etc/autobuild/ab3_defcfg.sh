@@ -62,6 +62,12 @@ AB_SAN_LEK=0
 # Use BFD LD?
 AB_LD_BFD=0
 
+# Default testing flags
+TESTS="default"
+ABTEST_USEDEFAULT=no
+ABTEST_TESTEXEC=plain
+ABTEST_ABORT_BUILD=yes
+
 ##OS Directory Tree
 # Built-in variables for AOSC OS directory tree.
 # Will be updated. Therefore not part of conffiles.

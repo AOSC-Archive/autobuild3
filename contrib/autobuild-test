@@ -1,0 +1,41 @@
+#!/bin/bash
+# autobuild-test: seperated bash instance for tests
+
+. $AB/lib/diag.sh || { echo "\e[1;91m FATAL: Cannot open stacktrace printing library! exiting."; exit 1; }
+. $AB/lib/base.sh || { echo "\e[1;91m FATAL: Cannot open base library! exiting."; exit 1; }
+. $AB/lib/builtins.sh || { echo "\e[1;91m FATAL: Cannot open utility function library! exiting."; exit 1; }
+
+. $AB/proc/10-core_defines.sh || abdie "Cannot load core_defines.sh, exiting ..."
+. $AB/proc/10-env-setup.sh || abdie "Cannot load env-setup.sh, exting ..."
+
+abrequire tests
+
+TEST=$1
+
+if [[ "$TEST" == "default" ]]; then
+    DEFAULT=yes
+fi
+
+if [ "$TEST" == "" ]; then
+    abdie "No test specified, exiting ..."
+fi
+
+if bool $DEFAULT; then
+    abinfo "Generating default test ..."
+    . $AB/proc/20-build_funcs.sh || abdie "Cannot load functions at build! exiting."
+    . $AB/proc/30-build_probe.sh
+    ab_dbg "ABTYPE for this build is $ABTYPE ..."
+    abtest_gen_default
+else
+    . $SRCDIR/autobuild/tests/$TEST || abdie "Failed to load testspec file $SRCDIR/autobuild/tests/$TEST"
+fi
+
+. $AB/tests/$TESTTYPE.sh || aberr "Test type $TESTTYPE is invalid."
+
+abtest
+
+if [[ $EXIT_CODE -gt 2 ]]; then
+    EXIT_CODE=255
+fi
+
+exit $EXIT_CODE
