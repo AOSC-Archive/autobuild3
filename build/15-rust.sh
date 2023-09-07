@@ -48,8 +48,13 @@ build_rust_build(){
 		! bool "$NOLTO"; then
 		build_rust_inject_lto
 	fi
-	bool "$NOCARGOAUDIT" \
-		|| build_rust_audit
+
+	# FIXME: cargo-audit 0.18 use rustls, break non amd64 and arm64 architectures
+	if [[ "${CROSS:-$ARCH}" = "amd64" || "${CROSS:-$ARCH}" = "arm64" ]] && \
+		bool "$NOCARGOAUDIT"; then
+		build_rust_audit
+	fi
+
 	BUILD_READY
 	abinfo 'Building Cargo package ...'
 	install -vd "$PKGDIR/usr/bin/"
