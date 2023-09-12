@@ -79,9 +79,9 @@ build_rust_build(){
 	BUILD_READY
 	abinfo 'Building Cargo package ...'
 	install -vd "$PKGDIR/usr/bin/"
-	if ! cargo read-manifest 2> /dev/null; then
+	if ! grep '\[workspace\]' Cargo.toml > /dev/null; then
 		cargo install --locked -f --path "$SRCDIR" \
-			      "${DEFAULT_CARGO_CONFIG[@]}" \
+                              --config "profile.release.lto = true" \
 			      --root="$PKGDIR/usr/" $CARGO_AFTER \
 			|| abdie "Compilation failed: $?."
 	else
