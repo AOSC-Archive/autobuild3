@@ -78,6 +78,9 @@ if ab_match_archgroup retro; then
 # Only 2GiB of user-addressable memory.
 elif ab_match_arch mips32r6el; then
 	DPKGDEBCOMP+="-Zxz -z6 --threads-max=1"
+# Buggy NUMA implementation on SG2042? Causes dead locks.
+elif ab_match_arch riscv64; then
+	DPKGDEBCOMP+="-Zxz -z6 --threads-max=1"
 else
 	DPKGDEBCOMP+="-Zxz -z6"
 fi
