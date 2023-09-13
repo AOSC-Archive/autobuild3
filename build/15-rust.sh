@@ -54,11 +54,10 @@ build_rust_audit() {
 
 fallback_build() {
         cargo build "${DEFAULT_CARGO_CONFIG[@]}" --release --locked $CARGO_AFTER || abdie "Compilation failed: $?."
-        abinfo "Installing lib in the workspace ..."
-        lib=$(find "$SRCDIR"/target/release -maxdepth 1 -executable -type f -name "*.so")
-        if [ -n $lib ]; then
-                install -vd "$PKGDIR"/usr/lib
-                find "$SRCDIR"/target/release -maxdepth 1 -executable -type f -name "*.so" -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/lib/" ';'
+        if [ -e "$SRCDIR"/target/release/*.so* ]; then
+		        abinfo "Installing lib in the workspace ..."
+                install -Dvm755 "$SRCDIR"/target/release/*.so* \
+                        -t "$PKGDIR"/usr/lib/
         fi
         abinfo "Installing binaries in the workspace ..."
         find "$SRCDIR"/target/release -maxdepth 1 -executable -type f ! -name "*.so" -exec 'install' '-Dvm755' '{}' "$PKGDIR/usr/bin/" ';'
