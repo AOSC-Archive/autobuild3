@@ -5,7 +5,11 @@ abrequire pm
 
 # FIXME: The flat stuff gets stupid with 'foo | bar' packs. Guess why.
 if bool $ABBUILDDEPONLY; then
-	FLATDEP="$(pm_deflat $BUILDDEP)"
+	if ! bool VER_NONE; then
+		aberr "ABBUILDDEPONLY must be used with VER_NONE=1 (dependency version-agnostic). Aborting."
+	else
+		FLATDEP="$(pm_deflat $BUILDDEP)"
+	fi
 else
 	FLATDEP="$(pm_deflat $PKGDEP $BUILDDEP $PKGPRDEP)"
 fi
