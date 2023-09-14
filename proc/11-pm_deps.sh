@@ -4,7 +4,7 @@
 abrequire pm
 
 # FIXME: The flat stuff gets stupid with 'foo | bar' packs. Guess why.
-if bool $BUILDDEPONLY; then
+if bool $ABBUILDDEPONLY; then
 	FLATDEP="$(pm_deflat $BUILDDEP)"
 else
 	FLATDEP="$(pm_deflat $PKGDEP $BUILDDEP $PKGPRDEP)"
