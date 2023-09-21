@@ -10,7 +10,11 @@
 
 abrequire tests
 
-TEST=$1
+if [[ $# -eq 0 ]]; then
+    TEST=default
+else
+    TEST=$1
+fi
 
 if [[ "$TEST" == "default" ]]; then
     DEFAULT=yes
@@ -26,6 +30,18 @@ if bool $DEFAULT; then
     . $AB/proc/30-build_probe.sh
     ab_dbg "ABTYPE for this build is $ABTYPE ..."
     abtest_gen_default
+    if [[ $? -ne 0 ]]; then
+        abdie "Failed to generate default test, exiting ..."
+    fi
+    _IFS="$IFS" IFS=$'\n'
+    IFS=$'\n'
+    for vars in $( set -o posix; set ); do
+        if [[ "${vars}" =~ ^ABTEST_default_ ]]; then
+            eval "${vars/ABTEST_default_/}"
+        fi
+    done
+    IFS="$_IFS"
+    unset _IFS
 else
     . $SRCDIR/autobuild/tests/$TEST || abdie "Failed to load testspec file $SRCDIR/autobuild/tests/$TEST"
 fi

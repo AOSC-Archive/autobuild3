@@ -105,7 +105,7 @@ abtest_run(){
             popd > /dev/null
             ;;
         sdrun)
-            abinfo "Invoking systemd-run"
+            abinfo "Invoking systemd-run ..."
             systemd-run \
                 --wait --pipe --service-type=exec \
                 --working-directory=${SRCDIR} \
@@ -113,7 +113,7 @@ abtest_run(){
             local exitcode=$?
             ;;
         *)
-            abdie "Invalid test execution environment for ${testname}"
+            abdie "Invalid test execution environment for ${testname}!"
     esac
 
     if [[ $exitcode -eq 255 ]]; then
@@ -124,11 +124,21 @@ abtest_run(){
 }
 
 abtest_gen_default() {
-    TESTEXEC=$ABTEST_TESTEXEC
-    TESTDESC="Automatically generated tests for $ABTYPE"
+    ABTEST_default_TESTEXEC=$ABTEST_TESTEXEC
+    ABTEST_default_TESTDESC="Automatically generated tests for $ABTYPE"
     case $ABTYPE in
         *)
-            abwarn "No default test found for $ABTYPE builds, add TESTS=\"\" to suppress this warning."
+            if [[ -e $SRCDIR/autobuild/check ]]; then
+                abinfo "Found autobuild/check file, using it as default test ..."
+                ABTEST_default_TESTTYPE=custom
+                ABTEST_default_TESTDEPS=$TESTDEPS
+                ABTEST_default_CUSTOM_STAGE=postbuild
+                ABTEST_default_CUSTOM_SCRIPT=$SRCDIR/autobuild/check
+                ABTEST_default_CUSTOM_IS_BASHSCRIPT=yes
+            else
+                abwarn "No default test found for $ABTYPE builds, use NOTEST=yes to suppress this warning."
+                return 1
+            fi
             ;;
     esac
 }

@@ -2,6 +2,11 @@
 ##proc/tests_pre: scan for tests in $TESTS and construct $TESTDEPS
 ##@copyright GPL-2.0+
 
+if bool $NOTEST; then
+    TESTS=""
+    TESTDEPS="" # Empty TESTDEPS by explicitly override it
+fi
+
 if [[ -n "$TESTS" ]]; then
     abrequire tests
 

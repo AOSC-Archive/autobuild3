@@ -67,6 +67,7 @@ TESTS="default"
 ABTEST_USEDEFAULT=no
 ABTEST_TESTEXEC=plain
 ABTEST_ABORT_BUILD=yes
+NOTEST=no
 
 ##OS Directory Tree
 # Built-in variables for AOSC OS directory tree.
