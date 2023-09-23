@@ -63,7 +63,7 @@ AB_SAN_LEK=0
 AB_LD_BFD=0
 
 # Default testing flags
-TESTS="default"
+ABTESTS="default"
 ABTEST_USEDEFAULT=no
 ABTEST_TESTEXEC=plain
 ABTEST_ABORT_BUILD=yes

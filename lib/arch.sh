@@ -100,10 +100,7 @@ arch_loadfile_strict(){
 	local _abarchf _arch_trymore=${arch_trymore:-1};
 	_abarchf="$(arch_findfile "$1")" || return $?;
 	shift;
-	echo -e 'trap - ERR; trap "abdie" ERR; bash -n "$0"\n' > "${_abarchf}.wrap.sh"
-	cat "$_abarchf" >> "${_abarchf}.wrap.sh"
-	echo -e '\ntrap - ERR' >> "${_abarchf}.wrap.sh"
-	. "${_abarchf}.wrap.sh" "$@";
+	load_strict "${_abarchf}" "$@";
 }
 
 arch_initcross(){

@@ -4,7 +4,7 @@
 
 abtest() {
     if bool $CUSTOM_IS_BASHSCRIPT; then
-        arch_loadfile_strict $CUSTOM_SCRIPT $CUSTOM_ARGS
+        load_strict $CUSTOM_SCRIPT $CUSTOM_ARGS
     else
         $CUSTOM_SCRIPT $CUSTOM_ARGS
     fi

@@ -1,13 +1,15 @@
 #!/bin/bash
-##proc/tests_pre: scan for tests in $TESTS and construct $TESTDEPS
+##proc/tests_pre: scan for tests in $ABTESTS and construct $TESTDEPS
 ##@copyright GPL-2.0+
 
 if bool $NOTEST; then
-    TESTS=""
+    ABTESTS=""
     TESTDEPS="" # Empty TESTDEPS by explicitly override it
+else
+    abinfo "Currently enabled tests are: $ABTESTS"
 fi
 
-if [[ -n "$TESTS" ]]; then
+if [[ -n "$ABTESTS" ]]; then
     abrequire tests
 
     _IFS="$IFS" IFS=$' '

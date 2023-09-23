@@ -61,24 +61,10 @@ abtest_run(){
     local stage="$1"
     local testname="$2"
 
-    if [[ "$testname" == "default" ]]; then
-        local isdefault=yes
-    else
-        local isdefault=no
-    fi
-
-    if bool $isdefault; then
-        local _testtype="TESTTYPE"
-    else
-        local _testtype="ABTEST_${testname}_TESTTYPE"
-    fi
+    local _testtype="ABTEST_${testname}_TESTTYPE"
 
     if [[ "${!_testtype}" == "custom" ]]; then
-        if bool $isdefault; then
-            local _testcustomstage=ABTEST_CUSTOM_STAGE
-        else
-            local _testcustomstage="ABTEST_${testname}_CUSTOM_STAGE"
-        fi
+        local _testcustomstage="ABTEST_${testname}_CUSTOM_STAGE"
 
         if [[ "${!_testcustomstage}" != "${stage}" ]]; then
             return 0
@@ -91,11 +77,7 @@ abtest_run(){
     fi
 
     abinfo "Running test $testname ..."
-    if bool $isdefault; then
-        local _testexec=TESTEXEC
-    else
-        local _testexec="ABTEST_${testname}_TESTEXEC"
-    fi
+    local _testexec="ABTEST_${testname}_TESTEXEC"
 
     case ${!_testexec} in
         plain)
@@ -116,11 +98,23 @@ abtest_run(){
             abdie "Invalid test execution environment for ${testname}!"
     esac
 
-    if [[ $exitcode -eq 255 ]]; then
-        abdie "Test $testname failed with fatal error!"
-    elif [[ $exitcode -eq 1 ]] && bool $ABTEST_ABORT_BUILD; then
-        abdie "Test $testname failed, aborting build ..."
-    fi
+    case "$exitcode" in
+        1)
+            if bool $ABTEST_ABORT_BUILD; then
+                abdie "Test $testname failed, aborting build ..."
+            fi
+            aberr "Test $testname failed, but build continues ..."
+            ;;
+        2)
+            abwarn "Test $testname soft-failed, the build continues ..."
+            ;;
+        255)
+            abdie "Test $testname failed with fatal error!"
+            ;;
+        *)
+            abinfo "Test $testname passed."
+            ;;
+    esac
 }
 
 abtest_gen_default() {
@@ -128,8 +122,9 @@ abtest_gen_default() {
     ABTEST_default_TESTDESC="Automatically generated tests for $ABTYPE"
     case $ABTYPE in
         *)
-            if [[ -e $SRCDIR/autobuild/check ]]; then
-                abinfo "Found autobuild/check file, using it as default test ..."
+            local checkscript="$(arch_findfile check)"
+            if [[ $? -eq 0 ]]; then
+                abinfo "Found check script file, using it as default test ..."
                 ABTEST_default_TESTTYPE=custom
                 ABTEST_default_TESTDEPS=$TESTDEPS
                 ABTEST_default_CUSTOM_STAGE=postbuild
