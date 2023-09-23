@@ -7,17 +7,12 @@ if bool $NOTEST; then
     TESTDEPS="" # Empty TESTDEPS by explicitly override it
 else
     abinfo "Currently enabled tests are: $ABTESTS"
+    abrequire tests
 fi
 
 if [[ -n "$ABTESTS" ]]; then
-    abrequire tests
-
     _IFS="$IFS" IFS=$' '
     for test in $ABTESTS; do
-        if [[ "default" == "$test" ]]; then
-            ABTEST_USEDEFAULT=yes
-            continue
-        fi
         abtest_scanner_load "$test"
         
         local _testdeps="ABTEST_${test}_TESTDEPS"

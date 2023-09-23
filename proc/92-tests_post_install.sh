@@ -1,9 +1,9 @@
 #!/bin/bash
-##proc/tests_postbuild: run tests at post install stage
+##proc/tests_post_install: run tests at post install stage
 ##@copyright GPL-2.0+
 
 for testcase in $ABTESTS; do
-    abtest_run postinst "${testcase}"
+    abtest_run post-install "${testcase}"
 done
 
 unset testcase

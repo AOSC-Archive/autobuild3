@@ -1,20 +1,22 @@
 #!/bin/bash
 # autobuild-test: seperated bash instance for tests
 
-. $AB/lib/diag.sh || { echo "\e[1;91m FATAL: Cannot open stacktrace printing library! exiting."; exit 1; }
-. $AB/lib/base.sh || { echo "\e[1;91m FATAL: Cannot open base library! exiting."; exit 1; }
-. $AB/lib/builtins.sh || { echo "\e[1;91m FATAL: Cannot open utility function library! exiting."; exit 1; }
-
-. $AB/proc/10-core_defines.sh || abdie "Cannot load core_defines.sh, exiting ..."
-. $AB/proc/10-env-setup.sh || abdie "Cannot load env-setup.sh, exting ..."
-
-abrequire tests
-
 if [[ $# -eq 0 ]]; then
     TEST=default
 else
     TEST=$1
 fi
+
+. $AB/lib/diag.sh || { echo "\e[1;91m FATAL: Cannot open stacktrace printing library! exiting."; exit 1; }
+. $AB/lib/base.sh || { echo "\e[1;91m FATAL: Cannot open base library! exiting."; exit 1; }
+. $AB/lib/builtins.sh || { echo "\e[1;91m FATAL: Cannot open utility function library! exiting."; exit 1; }
+
+echo "================= Running autobuild3 test for $TEST ================="
+
+. $AB/proc/10-core_defines.sh || abdie "Cannot load core_defines.sh, exiting ..."
+. $AB/proc/10-env-setup.sh || abdie "Cannot load env-setup.sh, exting ..."
+
+abrequire tests
 
 if [[ "$TEST" == "default" ]]; then
     DEFAULT=yes
@@ -54,4 +56,5 @@ if [[ $EXIT_CODE -gt 2 ]]; then
     EXIT_CODE=255
 fi
 
+echo "================= Finished autobuild3 test for $TEST ================="
 exit $EXIT_CODE
