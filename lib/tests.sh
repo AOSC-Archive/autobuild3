@@ -91,6 +91,7 @@ abtest_run(){
             systemd-run \
                 --wait --pipe --service-type=exec \
                 --working-directory=${SRCDIR} \
+                --setenv="ABTEST_RESULT_OUTPUT"
                 -- autobuild test $testname
             local exitcode=$?
             ;;
@@ -104,9 +105,7 @@ abtest_run(){
                 abdie "Test $testname failed, aborting build ..."
             fi
             aberr "Test $testname failed, but build continues ..."
-            ;;
-        2)
-            abwarn "Test $testname soft-failed, the build continues ..."
+            ABTEST_FAILED="${ABTEST_FAILED} ${testname}"
             ;;
         255)
             abdie "Test $testname failed with fatal error!"
@@ -126,7 +125,7 @@ abtest_gen_default() {
             if [[ $? -eq 0 ]]; then
                 abinfo "Found check script file, using it as default test ..."
                 ABTEST_default_TESTTYPE=custom
-                ABTEST_default_TESTDEPS=$TESTDEPS
+                ABTEST_default_TESTDEP=$TESTDEP
                 ABTEST_default_CUSTOM_STAGE=$ABTEST_AUTO_DETECT_STAGE
                 ABTEST_default_CUSTOM_SCRIPT=$SRCDIR/autobuild/check
                 ABTEST_default_CUSTOM_IS_BASHSCRIPT=yes

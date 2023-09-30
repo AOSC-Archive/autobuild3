@@ -18,6 +18,12 @@ echo "================= Running autobuild3 test for $TEST ================="
 
 abrequire tests
 
+abtest_result(){
+    if [[ -e "$ABTEST_RESULT_OUTPUT" ]]; then
+        echo "X-AOSC-Testing-$TEST-$1: $2" >> $ABTEST_RESULT_OUTPUT
+    fi
+}
+
 if [[ "$TEST" == "default" ]]; then
     DEFAULT=yes
 fi
@@ -50,7 +56,7 @@ fi
 
 . $AB/tests/$TESTTYPE.sh || aberr "Test type $TESTTYPE is invalid."
 
-abtest
+abtest_${TESTTYPE}_test
 
 if [[ $EXIT_CODE -gt 2 ]]; then
     EXIT_CODE=255
