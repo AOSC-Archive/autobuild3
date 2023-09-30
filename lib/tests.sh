@@ -9,7 +9,7 @@ abtest_scanner_extract(){
         exit 1
     fi
 
-    if [[ -z "${TESTDESC}" ]]; then
+    if [[ -z "${TESTDES}" ]]; then
         abwarn "Test case ${testname} has no description!"
     fi
 
@@ -118,19 +118,23 @@ abtest_run(){
 
 abtest_gen_default() {
     ABTEST_default_TESTEXEC=$ABTEST_TESTEXEC
-    ABTEST_default_TESTDESC="Automatically generated tests for $ABTYPE"
+    ABTEST_default_TESTDES="Automatically generated tests for $ABTYPE"
     case $ABTYPE in
+        cargo)
+            abinfo "Found cargo project, using cargo test as default test ..."
+            ABTEST_default_TESTTYPE=cargo
+            ABTEST_default_CARGO_TEST_AFTER="$CARGO_TEST_AFTER"
+            ;;
         *)
             local checkscript="$(arch_findfile check)"
-            if [[ $? -eq 0 ]]; then
+            if [[ -e $checkscript ]]; then
                 abinfo "Found check script file, using it as default test ..."
                 ABTEST_default_TESTTYPE=custom
-                ABTEST_default_TESTDEP=$TESTDEP
                 ABTEST_default_CUSTOM_STAGE=$ABTEST_AUTO_DETECT_STAGE
                 ABTEST_default_CUSTOM_SCRIPT=$SRCDIR/autobuild/check
                 ABTEST_default_CUSTOM_IS_BASHSCRIPT=yes
             else
-                abwarn "No default test found for $ABTYPE builds, use NOTEST=yes to suppress this warning."
+                abwarn "No default test found for $ABTYPE builds" # use ABTEST_AUTO_DETECT=no to suppress this warning
                 return 1
             fi
             ;;
