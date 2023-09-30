@@ -1,7 +1,7 @@
-abtest_cargo_run() {
+abtest_rust_test() {
     abinfo "Running cargo test ..."
     cargo test \
-        --path "$SRCDIR/Cargo.toml" \
+        --manifest-path "$SRCDIR/Cargo.toml" \
         --no-fail-fast -r \
         ${CARGO_TEST_AFTER}
 }

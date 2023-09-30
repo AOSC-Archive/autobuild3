@@ -6,7 +6,6 @@ if bool $NOTEST; then
     ABTESTS=""
     TESTDEP="" # Empty TESTDEPS by explicitly override it
 else
-    abinfo "Currently enabled tests are: $ABTESTS"
     abrequire tests
     export ABTEST_RESULT_OUTPUT="$SRCDIR/abtestoutput.txt"
     echo -n "" > "$ABTEST_RESULT_OUTPUT"

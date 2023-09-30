@@ -120,9 +120,9 @@ abtest_gen_default() {
     ABTEST_default_TESTEXEC=$ABTEST_TESTEXEC
     ABTEST_default_TESTDES="Automatically generated tests for $ABTYPE"
     case $ABTYPE in
-        cargo)
+        rust)
             abinfo "Found cargo project, using cargo test as default test ..."
-            ABTEST_default_TESTTYPE=cargo
+            ABTEST_default_TESTTYPE=rust
             ABTEST_default_CARGO_TEST_AFTER="$CARGO_TEST_AFTER"
             ;;
         *)

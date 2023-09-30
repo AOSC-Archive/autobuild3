@@ -7,3 +7,5 @@ if bool $ABTEST_AUTO_DETECT; then
         ABTESTS="$ABTESTS default"
     fi
 fi
+
+abinfo "Currently enabled tests are: $ABTESTS"
