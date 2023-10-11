@@ -11,4 +11,7 @@ CFLAGS_COMMON_ARCH='-march=mips64r6 -mtune=mips64r6 -mcompact-branches=always -m
 # rustix contains MIPS64 R2 assembly, without being able to distinguish between
 # R2 and R6 assemblies. Enabling this options instructs rustix to use the libc
 # backend instead.
-RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=mips64r6 -Cdebuginfo=0 -Ctarget-feature=+msa -Cllvm-args=--mips-compact-branches=always --cfg=rustix_use_libc '
+#
+# FIXME: As of Rust 1.71.1, enabling MSA results in broken sha2 checksum
+# calculation (breaks all Cargo operations). Disable this feature for now.
+RUSTFLAGS_COMMON_ARCH='-Ctarget-cpu=mips64r6 -Cdebuginfo=0 -Ctarget-feature=-msa -Cllvm-args=--mips-compact-branches=always --cfg=rustix_use_libc '
