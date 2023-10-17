@@ -54,7 +54,10 @@ build_autotools_build() {
 			|| abdie "Failed to enter shadow build directory: $?."
 	fi
 
-	if [[ "$ABHOST" != "$ABBUILD" ]]
+	if [[ "$AUTOTOOLS_TARGET_OVERRIDE" ]]
+	then
+		AUTOTOOLS_TARGET="$AUTOTOOLS_TARGET_OVERRIDE"
+	elif [[ "$ABHOST" != "$ABBUILD" ]]
 	then
 		AUTOTOOLS_TARGET="--host=$HOST"
 	else
