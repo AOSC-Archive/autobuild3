@@ -16,9 +16,13 @@ BUILD_FINAL(){ true; }
 
 abrequire arch
 . "$AB/arch/_common.sh"
-. "$AB/arch/${ABHOST//\//_}.sh" # Also load overlay configuration.
 BUILD=${ARCH_TARGET["$ABBUILD"]}
 HOST=${ARCH_TARGET["$ABHOST"]}
+# Allow overrides of some special variables, e.g. BUILD, *_DEF, etc.
+. "$AB/arch/${ABHOST//\//_}.sh"
+
+# To handle optenv*, which are noarch, but requires a special ABHOST.
+DPKG_ARCH=${DPKG_ARCH:-$ABHOST}
 
 if ! bool $ABSTAGE2; then
 	_arch_trymore=1 arch_loadfiles defines || \
