@@ -126,6 +126,15 @@ recsr(){ for sr in "$@"; do . $sr; done }
 	return $_ret
 }
 
+load_strict() {
+	local _file="$1.wrap.sh"
+	echo -e 'trap - ERR; trap "abdie" ERR; bash -n "$0"\n' > "$_file"
+	cat "$1" >> "$_file"
+	echo -e '\ntrap - ERR' >> "$_file"
+	shift
+	. "$_file" "$@";
+}
+
 # aosc_lib LIBNAME
 aosc_lib(){
 	if [ "$(basename "$0")" == "$1.sh" ]; then

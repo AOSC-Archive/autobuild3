@@ -48,6 +48,14 @@ dpkgctrl(){
 	if dpkg -l autobuild3 >/dev/null 2>&1; then
 		echo "X-AOSC-Autobuild3-Version: $(dpkg-query -f '${Version}' -W autobuild3)"
 	fi
+	if ! bool $NOTEST; then
+		if [[ -n $ABTEST_FAILED ]]; then
+			echo "X-AOSC-Testing-Failed: $ABTEST_FAILED"
+		fi
+		if [[ -e $ABTEST_RESULT_OUTPUT ]]; then
+			cat $ABTEST_RESULT_OUTPUT
+		fi
+	fi
 	echo "$DPKGXTRACTRL"
 }
 
