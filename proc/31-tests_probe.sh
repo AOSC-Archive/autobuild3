@@ -8,4 +8,6 @@ if bool $ABTEST_AUTO_DETECT; then
     fi
 fi
 
-abinfo "Currently enabled tests are: $ABTESTS"
+if ! bool $NOTEST; then
+    abinfo "Currently enabled tests are: $ABTESTS"
+fi
