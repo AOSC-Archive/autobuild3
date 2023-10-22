@@ -5,6 +5,7 @@
 if bool $NOTEST; then
     ABTESTS=""
     TESTDEP="" # Empty TESTDEPS by explicitly override it
+    ABTEST_AUTO_DETECT=no
 else
     abrequire tests
     export ABTEST_RESULT_OUTPUT="$SRCDIR/abtestoutput.txt"
