@@ -48,9 +48,17 @@ dpkgctrl(){
 	if dpkg -l autobuild3 >/dev/null 2>&1; then
 		echo "X-AOSC-Autobuild3-Version: $(dpkg-query -f '${Version}' -W autobuild3)"
 	fi
-	if ! bool $NOTEST; then
+	if bool $NOTEST; then
+		echo "X-AOSC-Autobuild3-Testing: disabled"
+	else
+		if [[ -n $ABTESTS ]]; then
+			# Redundant `echo' trims extra whitespaces
+			echo "X-AOSC-Autobuild3-Testing: $(echo $ABTESTS)"
+		else
+			echo "X-AOSC-Autobuild3-Testing: none"
+		fi
 		if [[ -n $ABTEST_FAILED ]]; then
-			echo "X-AOSC-Testing-Failed: $ABTEST_FAILED"
+			echo "X-AOSC-Autobuild3-Testing-Failed: $(echo $ABTEST_FAILED)"
 		fi
 		if [[ -e $ABTEST_RESULT_OUTPUT ]]; then
 			cat $ABTEST_RESULT_OUTPUT
