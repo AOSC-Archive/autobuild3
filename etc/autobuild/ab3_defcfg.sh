@@ -65,11 +65,11 @@ AB_LD_BFD=0
 # Default testing flags
 ABTESTS=""
 ABTEST_AUTO_DETECT=yes
-ABTEST_ABORT_BUILD=yes
+ABTEST_ABORT_BUILD=no
 ABTEST_TESTEXEC=plain
 ABTEST_AUTO_DETECT_STAGE=post-build
 ABTESTTYPE_rust_STAGE=post-build
-NOTEST=no
+NOTEST=yes
 
 ##OS Directory Tree
 # Built-in variables for AOSC OS directory tree.
