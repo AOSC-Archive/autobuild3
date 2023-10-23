@@ -131,7 +131,7 @@ abtest_gen_default() {
                 abinfo "Found check script file, using it as default test ..."
                 ABTEST_default_TESTTYPE=custom
                 ABTEST_default_CUSTOM_STAGE=$ABTEST_AUTO_DETECT_STAGE
-                ABTEST_default_CUSTOM_SCRIPT=$SRCDIR/autobuild/check
+                ABTEST_default_CUSTOM_SCRIPT="$SRCDIR/$checkscript"
                 ABTEST_default_CUSTOM_IS_BASHSCRIPT=yes
             else
                 abwarn "No default test found for $ABTYPE builds" # use ABTEST_AUTO_DETECT=no to suppress this warning
