@@ -35,6 +35,7 @@ ACCEPTABLE="
 ACCEPTABLE2="
 "$PKGDIR"/usr/bin
 "$PKGDIR"/usr/include
+"$PKGDIR"/usr/gnemul
 "$PKGDIR"/usr/lib
 "$PKGDIR"/usr/libexec
 "$PKGDIR"/usr/local
