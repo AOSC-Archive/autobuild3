@@ -4,7 +4,7 @@
 # a more precise one
 # addalt link name path prio
 addalt(){
-	echo "update-alternatives --install $(argprint "$@")" >> abscripts/postinst
+	echo "update-alternatives --install $(argprint "$@") --quiet" >> abscripts/postinst
 	echo 'if [ "$1" != "upgrade" ]; then' >> abscripts/prerm
 	echo "	update-alternatives --remove $(argprint "$2" "$3")" >> abscripts/prerm
 	echo "fi" >> abscripts/prerm
