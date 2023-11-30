@@ -12,3 +12,6 @@ if [ -e /usr/lib/hook_uname.so ]; then
     abinfo 'hook_uname.so detected, preloading ...'
     export LD_PRELOAD="/usr/lib/hook_uname.so:$LD_PRELOAD"
 fi
+
+abinfo 'Setting $TZ (default timezone) ...'
+export TZ=UTC
