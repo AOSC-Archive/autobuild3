@@ -57,5 +57,6 @@ for ABFLAG in {LD,C{,PP,XX},OBJC{,XX},RUST}FLAGS; do
 	declare -n FLAG="$ABFLAG";
 	FLAG+="${_flags_weird_buf[_flags_current_i]}"; ((_flags_current_i++));
 	unset -n FLAG;
+	ab_trim_args "$ABFLAG";
 done
 unset ABCC _flags_current_i
