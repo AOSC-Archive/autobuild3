@@ -74,3 +74,13 @@ ab_match_archgroup() {
 	abinfo "All architecture group members '${ABHOST_GROUP//$'\n'/,}' mismatches $1: taking false branch."
 	return 1
 }
+
+## ab_trim_args var
+## Minimize the whitespace characters inside the variable "$var"
+## NOTE: This function modifies the variable IN-PLACE and does not return any value.
+## Example: ab_trim_args CFLAGS
+ab_trim_args() {
+	local arg
+	declare -n arg="$1"
+	arg="$(tr -s ' ' <<< "${arg}")"
+}
