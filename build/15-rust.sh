@@ -29,10 +29,12 @@ build_rust_probe(){
 }
 
 build_rust_inject_lto() {
-        bool "${USECLANG}" \
+	bool "${USECLANG}" \
 		|| abdie 'Please set "USECLANG=1" in your defines to enable proper LTO.'
-        command -v ld.lld > /dev/null \
-		|| abdie 'ld.lld is unavailable. Please add "llvm" to your $BUILDDEP to enable proper LTO.'
+	if ! command -v ld.lld > /dev/null; then
+		aberr 'ld.lld is unavailable. Please add "llvm" to your $BUILDDEP to enable proper LTO.'
+		abdie 'If the architecture does not have ld.lld support, please disable LTO for this architecture.'
+	fi
 }
 
 build_rust_audit() {
