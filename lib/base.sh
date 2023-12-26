@@ -128,9 +128,9 @@ recsr(){ for sr in "$@"; do . $sr; done }
 
 load_strict() {
 	local _file="$1.wrap.sh"
-	echo -e 'trap - ERR; trap "abdie" ERR; bash -n "$0"\n' > "$_file"
+	echo -e 'trap - ERR; trap "abdie" ERR; set -E; bash -n "$0"\n' > "$_file"
 	cat "$1" >> "$_file"
-	echo -e '\ntrap - ERR' >> "$_file"
+	echo -e '\nset +E; trap - ERR' >> "$_file"
 	shift
 	. "$_file" "$@";
 }
