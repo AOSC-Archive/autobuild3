@@ -4,6 +4,7 @@
 mkdir -p abscripts
 
 for i in postinst prerm postrm preinst; do
+	abinfo "Generating and installing package management scripts ..."
 	echo "#!/bin/bash" > abscripts/$i
 	cat autobuild/$i >> abscripts/$i 2>/dev/null || abinfo "Creating empty $i."
 	chmod 755 abscripts/$i
