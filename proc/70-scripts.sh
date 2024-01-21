@@ -10,4 +10,10 @@ for i in postinst prerm postrm preinst; do
 	chmod 755 abscripts/$i
 done
 
+if [ -f "$SRCDIR"/autobuild/templates ]; then
+	abinfo "Installing Debconf templates ..."
+	cp -v "$SRCDIR"/autobuild/templates \
+		abscripts/templates
+fi
+
 recsr "$AB/scriptlet"/*.sh
