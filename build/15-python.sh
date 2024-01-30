@@ -20,7 +20,7 @@ build_python_build(){
 		BUILD_FINAL
 		abinfo "Installing Python (PyPI) package using $PYTHON ..."
 		"$PYTHON" "$SRCDIR"/setup.py install \
-			$MAKE_AFTER --prefix=/usr --root="$PKGDIR" --optimize=1 \
+			--prefix=/usr --root="$PKGDIR" --optimize=1 \
 			|| abdie "Failed to install Python (PyPI) package using ${PYTHON}: $?."
 		abinfo "Cleaning Python (PyPI) package source tree ..."
 		bool $NOPYTHONCLEAN \
