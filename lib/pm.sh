@@ -6,20 +6,22 @@
 # Magic book: ab2:PAKMGR.md
 _ab_pm='' # package manager spec variables
 # genver <pkgspec> -> pkgname[<ver_s><op>verstr<ver_e>]
-_ab_pm+="OP_{EQ,LE,GE} VER_{S,E} "
+_ab_pm+="OP_{EQ,LE,GE,LT,GT} VER_{S,E} "
 pm_genver(){
 	local store IFS ver name       # IFS is also used for holding OP.
-	: "${OP_EQ== } ${OP_LE=<= } ${OP_GE=>= } ${VER_S= (} ${VER_E=)}"
+	: "${OP_EQ== } ${OP_LE=<= } ${OP_GE=>= } ${OP_LT=<< } ${OP_GT=>> } ${VER_S= (} ${VER_E=)}"
 	if ((VER_NONE_ALL)); then			# name-only
 		name="${1/%_}"
 		echo "${name/[<>=]=*}"; return
-	elif [[ "$1" =~ [\<\>=]= ]]; then		# nameOP[ver] -> name OP_ ver
+	elif [[ "$1" =~ [\<\>=]=|\<\<|\>\> ]]; then		# nameOP[ver] -> name OP_ ver
 		IFS="$BASH_REMATCH"	# split string using each char in OP
 		read -ra store <<< "$1" 
 		name=${store[0]} ver=${store[2]}	# constexpr store[${#IFS}]
 		IFS=${IFS/==/$OP_EQ}	# translate to package manager notation
 		IFS=${IFS/<=/$OP_LE}
 		IFS=${IFS/>=/$OP_GE}
+		IFS=${IFS/<</$OP_LT}
+		IFS=${IFS/>>/$OP_GT}
 	elif ((VER_NONE)) || [[ "$1" =~ _$ ]]; then	# name{,_} -> name (e.g. conflicts, ..)
 		echo -n "${1%_}"; return;
 	else
